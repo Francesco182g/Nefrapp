@@ -4,7 +4,12 @@ import java.util.Date;
 
 public class Medico {
 	
-	private String codiceFiscale, nome, cognome, sesso, email, residenza;
+	private String codiceFiscale;
+	private String nome; 
+	private String cognome; 
+	private String sesso;
+	private String email; 
+	private String residenza;
 	private Date dataDiNascita;
 	
 	public Medico() {
