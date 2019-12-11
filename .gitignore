@@ -2,7 +2,6 @@
 .recommenders
 Servers
 .settings
-Nefrapp/build
-Nefrapp/.classpath
-Nefrapp/.project
-Nefrapp/WebContent/META-INF/context.xml
+**/build
+**/.classpath
+**/.project
