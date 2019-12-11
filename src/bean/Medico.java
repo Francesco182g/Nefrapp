@@ -7,6 +7,21 @@ public class Medico {
 	private String codiceFiscale, nome, cognome, sesso, email, residenza;
 	private Date dataDiNascita;
 	
+	public Medico() {
+		
+	}
+	
+	public Medico(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza, Date dataDiNascita) {
+		this.codiceFiscale = codiceFiscale;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.sesso = sesso;
+		this.email = email;
+		this.residenza = residenza;
+		this.dataDiNascita = dataDiNascita;
+	}
+	
+	
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
@@ -62,8 +77,4 @@ public class Medico {
 	public void setDataDiNascita(Date dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
-	
-	public Medico(String nome) {
-		this.nome = nome;
-	}		
 }
