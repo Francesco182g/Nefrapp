@@ -10,7 +10,6 @@ public class Paziente {
 	private String sesso;
 	private String email;
 	private String residenza;
-	private String password;
 	private Date dataDiNascita;
 	private Boolean attivo;
 	
@@ -18,8 +17,6 @@ public class Paziente {
 		
 	}
 	
-	
-
 	public Paziente(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza,
 			String password, Date dataDiNascita, Boolean attivo) {
 		this.codiceFiscale = codiceFiscale;
@@ -28,12 +25,9 @@ public class Paziente {
 		this.sesso = sesso;
 		this.email = email;
 		this.residenza = residenza;
-		this.password = password;
 		this.dataDiNascita = dataDiNascita;
 		this.attivo = attivo;
 	}
-
-
 
 	public String getCodiceFiscale() {
 		return codiceFiscale;
@@ -89,14 +83,6 @@ public class Paziente {
 	
 	public void setDataDiNascita(Date dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Boolean isAttivo() {
