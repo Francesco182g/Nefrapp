@@ -4,7 +4,13 @@ import java.util.Date;
 
 public class Paziente {
 	
-	private String codiceFiscale, nome, cognome, sesso, email, residenza, password;
+	private String codiceFiscale;
+	private String nome;
+	private String cognome;
+	private String sesso;
+	private String email;
+	private String residenza;
+	private String password;
 	private Date dataDiNascita;
 	private Boolean attivo;
 	
