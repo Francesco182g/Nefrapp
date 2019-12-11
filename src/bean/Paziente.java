@@ -14,6 +14,27 @@ public class Paziente {
 	private Date dataDiNascita;
 	private Boolean attivo;
 	
+	public Paziente() {
+		
+	}
+	
+	
+
+	public Paziente(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza,
+			String password, Date dataDiNascita, Boolean attivo) {
+		this.codiceFiscale = codiceFiscale;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.sesso = sesso;
+		this.email = email;
+		this.residenza = residenza;
+		this.password = password;
+		this.dataDiNascita = dataDiNascita;
+		this.attivo = attivo;
+	}
+
+
+
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
