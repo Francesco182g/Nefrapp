@@ -16,6 +16,7 @@ public class Amministratore {
 	//costruttore
 	
 	/**
+	 * 
 	 * Amministratore è un oggetto che rappresenta la figura dell'amministratore
 	 */
 	public Amministratore() {
