@@ -1,5 +1,6 @@
 package bean;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Paziente {
@@ -12,13 +13,14 @@ public class Paziente {
 	private String residenza;
 	private Date dataDiNascita;
 	private Boolean attivo;
+	private ArrayList<String> medici;
 	
 	public Paziente() {
 		
 	}
 	
 	public Paziente(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza,
-			String password, Date dataDiNascita, Boolean attivo) {
+			String password, Date dataDiNascita, Boolean attivo, ArrayList<String> medici) {
 		this.codiceFiscale = codiceFiscale;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -27,6 +29,7 @@ public class Paziente {
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
 		this.attivo = attivo;
+		this.medici = medici;
 	}
 
 	public String getCodiceFiscale() {
@@ -92,4 +95,13 @@ public class Paziente {
 	public void setAttivo(Boolean attivo) {
 		this.attivo = attivo;
 	}
+	
+	public ArrayList<String> getMedici() {
+		return medici;
+	}
+
+	public void setMedici(ArrayList<String> medici) {
+		this.medici = medici;
+	}
+
 }

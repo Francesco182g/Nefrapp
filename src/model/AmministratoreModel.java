@@ -9,6 +9,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import bean.Amministratore;
+import utility.CreaBeanUtility;
 
 /**
  * 
@@ -26,18 +27,15 @@ public class AmministratoreModel {
 		MongoCollection<Document> amministratori = DriverConnection.getConnection().getCollection("Amministratore");
 		Amministratore amministratore = null;
 		BasicDBObject andQuery = new BasicDBObject();
+		
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("CodiceFiscale", codiceFiscale));
 		obj.add(new BasicDBObject("Password", password));
 		andQuery.put("$and", obj);
+		
 		Document datiAmministratore = amministratori.find(andQuery).first();
 		if(datiAmministratore != null) {
-			amministratore = new Amministratore();
-			amministratore.setCodiceFiscale(codiceFiscale);
-			amministratore.setNome(datiAmministratore.getString("Nome"));
-			amministratore.setCognome(datiAmministratore.getString("Cognome"));
-			amministratore.setEmail("Email");
-			
+			amministratore = CreaBeanUtility.daDocumentAdAmministratore(datiAmministratore);
 		}
 		
 		return amministratore;
