@@ -12,7 +12,7 @@ public class Amministratore extends Utente{
 	
 	/**
 	 * 
-	 * Amministratore è un oggetto che rappresenta la figura dell'amministratore
+	 * Amministratore Ã¨ un oggetto che rappresenta la figura dell'amministratore
 	 */
 	public Amministratore() {
 		super();
@@ -20,7 +20,7 @@ public class Amministratore extends Utente{
 	
 	
 	/**
-	 * Amministratore è un oggetto che rappresenta la figura dell'amministratore 
+	 * Amministratore Ã¨ un oggetto che rappresenta la figura dell'amministratore 
 	 * @param codiceFiscale indica il codice fiscale dell'amministratore 
 	 * @param nome indica il nome dell'amministratore 
 	 * @param cognome indica il cognome dell'amministratore 

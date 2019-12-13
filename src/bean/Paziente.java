@@ -13,14 +13,14 @@ public class Paziente extends Utente{
 	
 	//costruttori
 	/**
-	 * Paziente è un oggetto che rappresenta la figura dell'paziente
+	 * Paziente Ã¨ un oggetto che rappresenta la figura dell'paziente
 	 */
 	public Paziente() {
 		super();
 	}
 	
 	/**
-	 * Paziente è un oggetto che rappresenta la figura del paziente
+	 * Paziente Ã¨ un oggetto che rappresenta la figura del paziente
 	 * @param codiceFiscale rappresenta il codice fiscale del paziente
 	 * @param nome rappresenta il nome del paziente
 	 * @param cognome rappresenta il cognome del paziente
@@ -28,7 +28,7 @@ public class Paziente extends Utente{
 	 * @param email rappresenta l'email del paziente
 	 * @param residenza rappresenta la residenza del paziente
 	 * @param dataDiNascita rappresenta la data di nascita del paziente
-	 * @param attivo rappresenta se l'account del paziente è stato disabilitato o meno
+	 * @param attivo rappresenta se l'account del paziente ï¿½ stato disabilitato o meno
 	 * @param medici rappresenta i medici che seguono paziente
 	 */
 	public Paziente(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza,Date dataDiNascita, Boolean attivo, ArrayList<String> medici) {

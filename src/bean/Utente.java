@@ -13,13 +13,13 @@ public class Utente {
 	
 	//costruttori
 	/**
-	 * Utente è un oggetto che rappresenta la generalizzazione di Amministratore, Medico e Paziente
+	 * Utente Ã¨ un oggetto che rappresenta la generalizzazione di Amministratore, Medico e Paziente
 	 */
 	public Utente() {
 	}
 	
 	/**
-	 * Utente è un oggetto che rappresenta la generalizzazione di Amministratore, Medico e Paziente
+	 * Utente Ã¨ un oggetto che rappresenta la generalizzazione di Amministratore, Medico e Paziente
 	 * @param codiceFiscale rappresenta il codice fiscale dell'utente
 	 * @param nome rappresenta il nome dell'utente
 	 * @param cognome rappresenta il cognome dell'utente 

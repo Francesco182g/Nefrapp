@@ -11,14 +11,14 @@ public class Medico extends Utente{
 	
 	//costruttori
 	/**
-	 *  Medico è un oggetto che rappresenta la figura del medico
+	 *  Medico Ã¨ un oggetto che rappresenta la figura del medico
 	 */
 	public Medico() {
 		super();
 	}
 	
 	/**
-	 *  Medico è un oggetto che rappresenta la figura del medico
+	 *  Medico Ã¨ un oggetto che rappresenta la figura del medico
 	 * @param codiceFiscale rappresenta il codice fiscale del medico
 	 * @param nome rappresenta il nome del medico
 	 * @param cognome rappresenta il cognome del medico
