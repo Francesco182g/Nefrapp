@@ -1,5 +1,8 @@
 package control;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import bean.Paziente;
+import bean.SchedaParametri;
 
 @WebServlet("GestioneParametri")
 public class GestioneParametri extends HttpServlet {
@@ -30,12 +34,14 @@ public class GestioneParametri extends HttpServlet {
 			
 			//Download report
 			if(flag.equals("0")) {
-				
+					
 			}
 			
 			//Inserisci parametri nella scheda
 			if(flag.equals("1")) {
-				
+				inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"), request.getParameter("PaMin"), request.getParameter("PaMax"), 
+						request.getParameter("ScaricoIniziale"), request.getParameter("UF"), request.getParameter("TempoSosta"), request.getParameter("Scarico"), request.getParameter("Carico"), 
+						request.getParameter("Data"));
 			}
 			
 			//Visualizza la scheda dei parametri del paziente selezionati
@@ -44,7 +50,7 @@ public class GestioneParametri extends HttpServlet {
 				
 				//TODO query per il recupero della scheda parametri del paziente
 				
-				request.setAttribute("schedaParametri", /*risultato della query se non è null*/);
+				request.setAttribute("schedaParametri", ""/*risultato della query se non ï¿½ null*/);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //reindirizzamento view per la visualizzazione della scheda
 				dispatcher.forward(request, response);
 			}
@@ -61,4 +67,21 @@ public class GestioneParametri extends HttpServlet {
 		doGet(request, response);
 		return;
 	}
+	
+	private void inserisciParametri(String cf, String peso, String paMin, String paMax, String scaricoIniziale, String uf, String tempoSosta, String scarico, String carico, String data)
+	{
+		BigDecimal newPeso = new BigDecimal(peso);
+		int newPaMin = Integer.parseInt(paMin);
+		int newPaMax = Integer.parseInt(paMax);
+		int newScaricoIniziale = Integer.parseInt(scaricoIniziale);
+		int newUf = Integer.parseInt(uf);
+		int newTempoSosta = Integer.parseInt(tempoSosta);
+		int newScarico = Integer.parseInt(scarico);
+		int newCarico = Integer.parseInt(carico);
+		LocalDate newData = LocalDate.parse(data);
+				
+		SchedaParametri daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
+				newUf, newTempoSosta, newScarico, newCarico, newData);
+	}
+	
 }

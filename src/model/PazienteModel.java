@@ -1,7 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
@@ -42,7 +45,6 @@ public class PazienteModel {
 		
 		return paziente;
 	}
-	
 	
 	/**
 	 * Metodo che ottiene tutti i dati dei pazienti seguiti da un medico
