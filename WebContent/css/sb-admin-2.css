@@ -10996,3 +10996,7 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+.regMed{
+	padding-left: 11.5rem;
+	padding-right: 11.5rem;
+}
