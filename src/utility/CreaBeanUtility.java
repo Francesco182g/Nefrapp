@@ -1,10 +1,13 @@
 package utility;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import org.bson.Document;
 
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import bean.SchedaParametri;
 
 /**
  * 
@@ -72,6 +75,30 @@ public class CreaBeanUtility {
 		amministratore.setEmail(datiAmministratore.getString("Email"));
 		
 		return amministratore;
+	}
+
+	/**
+	 * Classe che converte il documento inviato in una SchedaParametri
+	 * @param datiSchedaParametri documento che continee i dati della scheda
+	 * @return schedaParametri convertito dal documento
+	 */
+	public static SchedaParametri daDocumentASchedaParametri(Document datiSchedaParametri) {
+		SchedaParametri schedaParametri= new SchedaParametri();
+
+		schedaParametri = new SchedaParametri();
+		schedaParametri.setPazienteCodiceFiscale(datiSchedaParametri.getString("PazienteCodiceFiscale"));
+		schedaParametri.setPeso(new BigDecimal(datiSchedaParametri.getString("Peso")));
+		schedaParametri.setPaMin(Integer.parseInt(datiSchedaParametri.getString("PaMin")));
+		schedaParametri.setPaMax(Integer.parseInt(datiSchedaParametri.getString("PaMax")));
+		schedaParametri.setScaricoIniziale(Integer.parseInt(datiSchedaParametri.getString("ScaricoIniziale")));
+		schedaParametri.setUF(Integer.parseInt(datiSchedaParametri.getString("UF")));
+		schedaParametri.setTempoSosta(Integer.parseInt(datiSchedaParametri.getString("TempoSosta")));
+		schedaParametri.setScarico(Integer.parseInt(datiSchedaParametri.getString("Scarico")));
+		schedaParametri.setCarico(Integer.parseInt(datiSchedaParametri.getString("Carico")));
+		schedaParametri.setData(LocalDate.parse((datiSchedaParametri.getString("Data"))));
+		
+		
+		return schedaParametri;
 	}
 	
 }
