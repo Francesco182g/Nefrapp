@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 
 import bean.Paziente;
 import bean.SchedaParametri;
+import model.SchedaParametriModel;
 
 @WebServlet("GestioneParametri")
 public class GestioneParametri extends HttpServlet {
@@ -39,9 +40,11 @@ public class GestioneParametri extends HttpServlet {
 			
 			//Inserisci parametri nella scheda
 			if(flag.equals("1")) {
-				inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"), request.getParameter("PaMin"), request.getParameter("PaMax"), 
-						request.getParameter("ScaricoIniziale"), request.getParameter("UF"), request.getParameter("TempoSosta"), request.getParameter("Scarico"), request.getParameter("Carico"), 
-						request.getParameter("Data"));
+				inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"), 
+						request.getParameter("PaMin"), request.getParameter("PaMax"), 
+						request.getParameter("ScaricoIniziale"), request.getParameter("UF"), 
+						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
+						request.getParameter("Carico"), request.getParameter("Data"));
 			}
 			
 			//Visualizza la scheda dei parametri del paziente selezionati
@@ -68,8 +71,31 @@ public class GestioneParametri extends HttpServlet {
 		return;
 	}
 	
+	/**Questo metodo inserisce nel database una SchedaParametri formata dai dati inseriti dall'utente.
+	 * Riceve le stringhe inserite dall'utente, prelevate dalla request. 
+	 * Dopo averle parsate opportunamente, le usa per istanziare un bean SchedaParametri
+	 * e usa un'istanza di SchedaParametriModel per caricarla sul database.
+	 * 
+	 * @param cf
+	 * @param peso
+	 * @param paMin
+	 * @param paMax
+	 * @param scaricoIniziale
+	 * @param uf
+	 * @param tempoSosta
+	 * @param scarico
+	 * @param carico
+	 * @param data
+	 * 
+	 * @author nico
+	 */
 	private void inserisciParametri(String cf, String peso, String paMin, String paMax, String scaricoIniziale, String uf, String tempoSosta, String scarico, String carico, String data)
 	{
+		SchedaParametriModel model = new SchedaParametriModel();
+		SchedaParametri daAggiungere;
+		
+		//valutare la possibilità di fare controlli sulle stringhe ottenute prima di parsarle
+		
 		BigDecimal newPeso = new BigDecimal(peso);
 		int newPaMin = Integer.parseInt(paMin);
 		int newPaMax = Integer.parseInt(paMax);
@@ -80,8 +106,11 @@ public class GestioneParametri extends HttpServlet {
 		int newCarico = Integer.parseInt(carico);
 		LocalDate newData = LocalDate.parse(data);
 				
-		SchedaParametri daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
+		daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, newData);
+		
+		model.addSchedaParametri(daAggiungere);
+		
 	}
 	
 }

@@ -29,4 +29,21 @@ public class SchedaParametriModel {
 		
 		return scheda;
 	}
+
+	public void addSchedaParametri(SchedaParametri daAggiungere) 
+	{
+		MongoCollection<Document> scheda = DriverConnection.getConnection().getCollection("SchedaParametri");
+		
+		Document doc = new Document("PazienteCodiceFiscale", daAggiungere.getPazienteCodiceFiscale())
+				.append("Peso", daAggiungere.getPeso())
+				.append("PaMin", daAggiungere.getPaMin())
+				.append("PaMax", daAggiungere.getPaMax())
+				.append("ScaricoIniziale", daAggiungere.getScaricoIniziale())
+				.append("UF", daAggiungere.getUF())
+				.append("TempoSosta", daAggiungere.getTempoSosta())
+				.append("Carico", daAggiungere.getCarico())
+				.append("Scarico", daAggiungere.getScarico())
+				.append("Date", daAggiungere.getData());
+		scheda.insertOne(doc);	
+	}
 }
