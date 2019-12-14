@@ -52,8 +52,8 @@ public class RegistrazioneMedico extends HttpServlet {
 	private boolean validazione(String codiceFiscale,String nome, String cognome,String sesso, String email,String password) {
 		boolean valido=true;
 		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String expNome="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$";
-		String expCognome="^[a-zA-Z]+([ ']?[a-zA-Z]+)*$";
+		String expNome="^[A-Z][a-zA-Z ]*$";
+		String expCognome="^[A-Z][a-zA-Z ]*$";
 		String expSesso="^[MF]$";
 		String expEmail="^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
 		String expPassword="^[a-zA-Z0-9]*$";
