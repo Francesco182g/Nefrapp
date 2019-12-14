@@ -69,7 +69,6 @@
                       <th>Carico diurno(ml)</th>
                       <th>Scarico diurno(ml)</th>
                       <th>Data</th>
-                      <th>Ora</th> 
                       <!-- Possibile aggiunta di altri campi -->
                     </tr>
                   </tfoot>
@@ -85,7 +84,6 @@
                       <td>1000</td>
                       <td>1500</td>
                       <td>12/12/2019</td>
-                      <td>12:15</td>
                     </tr>
                   </tbody>
                 </table>
