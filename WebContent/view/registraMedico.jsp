@@ -48,28 +48,28 @@
 							              </div>
 							              <form class="user">
 							                <div class="form-group">
-							                  <input type="text" class="form-control form-control-user" id="codiceFiscale" placeholder="Codice fiscale">
+							                  <input type="text" class="form-control form-control-user" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group row">
 							                  <div class="col-sm-6 mb-3 mb-sm-0">
-							                    <input type="text" class="form-control form-control-user" id="nome" placeholder="Nome">
+							                    <input type="text" class="form-control form-control-user" id="nome" placeholder="Nome" required="required" min="2" max="30">
 							                  </div>
 							                  <div class="col-sm-6">
-							                    <input type="text" class="form-control form-control-user" id="cognome" placeholder="Cognome">
+							                    <input type="text" class="form-control form-control-user" id="cognome" placeholder="Cognome" required="required" min="2" max="30">
 							                  </div>
 							                </div>
 											<div class="form-group">
                     							<div class="col-sm-6">
-							                    	Sesso: <input type="radio"  name="sesso" value="M">
+							                    	Sesso: <input type="radio"  name="sesso" value="M" checked="checked">
                     								Maschio <input type="radio" name="sesso" value="F">
                     								Femmina <br>
                     							</div>		
                   							</div>
                   							<div class="form-group">
-							                  <input type="email" class="form-control form-control-user" id="email" placeholder="Email">
+							                  <input type="email" class="form-control form-control-user" id="email" placeholder="Email" required="required" min="6" max="50">
 							                </div>
 							                <div class="form-group">
-							                   <input type="password" class="form-control form-control-user" id="password" placeholder="Password"> 
+							                   <input type="password" class="form-control form-control-user" id="password" placeholder="Password" required="required" min="6" max="20"> 
 							                </div>
 							                <a href="#" class="btn btn-primary btn-user btn-block">
 							                  Registra Medico
