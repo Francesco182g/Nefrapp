@@ -2,20 +2,25 @@ package bean;
 
 import java.util.Date;
 
-public class Medico extends Utente{ 
+public class Medico{ 
 	
 	//variabili
 	private String sesso; 
 	private String residenza;
 	private Date dataDiNascita;
+	private String codiceFiscale;
+	private String nome;
+	private String cognome;
+	private String email;
 	
 	//costruttori
 	/**
 	 *  Medico è un oggetto che rappresenta la figura del medico
 	 */
 	public Medico() {
-		super();
 	}
+
+	
 	
 	/**
 	 *  Medico è un oggetto che rappresenta la figura del medico
@@ -27,44 +32,108 @@ public class Medico extends Utente{
 	 * @param residenza rappresenta la residenza del medico
 	 * @param dataDiNascita rappresenta la data di nascita del medico
 	 */
-	public Medico(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza, Date dataDiNascita) {
-		super(codiceFiscale, nome, cognome, email);
+	public Medico(String sesso, String residenza, Date dataDiNascita, String codiceFiscale, String nome, String cognome,String email) {
 		this.sesso = sesso;
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
+		this.codiceFiscale = codiceFiscale;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
 	}
-	
+
+
 	//metodi
 	
 	public String getSesso() {
 		return sesso;
 	}
-	
+
+
+
 	public void setSesso(String sesso) {
 		this.sesso = sesso;
 	}
-	
-	
+
+
+
 	public String getResidenza() {
 		return residenza;
 	}
-	
+
+
+
 	public void setResidenza(String residenza) {
 		this.residenza = residenza;
 	}
-	
+
+
+
 	public Date getDataDiNascita() {
 		return dataDiNascita;
 	}
-	
+
+
+
 	public void setDataDiNascita(Date dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
 
+
+
+	public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+
+
+
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public String getCognome() {
+		return cognome;
+	}
+
+
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return super.toString()+"[sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita + "]";
-	}
-	
+		return "Medico [sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita
+				+ ", codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email
+				+ "]";
+	}	
 	
 }

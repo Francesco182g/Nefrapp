@@ -3,9 +3,13 @@ package bean;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Paziente extends Utente{
+public class Paziente{
 	//variabili
 	private String sesso;
+	private String codiceFiscale;
+	private String nome;
+	private String cognome;
+	private String email;
 	private String residenza;
 	private Date dataDiNascita;
 	private Boolean attivo;
@@ -16,9 +20,9 @@ public class Paziente extends Utente{
 	 * Paziente è un oggetto che rappresenta la figura dell'paziente
 	 */
 	public Paziente() {
-		super();
-	}
 	
+	}
+
 	/**
 	 * Paziente è un oggetto che rappresenta la figura del paziente
 	 * @param codiceFiscale rappresenta il codice fiscale del paziente
@@ -31,9 +35,12 @@ public class Paziente extends Utente{
 	 * @param attivo rappresenta se l'account del paziente � stato disabilitato o meno
 	 * @param medici rappresenta i medici che seguono paziente
 	 */
-	public Paziente(String codiceFiscale, String nome, String cognome, String sesso, String email, String residenza,Date dataDiNascita, Boolean attivo, ArrayList<String> medici) {
-		super(codiceFiscale, nome, cognome, email);
+	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza,Date dataDiNascita, Boolean attivo, ArrayList<String> medici) {
 		this.sesso = sesso;
+		this.codiceFiscale = codiceFiscale;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
 		this.attivo = attivo;
@@ -41,40 +48,70 @@ public class Paziente extends Utente{
 	}
 	
 	//metodi
-	
 	public String getSesso() {
 		return sesso;
 	}
-	
+
 	public void setSesso(String sesso) {
 		this.sesso = sesso;
 	}
-	
-	
+
+	public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getResidenza() {
 		return residenza;
 	}
-	
+
 	public void setResidenza(String residenza) {
 		this.residenza = residenza;
 	}
-	
+
 	public Date getDataDiNascita() {
 		return dataDiNascita;
 	}
-	
+
 	public void setDataDiNascita(Date dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
 
-	public Boolean isAttivo() {
+	public Boolean getAttivo() {
 		return attivo;
 	}
 
 	public void setAttivo(Boolean attivo) {
 		this.attivo = attivo;
 	}
-	
+
 	public ArrayList<String> getMedici() {
 		return medici;
 	}
@@ -85,9 +122,9 @@ public class Paziente extends Utente{
 
 	@Override
 	public String toString() {
-		return super.toString()+"[sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita
+		return "Paziente [sesso=" + sesso + ", codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome="
+				+ cognome + ", email=" + email + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita
 				+ ", attivo=" + attivo + ", medici=" + medici + "]";
 	}
-	
 	
 }
