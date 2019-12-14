@@ -1,10 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.ArrayList; 
 import java.util.List;
-import java.util.Map;
-
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
@@ -46,6 +43,7 @@ public class PazienteModel {
 		return paziente;
 	}
 	
+	
 	/**
 	 * Metodo che ottiene tutti i dati dei pazienti seguiti da un medico
 	 * @param codiceFiscaleMedico codice fiscale del medico che richiede i dati dei pazienti
@@ -61,6 +59,25 @@ public class PazienteModel {
 		}
 		
 		return pazientiMedico;	
+	}
+	
+	/**
+	 * Metodo che permette l'aggiunta di un paziente al database
+	 * @param toAdd paziente da aggiungere
+	 * @param password password del paziente
+	 */
+	public static void addPaziente(Paziente toAdd,String password) {
+		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
+		
+		Document doc = new Document("CodiceFiscale", toAdd.getCodiceFiscale())
+				.append("Nome", toAdd.getNome())
+				.append("Cognome", toAdd.getCognome())
+				.append("Password",password)
+				.append("DataDiNascita", toAdd.getDataDiNascita())
+				.append("Sesso", toAdd.getSesso())
+				.append("Residenza", toAdd.getResidenza())
+				.append("Email", toAdd.getEmail());
+		paziente.insertOne(doc);	
 	}
 	
 }
