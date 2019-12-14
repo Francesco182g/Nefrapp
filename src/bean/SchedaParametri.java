@@ -2,6 +2,7 @@ package bean;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * @author Silvio 
@@ -10,7 +11,7 @@ import java.sql.Date;
 
 public class SchedaParametri {
 	
-	private String codiceFiscalePaziente;
+	private String pazienteCodiceFiscale;
 	private BigDecimal peso;
 	private int paMin;
 	private int paMax;
@@ -20,7 +21,7 @@ public class SchedaParametri {
 	private int carico; 
 	private int scarico;
 	private String ora;
-	private Date data;	
+	private LocalDate data;	
 	
 	public SchedaParametri() {
 		
@@ -39,8 +40,8 @@ public class SchedaParametri {
 	 * @param ora indica l'ora di inserimento dei parametri
 	 * @param data indica la data di inserimento dei parametri
 	 */	
-	public SchedaParametri(String codiceFiscalePaziente, BigDecimal peso, int paMin, int paMax, int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, String ora, Date data) {
-		this.codiceFiscalePaziente=codiceFiscalePaziente;
+	public SchedaParametri(String pazienteCodiceFiscale, BigDecimal peso, int paMin, int paMax, int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, String ora, LocalDate data) {
+		this.pazienteCodiceFiscale=pazienteCodiceFiscale;
 		this.peso=peso;
 		this.paMin=paMin;
 		this.paMax=paMax;
@@ -53,12 +54,12 @@ public class SchedaParametri {
 		this.data=data;
 	}
 
-	public String getCodiceFiscalePaziente() {
-		return codiceFiscalePaziente;
+	public String getPazienteCodiceFiscale() {
+		return pazienteCodiceFiscale;
 	}
 
-	public void setCodiceFiscalePaziente(String codiceFiscalePaziente) {
-		this.codiceFiscalePaziente = codiceFiscalePaziente;
+	public void setPazienteCodiceFiscale(String pazienteCodiceFiscale) {
+		this.pazienteCodiceFiscale= pazienteCodiceFiscale;
 	}
 
 	public BigDecimal getPeso() {
@@ -133,11 +134,11 @@ public class SchedaParametri {
 		this.ora = ora;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
@@ -147,7 +148,7 @@ public class SchedaParametri {
 		int result = 1;
 		result = prime * result + UF;
 		result = prime * result + carico;
-		result = prime * result + ((codiceFiscalePaziente == null) ? 0 : codiceFiscalePaziente.hashCode());
+		result = prime * result + ((pazienteCodiceFiscale== null) ? 0 : pazienteCodiceFiscale.hashCode());
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((ora == null) ? 0 : ora.hashCode());
 		result = prime * result + paMax;
@@ -172,10 +173,10 @@ public class SchedaParametri {
 			return false;
 		if (carico != other.carico)
 			return false;
-		if (codiceFiscalePaziente == null) {
-			if (other.codiceFiscalePaziente != null)
+		if (pazienteCodiceFiscale== null) {
+			if (other.pazienteCodiceFiscale!= null)
 				return false;
-		} else if (!codiceFiscalePaziente.equals(other.codiceFiscalePaziente))
+		} else if (!pazienteCodiceFiscale.equals(other.pazienteCodiceFiscale))
 			return false;
 		if (data == null) {
 			if (other.data != null)
@@ -207,7 +208,7 @@ public class SchedaParametri {
 
 	@Override
 	public String toString() {
-		return "SchedaParametri [codiceFiscalePaziente=" + codiceFiscalePaziente + ", peso=" + peso + ", paMin=" + paMin
+		return "SchedaParametri [codiceFiscalePaziente=" + pazienteCodiceFiscale+ ", peso=" + peso + ", paMin=" + paMin
 				+ ", paMax=" + paMax + ", scaricoIniziale=" + scaricoIniziale + ", UF=" + UF + ", tempoSosta="
 				+ tempoSosta + ", carico=" + carico + ", scarico=" + scarico + ", ora=" + ora + ", data=" + data + "]";
 	}
