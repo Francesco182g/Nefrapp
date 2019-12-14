@@ -1,17 +1,10 @@
 package model;
 import static com.mongodb.client.model.Filters.eq;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.bson.Document;
-
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
-import bean.Paziente;
 import bean.SchedaParametri;
 import utility.CreaBeanUtility;
 
