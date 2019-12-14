@@ -12,7 +12,7 @@ import bean.SchedaParametri;
 import utility.CreaBeanUtility;
 
 public class SchedaParametriModel {
-	public static SchedaParametri getSchedaParametri(String codiceFiscalePaziente, LocalDate data) {
+	public static SchedaParametri getSchedaParametriByCFDate(String codiceFiscalePaziente, LocalDate data) {
 		MongoCollection<Document> schedaParametri = DriverConnection.getConnection().getCollection("SchedaParametri");
 		SchedaParametri scheda= null;
 		BasicDBObject andQuery = new BasicDBObject();
