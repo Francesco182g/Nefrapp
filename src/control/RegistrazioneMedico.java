@@ -24,12 +24,20 @@ public class RegistrazioneMedico extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String codiceFiscale= request.getParameter("codiceFiscale");
 		String nome=request.getParameter("nome");
 		String cognome=request.getParameter("cognome");
 		String sesso=request.getParameter("sesso");
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
+		
 		
 		if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
 			Medico medico=new Medico(sesso,"",null,codiceFiscale,nome,cognome,email);
@@ -38,16 +46,7 @@ public class RegistrazioneMedico extends HttpServlet {
 		}
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
-		requestDispatcher.forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		requestDispatcher.forward(request, response);	}
 	
 	private boolean validazione(String codiceFiscale,String nome, String cognome,String sesso, String email,String password) {
 		boolean valido=true;
