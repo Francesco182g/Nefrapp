@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,17 +36,6 @@ public class GestioneParametri extends HttpServlet {
 					
 			}
 			
-			//Inserisci parametri nella scheda
-			if(flag.equals("1")) {
-				inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"), 
-						request.getParameter("PaMin"), request.getParameter("PaMax"), 
-						request.getParameter("ScaricoIniziale"), request.getParameter("UF"), 
-						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
-						request.getParameter("Carico"), request.getParameter("Data"));
-				
-				response.sendRedirect(request.getContextPath() + "/view/index.jsp");
-			}
-			
 			//Visualizza la scheda dei parametri del paziente selezionati
 			if(flag.equals("2")) {
 				String pazienteCF = request.getParameter("codiceFiscale");
@@ -65,7 +55,30 @@ public class GestioneParametri extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		doGet(request, response);
+		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
+		// ok)
+		try {
+			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+				response.setContentType("application/json");
+				response.setHeader("Cache-Control", "no-cache");
+				response.getWriter().write(new Gson().toJson("Errore generato dalla richiesta!"));
+				return;
+			}
+
+			// Inserisci parametri nella scheda
+			// Valutare la possibilità di inserire flag di controllo anche se questo è
+			// l'unico metodo eseguito da una post request
+			inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
+					request.getParameter("PaMin"), request.getParameter("PaMax"),
+					request.getParameter("ScaricoIniziale"), request.getParameter("UF"),
+					request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
+					request.getParameter("Carico"));
+
+			response.sendRedirect(request.getContextPath() + "/view/index.jsp");
+		} catch (IOException e) {
+			System.out.println("Errore in gestione parametri:");
+			e.printStackTrace();
+		}
 		return;
 	}
 	
@@ -87,7 +100,7 @@ public class GestioneParametri extends HttpServlet {
 	 * 
 	 * @author nico
 	 */
-	private void inserisciParametri(String cf, String peso, String paMin, String paMax, String scaricoIniziale, String uf, String tempoSosta, String scarico, String carico, String data)
+	private void inserisciParametri(String cf, String peso, String paMin, String paMax, String scaricoIniziale, String uf, String tempoSosta, String scarico, String carico)
 	{
 		SchedaParametri daAggiungere;
 		
@@ -101,10 +114,10 @@ public class GestioneParametri extends HttpServlet {
 		int newTempoSosta = Integer.parseInt(tempoSosta);
 		int newScarico = Integer.parseInt(scarico);
 		int newCarico = Integer.parseInt(carico);
-		LocalDate newData = LocalDate.parse(data);
+		LocalDate oggi = LocalDate.now();
 				
 		daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
-				newUf, newTempoSosta, newScarico, newCarico, newData);
+				newUf, newTempoSosta, newScarico, newCarico, oggi);
 		
 		SchedaParametriModel.addSchedaParametri(daAggiungere);
 	}
