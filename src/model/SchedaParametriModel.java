@@ -1,33 +1,28 @@
 package model;
-import java.time.LocalDate;
+import static com.mongodb.client.model.Filters.eq;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.bson.Document;
-
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 import bean.SchedaParametri;
 import utility.CreaBeanUtility;
 
 public class SchedaParametriModel {
-	public static SchedaParametri getSchedaParametriByCFDate(String codiceFiscalePaziente, LocalDate data) {
-		MongoCollection<Document> schedaParametri = DriverConnection.getConnection().getCollection("SchedaParametri");
-		SchedaParametri scheda= null;
-		BasicDBObject andQuery = new BasicDBObject();
+	/**
+	 * Metodo che preleva le schede parametri di un paziente dal DataBase
+	 * @param pazienteCodiceFiscale codice fiscale del paziente
+	 * @return schedeParametri array di schede di un paziente, null altrimenti
+	 */
+	public static ArrayList<SchedaParametri> getSchedaParametriByCF(String codiceFiscalePaziente) {
+		MongoCollection<Document> schedeParametriDB = DriverConnection.getConnection().getCollection("SchedaParametri");
+		ArrayList<SchedaParametri> schedeParametri= new ArrayList<SchedaParametri>();
+		MongoCursor<Document> documenti = schedeParametriDB.find(eq("PazienteCodiceFiscale", codiceFiscalePaziente)).iterator();
 		
-		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
-		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
-		obj.add(new BasicDBObject("Data", data));
-		andQuery.put("$and", obj);
-		
-		Document datiSchedaParametri = schedaParametri.find(andQuery).first();
-		if(datiSchedaParametri != null) {
-			scheda = CreaBeanUtility.daDocumentASchedaParametri(datiSchedaParametri);
+		while(documenti.hasNext()) {
+			schedeParametri.add(CreaBeanUtility.daDocumentASchedaParametri(documenti.next()));
 		}
-		
-		return scheda;
+		return schedeParametri;
 	}
 
 	public void addSchedaParametri(SchedaParametri daAggiungere) 
