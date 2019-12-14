@@ -1,3 +1,4 @@
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -35,7 +36,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente (Nome, cognome)</h1>
+          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente (Nome, cognome) </h1>
           
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
@@ -54,7 +55,6 @@
                       <th>Carico diurno(ml)</th>
                       <th>Scarico diurno(ml)</th>
                       <th>Data</th>
-                      <th>Ora</th> 
                       <!-- Possibile aggiunta di atri campi -->
                     </tr>
                   </thead>
@@ -73,18 +73,23 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                  	
+                  	<c:set var="scheda" value='${requestScope["nomescelto"]}'/>
+                  	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
+             		<c:forEach items="${scheda}" var="item">
                     <tr>
-                      <td>80</td>
-                      <td>80</td>
-                      <td>120</td>
-                      <td>+1200</td>
-                      <td>+550</td>
-                      <td>2</td>
-                      <td>1000</td>
-                      <td>1500</td>
-                      <td>12/12/2019</td>
+                      <td>${item.peso}</td>
+                      <td>${item.paMin}</td>
+                      <td>${item.paMax}</td>
+                      <td>${item.scaricoIniziale}</td>
+                      <td>${item.UF}</td>
+                      <td>${item.tempoSosta}</td>
+                      <td>${item.scarico}</td>
+                      <td>${item.carico}</td>
+                      <td>${item.data}</td>
                     </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>
