@@ -20,7 +20,6 @@ public class SchedaParametri {
 	private int tempoSosta;
 	private int carico; 
 	private int scarico;
-	private String ora;
 	private LocalDate data;	
 	
 	public SchedaParametri() {
@@ -40,7 +39,7 @@ public class SchedaParametri {
 	 * @param ora indica l'ora di inserimento dei parametri
 	 * @param data indica la data di inserimento dei parametri
 	 */	
-	public SchedaParametri(String pazienteCodiceFiscale, BigDecimal peso, int paMin, int paMax, int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, String ora, LocalDate data) {
+	public SchedaParametri(String pazienteCodiceFiscale, BigDecimal peso, int paMin, int paMax, int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, LocalDate data) {
 		this.pazienteCodiceFiscale=pazienteCodiceFiscale;
 		this.peso=peso;
 		this.paMin=paMin;
@@ -50,7 +49,6 @@ public class SchedaParametri {
 		this.tempoSosta=tempoSosta;
 		this.carico=carico;
 		this.scarico=scarico;
-		this.ora=ora;
 		this.data=data;
 	}
 
@@ -126,14 +124,6 @@ public class SchedaParametri {
 		this.scarico = scarico;
 	}
 
-	public String getOra() {
-		return ora;
-	}
-
-	public void setOra(String ora) {
-		this.ora = ora;
-	}
-
 	public LocalDate getData() {
 		return data;
 	}
@@ -150,7 +140,6 @@ public class SchedaParametri {
 		result = prime * result + carico;
 		result = prime * result + ((pazienteCodiceFiscale== null) ? 0 : pazienteCodiceFiscale.hashCode());
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime * result + ((ora == null) ? 0 : ora.hashCode());
 		result = prime * result + paMax;
 		result = prime * result + paMin;
 		result = prime * result + ((peso == null) ? 0 : peso.hashCode());
@@ -183,11 +172,6 @@ public class SchedaParametri {
 				return false;
 		} else if (!data.equals(other.data))
 			return false;
-		if (ora == null) {
-			if (other.ora != null)
-				return false;
-		} else if (!ora.equals(other.ora))
-			return false;
 		if (paMax != other.paMax)
 			return false;
 		if (paMin != other.paMin)
@@ -210,7 +194,7 @@ public class SchedaParametri {
 	public String toString() {
 		return "SchedaParametri [codiceFiscalePaziente=" + pazienteCodiceFiscale+ ", peso=" + peso + ", paMin=" + paMin
 				+ ", paMax=" + paMax + ", scaricoIniziale=" + scaricoIniziale + ", UF=" + UF + ", tempoSosta="
-				+ tempoSosta + ", carico=" + carico + ", scarico=" + scarico + ", ora=" + ora + ", data=" + data + "]";
+				+ tempoSosta + ", carico=" + carico + ", scarico=" + scarico + ", ora=" + ", data=" + data + "]";
 	}
 	
 
