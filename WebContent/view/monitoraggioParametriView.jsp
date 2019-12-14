@@ -32,12 +32,68 @@
 	
 	
 	                <!-- Begin Page Content -->
-	                <div class="container-fluid">
-	
-	                    <!-- Page Heading -->
-	                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-	
-	                </div>
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente (Nome, cognome)</h1>
+          
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Peso(Kg)</th>
+                      <th>Pressione arteriosa minima(mmHg)</th>
+                      <th>Pressione arteriosa massima(mmHg)</th>
+                      <th>Scarico iniziale(ml)</th>
+                      <th>Ultrafiltrato(ml)</th>
+                      <th>Tempo di sosta</th>
+                      <th>Carico diurno(ml)</th>
+                      <th>Scarico diurno(ml)</th>
+                      <th>Data</th>
+                      <th>Ora</th> 
+                      <!-- Possibile aggiunta di atri campi -->
+                    </tr>
+                  </thead>
+                  <tfoot> <!-- Sarebbe il footer della tabella-->
+                    <tr>
+                      <th>Peso(Kg)</th>
+                      <th>Pressione arteriosa minima(mmHg)</th>
+                      <th>Pressione arteriosa massima(mmHg)</th>
+                      <th>Scarico iniziale(ml)</th>
+                      <th>Ultrafiltrato(ml)</th>
+                      <th>Tempo di sosta</th>
+                      <th>Carico diurno(ml)</th>
+                      <th>Scarico diurno(ml)</th>
+                      <th>Data</th>
+                      <th>Ora</th> 
+                      <!-- Possibile aggiunta di altri campi -->
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
+                    <tr>
+                      <td>80</td>
+                      <td>80</td>
+                      <td>120</td>
+                      <td>+1200</td>
+                      <td>+550</td>
+                      <td>2</td>
+                      <td>1000</td>
+                      <td>1500</td>
+                      <td>12/12/2019</td>
+                      <td>12:15</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
 	                <!-- /.container-fluid -->
 	
 	            </div>
