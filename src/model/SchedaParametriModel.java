@@ -25,7 +25,7 @@ public class SchedaParametriModel {
 		return schedeParametri;
 	}
 
-	public void addSchedaParametri(SchedaParametri daAggiungere) 
+	public static void addSchedaParametri(SchedaParametri daAggiungere) 
 	{
 		MongoCollection<Document> scheda = DriverConnection.getConnection().getCollection("SchedaParametri");
 		

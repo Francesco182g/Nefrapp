@@ -15,7 +15,7 @@ import bean.Paziente;
 import bean.SchedaParametri;
 import model.SchedaParametriModel;
 
-@WebServlet("GestioneParametri")
+@WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//static SchedaParametriModel parametriModel = new SchedaParametriModel();
@@ -45,6 +45,8 @@ public class GestioneParametri extends HttpServlet {
 						request.getParameter("ScaricoIniziale"), request.getParameter("UF"), 
 						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
 						request.getParameter("Carico"), request.getParameter("Data"));
+				
+				response.sendRedirect(request.getContextPath() + "/view/index.jsp");
 			}
 			
 			//Visualizza la scheda dei parametri del paziente selezionati
@@ -91,7 +93,6 @@ public class GestioneParametri extends HttpServlet {
 	 */
 	private void inserisciParametri(String cf, String peso, String paMin, String paMax, String scaricoIniziale, String uf, String tempoSosta, String scarico, String carico, String data)
 	{
-		SchedaParametriModel model = new SchedaParametriModel();
 		SchedaParametri daAggiungere;
 		
 		//valutare la possibilità di fare controlli sulle stringhe ottenute prima di parsarle
@@ -109,8 +110,7 @@ public class GestioneParametri extends HttpServlet {
 		daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, newData);
 		
-		model.addSchedaParametri(daAggiungere);
-		
+		SchedaParametriModel.addSchedaParametri(daAggiungere);
 	}
 	
 }
