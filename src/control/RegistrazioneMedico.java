@@ -48,6 +48,16 @@ public class RegistrazioneMedico extends HttpServlet {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
 		requestDispatcher.forward(request, response);	}
 	
+	/**
+	 * La funzione validazione permette di validare i campi che sono stati ricevuti dal client prima di poter inserire il medico nel database
+	 * @param codiceFiscale indica il codice fiscale del medico
+	 * @param nome indica il nome del medico
+	 * @param cognome indica il cognome del medico
+	 * @param sesso indica il sesso del medico
+	 * @param email indica l'email del medico
+	 * @param password la password del medico 
+	 * @return un valore boolean che è true se tutti i campi rispettano i criteri altrimenti false
+	 */
 	private boolean validazione(String codiceFiscale,String nome, String cognome,String sesso, String email,String password) {
 		boolean valido=true;
 		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
