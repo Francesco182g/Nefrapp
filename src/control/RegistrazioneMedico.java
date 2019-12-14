@@ -24,12 +24,20 @@ public class RegistrazioneMedico extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String codiceFiscale= request.getParameter("codiceFiscale");
 		String nome=request.getParameter("nome");
 		String cognome=request.getParameter("cognome");
 		String sesso=request.getParameter("sesso");
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
+		
 		
 		if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
 			Medico medico=new Medico(sesso,"",null,codiceFiscale,nome,cognome,email);
@@ -38,22 +46,13 @@ public class RegistrazioneMedico extends HttpServlet {
 		}
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
-		requestDispatcher.forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		requestDispatcher.forward(request, response);	}
 	
 	private boolean validazione(String codiceFiscale,String nome, String cognome,String sesso, String email,String password) {
 		boolean valido=true;
 		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String expNome="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$";
-		String expCognome="^[a-zA-Z]+([ ']?[a-zA-Z]+)*$";
+		String expNome="^[A-Z][a-zA-Z ]*$";
+		String expCognome="^[A-Z][a-zA-Z ]*$";
 		String expSesso="^[MF]$";
 		String expEmail="^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
 		String expPassword="^[a-zA-Z0-9]*$";
