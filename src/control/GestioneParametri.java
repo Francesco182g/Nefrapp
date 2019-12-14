@@ -2,15 +2,13 @@ package control;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.google.gson.Gson;
-
 import bean.Paziente;
 import bean.SchedaParametri;
 import model.SchedaParametriModel;
@@ -18,7 +16,6 @@ import model.SchedaParametriModel;
 @WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//static SchedaParametriModel parametriModel = new SchedaParametriModel();
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -53,10 +50,9 @@ public class GestioneParametri extends HttpServlet {
 			if(flag.equals("2")) {
 				String pazienteCF = request.getParameter("codiceFiscale");
 				
-				//TODO query per il recupero della scheda parametri del paziente
-				
-				request.setAttribute("schedaParametri", ""/*risultato della query se non � null*/);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //reindirizzamento view per la visualizzazione della scheda
+				ArrayList<SchedaParametri> sp = SchedaParametriModel.getSchedaParametriByCF(pazienteCF);
+				request.setAttribute("schedaParametri", sp);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //reindirizzamento view per la visualizzazione delle schede
 				dispatcher.forward(request, response);
 			}
 			
