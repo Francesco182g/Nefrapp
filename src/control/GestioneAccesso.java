@@ -40,10 +40,10 @@ public class GestioneAccesso extends HttpServlet {
 			
 			String codiceFiscale = req.getParameter("codiceFiscale");
 			String password = req.getParameter("password");
-			String flag = req.getParameter("flag");
+			String operazione = req.getParameter("operazione");
 			HttpSession session = req.getSession();
 			synchronized (session) {
-				if(flag.equalsIgnoreCase("admin"))
+				if(operazione.equalsIgnoreCase("admin"))
 				{
 					Amministratore amministratore = null;
 					if(controllaParametri(codiceFiscale, password))
