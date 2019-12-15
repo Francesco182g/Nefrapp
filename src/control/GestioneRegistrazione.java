@@ -23,8 +23,8 @@ import model.PazienteModel;
 /**
  * Servlet implementation class RegistrazioneMedico
  */
-@WebServlet("/Registrazione")
-public class Registrazione extends HttpServlet {
+@WebServlet("/GestioneRegistrazione")
+public class GestioneRegistrazione extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
 	/**
@@ -69,7 +69,7 @@ public class Registrazione extends HttpServlet {
 			}
 		}
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
