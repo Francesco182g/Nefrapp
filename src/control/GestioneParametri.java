@@ -64,8 +64,6 @@ public class GestioneParametri extends HttpServlet {
 				return;
 			}
 
-			// Inserisci parametri nella scheda
-			
 			// Valutare la possibilità di inserire flag di controllo anche se questo è
 			// l'unico metodo eseguito da una post request
 			inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
@@ -84,7 +82,7 @@ public class GestioneParametri extends HttpServlet {
 	
 	/**Questo metodo richiama dal database la lista delle schede parametri inserite da un determinato utente.
 	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso è richiamato dalla sessione,
-	 * nel caso in cui la visualizzazione sia richiesta da un medico, il paziente di cui mostrare le schede
+	 * nel caso in cui la visualizzazione sia richiesta da un medico, il CF del paziente di cui mostrare le schede
 	 * è inserito in un attributo nella request
 	 * @param request
 	 * @param response
@@ -95,7 +93,7 @@ public class GestioneParametri extends HttpServlet {
 		String pazienteCF;
 		Paziente pazienteLoggato = (Paziente)session.getAttribute("pazienteLoggato");
 		
-		if (session.getAttribute("pazienteLoggatoCF") != null)
+		if (pazienteLoggato != null)
 			pazienteCF = pazienteLoggato.getCodiceFiscale();
 		else	
 			pazienteCF = request.getParameter("codiceFiscale");
