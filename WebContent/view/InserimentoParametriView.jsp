@@ -1,0 +1,132 @@
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	<meta name="description" content="">
+    	<meta name="author" content="">
+		<title>Pagina bianca</title>
+    	
+    	<!-- Custom fonts for this template-->
+    	<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    	<!-- Custom styles for this template-->
+   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
+	</head>
+	
+	<body id="page-top">
+		<!-- Page Wrapper -->
+	    <div id="wrapper">
+			<%@include file="../includes/sidebar.jsp" %>		
+	
+	        <!-- Content Wrapper -->
+	        <div id="content-wrapper" class="d-flex flex-column">
+	
+	            <!-- Main Content -->
+	            <div id="content">
+					<%@include file="../includes/header.jsp" %>
+	
+	
+	                <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Nuova Scheda Parametri</h1>
+          
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+				<form class="user" action="nomeservlet">
+						<div class="form-group">
+						Scheda parametri:
+						<br>
+						<div class="form-group row">
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Peso: <br>
+						<input type="text" class="form-control form-control-user" id="peso" placeholder="Esempio: 80,00" required="required" >
+						</div>
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Pressione Massima:<br>
+						<input type="text" class="form-control form-control-user" id="pamax" placeholder="Esempio: 120" required="required">
+						</div>
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Pressione Minima:<br>
+						<input type="text" class="form-control form-control-user" id="pamin" placeholder="Esempio: 80" required="required">
+						</div>
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Scarico Iniziale:<br>
+						<input type="text" class="form-control form-control-user" id="scaricoIniziale" placeholder="Esempio: 1000" required="required" min="2" max="30">
+						</div>
+						</div>
+						</div>
+						<div class="form-group row">
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						UF: <br>
+						<input type="text" class="form-control form-control-user" id="uf" placeholder="Esempio: 500" required="required" min="2" max="30">
+						</div>
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Tempo di sosta:<br>
+						<input type="text" class="form-control form-control-user" id="tempodisosta" placeholder="Esempio: 1" required="required" min="2" max="30">
+						</div>
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Carico:<br>
+						<input type="text" class="form-control form-control-user" id="carico" placeholder="Esempio: 1000" required="required" min="2" max="30">
+						</div>
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+						Scarico:<br>
+						<input type="text" class="form-control form-control-user" id="scarico" placeholder="Esempio: 500" required="required" min="2" max="30">
+						</div>
+		                </div>
+		                <div class="col-lg-3 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
+		                <a href="#" class="btn btn-primary btn-user btn-block" >
+		                  Salva Parametri
+		                </a>
+		                </div>
+				</form>
+            </div>
+          </div>
+
+        </div>
+	                <!-- /.container-fluid -->
+	
+	            </div>
+	            <!-- End of Main Content -->
+				<%@include file="../includes/footer.jsp" %>	
+	        </div>
+	        <!-- End of Content Wrapper -->
+	
+	    </div>
+	    <!-- End of Page Wrapper -->
+	
+	    <!-- Scroll to Top Button-->
+	    <a class="scroll-to-top rounded" href="#page-top">
+	        <i class="fas fa-angle-up"></i>
+	    </a>
+	
+	    <!-- Logout Modal-->
+	    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	        <div class="modal-dialog" role="document">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">×</span>
+	          </button>
+	                </div>
+	                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+	                <div class="modal-footer">
+	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+	                    <a class="btn btn-primary" href="login.html">Logout</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	</body>
+</html>
