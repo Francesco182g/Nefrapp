@@ -53,11 +53,11 @@ public class GestioneAccesso extends HttpServlet {
 						if(amministratore != null)
 						{
 							session.setAttribute("amministratore", amministratore);
-							resp.sendRedirect("paginaAmministratore.jsp");
+							resp.sendRedirect("view/paginaAmministratore.jsp");
 						}
 						else
 						{
-							resp.sendRedirect("loginAmministratore.jsp");
+							resp.sendRedirect("view/loginAmministratore.jsp");
 						}
 					}
 				}	

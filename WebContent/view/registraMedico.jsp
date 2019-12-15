@@ -48,7 +48,7 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
-							              <form class="user" method="get"  action="../RegistrazioneMedico">
+							              <form class="user" method="post"  action="../RegistrazioneMedico">
 							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
