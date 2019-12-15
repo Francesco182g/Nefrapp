@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
@@ -41,8 +42,8 @@ public class GestioneParametri extends HttpServlet {
 			//Visualizza la scheda dei parametri del paziente selezionati
 			if(flag.equals("1")) {
 				monitoraParametri(request, response);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp"); //reindirizzamento view per la visualizzazione delle schede
-				dispatcher.forward(request, response);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp"); //reindirizzamento view per la visualizzazione delle schede
+				//dispatcher.forward(request, response);
 			}
 			
 		}catch (Exception e) {
@@ -142,7 +143,12 @@ for (SchedaParametri s : sp)
 		int newTempoSosta = Integer.parseInt(tempoSosta);
 		int newScarico = Integer.parseInt(scarico);
 		int newCarico = Integer.parseInt(carico);
-		LocalDate oggi = LocalDate.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		String now=LocalDate.now().format(format);
+		
+		LocalDate oggi=LocalDate.parse(now, format);
+		
 				
 		daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, oggi);
