@@ -39,10 +39,6 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-	
-	
-							  <div class="container regMed">
-							
 							    <div class="card o-hidden border-0 shadow-lg my-5">
 							      <div class="card-body p-0">
 							        <!-- Nested Row within Card Body -->
@@ -53,34 +49,45 @@
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
 							              <form class="user" method="get"  action="../RegistrazioneMedico">
-							                <div class="form-group">
+							                <div class="form-group row col-lg-6">
+							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group row">
 							                  <div class="col-sm-6 mb-3 mb-sm-0">
+							                  Nome:
 							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Nome" required="required" min="2" max="30">
 							                  </div>
 							                  <div class="col-sm-6">
+							                  Cognome:
 							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" placeholder="Cognome" required="required" min="2" max="30">
 							                  </div>
 							                </div>
-											<div class="form-group">
-                    							<div class="col-sm-6">
-							                    	Sesso: <input type="radio"  name="sesso" value="M" checked="checked">
-                    								Maschio <input type="radio" name="sesso" value="F">
-                    								Femmina <br>
-                    							</div>		
+											<div class="form-group row">
+													<div class="col-lg-4 col-mb-12 col-sm-4">
+							                    	Sesso:
+							                    	</div>
+							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
+							                    	<input type="radio"  name="sesso" value="M" checked="checked"> Maschio
+							                    	</div>
+							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
+                    								<input type="radio" name="sesso" value="F"> Femmina
+                    								</div>
+                    								<br>	
                   							</div>
-                  							<div class="form-group">
+                  							<div class="form-group row col-lg-6">
+                  							Email:
 							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50">
 							                </div>
-							                <div class="form-group">
+							                <div class="form-group row col-lg-6">
+							                Password:
 							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20"> 
 							                </div>
+							                <div class="col-lg-3 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
 							                <button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">
 							                  Registra Medico
 							                </button>
-							               
+							               </div>
 							              </form>
 							              
 							            </div>
@@ -96,11 +103,11 @@
 	
 	            </div>
 	            <!-- End of Main Content -->
+	           </div>
 				<%@include file="../includes/footer.jsp" %>	
-	        </div>
+	        
 	        <!-- End of Content Wrapper -->
 	
-	    </div>
 	    <!-- End of Page Wrapper -->
 	
 	    <!-- Scroll to Top Button-->
