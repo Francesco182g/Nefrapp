@@ -20,6 +20,11 @@
 	</head>
 	
 	<body id="page-top">
+	<jsp:include page="/parametri">
+	 <jsp:param name="codiceFiscale" value="RSSGPP95L18I483O"/>
+	 <jsp:param name="flag" value="1"/>
+	</jsp:include>
+	
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
 			<%@include file="../includes/sidebar.jsp" %>		
@@ -74,7 +79,7 @@
                   </tfoot>
                   <tbody>
                   	
-                  	<c:set var="scheda" value='${requestScope["scheda"]}'/>
+                  	<c:set var="scheda" value='${requestScope["schedaParametri"]}'/>
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
              		<c:forEach items="${scheda}" var="item">

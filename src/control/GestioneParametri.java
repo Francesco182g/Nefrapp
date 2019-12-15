@@ -39,7 +39,7 @@ public class GestioneParametri extends HttpServlet {
 			}
 			
 			//Visualizza la scheda dei parametri del paziente selezionati
-			if(flag.equals("2")) {
+			if(flag.equals("1")) {
 				monitoraParametri(request, response);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //reindirizzamento view per la visualizzazione delle schede
 				dispatcher.forward(request, response);
@@ -86,19 +86,27 @@ public class GestioneParametri extends HttpServlet {
 	 * è inserito in un attributo nella request
 	 * @param request
 	 * @param response
+	 * 
+	 * @author nico
+	 * @author Antonio
 	 */
 	private void monitoraParametri(HttpServletRequest request, HttpServletResponse response)
 	{
 		HttpSession session = request.getSession();
 		String pazienteCF;
-		Paziente pazienteLoggato = (Paziente)session.getAttribute("pazienteLoggato");
-		
-		if (pazienteLoggato != null)
+		Paziente pazienteLoggato = (Paziente) session.getAttribute("pazienteLoggato");
+
+		if (pazienteLoggato != null) {
 			pazienteCF = pazienteLoggato.getCodiceFiscale();
-		else	
+		} else {
 			pazienteCF = request.getParameter("codiceFiscale");
-		
+		}
+
 		ArrayList<SchedaParametri> sp = SchedaParametriModel.getSchedaParametriByCF(pazienteCF);
+		
+for (SchedaParametri s : sp)
+	System.out.println(s.toString());
+		
 		request.setAttribute("schedaParametri", sp);
 	}
 	
