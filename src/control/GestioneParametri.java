@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.google.gson.Gson;
 import bean.Paziente;
 import bean.SchedaParametri;
@@ -38,10 +40,7 @@ public class GestioneParametri extends HttpServlet {
 			
 			//Visualizza la scheda dei parametri del paziente selezionati
 			if(flag.equals("2")) {
-				String pazienteCF = request.getParameter("codiceFiscale");
-				
-				ArrayList<SchedaParametri> sp = SchedaParametriModel.getSchedaParametriByCF(pazienteCF);
-				request.setAttribute("schedaParametri", sp);
+				monitoraParametri(request, response);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //reindirizzamento view per la visualizzazione delle schede
 				dispatcher.forward(request, response);
 			}
@@ -81,6 +80,28 @@ public class GestioneParametri extends HttpServlet {
 			e.printStackTrace();
 		}
 		return;
+	}
+	
+	/**Questo metodo richiama dal database la lista delle schede parametri inserite da un determinato utente.
+	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso è richiamato dalla sessione,
+	 * nel caso in cui la visualizzazione sia richiesta da un medico, il paziente di cui mostrare le schede
+	 * è inserito in un attributo nella request
+	 * @param request
+	 * @param response
+	 */
+	private void monitoraParametri(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session = request.getSession();
+		String pazienteCF;
+		Paziente pazienteLoggato = (Paziente)session.getAttribute("pazienteLoggato");
+		
+		if (session.getAttribute("pazienteLoggatoCF") != null)
+			pazienteCF = pazienteLoggato.getCodiceFiscale();
+		else	
+			pazienteCF = request.getParameter("codiceFiscale");
+		
+		ArrayList<SchedaParametri> sp = SchedaParametriModel.getSchedaParametriByCF(pazienteCF);
+		request.setAttribute("schedaParametri", sp);
 	}
 	
 	/**Questo metodo inserisce nel database una SchedaParametri formata dai dati inseriti dall'utente.
