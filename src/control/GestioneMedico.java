@@ -57,6 +57,11 @@ public class GestioneMedico extends HttpServlet {
 		return;	
 	}
 
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
 	/**
 	 * Metodo che prende i pazienti seguiti dal medico e li inserisce nella richiesta
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
@@ -65,10 +70,6 @@ public class GestioneMedico extends HttpServlet {
 		String codiceFiscaleMedico = request.getParameter("codiceFiscale");
 		ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(codiceFiscaleMedico);
 		request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

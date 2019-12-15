@@ -19,6 +19,7 @@ import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
+import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * Servlet implementation class RegistrazioneMedico
@@ -45,6 +46,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
 				Medico medico=new Medico(sesso,"",null,codiceFiscale,nome,cognome,email);
 				MedicoModel med=new MedicoModel();
+				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
 				med.addMedico(medico, password);
 			} 
 		}
