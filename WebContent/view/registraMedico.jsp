@@ -40,7 +40,7 @@
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
 							    <div class="my-5">
-							      <div class="card-body p-0">
+							      <div class="card-body p-0 d-flex justify-content-center">
 							        <!-- Nested Row within Card Body -->
 							        <div class="row">
 							          <div class="col-sm-12">
@@ -56,11 +56,11 @@
 							                <div class="form-group row">
 							                  <div class="col-sm-6 mb-3 mb-sm-0">
 							                  Nome:
-							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Nome" required="required" min="2" max="30">
+							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Nome" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                  <div class="col-sm-6">
 							                  Cognome:
-							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" placeholder="Cognome" required="required" min="2" max="30">
+							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" placeholder="Cognome" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                </div>
 											<div class="form-group row">
@@ -77,11 +77,11 @@
                   							</div>
                   							<div class="form-group row col-lg-12">
                   							Email:
-							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50">
+							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50" maxlength="50">
 							                </div>
 							                <div class="form-group row col-lg-12">
 							                Password:
-							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20"> 
+							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20" maxlength="20"> 
 							                </div>
 							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
 							                <button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">

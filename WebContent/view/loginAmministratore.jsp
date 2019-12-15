@@ -35,7 +35,7 @@
 	                <div class="container-fluid">
 	
 	
-							  <div class="container regMed">
+							  <div class="container">
 							
 							    <div class="card o-hidden border-0 shadow-lg my-5">
 							      <div class="card-body p-0">
