@@ -16,7 +16,11 @@ import com.google.gson.Gson;
 import bean.Amministratore;
 import model.AmministratoreModel;
 import utility.AlgoritmoCriptazioneUtility;
-
+/**
+ * 
+ * @author Eugenio
+ *
+ */
 @WebServlet("/GestioneAccesso")
 public class GestioneAccesso extends HttpServlet {
 	@Override
@@ -68,7 +72,12 @@ public class GestioneAccesso extends HttpServlet {
 	
 	}
 	
-	
+	/**
+	 * Funzione che controlla i parametri codice fiscale e password dell' amministratore e dell'utente
+	 * @param codiceFiscale indica il codice fiscale dell' amministratore o dell'utente 
+	 * @param password indica la password dell'amministratore o dell'utente
+	 * @return true se i controlli vanno a buon fine false altrimenti
+	 */
 	public boolean controllaParametri(String codiceFiscale, String password)
 	{
 		boolean valido=true;
