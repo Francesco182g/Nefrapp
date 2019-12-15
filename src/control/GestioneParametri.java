@@ -41,7 +41,7 @@ public class GestioneParametri extends HttpServlet {
 				String pazienteCF = request.getParameter("codiceFiscale");
 				
 				ArrayList<SchedaParametri> sp = SchedaParametriModel.getSchedaParametriByCF(pazienteCF);
-				request.setAttribute("schedaParametri", sp);
+				request.getSession().setAttribute("schedaParametri", sp);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //reindirizzamento view per la visualizzazione delle schede
 				dispatcher.forward(request, response);
 			}
