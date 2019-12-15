@@ -16,7 +16,10 @@
     	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     	<!-- Custom styles for this template-->
-   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
+   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+   	 		
+   	 	<!-- Script per l'inserimento -->
+   	 	<script src="../js/inserimentoControl.js"></script>	
 	</head>
 	
 	<body id="page-top">
@@ -49,42 +52,42 @@
 						<div class="form-group row">
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Peso: <br>
-						<input type="text" class="form-control form-control-user" id="peso" placeholder="Esempio: 80,00" required="required" >
+						<input type="text" class="form-control form-control-user" id="Peso" placeholder="Esempio: 80,00" required="required" maxlength="5" >
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Pressione Massima:<br>
-						<input type="text" class="form-control form-control-user" id="pamax" placeholder="Esempio: 120" required="required">
+						<input type="text" class="form-control form-control-user" id="PaMax" placeholder="Esempio: 120" required="required" maxlength="3">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Pressione Minima:<br>
-						<input type="text" class="form-control form-control-user" id="pamin" placeholder="Esempio: 80" required="required">
+						<input type="text" class="form-control form-control-user" id="PaMin" placeholder="Esempio: 80" required="required" maxlength="3">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Scarico Iniziale:<br>
-						<input type="text" class="form-control form-control-user" id="scaricoIniziale" placeholder="Esempio: 1000" required="required" min="2" max="30">
+						<input type="text" class="form-control form-control-user" id="ScaricoIniziale" placeholder="Esempio: -1000 +1000"  maxlength="5">
 						</div>
 						</div>
 						</div>
 						<div class="form-group row">
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						UF: <br>
-						<input type="text" class="form-control form-control-user" id="uf" placeholder="Esempio: 500" required="required" min="2" max="30">
+						<input type="text" class="form-control form-control-user" id="UF" placeholder="Esempio: +500, -200" required="required" maxlength="5">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Tempo di sosta:<br>
-						<input type="text" class="form-control form-control-user" id="tempodisosta" placeholder="Esempio: 1" required="required" min="2" max="30">
+						<input type="text" class="form-control form-control-user" id="TempoSosta" placeholder="Esempio: 1" required="required" maxlength="2">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Carico:<br>
-						<input type="text" class="form-control form-control-user" id="carico" placeholder="Esempio: 1000" required="required" min="2" max="30">
+						<input type="text" class="form-control form-control-user" id="Carico" placeholder="Esempio: 1000" required="required" maxlength="4">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Scarico:<br>
-						<input type="text" class="form-control form-control-user" id="scarico" placeholder="Esempio: 500" required="required" min="2" max="30">
+						<input type="text" class="form-control form-control-user" id="Scarico" placeholder="Esempio: 500" required="required" maxlength="4">
 						</div>
 		                </div>
 		                <div class="col-lg-3 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
-		                <a href="#" class="btn btn-primary btn-user btn-block" >
+		                <a href="#" class="btn btn-primary btn-user btn-block" id="inserimentoSchedaButton">
 		                  Salva Parametri
 		                </a>
 		                </div>
