@@ -40,7 +40,7 @@
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
 							    <div class="my-5">
-							      <div class="card-body p-0 d-flex justify-content-center">
+							      <div class="card-body p-0">
 							        <!-- Nested Row within Card Body -->
 							        <div class="row">
 							          <div class="col-sm-12">
