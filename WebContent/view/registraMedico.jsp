@@ -39,17 +39,17 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-							    <div class="card o-hidden border-0 shadow-lg my-5">
-							      <div class="card-body p-0">
+							    <div class="my-5">
+							      <div class="card-body p-0 d-flex justify-content-center">
 							        <!-- Nested Row within Card Body -->
 							        <div class="row">
-							          <div class="col-lg-12">
-							            <div class="p-5">
+							          <div class="col-sm-12">
+							            <div class="card o-hidden border-0 shadow-sm p-5">
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
 							              <form class="user" method="get"  action="../RegistrazioneMedico">
-							                <div class="form-group row col-lg-6">
+							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
@@ -75,15 +75,15 @@
                     								</div>
                     								<br>	
                   							</div>
-                  							<div class="form-group row col-lg-6">
+                  							<div class="form-group row col-lg-12">
                   							Email:
 							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50">
 							                </div>
-							                <div class="form-group row col-lg-6">
+							                <div class="form-group row col-lg-12">
 							                Password:
 							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20"> 
 							                </div>
-							                <div class="col-lg-3 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
+							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
 							                <button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">
 							                  Registra Medico
 							                </button>
