@@ -74,23 +74,25 @@
                   </tfoot>
                   <tbody>
                   	
-                  	<c:set var="scheda" value='${requestScope["scheda"]}'/>
-                  	
-                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
-             		<c:forEach items="${scheda}" var="item">
-                    <tr>
-                      <td>${item.peso}</td>
-                      <td>${item.paMin}</td>
-                      <td>${item.paMax}</td>
-                      <td>${item.scaricoIniziale}</td>
-                      <td>${item.UF}</td>
-                      <td>${item.tempoSosta}</td>
-                      <td>${item.scarico}</td>
-                      <td>${item.carico}</td>
-                      <td>${item.data}</td>
-                    </tr>
-                    </c:forEach>
+	                  	<c:set var="scheda" value='${requestScope["scheda"]}'/>
+	                  	
+	                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
+	             		<c:forEach items="${scheda}" var="item">
+	                    <tr>
+	                      <td>${item.peso}</td>
+	                      <td>${item.paMin}</td>
+	                      <td>${item.paMax}</td>
+	                      <td>${item.scaricoIniziale}</td>
+	                      <td>${item.UF}</td>
+	                      <td>${item.tempoSosta}</td>
+	                      <td>${item.scarico}</td>
+	                      <td>${item.carico}</td>
+	                      <td>${item.data}</td>
+	                    </tr>
+	                    </c:forEach>
+                    
                   </tbody>
+                 
                 </table>
               </div>
             </div>
