@@ -10,7 +10,7 @@
  * 
  */
 function submitListaPazienteForm(event) {
-	$('#listaPazientiForm').append("<input type='hidden' name='flag' value='2'/>");   
+	$('#listaPazientiForm').append("<input type='hidden' name='flag' value='1'/>");   
 	$('#listaPazientiForm').append("<input type='hidden' name='codiceFiscale' value='"+ event.id +"'/>");   
 	$('#listaPazientiForm').submit();    
 }	
