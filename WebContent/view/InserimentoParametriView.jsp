@@ -45,51 +45,51 @@
           <div class="card shadow mb-4">
             
             <div class="card-body">
-				<form class="user" action="nomeservlet">
+				<form class="user" action="../parametri" method="POST">
 						<div class="form-group">
 						Scheda parametri:
 						<br>
-						<div class="form-group row">
+						<!-- <input type="text"  id="PazienteCodiceFiscale" name="PazienteCodiceFiscale" value="RSSGPP95L18I483O"> -->						<div class="form-group row">
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Peso: <br>
-						<input type="text" class="form-control form-control-user" id="Peso" placeholder="Esempio: 80,00" required="required" maxlength="5" >
+						<input type="text" class="form-control form-control-user" id="Peso" name="Peso" placeholder="Esempio: 80,00" required="required" maxlength="5" >
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Pressione Massima:<br>
-						<input type="text" class="form-control form-control-user" id="PaMax" placeholder="Esempio: 120" required="required" maxlength="3">
+						<input type="text" class="form-control form-control-user" id="PaMax" name="PaMax" placeholder="Esempio: 120" required="required" maxlength="3">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Pressione Minima:<br>
-						<input type="text" class="form-control form-control-user" id="PaMin" placeholder="Esempio: 80" required="required" maxlength="3">
+						<input type="text" class="form-control form-control-user" id="PaMin" name="PaMin" placeholder="Esempio: 80" required="required" maxlength="3">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Scarico Iniziale:<br>
-						<input type="text" class="form-control form-control-user" id="ScaricoIniziale" placeholder="Esempio: -1000 +1000"  maxlength="5">
+						<input type="text" class="form-control form-control-user" id="ScaricoIniziale" name="ScaricoIniziale" placeholder="Esempio: -1000 +1000"  maxlength="5">
 						</div>
 						</div>
 						</div>
 						<div class="form-group row">
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						UF: <br>
-						<input type="text" class="form-control form-control-user" id="UF" placeholder="Esempio: +500, -200" required="required" maxlength="5">
+						<input type="text" class="form-control form-control-user" id="UF" name="UF" placeholder="Esempio: +500, -200" required="required" maxlength="5">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Tempo di sosta:<br>
-						<input type="text" class="form-control form-control-user" id="TempoSosta" placeholder="Esempio: 1" required="required" maxlength="2">
+						<input type="text" class="form-control form-control-user" id="TempoSosta" name="TempoSosta" placeholder="Esempio: 1" required="required" maxlength="2">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Carico:<br>
-						<input type="text" class="form-control form-control-user" id="Carico" placeholder="Esempio: 1000" required="required" maxlength="4">
+						<input type="text" class="form-control form-control-user" id="Carico" name="Carico" placeholder="Esempio: 1000" required="required" maxlength="4">
 						</div>
 						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Scarico:<br>
-						<input type="text" class="form-control form-control-user" id="Scarico" placeholder="Esempio: 500" required="required" maxlength="4">
+						<input type="text" class="form-control form-control-user" id="Scarico" name="Scarico"placeholder="Esempio: 500" required="required" maxlength="4">
 						</div>
 		                </div>
 		                <div class="col-lg-3 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
-		                <a href="#" class="btn btn-primary btn-user btn-block" id="inserimentoSchedaButton">
+		                <button class="btn btn-primary btn-user btn-block" id="inserimentoSchedaButton">
 		                  Salva Parametri
-		                </a>
+		                </button>
 		                </div>
 				</form>
             </div>
