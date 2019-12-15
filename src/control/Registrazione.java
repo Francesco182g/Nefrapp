@@ -31,46 +31,8 @@ public class Registrazione extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session=request.getSession();
-		String codiceFiscale= request.getParameter("codiceFiscale");
-		String nome=request.getParameter("nome");
-		String cognome=request.getParameter("cognome");
-		String sesso=request.getParameter("sesso");
-		String email=request.getParameter("email");
-		String password=request.getParameter("password");
-		String flag=request.getParameter("flag");
+		doPost(request, response);
 		
-		if(flag.equals("0")) {
-			if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
-				Medico medico=new Medico(sesso,"",null,codiceFiscale,nome,cognome,email);
-				MedicoModel med=new MedicoModel();
-				med.addMedico(medico, password);
-			} 
-		}
-		else if(flag.equals("1")) {
-			if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
-				Medico medicoLoggato= (Medico) session.getAttribute("medico");
-				ArrayList<String> medici=new ArrayList<String>();
-				medici.add(medicoLoggato.getCodiceFiscale());
-				String residenza=request.getParameter("residenza");
-				String dataDiNascita=request.getParameter("dataDiNascita");
-				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-				Date data=null;
-				try {
-					data = formatter.parse(dataDiNascita);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Paziente paziente=new Paziente(sesso,codiceFiscale,nome,cognome,email,residenza,data,true,medici);
-				PazienteModel paz=new PazienteModel();
-				paz.addPaziente(paziente,password);
-			}
-		}
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
-		requestDispatcher.forward(request, response);
 	}
 
 	/**
@@ -78,7 +40,45 @@ public class Registrazione extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+				HttpSession session=request.getSession();
+				String codiceFiscale= request.getParameter("codiceFiscale");
+				String nome=request.getParameter("nome");
+				String cognome=request.getParameter("cognome");
+				String sesso=request.getParameter("sesso");
+				String email=request.getParameter("email");
+				String password=request.getParameter("password");
+				String flag=request.getParameter("flag");
+				
+				if(flag.equals("0")) {
+					if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
+						Medico medico=new Medico(sesso,"",null,codiceFiscale,nome,cognome,email);
+						MedicoModel med=new MedicoModel();
+						med.addMedico(medico, password);
+					} 
+				}
+				else if(flag.equals("1")) {
+					if (validazione(codiceFiscale,nome,cognome,sesso,email,password)) {
+						Medico medicoLoggato= (Medico) session.getAttribute("medico");
+						ArrayList<String> medici=new ArrayList<String>();
+						medici.add(medicoLoggato.getCodiceFiscale());
+						String residenza=request.getParameter("residenza");
+						String dataDiNascita=request.getParameter("dataDiNascita");
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+						Date data=null;
+						try {
+							data = formatter.parse(dataDiNascita);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						Paziente paziente=new Paziente(sesso,codiceFiscale,nome,cognome,email,residenza,data,true,medici);
+						PazienteModel paz=new PazienteModel();
+						paz.addPaziente(paziente,password);
+					}
+				}
+				
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
+				requestDispatcher.forward(request, response);
 	}
 	
 	private boolean validazione(String codiceFiscale,String nome, String cognome,String sesso, String email,String password) {
