@@ -66,6 +66,7 @@ public class GestioneParametri extends HttpServlet {
 			}
 
 			// Inserisci parametri nella scheda
+			
 			// Valutare la possibilità di inserire flag di controllo anche se questo è
 			// l'unico metodo eseguito da una post request
 			inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
