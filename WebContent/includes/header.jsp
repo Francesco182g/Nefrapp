@@ -18,7 +18,15 @@
    	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
 	</head>
 	
+	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
+
 	<body id="page-top">
+	
+	<!-- session attribute -->
+	<c:set var="paziente" value='${sessionScope["paziente"]}'/>
+	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
+	
 		
     <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -82,12 +90,13 @@
 
             
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+				
 
             <!-- Nav Item - User Information -->
+            <c:if test="${accessDone}">
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nome utente</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${paziente.nome} ${paziente.cognome }</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information, azioni che potrebbe fare l'utente -->
@@ -105,12 +114,13 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
+                <form action="../GestioneAccesso" method="get">
+                <button class="btn btn-primary btn-user">Logout</button>
+                </form>
+                
               </div>
             </li>
+            </c:if>
 
           </ul>
 

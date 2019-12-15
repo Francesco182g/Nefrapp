@@ -25,12 +25,7 @@ public class SchedaParametriModel {
 		return schedeParametri;
 	}
 
-	public static void addSchedaParametri(SchedaParametri daAggiungere)
-	/**
-	 * Metodo che aggiunge la scheda parametri di un paziente al DataBase
-	 * @param daAggiungere, SchedaParametri da aggiungere al database  
-	 * @return void
-	 */
+	public static void addSchedaParametri(SchedaParametri daAggiungere) 
 	{
 		MongoCollection<Document> scheda = DriverConnection.getConnection().getCollection("SchedaParametri");
 		
