@@ -1,6 +1,7 @@
 package utility;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.bson.Document;
 
@@ -84,18 +85,20 @@ public class CreaBeanUtility {
 	 */
 	public static SchedaParametri daDocumentASchedaParametri(Document datiSchedaParametri) {
 		SchedaParametri schedaParametri= new SchedaParametri();
-
 		schedaParametri = new SchedaParametri();
 		schedaParametri.setPazienteCodiceFiscale(datiSchedaParametri.getString("PazienteCodiceFiscale"));
-		schedaParametri.setPeso(new BigDecimal(datiSchedaParametri.getString("Peso")));
-		schedaParametri.setPaMin(Integer.parseInt(datiSchedaParametri.getString("PaMin")));
-		schedaParametri.setPaMax(Integer.parseInt(datiSchedaParametri.getString("PaMax")));
-		schedaParametri.setScaricoIniziale(Integer.parseInt(datiSchedaParametri.getString("ScaricoIniziale")));
-		schedaParametri.setUF(Integer.parseInt(datiSchedaParametri.getString("UF")));
-		schedaParametri.setTempoSosta(Integer.parseInt(datiSchedaParametri.getString("TempoSosta")));
-		schedaParametri.setScarico(Integer.parseInt(datiSchedaParametri.getString("Scarico")));
-		schedaParametri.setCarico(Integer.parseInt(datiSchedaParametri.getString("Carico")));
-		schedaParametri.setData(LocalDate.parse((datiSchedaParametri.getString("Data"))));
+		schedaParametri.setPeso(new BigDecimal(String.valueOf(datiSchedaParametri.get("Peso"))));
+		schedaParametri.setPaMin(datiSchedaParametri.getInteger("PaMin"));
+		schedaParametri.setPaMax(datiSchedaParametri.getInteger("PaMax"));
+		schedaParametri.setScaricoIniziale(datiSchedaParametri.getInteger("ScaricoIniziale"));
+		schedaParametri.setUF(datiSchedaParametri.getInteger("UF"));
+		schedaParametri.setTempoSosta(datiSchedaParametri.getInteger("TempoSosta"));
+		schedaParametri.setScarico(datiSchedaParametri.getInteger("Scarico"));
+		schedaParametri.setCarico(datiSchedaParametri.getInteger("Carico"));
+		DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	    DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    String data = LocalDate.parse(datiSchedaParametri.getString("Data"), inputFormat).format(outputFormat);
+		schedaParametri.setData(LocalDate.parse(data, outputFormat));
 		
 		
 		return schedaParametri;
