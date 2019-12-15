@@ -16,6 +16,11 @@
 
     	<!-- Custom styles for this template-->
    	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
+		
+		<script src="../vendor/jquery/jquery.min.js"></script>
+		
+		<!-- Script per la registrazione -->
+   	 	<script src="../js/registrazioneControl.js"></script>
 	</head>
 
 	<body id="page-top">
@@ -35,27 +40,29 @@
 	                <div class="container-fluid">
 	
 	
-							  <div class="container regMed">
+							  <div class="container">
 							
-							    <div class="card o-hidden border-0 shadow-lg my-5">
-							      <div class="card-body p-0">
+							    <div class="my-5">
+							      <div class="card-body p-0 d-flex justify-content-center">
 							        <!-- Nested Row within Card Body -->
 							        <div class="row">
-							          <div class="col-lg-12">
-							            <div class="p-5">
+							          <div class="col-sm-12">
+							            <div class="card o-hidden border-0 shadow-sm p-5">
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Login Amministratore</h1>
+							                
 							              </div>
-							              <form class="user">
+							              <form class="user" method="post" action="../GestioneAccesso">
 							                <div class="form-group">
-							                  <input type="text" class="form-control form-control-user" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
+							                <input type="hidden" name="operazione" value="admin">
+							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group">
-							                   <input type="password" class="form-control form-control-user" id="password" placeholder="Password" required="required" min="6" max="20"> 
+							                   <input type="password" class="form-control form-control-user" name= "password"  id="password" placeholder="Password" required="required" min="6" max="20" maxlength="20"> 
 							                </div>
-							                <a href="#" class="btn btn-primary btn-user btn-block">
+							                <button  class="btn btn-primary btn-user btn-block" id="accediAdminButton">
 							                  Accedi
-							                </a>
+							                </button>
 							               
 							              </form>
 							              
@@ -92,6 +99,7 @@
 	                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
 	            <span aria-hidden="true">×</span>
+	            
 	          </button>
 	                </div>
 	                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

@@ -37,14 +37,13 @@ public class GestioneMedico extends HttpServlet {
 			}
 			
 			String operazione = request.getParameter("operazione");
-			
-			if(operazione == "ResetPassword") {
+			if(operazione.equals("ResetPassword")) {
 				//cose da fare
-			}else if(operazione ==  "ModificaDatiPersonali") {
+			}else if(operazione.equals("ModificaDatiPersonali")) {
 				//cose da fare
-			}else if (operazione == "VisualizzaPazientiSeguiti") {
+			}else if (operazione.equals("VisualizzaPazientiSeguiti")) {
 				visualizzaPazientiseguiti(request);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("view/listaPazientiView"); //reindirizzamento view per la visualizzazione della lista pazienti
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/listaPazientiView.jsp"); //reindirizzamento view per la visualizzazione della lista pazienti
 				dispatcher.forward(request, response);
 				
 			}else {
@@ -58,6 +57,11 @@ public class GestioneMedico extends HttpServlet {
 		return;	
 	}
 
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
 	/**
 	 * Metodo che prende i pazienti seguiti dal medico e li inserisce nella richiesta
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
@@ -66,10 +70,6 @@ public class GestioneMedico extends HttpServlet {
 		String codiceFiscaleMedico = request.getParameter("codiceFiscale");
 		ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(codiceFiscaleMedico);
 		request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }
