@@ -54,7 +54,7 @@
 							              </div>
 							              <form class="user" method="post" action="../GestioneAccesso">
 							                <div class="form-group">
-							                <input type="hidden" name="flag" value="admin">
+							                <input type="hidden" name="operazione" value="admin">
 							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group">
