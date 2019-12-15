@@ -1,4 +1,3 @@
-<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,16 +8,16 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     	<meta name="description" content="">
     	<meta name="author" content="">
-		<title>Pagina bianca</title>
+		<title>Lista pazienti</title>
     	
     	<!-- Custom fonts for this template-->
-    	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    	<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     	<!-- Custom styles for this template-->
-   	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">	
-   	 	<script src="./vendor/jquery/jquery.min.js"></script>
-   	 	<script src="./js/listaPazientiControl.js"></script>
+   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
+   	 	<!-- Custom styles for this page -->
+  		<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">	
 	</head>
 	
 	<body id="page-top">
@@ -35,17 +34,17 @@
 	
 	
 	                <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Lista pazienti seguiti</h1>
+	                <div class="container-fluid">
+	
+	                    <!-- Page Heading -->
+	                    <h1 class="h3 mb-2 text-gray-800">Lista pazienti seguiti</h1>
           
-          <!-- DataTales Example -->
+          <!-- DataTables -->
           <div class="card shadow mb-4">
             
             <div class="card-body">
               <div class="table-responsive">
-              	<form id = "listaPazientiForm" method = "GET" action="./GestioneParametri">
+              	
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr>
@@ -53,6 +52,7 @@
 	                      <th>Nome</th>
 	                      <th>Cognome</th>
 	                      <th>Sesso</th>
+	                      <th>Operazioni</th> <!-- Possono essere eseguite solo se si è medico, l'admin non le vede -->
 	                      <!-- Possibile aggiunta di atri campi -->
 	                    </tr>
 	                  </thead>
@@ -62,6 +62,7 @@
 	                      <th>Nome</th>
 	                      <th>Cognome</th>
 	                      <th>Sesso</th>
+	                      <th>Operazioni</th> <!-- Possono essere eseguite solo se si è medico, l'admin non le vede -->
 	                      <!-- Possibile aggiunta di altri campi -->
 	                    </tr>
 	                  </tfoot>
@@ -71,21 +72,37 @@
 	                  	
 	                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
 	             		<c:forEach items="${pazienti}" var="item">
-	                    <tr id = "${item.codiceFiscale}" onclick = "submitListaPazienteForm(this)">
+	                    <tr id = "${item.codiceFiscale}" onclick = "submitListaPazienteForm(this)"> <!-- TODO modificare per reindirizzare al profilo paziente -->
 	                      <td>${item.codiceFiscale}</td>
 	                      <td>${item.nome}</td>
 	                      <td>${item.cognome}</td>
 	                      <td>${item.sesso}</td>
+	                      <td>
+	                       
+	                      	<a href="#" class="btn btn-info btn-icon-split" style="align=center">
+                    			<span class="icon text-white-50">
+                      				<i class="fas fa-info-circle"></i>
+                    			</span>
+                    			<span class="text">Piao terapeutico</span>
+                  			</a>
+                  			<a href="#" class="btn btn-info btn-icon-split" style="align=center">
+                    			<span class="icon text-white-50">
+                      				<i class="fas fa-info-circle"></i>
+                    			</span>
+                    			<span class="text">Scheda parametri</span>
+                  			</a>
+                  			<!-- <a href="#"><input type="button" value="Piano terapeutico" class="btn btn-info btn-icon-split"></a>  --> 
+	                      </td> <!-- TODO operazioni per i pulsanti -->
 	                    </tr>
 	                    </c:forEach>
 	                  </tbody>
 	                </table>
-                </form>
+                
               </div>
             </div>
           </div>
-
-        </div>
+	
+	                </div>
 	                <!-- /.container-fluid -->
 	
 	            </div>
@@ -120,6 +137,8 @@
 	            </div>
 	        </div>
 	    </div>
+	    
+	    
 	
 	</body>
 </html>
