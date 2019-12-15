@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import bean.Amministratore;
+import bean.Paziente;
 import model.AmministratoreModel;
+import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 /**
  * 
@@ -25,7 +28,10 @@ import utility.AlgoritmoCriptazioneUtility;
 public class GestioneAccesso extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+		HttpSession session = req.getSession();
+		if(session != null)
+		    session.invalidate();
+		resp.sendRedirect("/Nefrapp/view/index.jsp");
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,6 +47,8 @@ public class GestioneAccesso extends HttpServlet {
 			String codiceFiscale = req.getParameter("codiceFiscale");
 			String password = req.getParameter("password");
 			String operazione = req.getParameter("operazione");
+			String ricordaUtente=req.getParameter("ricordaUtente");
+			
 			HttpSession session = req.getSession();
 			synchronized (session) {
 				if(operazione.equalsIgnoreCase("admin"))
@@ -60,7 +68,63 @@ public class GestioneAccesso extends HttpServlet {
 							resp.sendRedirect("view/loginAmministratore.jsp");
 						}
 					}
-				}	
+				}
+				
+				else if(operazione.equalsIgnoreCase("paziente"))
+				{
+					Cookie[] cookies=req.getCookies();
+					
+					if(cookies!=null)
+					{
+						for(Cookie cookie: cookies)
+						{
+							if(cookie.getName().equals("salvaPass"))
+							{
+								password = cookie.getValue();
+							}
+							
+							if(cookie.getName().equals("salvaCF"))
+							{
+								codiceFiscale = cookie.getValue();
+							}
+						}
+					}
+					
+					Cookie salvaPass;
+					Cookie salvaCF;
+					
+					Paziente paziente = null;
+					if(controllaParametri(codiceFiscale, password))
+					{					
+						//password = AlgoritmoCriptazioneUtility.criptaConMD5(password);  
+						paziente = PazienteModel.checkLogin(codiceFiscale, password);
+
+						if(paziente!=null)
+						{
+							session.setAttribute("paziente", paziente);
+							session.setAttribute("accessDone", true);
+							
+							if(ricordaUtente!=null)
+							{
+								salvaPass= new Cookie ("salvaPass", password);
+								salvaCF= new Cookie ("salvaCF", codiceFiscale);
+								salvaPass.setMaxAge(50000);
+								salvaCF.setMaxAge(50000);
+								resp.addCookie(salvaPass);
+								resp.addCookie(salvaCF);
+							}
+							
+							resp.sendRedirect("view/dashboard.jsp");
+						}
+						
+					}
+
+					else
+					{
+						resp.sendRedirect("view/loginPaziente.jsp");
+					}
+					
+				}
 			
 			}
 		} catch (Exception e) {
