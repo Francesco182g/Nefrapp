@@ -1,3 +1,4 @@
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -61,14 +62,19 @@
                       <!-- Possibile aggiunta di altri campi -->
                     </tr>
                   </tfoot>
-                  <tbody>
-                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (lista pazienti seguiti) -->
+                 <tbody>
+                  	
+                  	<c:set var="pazienti" value='${requestScope["pazientiSeguiti"]}'/>
+                  	
+                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
+             		<c:forEach items="${pazienti}" var="item">
                     <tr>
-                      <td>aaaaaaaa</td>
-                      <td>giancarlo</td>
-                      <td>bianchi</td>
-                      <td>M</td>
+                      <td>${item.codiceFiscale}</td>
+                      <td>${item.nome}</td>
+                      <td>${item.cognome}</td>
+                      <td>${item.sesso}</td>
                     </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>

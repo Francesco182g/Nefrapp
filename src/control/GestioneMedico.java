@@ -37,14 +37,13 @@ public class GestioneMedico extends HttpServlet {
 			}
 			
 			String operazione = request.getParameter("operazione");
-			
-			if(operazione == "ResetPassword") {
+			if(operazione.equals("ResetPassword")) {
 				//cose da fare
-			}else if(operazione ==  "ModificaDatiPersonali") {
+			}else if(operazione.equals("ModificaDatiPersonali")) {
 				//cose da fare
-			}else if (operazione == "VisualizzaPazientiSeguiti") {
+			}else if (operazione.equals("VisualizzaPazientiSeguiti")) {
 				visualizzaPazientiseguiti(request);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("view/listaPazientiView"); //reindirizzamento view per la visualizzazione della lista pazienti
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/listaPazientiView.jsp"); //reindirizzamento view per la visualizzazione della lista pazienti
 				dispatcher.forward(request, response);
 				
 			}else {

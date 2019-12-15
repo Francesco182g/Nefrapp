@@ -74,7 +74,7 @@
                   </tfoot>
                   <tbody>
                   	
-                  	<c:set var="scheda" value='${requestScope["nomescelto"]}'/>
+                  	<c:set var="scheda" value='${requestScope["scheda"]}'/>
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
              		<c:forEach items="${scheda}" var="item">
