@@ -43,7 +43,7 @@ public class SchedaParametriModel {
 				.append("TempoSosta", daAggiungere.getTempoSosta())
 				.append("Carico", daAggiungere.getCarico())
 				.append("Scarico", daAggiungere.getScarico())
-				.append("Date", daAggiungere.getData());
+				.append("Data", daAggiungere.getData());
 		scheda.insertOne(doc);	
 	}
 }

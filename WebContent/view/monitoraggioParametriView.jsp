@@ -20,10 +20,10 @@
 	</head>
 	
 	<body id="page-top">
-	<jsp:include page="/parametri">
-	 <jsp:param name="codiceFiscale" value="RSSGPP95L18I483O"/>
-	 <jsp:param name="flag" value="1"/>
-	</jsp:include>
+<%-- 	<jsp:include page="/parametri">
+   <jsp:param name="codiceFiscale" value="NTNNTN80A01B963Y"/>
+   <jsp:param name="flag" value="1"/>
+  </jsp:include> --%>
 	
 		<!-- Page Wrapper -->
 	    <div id="wrapper">

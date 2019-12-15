@@ -1,8 +1,11 @@
 package utility;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.bson.Document;
 
 import bean.Amministratore;
@@ -95,12 +98,15 @@ public class CreaBeanUtility {
 		schedaParametri.setTempoSosta(datiSchedaParametri.getInteger("TempoSosta"));
 		schedaParametri.setScarico(datiSchedaParametri.getInteger("Scarico"));
 		schedaParametri.setCarico(datiSchedaParametri.getInteger("Carico"));
-		DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-	    DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    String data = LocalDate.parse(datiSchedaParametri.getString("Data"), inputFormat).format(outputFormat);
-		schedaParametri.setData(LocalDate.parse(data, outputFormat));
-		
-		
+//tengo commentata la vecchia soluzione
+//		DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//	    DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//	    String data = LocalDate.parse(datiSchedaParametri.getString("Data"), inputFormat).format(outputFormat);
+//		schedaParametri.setData(LocalDate.parse(data, outputFormat));
+		Date temp = datiSchedaParametri.getDate("Data");
+		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		schedaParametri.setData(data);
+
 		return schedaParametri;
 	}
 	
