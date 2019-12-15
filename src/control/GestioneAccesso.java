@@ -17,7 +17,7 @@ import bean.Amministratore;
 import model.AmministratoreModel;
 import utility.AlgoritmoCriptazioneUtility;
 
-@WebServlet("/LoginAmministratore")
+@WebServlet("/GestioneAccesso")
 public class GestioneAccesso extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
