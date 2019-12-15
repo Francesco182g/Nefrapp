@@ -81,6 +81,16 @@ public class Registrazione extends HttpServlet {
 				requestDispatcher.forward(request, response);
 	}
 	
+	/**
+	 * Metodo che serve a validare i dati del medico 
+	 * @param codiceFiscale indica il codice fiscale del medico
+	 * @param nome indica il nome del medico
+	 * @param cognome indica il cognome del medico
+	 * @param sesso indica il sesso del medico 
+	 * @param email indica la mail del medico
+	 * @param password indica la password del medico
+	 * @return un booleano che è true se tutti i campi sono validi e rispettano i criteri altrimenti false
+	 */
 	private boolean validazione(String codiceFiscale,String nome, String cognome,String sesso, String email,String password) {
 		boolean valido=true;
 		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
