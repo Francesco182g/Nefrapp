@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,11 +23,14 @@
 		<!-- Script per la registrazione -->
    	 	<script src="../js/ParameterControl.js"></script>
 	</head>
-
+	
 	<body id="page-top">
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
-					
+	    <c:out value="${sessionScope.amministratore}"></c:out>
+			 <c:if test="${sessionScope.amministratore} != null">
+			 	response.sendRedirect("dashboard.jsp");
+			 </c:if>	
 	
 	        <!-- Content Wrapper -->
 	        <div id="content-wrapper" class="d-flex flex-column">
