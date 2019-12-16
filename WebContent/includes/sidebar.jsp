@@ -43,31 +43,31 @@
         <c:when test='${paziente!=null}'>
     
         <li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dati Anagrafici</span></a>
+                <span>Dati Anagraficip</span></a>
         </li>
         
         <li class="nav-item">
             <a class="nav-link" href="../view/inserimentoParametriView.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Inserimento Scheda Parametri</span></a>
+                <span>Inserimento Scheda Parametri </span></a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+             <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Schede Parametri</span></a>
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Piano Terapeutico</span></a>
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Invia Foto</span></a>
         </li>
@@ -76,13 +76,13 @@
         <c:when test='${medico!=null}'>
 
         <li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dati Anagrafici</span></a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="../view/inserimentoParametriView.jsp">
+            <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Lista Pazienti</span></a>
         </li>
