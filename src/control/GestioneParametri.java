@@ -158,5 +158,4 @@ public class GestioneParametri extends HttpServlet {
 		
 		SchedaParametriModel.addSchedaParametri(daAggiungere);
 	}
-	
 }
