@@ -106,7 +106,7 @@
                        </td>
                     </tr>
                     <tr>
-                     <td><img src="../img/NefrappTeam/Davide Benedetto Strianese.jpg"></td>
+                     <td><img src="../img/NefrappTeam/CapoFester.jpg"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Davide Benedetto Strianese</h1><br>
 						Conosciuto anche come "Capo Fester" tende ad avere comportamenti dispotici e dittatoriali.
 						Il potere concessogli dai PM come capo (f)tester ne ha solo acuito gli effetti.
