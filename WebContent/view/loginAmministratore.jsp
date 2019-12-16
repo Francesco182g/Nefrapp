@@ -22,16 +22,14 @@
 		
 		<!-- Script per la registrazione -->
    	 	<script src="../js/ParameterControl.js"></script>
+   	 	<c:if test='${not empty sessionScope.amministratore}'>
+			<c:redirect url = "/view/dashboard.jsp"/>
+		</c:if>	
 	</head>
 	
 	<body id="page-top">
 		<!-- Page Wrapper -->
-	    <div id="wrapper">
-	    <c:out value="${sessionScope.amministratore}"></c:out>
-			 <c:if test="${sessionScope.amministratore} != null">
-			 	response.sendRedirect("dashboard.jsp");
-			 </c:if>	
-	
+	    <div id="wrapper">	
 	        <!-- Content Wrapper -->
 	        <div id="content-wrapper" class="d-flex flex-column">
 	
@@ -43,7 +41,7 @@
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
 	
-	
+							
 							  <div class="container">
 							
 							    <div class="my-5">
@@ -59,6 +57,7 @@
 							              <form class="user" method="post" action="../GestioneAccesso">
 							                <div class="form-group">
 							                <input type="hidden" name="operazione" value="admin">
+							                
 							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group">
