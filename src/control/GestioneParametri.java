@@ -44,6 +44,7 @@ public class GestioneParametri extends HttpServlet {
 			//Visualizza la scheda dei parametri del paziente selezionato
 			if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request, response);
+				//response.sendRedirect(request.getContextPath() + "/view/monitoraggioParametriView.jsp");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp");
 				dispatcher.forward(request, response);
 			}
@@ -67,7 +68,7 @@ public class GestioneParametri extends HttpServlet {
 				return;
 			}
 
-			// Valutare la possibilità di inserire flag di controllo anche se questo è
+			// Valutare la possibilitÃ  di inserire flag di controllo anche se questo Ã¨
 			// l'unico metodo eseguito da una post request
 			inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
 					request.getParameter("PaMin"), request.getParameter("PaMax"),
@@ -75,7 +76,7 @@ public class GestioneParametri extends HttpServlet {
 					request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
 					request.getParameter("Carico"));
 
-			response.sendRedirect(request.getContextPath() + "/view/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/view/dashboard.jsp");
 		} catch (IOException e) {
 			System.out.println("Errore in gestione parametri:");
 			e.printStackTrace();
@@ -84,9 +85,9 @@ public class GestioneParametri extends HttpServlet {
 	}
 	
 	/**Questo metodo richiama dal database la lista delle schede parametri inserite da un determinato utente.
-	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso è richiamato dalla sessione,
+	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso Ã¨ richiamato dalla sessione,
 	 * nel caso in cui la visualizzazione sia richiesta da un medico, il CF del paziente di cui mostrare le schede
-	 * è inserito in un attributo nella request
+	 * Ã¨ inserito in un attributo nella request
 	 * @param request
 	 * @param response
 	 * 
@@ -96,29 +97,28 @@ public class GestioneParametri extends HttpServlet {
 	private void monitoraParametri(HttpServletRequest request, HttpServletResponse response)
 	{
 		/*
-		 * La visualizzazione pu� essere fatta sia dal medico che dal paziente.
-		 * Questo significa che bisogna controllare chi � in sessione.
+		 * La visualizzazione può essere fatta sia dal medico che dal paziente.
+		 * Questo significa che bisogna controllare chi è in sessione.
 		 */
 		
 		HttpSession session = request.getSession();
-		Medico medico = null;
+		//Medico medico = null;
 		Paziente paziente = null;
 		ArrayList<SchedaParametri> scheda = null;
 		String CFPaziente = null;
 		
-		paziente = (Paziente) session.getAttribute("paziente");
-		medico = (Medico) session.getAttribute("medico");
+		Object utente=(Object) session.getAttribute("utente");
 		
-		if(medico != null && paziente == null) {
+		if (utente instanceof Paziente){
+			paziente = (Paziente)utente;
+			CFPaziente = paziente.getCodiceFiscale();
+			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
+		}	
+		else if(utente instanceof Medico) {
+			//medico = (Medico)utente;
 			CFPaziente = request.getParameter("CFPaziente");
 			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
 		}
-		
-		else if(medico == null && paziente != null) {
-			CFPaziente = paziente.getCodiceFiscale();
-			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
-		}
-		
 		else {
 			//TODO messaggio di errore
 			System.out.println("Utente deve esssere loggato");
@@ -153,7 +153,7 @@ public class GestioneParametri extends HttpServlet {
 	{
 		SchedaParametri daAggiungere;
 		
-		//valutare la possibilità di fare controlli sulle stringhe ottenute prima di parsarle
+		//valutare la possibilitÃ  di fare controlli sulle stringhe ottenute prima di parsarle
 		
 		BigDecimal newPeso = new BigDecimal(peso);
 		int newPaMin = Integer.parseInt(paMin);

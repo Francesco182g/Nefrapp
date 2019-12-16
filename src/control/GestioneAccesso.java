@@ -22,7 +22,7 @@ import utility.AlgoritmoCriptazioneUtility;
 /**
  * 
  * @author Eugenio Corbisiero, Davide Benedetto Strianese
- * Questa classe è una servlet che si occupa della gestione dell'accesso al sistema
+ * Questa classe ï¿½ una servlet che si occupa della gestione dell'accesso al sistema
  *
  */
 @WebServlet("/GestioneAccesso")
@@ -95,7 +95,7 @@ public class GestioneAccesso extends HttpServlet {
 			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 			amministratore = AmministratoreModel.checkLogin(codiceFiscale, password);
 			if(amministratore != null){
-				session.setAttribute("amministratore", amministratore);
+				session.setAttribute("utente", amministratore);
 				response.sendRedirect("view/dashboard.jsp");
 			}
 			else{
@@ -136,7 +136,7 @@ public class GestioneAccesso extends HttpServlet {
 				paziente = PazienteModel.checkLogin(codiceFiscale, password);
 			
 				if(paziente != null){
-					session.setAttribute("paziente", paziente);
+					session.setAttribute("utente", paziente);
 					session.setAttribute("accessDone", true);
 					
 					if(ricordaUtente != null){
@@ -149,7 +149,9 @@ public class GestioneAccesso extends HttpServlet {
 					}
 					
 					response.sendRedirect("view/dashboard.jsp");
+					return;
 				}
+				response.sendRedirect("view/login.jsp");
 			}
 			else{
 				response.sendRedirect("view/login.jsp");
@@ -162,13 +164,17 @@ public class GestioneAccesso extends HttpServlet {
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 				medico = MedicoModel.checkLogin(codiceFiscale, password);
 				if(medico != null){
-					session.setAttribute("medico", medico);
+					session.setAttribute("utente", medico);
+					session.setAttribute("accessDone", true);
 					response.sendRedirect("view/dashboard.jsp");
 				}
 				else{
 					response.sendRedirect("view/login.jsp");
 					//reindirizzamento login per il medico/paziente
 				}
+			}
+			else {
+				response.sendRedirect("view/login.jsp");
 			}
 		}
 	}

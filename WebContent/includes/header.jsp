@@ -26,8 +26,9 @@
 	<body id="page-top">
 	
 	<!-- session attribute -->
-	<c:set var="paziente" value='${sessionScope["paziente"]}'/>
+	<c:set var="utente" value='${sessionScope["utente"]}'/>
 	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
+	
 	
 		
     <!-- Topbar -->
