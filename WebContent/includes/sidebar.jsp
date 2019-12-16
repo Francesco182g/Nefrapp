@@ -88,9 +88,9 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="./registraPaziente.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Visualizza Schede Parametri</span></a>
+                <span>Registra paziente</span></a>
         </li>
         
 		<li class="nav-item">
