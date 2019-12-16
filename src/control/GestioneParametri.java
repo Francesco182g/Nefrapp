@@ -26,23 +26,35 @@ public class GestioneParametri extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				response.setContentType("application/json");
-				response.setHeader("Cache-Control", "no-cache");
-				response.getWriter().write(new Gson().toJson("Errore generato dalla richiesta!"));
+				request.setAttribute("notification", "Errore generato dalla richiesta!");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home
+				dispatcher.forward(request, response);
 				return;
-			}
+			} 
 			
 			String operazione = request.getParameter("operazione");
 			
-			//Download report
-			if(operazione.equals("")) {
-					
-			}
-			
-			//Visualizza la scheda dei parametri del paziente selezionato
-			if(operazione.equals("visualizzaScheda")) {
+			if(operazione.equals("inserisciScheda")) {
+				try {
+					// Valutare la possibilitÃƒÂ  di inserire flag di controllo anche se questo ÃƒÂ¨
+					// l'unico metodo eseguito da una post request
+					inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
+							request.getParameter("PaMin"), request.getParameter("PaMax"),
+							request.getParameter("ScaricoIniziale"), request.getParameter("UF"),
+							request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
+							request.getParameter("Carico"));
+
+					response.sendRedirect(request.getContextPath() + "/view/dashboard.jsp");
+				} catch (IOException e) {
+					System.out.println("Errore in gestione parametri:");
+					e.printStackTrace();
+				}
+
+			} else if(operazione.equals("")) {
+				//Download report
+			} else if(operazione.equals("visualizzaScheda")) {
+				//Visualizza la scheda dei parametri del paziente selezionato
 				monitoraParametri(request, response);
 				//response.sendRedirect(request.getContextPath() + "/view/monitoraggioParametriView.jsp");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp");
@@ -58,36 +70,13 @@ public class GestioneParametri extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
-		// ok)
-		try {
-			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				response.setContentType("application/json");
-				response.setHeader("Cache-Control", "no-cache");
-				response.getWriter().write(new Gson().toJson("Errore generato dalla richiesta!"));
-				return;
-			}
-
-			// Valutare la possibilitÃ  di inserire flag di controllo anche se questo Ã¨
-			// l'unico metodo eseguito da una post request
-			inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
-					request.getParameter("PaMin"), request.getParameter("PaMax"),
-					request.getParameter("ScaricoIniziale"), request.getParameter("UF"),
-					request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
-					request.getParameter("Carico"));
-
-			response.sendRedirect(request.getContextPath() + "/view/dashboard.jsp");
-		} catch (IOException e) {
-			System.out.println("Errore in gestione parametri:");
-			e.printStackTrace();
-		}
-		return;
+		doGet(request, response);
 	}
-	
+
 	/**Questo metodo richiama dal database la lista delle schede parametri inserite da un determinato utente.
-	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso Ã¨ richiamato dalla sessione,
+	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso ÃƒÂ¨ richiamato dalla sessione,
 	 * nel caso in cui la visualizzazione sia richiesta da un medico, il CF del paziente di cui mostrare le schede
-	 * Ã¨ inserito in un attributo nella request
+	 * ÃƒÂ¨ inserito in un attributo nella request
 	 * @param request
 	 * @param response
 	 * 
@@ -97,8 +86,8 @@ public class GestioneParametri extends HttpServlet {
 	private void monitoraParametri(HttpServletRequest request, HttpServletResponse response)
 	{
 		/*
-		 * La visualizzazione può essere fatta sia dal medico che dal paziente.
-		 * Questo significa che bisogna controllare chi è in sessione.
+		 * La visualizzazione puÃ² essere fatta sia dal medico che dal paziente.
+		 * Questo significa che bisogna controllare chi Ã¨ in sessione.
 		 */
 		
 		HttpSession session = request.getSession();
@@ -153,7 +142,7 @@ public class GestioneParametri extends HttpServlet {
 	{
 		SchedaParametri daAggiungere;
 		
-		//valutare la possibilitÃ  di fare controlli sulle stringhe ottenute prima di parsarle
+		//valutare la possibilitÃƒÂ  di fare controlli sulle stringhe ottenute prima di parsarle
 		
 		BigDecimal newPeso = new BigDecimal(peso);
 		int newPaMin = Integer.parseInt(paMin);
@@ -169,5 +158,4 @@ public class GestioneParametri extends HttpServlet {
 		
 		SchedaParametriModel.addSchedaParametri(daAggiungere);
 	}
-	
 }
