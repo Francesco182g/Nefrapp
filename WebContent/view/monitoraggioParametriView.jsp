@@ -1,7 +1,7 @@
 
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,11 +13,11 @@
 		<title>Pagina bianca</title>
     	
     	<!-- Custom fonts for this template-->
-    	<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     	<!-- Custom styles for this template-->
-   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
+   	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">	
 	</head>
 	
 	<body id="page-top">
@@ -127,7 +127,7 @@
 	                <div class="modal-header">
 	                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">×</span>
+	            <span aria-hidden="true">Ã—</span>
 	          </button>
 	                </div>
 	                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
