@@ -71,21 +71,21 @@
 	                  	<c:set var="pazienti" value='${requestScope["pazientiSeguiti"]}'/>
 	                  	
 	                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
-	             		<c:forEach items="${pazienti}" var="item">
-	                    <tr id = "${item.codiceFiscale}" onclick = "submitListaPazienteForm(this)"> <!-- TODO modificare per reindirizzare al profilo paziente -->
+	             		<c:forEach items="${pazienti}" var="item"> 
+	                    <tr id = "${item.codiceFiscale}" onclick = "submitListaPazienteForm(this)"> <!-- TODO modificare per reindirizzare al profilo paziente--> 
 	                      <td>${item.codiceFiscale}</td>
 	                      <td>${item.nome}</td>
 	                      <td>${item.cognome}</td>
 	                      <td>${item.sesso}</td>
-	                      <td>
-	                       
-	                      	<a href="#" class="btn btn-info btn-icon-split" style="align=center">
+	                      <td> 
+	                      
+	                      	<a href="#" class="btn btn-info btn-icon-split" >
                     			<span class="icon text-white-50">
                       				<i class="fas fa-info-circle"></i>
                     			</span>
                     			<span class="text">Piao terapeutico</span>
                   			</a>
-                  			<a href="#" class="btn btn-info btn-icon-split" style="align=center">
+                  			<a href="#" class="btn btn-info btn-icon-split">
                     			<span class="icon text-white-50">
                       				<i class="fas fa-info-circle"></i>
                     			</span>
