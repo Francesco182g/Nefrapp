@@ -136,7 +136,7 @@
 		if (!$('[name="operazione"]').is(':checked'))
 				{
 				if(!(operazione=="amministratore"))
-						valido=[false,"Paziente o medico?"];
+					valido=[false,"Paziente o medico?"];
 				}
 		
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
