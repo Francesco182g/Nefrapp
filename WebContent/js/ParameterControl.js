@@ -7,6 +7,7 @@
   $(document).ready(function(){
 	  var button1 = $("#registrazioneMedicoButton")
 	  var button2 = $("#accediAdminButton") 
+	  var button3 = $("#loginUtente")
 	  $(document).submit(function(){
 				  return sub; 
 		  });
@@ -17,6 +18,11 @@
 	  else if(button2.length>0)
 	  	{
 		  loginValidator();
+	  	}
+	  
+	  else if(button3.length>0)
+	  	{
+		  loginValidators();
 	  	}
 	  
 	});
@@ -49,6 +55,24 @@
 
 	function loginValidator(){
 		$("#accediAdminButton").click(function(){
+			var valid = checkValidityLogin();
+			if (!valid [0])
+				{
+					sub = false;
+					alert(valid[1])
+				}
+			else
+				{
+					sub = true;
+					console.log("sono qui")
+					$(document).submit();
+				}
+			
+		});
+	}
+	
+	function loginValidators(){
+		$("#loginUtente").click(function(){
 			var valid = checkValidityLogin();
 			if (!valid [0])
 				{
