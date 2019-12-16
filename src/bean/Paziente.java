@@ -120,6 +120,10 @@ public class Paziente{
 		this.medici = medici;
 	}
 
+	public void addMedico(String medicoCodiceFiscale) {
+		this.medici.add(medicoCodiceFiscale);
+	}
+	
 	@Override
 	public String toString() {
 		return "Paziente [sesso=" + sesso + ", codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome="
