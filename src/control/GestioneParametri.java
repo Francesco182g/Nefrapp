@@ -72,7 +72,7 @@ public class GestioneParametri extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
 	}
-	
+
 	/**Questo metodo richiama dal database la lista delle schede parametri inserite da un determinato utente.
 	 * Nel caso in cui la visualizzazione sia richiesta da un paziente, esso ÃƒÂ¨ richiamato dalla sessione,
 	 * nel caso in cui la visualizzazione sia richiesta da un medico, il CF del paziente di cui mostrare le schede
