@@ -82,7 +82,7 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../GestioneMedico?operazione=VisualizzaPazientiSeguiti">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Lista Pazienti</span></a>
         </li>
@@ -144,9 +144,9 @@
                 <span>Conosci il prodotto</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../view/team.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Conosci il team</span></a>
+                <span>Conosci il team!</span></a>
         </li>
         </c:otherwise>
         </c:choose>
