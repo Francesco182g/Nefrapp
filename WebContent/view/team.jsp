@@ -43,7 +43,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td><img src="../img/NefrappTeam/EugenioCarbosiero.jpg"></td>
+                      <td><img src="../img/NefrappTeam/EugenioCarbosiero.jpg" height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Eugenio Carbosiero</h1><br>
                       Conosciuto da tutti per i suoi "gusti particolari" riguardo le ragazze, 
                       è stato il protagonista principale riguardo la stesura del risk document. 
@@ -52,7 +52,7 @@
                        </td>
                       </tr>
                       <tr>
-						<td><img src="../img/NefrappTeam/SaraEnel.jpg"></td>
+						<td><img src="../img/NefrappTeam/SaraEnel.jpg" height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Sara Corrente</h1><br>
                       Nulla da dire, una ragazza fantastica incline agli scatti d'ira ed istinti omicidi (specialmente verso Antonio Donnarumma), 
                       
@@ -60,7 +60,7 @@
                        
                     </tr>
                     <tr>
-                     <td><img src="../img/NefrappTeam/DonnarummaAntonio.jpg"></td>
+                     <td><img src="../img/NefrappTeam/DonnarummaAntonio.jpg" height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Antonio Donnarumma</h1><br>
                       Se ve lo state chiedendo, sotto quegli occhiali non si nasconde il portiere del Milan, ma vi posso assicurare
                       che la sua capacità ad arraffare quanti più check sui task possibili non eguaglia nessuno.
@@ -69,7 +69,7 @@
                        </td>          
                     </tr>
                     <tr>
-                    <td><img src="../img/NefrappTeam/SilvioDiMartino.jpg"></td>
+                    <td><img src="../img/NefrappTeam/SilvioDiMartino.jpg" height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Silvio Di Martino</h1><br>
                       Viene visto dai PM come persona poco propositiva, ma, da salernitano nel cuore e nello spirito come pochi, conserva le energie 
                       per le partite della sua squadra del cuore nel weekend dove da Dottor Jekyll diventa Mister Hyde 
@@ -77,14 +77,14 @@
                        </td>
                     </tr>
                     <tr>
-                     <td><img src="../img/NefrappTeam/LucaEsposito.jpg"></td>
+                     <td><img src="../img/NefrappTeam/LucaEsposito.jpg" height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Luca Esposito</h1><br>
                       Un'immigrato dalla Basilicata che cerca di integrarsi con i polentoni del Nord.
                       Noi lo lasciamo fare, poverino.
                        </td>
                     </tr>
 					<tr>
-                     <td><img src="../img/NefrappTeam/MatteoFalco.jpg"></td>
+                     <td><img src="../img/NefrappTeam/MatteoFalco.jpg" height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Matteo Falco</h1><br>
                       Un ingegnere informatico che ha capito di aver fatto lo sbaglio più grande della sua vita e ha cercato di porvi
                       rimedio.
@@ -97,7 +97,7 @@
                        </td>
                     </tr>
                     <tr>
-                     <td><img src="../img/NefrappTeam/DomenicoMusone.jpg"></td>
+                     <td><img src="../img/NefrappTeam/DomenicoMusone.jpg"height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Domenico Musone</h1><br>
 						Responsabile della qualità (della sintassi e della semantica). Quando un documento passava per le sue mani
 						il resto del team tremava già al solo pensiero di ciò che stava per accadere. 
@@ -106,7 +106,7 @@
                        </td>
                     </tr>
                     <tr>
-                     <td><img src="../img/NefrappTeam/CapoFester.jpg"></td>
+                     <td><img src="../img/NefrappTeam/CapoFester.jpg"height="50%" width="%50"></td>
                       <td><h2 class="h3 mb-4 text-gray-800">Davide Benedetto Strianese</h1><br>
 						Conosciuto anche come "Capo Fester" tende ad avere comportamenti dispotici e dittatoriali.
 						Il potere concessogli dai PM come capo (f)tester ne ha solo acuito gli effetti.
