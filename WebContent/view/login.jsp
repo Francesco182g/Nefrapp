@@ -47,12 +47,16 @@
 							                <h1 class="h4 text-gray-900 mb-4">Effettua il login</h1>
 							              </div>
 							              <form class="user" method="post" action="../GestioneAccesso">
-							                <input type="hidden" name="operazione" value="paziente">
-    							            <div class="form-group">
+												<div class="form-group">
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group">
 							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20"> 
+							                </div>
+							                <div class="form-group">
+							                Tipologia utente:<br>
+  								                <input type="radio" name="operazione" value="paziente"> Paziente
+												<input type="radio" name="operazione" value="medico"> Medico<br>
 							                </div>
 							                <div class="p-6">
 								                  <a href="#">
