@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+
+import bean.Medico;
 import bean.Paziente;
 import bean.SchedaParametri;
 import model.SchedaParametriModel;
@@ -32,17 +34,17 @@ public class GestioneParametri extends HttpServlet {
 				return;
 			}
 			
-			String flag = request.getParameter("flag");
+			String operazione = request.getParameter("operazione");
 			
 			//Download report
-			if(flag.equals("0")) {
+			if(operazione.equals("")) {
 					
 			}
 			
-			//Visualizza la scheda dei parametri del paziente selezionati
-			if(flag.equals("1")) {
+			//Visualizza la scheda dei parametri del paziente selezionato
+			if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request, response);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp"); //reindirizzamento view per la visualizzazione delle schede
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp");
 				dispatcher.forward(request, response);
 			}
 			
@@ -93,22 +95,40 @@ public class GestioneParametri extends HttpServlet {
 	 */
 	private void monitoraParametri(HttpServletRequest request, HttpServletResponse response)
 	{
+		/*
+		 * La visualizzazione può essere fatta sia dal medico che dal paziente.
+		 * Questo significa che bisogna controllare chi è in sessione.
+		 */
+		
 		HttpSession session = request.getSession();
-		String pazienteCF;
-		Paziente pazienteLoggato = (Paziente) session.getAttribute("pazienteLoggato");
-
-		if (pazienteLoggato != null) {
-			pazienteCF = pazienteLoggato.getCodiceFiscale();
-		} else {
-			pazienteCF = request.getParameter("codiceFiscale");
+		Medico medico = null;
+		Paziente paziente = null;
+		ArrayList<SchedaParametri> scheda = null;
+		String CFPaziente = null;
+		
+		paziente = (Paziente) session.getAttribute("paziente");
+		medico = (Medico) session.getAttribute("medico");
+		
+		if(medico != null && paziente == null) {
+			CFPaziente = request.getParameter("CFPaziente");
+			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
 		}
-
-		ArrayList<SchedaParametri> sp = SchedaParametriModel.getSchedaParametriByCF(pazienteCF);
 		
-for (SchedaParametri s : sp)
-	System.out.println(s.toString());
+		else if(medico == null && paziente != null) {
+			CFPaziente = paziente.getCodiceFiscale();
+			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
+		}
 		
-		request.setAttribute("schedaParametri", sp);
+		else {
+			//TODO messaggio di errore
+			System.out.println("Utente deve esssere loggato");
+		}
+		
+		//stampa di controllo. TODO da eliminare
+		for (SchedaParametri s : scheda)
+			System.out.println(s.toString());
+		
+		request.setAttribute("schedaParametri", scheda);
 	}
 	
 	/**Questo metodo inserisce nel database una SchedaParametri formata dai dati inseriti dall'utente.

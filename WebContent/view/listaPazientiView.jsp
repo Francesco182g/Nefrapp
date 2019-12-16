@@ -16,8 +16,7 @@
 
     	<!-- Custom styles for this template-->
    	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
-   	 	<!-- Custom styles for this page -->
-  		<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">	
+   	 	
 	</head>
 	
 	<body id="page-top">
@@ -72,27 +71,26 @@
 	                  	
 	                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
 	             		<c:forEach items="${pazienti}" var="item"> 
-	                    <tr id = "${item.codiceFiscale}" onclick = "submitListaPazienteForm(this)"> <!-- TODO modificare per reindirizzare al profilo paziente--> 
-	                      <td>${item.codiceFiscale}</td>
+	                    <tr> 
+	                      <td><a href="#">${item.codiceFiscale}</a></td> <!-- TODO reindirizzamento profilo paziente--> 
 	                      <td>${item.nome}</td>
 	                      <td>${item.cognome}</td>
 	                      <td>${item.sesso}</td>
 	                      <td> 
-	                      
-	                      	<a href="#" class="btn btn-info btn-icon-split" >
+	                      	<a href="#" class="btn btn-info btn-icon-split" > <!-- TODO reindirizzamento visualizzazione piano terapeutico -->
                     			<span class="icon text-white-50">
                       				<i class="fas fa-info-circle"></i>
                     			</span>
-                    			<span class="text">Piao terapeutico</span>
+                    			<span class="text">Piano terapeutico</span>
                   			</a>
-                  			<a href="#" class="btn btn-info btn-icon-split">
+                  			<a href="GestioneParametri?operazione=visualizzaScheda&CFPaziente=${item.codiceFiscale}" class="btn btn-info btn-icon-split">
                     			<span class="icon text-white-50">
                       				<i class="fas fa-info-circle"></i>
                     			</span>
                     			<span class="text">Scheda parametri</span>
                   			</a>
-                  			<!-- <a href="#"><input type="button" value="Piano terapeutico" class="btn btn-info btn-icon-split"></a>  --> 
-	                      </td> <!-- TODO operazioni per i pulsanti -->
+                  			
+	                      </td> 
 	                    </tr>
 	                    </c:forEach>
 	                  </tbody>
