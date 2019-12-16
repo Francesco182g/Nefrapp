@@ -60,13 +60,14 @@
 			else
 				{
 					sub = true;
-					console.log("sono qui")
 					$(document).submit();
 				}
 			
 		});
 		
 		$("#loginUtente").click(function(){
+			//per chi fa la login utente , fate il controllo sul radio button prima di richiamare il metodo check cosi 
+			//non si creano problemi con la pagina dell'amministratore se rimane la check altrimenti canellate il commento
 			var valid = checkValidityLogin();
 			if (!valid [0])
 				{
@@ -76,7 +77,6 @@
 			else
 				{
 					sub = true;
-					console.log("sono qui")
 					$(document).submit();
 				}
 			
@@ -131,14 +131,6 @@
 		var expPassword=RegExp("^[a-zA-Z0-9]*$");
 		var codiceFiscale = $("#codiceFiscale").val();
 		var password = $("#password").val();
-		var operazione = $('[name="operazione"]').val();
-		
-		if (!$('[name="operazione"]').is(':checked'))
-				{
-				if(!(operazione=="amministratore"))
-					valido=[false,"Paziente o medico?"];
-				}
-		
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
 			valido=[false,"formato codiceFiscale non valido"];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
@@ -146,13 +138,6 @@
 		return valido;
 	}
 	
-	/**
-	  * Funzione che blocca il submit
-	  */
-	function bloccaSubmit()
-	{
-		  
-	}
   
 
 })(jQuery); // End of use strict

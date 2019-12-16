@@ -22,7 +22,7 @@ import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * @author Antonio Donnarumma, Davide Benedetto Strianese,
- * Questa classe è una servlet che si occupa della registrazione di un utente del sistema.
+ * Questa classe ï¿½ una servlet che si occupa della registrazione di un utente del sistema.
  */
 @WebServlet("/GestioneRegistrazione")
 public class GestioneRegistrazione extends HttpServlet {
@@ -37,7 +37,7 @@ public class GestioneRegistrazione extends HttpServlet {
 	 * 				 sesso != null && sesso.matches("^[MF]$") && sesso.lenght() == 1,
 	 * 				 email != null && email.matches("^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$"),
 	 * 				 password != null && password.matches("^[a-zA-Z0-9]*$") && (password.lenght() > 4 && password.lenght() < 21),
-	 * @postcondition L'utente è stato registrato nel sistema
+	 * @postcondition L'utente ï¿½ stato registrato nel sistema
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response){
 		
