@@ -38,7 +38,7 @@ public class GestioneAccesso extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response){
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notification", "Errore generato dalla richiesta!");
+				request.setAttribute("notifica", "Errore generato dalla richiesta!");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("view/index.jsp");
 				dispatcher.forward(request, response);
 				return;
@@ -58,7 +58,7 @@ public class GestioneAccesso extends HttpServlet {
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notification", "Errore generato dalla richiesta!");
+				request.setAttribute("notifica", "Errore generato dalla richiesta!");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("view/index.jsp");
 				dispatcher.forward(request, response);
 				return;

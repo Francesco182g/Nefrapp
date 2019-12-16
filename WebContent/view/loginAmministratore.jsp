@@ -24,6 +24,9 @@
    	 	<script src="../js/ParameterControl.js"></script>
    	 	<c:if test='${not empty sessionScope.amministratore}'>
 			<c:redirect url = "/view/dashboard.jsp"/>
+		</c:if>
+		<c:if test='${not empty sessionScope.amministratore}'>
+			<c:redirect url = "/view/dashboard.jsp"/>
 		</c:if>	
 	</head>
 	
@@ -57,7 +60,7 @@
 							              <form class="user" method="post" action="../GestioneAccesso">
 							                <div class="form-group">
 							                <input type="hidden" name="operazione" value="loginAdmin">
-							                
+							                <input type="hidden" id="notifica" n value="${sessionScope.notifica}"> 
 							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group">

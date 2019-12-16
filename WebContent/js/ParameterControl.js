@@ -5,6 +5,7 @@
   "use strict"; // Start of use strict
   var sub = false
   $(document).ready(function(){
+	  checkNotification()
 	  var button1 = $("#registrazioneMedicoButton")
 	  var button2 = $("#accediAdminButton") 
 	  var button3 = $("#loginUtente")
@@ -60,6 +61,7 @@
 			else
 				{
 					sub = true;
+					$(this).prop("disabled",true);
 					$(document).submit();
 				}
 			
@@ -136,6 +138,15 @@
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
 			valido=[false,"formato password non valido"];
 		return valido;
+	}
+	
+	function checkNotification()
+	{
+		var notifica = $("#notifica").val()
+		if (notifica.length>0)
+			{
+				alert(notifica)
+			}
 	}
 	
   

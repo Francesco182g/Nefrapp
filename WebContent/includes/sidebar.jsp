@@ -19,7 +19,7 @@
 	</head>
 	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<body id="page-top">
-		
+	
 			 <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
