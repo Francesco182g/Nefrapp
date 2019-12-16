@@ -20,7 +20,7 @@
 		<script src="../vendor/jquery/jquery.min.js"></script>
 		
 		<!-- Script per la registrazione -->
-   	 	<script src="../js/registrazioneControl.js"></script>
+   	 	<script src="../js/ParameterControl.js"></script>
 	</head>
 
 	<body id="page-top">
