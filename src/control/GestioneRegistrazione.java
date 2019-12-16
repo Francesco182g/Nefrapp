@@ -42,7 +42,7 @@ public class GestioneRegistrazione extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response){
 		
 		try {
-			if(!"XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta! Se il problema persiste contattaci.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home
 				dispatcher.forward(request, response);
