@@ -49,8 +49,6 @@
 						<div class="form-group">
 						Scheda parametri:
 						<br>
-						<input type="text"  id="PazienteCodiceFiscale" name="PazienteCodiceFiscale" value="NTNNTN80A01B963Y"> 						<div class="form-group row">
-						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Peso: <br>
 						<input type="text" class="form-control form-control-user" id="Peso" name="Peso" placeholder="Esempio: 80,00" required="required" maxlength="5" >
 						</div>

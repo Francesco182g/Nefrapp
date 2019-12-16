@@ -28,25 +28,57 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">Nefrapp <sup>2</sup></div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
+       
+        <c:when test="{utente=paziente}">
+        
+        <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dati Anagrafici</span></a>
+        </li>
       
         <li class="nav-item">
             <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span>Dashboard (Utente)</span></a>
         </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="../view/inserimentoParametriView.jsp">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Inserimento Scheda Parametri</span></a>
+        </li>
+        
         <li class="nav-item">
             <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Schede Parametri</span></a>
         </li>
-
+        
+		<li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Visualizza Piano Terapeutico</span></a>
+        </li>
+        
+		<li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Invia Foto</span></a>
+        </li>
+        
+        </c:when>
+        
+        <c:otherwise>
+            No comment sir...
+         </c:otherwise>
         <!-- Divider -->
         <hr class="sidebar-divider">
 
