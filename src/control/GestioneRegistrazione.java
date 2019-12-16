@@ -61,6 +61,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			if(operazione.equals("registraMedico")) {
 				Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
 				if(amministratore != null) {
+					
 					if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
 						//TODO controllare esistenza all'interno del db
 						Medico medico = new Medico(sesso, "", null, codiceFiscale, nome, cognome, email);

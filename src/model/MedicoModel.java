@@ -53,4 +53,17 @@ public class MedicoModel {
 		medico.insertOne(doc);	
 	}
 	
+	public static boolean controllaCodiceFiscaleMedico(String codiceFiscale) {
+		MongoCollection<Document> medico = DriverConnection.getConnection().getCollection("Medico");
+		if (medico.find(new BasicDBObject("CodiceFiscale", codiceFiscale)) != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
 }
