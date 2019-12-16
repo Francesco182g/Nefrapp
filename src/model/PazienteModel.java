@@ -66,18 +66,52 @@ public class PazienteModel {
 	 * @param toAdd paziente da aggiungere
 	 * @param password password del paziente
 	 */
-	public static void addPaziente(Paziente toAdd,String password) {
+	public static void addPaziente(Paziente daAggiungere,String password) {
 		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
 		
-		Document doc = new Document("CodiceFiscale", toAdd.getCodiceFiscale())
-				.append("Nome", toAdd.getNome())
-				.append("Cognome", toAdd.getCognome())
+		Document doc = new Document("CodiceFiscale", daAggiungere.getCodiceFiscale())
+				.append("Nome", daAggiungere.getNome())
+				.append("Cognome", daAggiungere.getCognome())
 				.append("Password",password)
-				.append("DataDiNascita", toAdd.getDataDiNascita())
-				.append("Sesso", toAdd.getSesso())
-				.append("Residenza", toAdd.getResidenza())
-				.append("Email", toAdd.getEmail());
+				.append("DataDiNascita", daAggiungere.getDataDiNascita())
+				.append("Sesso", daAggiungere.getSesso())
+				.append("Residenza", daAggiungere.getResidenza())
+				.append("Email", daAggiungere.getEmail());
 		paziente.insertOne(doc);	
 	}
+	
+	/**
+	 * Query che aggiorna i medici di un paziente
+	 * @param daAggiornare paziente a cui aggiornare i medici
+	 */
+	public static void updatePaziente(Paziente daAggiornare) {
+		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
+		
+		BasicDBObject nuovoPaziente = new BasicDBObject();
+		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
+
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+
+		paziente.updateOne(searchQuery, nuovoPaziente);
+		
+	}
+	
+	/**
+	 * Query che ricerca un paziente per codice fiscale
+	 * @param codiceFiscale del paziente da ricercare
+	 * @return paziente se trovato, altrimenti null
+	 */
+	public static Paziente getPazienteByCF(String codiceFiscale) {
+		
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		Paziente paziente = null;
+		Document datiPaziente = pazienti.find(eq("CodiceFiscale", codiceFiscale)).first();
+		if(datiPaziente != null)
+			paziente = CreaBeanUtility.daDocumentAPaziente(datiPaziente);
+		
+		return paziente;
+	}
+	
+
 	
 }

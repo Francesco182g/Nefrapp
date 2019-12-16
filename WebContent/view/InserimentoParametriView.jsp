@@ -1,6 +1,6 @@
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -49,6 +49,8 @@
 						<div class="form-group">
 						Scheda parametri:
 						<br>
+						<input type="text"  id="PazienteCodiceFiscale" name="PazienteCodiceFiscale" value="NTNNTN80A01B963Y"> 						<div class="form-group row">
+						<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 						Peso: <br>
 						<input type="text" class="form-control form-control-user" id="Peso" name="Peso" placeholder="Esempio: 80,00" required="required" maxlength="5" >
 						</div>
@@ -117,7 +119,7 @@
 	                <div class="modal-header">
 	                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">×</span>
+	            <span aria-hidden="true">Ã—</span>
 	          </button>
 	                </div>
 	                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

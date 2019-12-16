@@ -1,7 +1,7 @@
 
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -127,7 +127,7 @@
 	                <div class="modal-header">
 	                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">×</span>
+	            <span aria-hidden="true">Ã—</span>
 	          </button>
 	                </div>
 	                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
