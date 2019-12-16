@@ -35,9 +35,7 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-       
-        <c:when test="{utente=paziente}">
-        
+  
         <li class="nav-item">
             <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -74,11 +72,6 @@
                 <span>Invia Foto</span></a>
         </li>
         
-        </c:when>
-        
-        <c:otherwise>
-            No comment sir...
-         </c:otherwise>
         <!-- Divider -->
         <hr class="sidebar-divider">
 
