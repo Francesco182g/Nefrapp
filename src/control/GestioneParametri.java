@@ -19,6 +19,10 @@ import bean.Paziente;
 import bean.SchedaParametri;
 import model.SchedaParametriModel;
 
+/**
+ * @author Antonio Donnarumma, Davide Benedetto Strianese,
+ * Questa classe � una servlet che si occupa della gestione dei parametri del paziente
+ */
 @WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,25 +40,22 @@ public class GestioneParametri extends HttpServlet {
 			String operazione = request.getParameter("operazione");
 			
 			if(operazione.equals("inserisciScheda")) {
-				try {
-					// Valutare la possibilitÃƒÂ  di inserire flag di controllo anche se questo ÃƒÂ¨
-					// l'unico metodo eseguito da una post request
-					inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
-							request.getParameter("PaMin"), request.getParameter("PaMax"),
-							request.getParameter("ScaricoIniziale"), request.getParameter("UF"),
-							request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
-							request.getParameter("Carico"));
+				// Valutare la possibilitÃƒÂ  di inserire flag di controllo anche se questo ÃƒÂ¨
+				// l'unico metodo eseguito da una post request
+				inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
+						request.getParameter("PaMin"), request.getParameter("PaMax"),
+						request.getParameter("ScaricoIniziale"), request.getParameter("UF"),
+						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
+						request.getParameter("Carico"));
 
-					response.sendRedirect(request.getContextPath() + "/view/dashboard.jsp");
-				} catch (IOException e) {
-					System.out.println("Errore in gestione parametri:");
-					e.printStackTrace();
-				}
-
-			} else if(operazione.equals("")) {
-				//Download report
-			} else if(operazione.equals("visualizzaScheda")) {
-				//Visualizza la scheda dei parametri del paziente selezionato
+				response.sendRedirect(request.getContextPath() + "/view/dashboard.jsp");
+			}
+			//Download report
+			else if(operazione.equals("")) {
+				//TODO
+			} 
+			//Visualizza la scheda dei parametri del paziente selezionato
+			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request, response);
 				//response.sendRedirect(request.getContextPath() + "/view/monitoraggioParametriView.jsp");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp");
@@ -71,6 +72,7 @@ public class GestioneParametri extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
+		return;
 	}
 
 	/**Questo metodo richiama dal database la lista delle schede parametri inserite da un determinato utente.
@@ -80,8 +82,7 @@ public class GestioneParametri extends HttpServlet {
 	 * @param request
 	 * @param response
 	 * 
-	 * @author nico
-	 * @author Antonio
+	 * @author Antonio Donnarumma, Domenico Musone, Davide Bendetto Strianese
 	 */
 	private void monitoraParametri(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -91,22 +92,18 @@ public class GestioneParametri extends HttpServlet {
 		 */
 		
 		HttpSession session = request.getSession();
-		//Medico medico = null;
+		Medico medico = null;
 		Paziente paziente = null;
 		ArrayList<SchedaParametri> scheda = null;
-		String CFPaziente = null;
 		
-		Object utente=(Object) session.getAttribute("utente");
+		medico = (Medico) session.getAttribute("medico");
+		paziente = (Paziente) session.getAttribute("paziente");
 		
-		if (utente instanceof Paziente){
-			paziente = (Paziente)utente;
-			CFPaziente = paziente.getCodiceFiscale();
-			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
+		if (paziente != null && medico == null){
+			scheda = SchedaParametriModel.getSchedaParametriByCF(paziente.getCodiceFiscale());
 		}	
-		else if(utente instanceof Medico) {
-			//medico = (Medico)utente;
-			CFPaziente = request.getParameter("CFPaziente");
-			scheda = SchedaParametriModel.getSchedaParametriByCF(CFPaziente);
+		else if(paziente == null && medico != null) {
+			scheda = SchedaParametriModel.getSchedaParametriByCF(request.getParameter("CFPaziente"));
 		}
 		else {
 			//TODO messaggio di errore
