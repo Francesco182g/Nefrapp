@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -51,7 +51,7 @@
 	                      <th>Nome</th>
 	                      <th>Cognome</th>
 	                      <th>Sesso</th>
-	                      <th>Operazioni</th> <!-- Possono essere eseguite solo se si è medico, l'admin non le vede -->
+	                      <th>Operazioni</th> <!-- Possono essere eseguite solo se si Ã¨ medico, l'admin non le vede -->
 	                      <!-- Possibile aggiunta di atri campi -->
 	                    </tr>
 	                  </thead>
@@ -61,7 +61,7 @@
 	                      <th>Nome</th>
 	                      <th>Cognome</th>
 	                      <th>Sesso</th>
-	                      <th>Operazioni</th> <!-- Possono essere eseguite solo se si è medico, l'admin non le vede -->
+	                      <th>Operazioni</th> <!-- Possono essere eseguite solo se si Ã¨ medico, l'admin non le vede -->
 	                      <!-- Possibile aggiunta di altri campi -->
 	                    </tr>
 	                  </tfoot>
@@ -124,7 +124,7 @@
 	                <div class="modal-header">
 	                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">×</span>
+	            <span aria-hidden="true">Ã—</span>
 	          </button>
 	                </div>
 	                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
