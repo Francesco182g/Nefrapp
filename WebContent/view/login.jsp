@@ -16,6 +16,12 @@
 
     	<!-- Custom styles for this template-->
    	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">	
+   	 	
+ 	 	<script src="../vendor/jquery/jquery.min.js"></script>
+   	 	
+   	 	
+   	 	<!-- Script per controllo del form -->
+   	 	<script src="../js/ParameterControl.js"></script>
 	</head>
 
 	<body id="page-top">
@@ -62,7 +68,7 @@
 								                  <a href="#">
 								                  Password dimenticata?
 								                  </a>
-								                  <button class="btn btn-primary btn-user" type="submit" style="float:right">
+								                  <button class="btn btn-primary btn-user" type="submit" id="loginUtente" style="float:right">
 								                  Accedi
 								                  </button>
 							                </div>
