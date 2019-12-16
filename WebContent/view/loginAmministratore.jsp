@@ -25,9 +25,7 @@
    	 	<c:if test='${not empty sessionScope.amministratore}'>
 			<c:redirect url = "/view/dashboard.jsp"/>
 		</c:if>
-		<c:if test='${not empty sessionScope.amministratore}'>
-			<c:redirect url = "/view/dashboard.jsp"/>
-		</c:if>	
+		
 	</head>
 	
 	<body id="page-top">
