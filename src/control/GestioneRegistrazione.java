@@ -1,6 +1,5 @@
 package control;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,13 +7,13 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
@@ -60,45 +59,60 @@ public class GestioneRegistrazione extends HttpServlet {
 			String operazione = request.getParameter("operazione");
 			
 			if(operazione.equals("registraMedico")) {
-				if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
-					//TODO controllare esistenza all'interno del db
-					Medico medico = new Medico(sesso, "", null, codiceFiscale, nome, cognome, email);
-					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
-					MedicoModel.addMedico(medico, password);
-				} 
+				Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
+				if(amministratore != null) {
+					if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
+						//TODO controllare esistenza all'interno del db
+						Medico medico = new Medico(sesso, "", null, codiceFiscale, nome, cognome, email);
+						password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
+						MedicoModel.addMedico(medico, password);
+					}
+				}
+				else {
+					session.setAttribute("notification", "Non si hanno i permessi necessari per eseguire l'operazione");
+					return;
+				}
 			}
 			else if(operazione.equals("registraPaziente")) {
 				if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
 					Medico medicoLoggato = (Medico) session.getAttribute("medico");
-					ArrayList<String> medici = new ArrayList<String>(); //creazione array che contiene i CF dei medici che seguono il paziente
-					Paziente paziente = null;
 					
-					medici.add(medicoLoggato.getCodiceFiscale());
-					
-					String residenza = request.getParameter("residenza");
-					String dataDiNascita = request.getParameter("dataDiNascita");
-					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-					Date data = null;
-					
-					try {
-						data = formatter.parse(dataDiNascita);
-					} catch (ParseException e) {
-						e.printStackTrace();
+					if(medicoLoggato != null) {
+						ArrayList<String> medici = new ArrayList<String>(); //creazione array che contiene i CF dei medici che seguono il paziente
+						Paziente paziente = null;
+						
+						medici.add(medicoLoggato.getCodiceFiscale());
+						
+						String residenza = request.getParameter("residenza");
+						String dataDiNascita = request.getParameter("dataDiNascita");
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+						Date data = null;
+						
+						try {
+							data = formatter.parse(dataDiNascita);
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+						
+						//TODO verificare esistenza paziente tramite il CF
+						//paziente = PazienteModel.getPazienteByCF(codiceFiscale);
+						
+						//se il paziente esiste allora bisogna aggiornare l'array che contiene i medici che lo seguono
+						if(paziente != null) {
+							paziente.getMedici().add(medicoLoggato.getCodiceFiscale());
+							//TODO aggiornare paziente nel DB
+							//PazienteModel.updatePaziente(paziente);
+							return;
+						}
+						//altrimenti si crea il paziente e lo si aggiunge al db
+						else {
+							paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, data, true, medici);
+							PazienteModel.addPaziente(paziente,password);
+						}
 					}
-					
-					//TODO verificare esistenza paziente tramite il CF
-					//paziente = PazienteModel.getPazienteByCF(codiceFiscale);
-					
-					//se il paziente esiste allora bisogna aggiornare l'array che contiene i medici che lo seguono
-					if(paziente != null) {
-						paziente.getMedici().add(medicoLoggato.getCodiceFiscale());
-						//TODO aggiornare paziente nel DB
-						//PazienteModel.updatePaziente(paziente);
-					}
-					//altrimenti si crea il paziente e lo si aggiunge al db
 					else {
-						paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, data, true, medici);
-						PazienteModel.addPaziente(paziente,password);
+						session.setAttribute("notification", "Non si hanno i permessi necessari per eseguire l'operazione");
+						return;
 					}
 				}
 			}
