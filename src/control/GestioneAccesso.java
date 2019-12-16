@@ -1,18 +1,15 @@
 package control;
 
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
 
 import bean.Amministratore;
 import bean.Medico;
@@ -23,7 +20,7 @@ import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 /**
  * 
- * @author Eugenio
+ * @author Eugenio Corbisiero, Davide Benedetto Strianese
  * Questa classe è una servlet che si occupa della gestione dell'accesso al sistema
  *
  */
