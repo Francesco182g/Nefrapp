@@ -26,7 +26,7 @@
 	<body id="page-top">
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
-			<%@include file="../includes/sidebar.jsp" %>		
+					
 	
 	        <!-- Content Wrapper -->
 	        <div id="content-wrapper" class="d-flex flex-column">
