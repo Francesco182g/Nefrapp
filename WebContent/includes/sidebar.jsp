@@ -17,35 +17,35 @@
     	<!-- Custom styles for this template-->
    	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	</head>
-	
+	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<body id="page-top">
 		
 			 <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../view/dashboard.jsp">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Nefrapp <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">Nefrapp <sup>10</sup></div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-  
+        
+        <c:set var="paziente" value='${sessionScope["paziente"]}'/>
+        <c:set var="medico" value='${sessionScope["medico"]}'/>
+        <c:set var="amministratore" value='${sessionScope["amministratore"]}'/>
+        <c:choose>
+        <c:when test='${paziente!=null}'>
+    
         <li class="nav-item">
             <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dati Anagrafici</span></a>
-        </li>
-      
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard (Utente)</span></a>
         </li>
         
         <li class="nav-item">
@@ -71,6 +71,85 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Invia Foto</span></a>
         </li>
+        </c:when>
+       
+        <c:when test='${medico!=null}'>
+
+        <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dati Anagrafici</span></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="../view/inserimentoParametriView.jsp">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Visualizza Lista Pazienti</span></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Visualizza Schede Parametri</span></a>
+        </li>
+        
+		<li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Messaggi</span></a>
+        </li>
+        
+		<li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Pubblica Annuncio</span></a>
+        </li>
+
+        </c:when>
+         <c:when test='${amministratore!=null}'>
+         <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Registra Medico</span></a>
+        </li>
+         
+         <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Modifica account Medico</span></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Rimuovi Medico</span></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Modifica Password Paziente</span></a>
+        </li>
+        
+             <li class="nav-item">
+            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Rimuovi account Paziente</span></a>
+        </li>   
+         </c:when>
+        <c:otherwise>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Conosci il prodotto</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Conosci il team</span></a>
+        </li>
+        </c:otherwise>
+        </c:choose>
         
         <!-- Divider -->
         <hr class="sidebar-divider">
