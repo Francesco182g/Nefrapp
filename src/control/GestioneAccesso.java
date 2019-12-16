@@ -86,7 +86,13 @@ public class GestioneAccesso extends HttpServlet {
 		
 		return;	
 	}
-	
+	/**
+	 * Metodo che permette di effettuare la login dell'amministratore 
+	 * @param request la richiesta al server 
+	 * @param response la risposta del server
+	 * @param session la sessione in cui deve essere salvato l'amministratore se avviene con successo la login
+	 * @throws IOException lancia un eccezione se si verifica un errore di input / output
+	 */
 	private void loginAmministratore(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
@@ -95,11 +101,14 @@ public class GestioneAccesso extends HttpServlet {
 			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 			amministratore = AmministratoreModel.checkLogin(codiceFiscale, password);
 			if(amministratore != null){
+				session.removeAttribute("notifica");
 				session.setAttribute("amministratore", amministratore);
+				session.setAttribute("accessDone", true);
+				
 				response.sendRedirect("view/dashboard.jsp");
 			}
 			else{
-				System.out.println("Metodo loginAmministratore, login fallito");
+				session.setAttribute("notifica","login fallito");
 				response.sendRedirect("view/loginAmministratore.jsp");
 			}
 		}
@@ -179,6 +188,10 @@ public class GestioneAccesso extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * Funzione che permette di effettuare il logout
+	 * @param request è il client in cui risiede la sessione che deve essere invalidata
+	 */
 	private void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if(session != null) {
@@ -186,13 +199,13 @@ public class GestioneAccesso extends HttpServlet {
 		}
 	}
 	
-	public boolean controllaParametri(String codiceFiscale, String password)
 	/**
 	 * Funzione che controlla i parametri codice fiscale e password dell' amministratore e dell'utente
 	 * @param codiceFiscale indica il codice fiscale dell' amministratore o dell'utente 
 	 * @param password indica la password dell'amministratore o dell'utente
 	 * @return true se i controlli vanno a buon fine false altrimenti
 	 */
+	public boolean controllaParametri(String codiceFiscale, String password)
 	{
 		boolean valido=true;
 		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";

@@ -69,7 +69,7 @@ public class GestioneRegistrazione extends HttpServlet {
 					}
 				}
 				else {
-					session.setAttribute("notification", "Non si hanno i permessi necessari per eseguire l'operazione");
+					session.setAttribute("notifica", "Non si hanno i permessi necessari per eseguire l'operazione");
 					return;
 				}
 			}
@@ -111,7 +111,8 @@ public class GestioneRegistrazione extends HttpServlet {
 						}
 					}
 					else {
-						session.setAttribute("notification", "Non si hanno i permessi necessari per eseguire l'operazione");
+					
+						session.setAttribute("notifica", "Non si hanno i permessi necessari per eseguire l'operazione");
 						return;
 					}
 				}
