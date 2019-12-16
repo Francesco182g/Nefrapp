@@ -151,10 +151,10 @@ public class GestioneAccesso extends HttpServlet {
 					response.sendRedirect("view/dashboard.jsp");
 					return;
 				}
-				response.sendRedirect("view/login.jsp");
-			}
-			else{
-				response.sendRedirect("view/login.jsp");
+				
+				else {
+						response.sendRedirect("view/login.jsp");
+					}
 			}
 		}
 		

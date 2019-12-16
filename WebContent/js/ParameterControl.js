@@ -15,15 +15,11 @@
 		  {
 		  	registraMedicoValidator();
 		  }
-	  else if(button2.length>0)
+	  else if(button2.length>0 || button3.length>0)
 	  	{
 		  loginValidator();
 	  	}
 	  
-	  else if(button3.length>0)
-	  	{
-		  loginValidators();
-	  	}
 	  
 	});
 	
@@ -69,9 +65,7 @@
 				}
 			
 		});
-	}
-	
-	function loginValidators(){
+		
 		$("#loginUtente").click(function(){
 			var valid = checkValidityLogin();
 			if (!valid [0])
@@ -88,6 +82,7 @@
 			
 		});
 	}
+
 	
 	
 	/**
@@ -137,6 +132,8 @@
 		var codiceFiscale = $("#codiceFiscale").val();
 		var password = $("#password").val();
 		
+		if (!$('[name="operazione"]').is(':checked'))
+			valido=[false,"Paziente o medico?"];
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
 			valido=[false,"formato codiceFiscale non valido"];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
