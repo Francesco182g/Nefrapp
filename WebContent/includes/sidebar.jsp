@@ -143,7 +143,7 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Conosci il prodotto</span></a>
         </li>
-        <li class="nav-item" style="background-color:tomato">
+        <li class="nav-item">
             <a class="nav-link" href="../view/team.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Conosci il team!</span></a>
