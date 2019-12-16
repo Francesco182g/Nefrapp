@@ -95,7 +95,7 @@ public class GestioneAccesso extends HttpServlet {
 			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 			amministratore = AmministratoreModel.checkLogin(codiceFiscale, password);
 			if(amministratore != null){
-				session.setAttribute("utente", amministratore);
+				session.setAttribute("amministratore", amministratore);
 				response.sendRedirect("view/dashboard.jsp");
 			}
 			else{
@@ -136,7 +136,7 @@ public class GestioneAccesso extends HttpServlet {
 				paziente = PazienteModel.checkLogin(codiceFiscale, password);
 			
 				if(paziente != null){
-					session.setAttribute("utente", paziente);
+					session.setAttribute("paziente", paziente);
 					session.setAttribute("accessDone", true);
 					
 					if(ricordaUtente != null){
@@ -164,7 +164,7 @@ public class GestioneAccesso extends HttpServlet {
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 				medico = MedicoModel.checkLogin(codiceFiscale, password);
 				if(medico != null){
-					session.setAttribute("utente", medico);
+					session.setAttribute("medico", medico);
 					session.setAttribute("accessDone", true);
 					response.sendRedirect("view/dashboard.jsp");
 				}
