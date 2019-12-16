@@ -117,10 +117,10 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <form action="../GestioneAccesso" method="get">
-                <button class="btn btn-primary btn-user">Logout</button>
-                </form>
-                
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                  </a>
               </div>
             </li>
             </c:if>

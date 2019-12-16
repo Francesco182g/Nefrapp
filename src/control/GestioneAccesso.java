@@ -43,7 +43,7 @@ public class GestioneAccesso extends HttpServlet {
 				dispatcher.forward(request, response);
 				return;
 			}
-			
+		
 			logout(request);
 			response.sendRedirect("view/index.jsp");
 			
@@ -68,8 +68,8 @@ public class GestioneAccesso extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			synchronized (session) {
-				
-				if(operazione.equalsIgnoreCase("admin")){
+			
+				if(operazione.equalsIgnoreCase("loginAdmin")){
 					//Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
 				}
