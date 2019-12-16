@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import bean.Medico;
 import bean.Paziente;
 import model.PazienteModel;
 
@@ -67,8 +68,8 @@ public class GestioneMedico extends HttpServlet {
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
 	private void visualizzaPazientiseguiti(HttpServletRequest request) {
-		String codiceFiscaleMedico = request.getParameter("codiceFiscale");
-		ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(codiceFiscaleMedico);
+		Medico medico = (Medico) request.getSession().getAttribute("medico");
+		ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 		request.setAttribute("pazientiSeguiti", pazientiSeguiti);
 	}
 

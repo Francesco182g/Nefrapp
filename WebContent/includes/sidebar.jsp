@@ -82,7 +82,7 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../GestioneMedico?operazione=VisualizzaPazientiSeguiti">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Lista Pazienti</span></a>
         </li>
