@@ -45,7 +45,7 @@
 	}
 	
 	  /**
-	   * Funzione che permette di eseguire la richiesta di login dell'amministratore alla servlet però fa prima dei controlli 
+	   * Funzione che permette di eseguire la richiesta di login dell'amministratore e degli altri utenti alla servlet però fa prima dei controlli 
 	   * e se nella pagina è tutto ok invia i dati alla servlet
 	   */
 
@@ -131,9 +131,14 @@
 		var expPassword=RegExp("^[a-zA-Z0-9]*$");
 		var codiceFiscale = $("#codiceFiscale").val();
 		var password = $("#password").val();
+		var operazione = $('[name="operazione"]').val();
 		
 		if (!$('[name="operazione"]').is(':checked'))
-			valido=[false,"Paziente o medico?"];
+				{
+				if(!(operazione=="amministratore"))
+						valido=[false,"Paziente o medico?"];
+				}
+		
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
 			valido=[false,"formato codiceFiscale non valido"];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
