@@ -53,7 +53,7 @@ public class GestioneAmministratore extends HttpServlet {
 						}
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp"); 
 						dispatcher.forward(request, response);
-					}else if(operazione.equals("ModificaDatiPersonali")) {
+					}else if(operazione.equals("ModificaPassword")) {
 						Amministratore amministratore= (Amministratore) session.getAttribute("amministratore");
 						if(amministratore!=null) {
 							String vecchiaPassword=request.getParameter("vecchiaPassword");
