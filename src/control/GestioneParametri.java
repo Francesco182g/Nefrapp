@@ -48,7 +48,7 @@ public class GestioneParametri extends HttpServlet {
 						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
 						request.getParameter("Carico"));
 
-				response.sendRedirect(request.getContextPath() + "/view/dashboard.jsp");
+				response.sendRedirect(request.getContextPath() + "dashboard.jsp");
 			}
 			//Download report
 			else if(operazione.equals("")) {
@@ -57,7 +57,7 @@ public class GestioneParametri extends HttpServlet {
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request, response);
-				response.sendRedirect(request.getContextPath() + "/view/monitoraggioParametriView.jsp");
+				response.sendRedirect(request.getContextPath() + "monitoraggioParametriView.jsp");
 				
 			}
 			

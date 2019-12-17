@@ -39,13 +39,13 @@ public class GestioneAccesso extends HttpServlet {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("view/index.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
 		
 			logout(request);
-			response.sendRedirect("view/index.jsp");
+			response.sendRedirect("index.jsp");
 			
 			}catch(Exception e) {
 				System.out.println("Errore in Gestione accesso:");
@@ -59,7 +59,7 @@ public class GestioneAccesso extends HttpServlet {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("view/index.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -109,7 +109,7 @@ public class GestioneAccesso extends HttpServlet {
 			}
 			else{
 				session.setAttribute("notifica","login fallito");
-				response.sendRedirect("view/loginAmministratore.jsp");
+				response.sendRedirect("loginAmministratore.jsp");
 			}
 		}
 	}
@@ -157,12 +157,12 @@ public class GestioneAccesso extends HttpServlet {
 						response.addCookie(salvaCF);
 					}
 					
-					response.sendRedirect("view/dashboard.jsp");
+					response.sendRedirect("dashboard.jsp");
 					return;
 				}
 				
 				else {
-						response.sendRedirect("view/login.jsp");
+						response.sendRedirect("login.jsp");
 					}
 			}
 		}
@@ -175,15 +175,15 @@ public class GestioneAccesso extends HttpServlet {
 				if(medico != null){
 					session.setAttribute("medico", medico);
 					session.setAttribute("accessDone", true);
-					response.sendRedirect("view/dashboard.jsp");
+					response.sendRedirect("dashboard.jsp");
 				}
 				else{
-					response.sendRedirect("view/login.jsp");
+					response.sendRedirect("login.jsp");
 					//reindirizzamento login per il medico/paziente
 				}
 			}
 			else {
-				response.sendRedirect("view/login.jsp");
+				response.sendRedirect("login.jsp");
 			}
 		}
 	}
