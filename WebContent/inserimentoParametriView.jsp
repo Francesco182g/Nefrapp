@@ -23,7 +23,7 @@
 <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
 <!-- Script per l'inserimento -->
-<script src="../js/inserimentoControl.js"></script>
+<script type="text/javascript" src="js/inserimentoControl.js"></script>
 </head>
 
 <body id="page-top">
@@ -49,7 +49,8 @@
 					<div class="card shadow mb-4">
 
 						<div class="card-body">
-							<form class="user" action="../parametri" method="POST">
+							<form class="user" action="./parametri" method="POST">
+							<input type="hidden" name="operazione" value="inserisciScheda">
 									Scheda parametri: <br>
 									<div class="form-group row">
 									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
@@ -106,7 +107,7 @@
 						<div class="col-lg-3 sm-12"
 							style="margin-left: auto; margin-right: auto; display: block; margin-top: 22%; margin-bottom: 0%">
 							<button class="btn btn-primary btn-user btn-block"
-								id="inserimentoSchedaButton">Salva Parametri</button>
+								id="inserimentoSchedaButton" >Salva Parametri</button>
 						</div>
 						</form>
 					</div>
