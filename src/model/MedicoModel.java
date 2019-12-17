@@ -1,15 +1,12 @@
 package model;
 
 import static com.mongodb.client.model.Filters.eq;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
-import bean.Paziente;
 import utility.CreaBeanUtility;
 
 /**
@@ -107,5 +104,16 @@ public class MedicoModel {
 		return listaMedici;
 	}
 	
-
+	/**
+	 * Query che modifica la password del medico
+	 * @param daAggiornare codice fiscale del medico
+	 * @param password aggiornata
+	 */
+	public static void changePassword(String daAggiornare,String password) {
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		BasicDBObject nuovoMedico = new BasicDBObject();
+		nuovoMedico.append("$set", new Document().append("Password", password));
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
+		medici.updateOne(searchQuery, nuovoMedico);
+	}
 }

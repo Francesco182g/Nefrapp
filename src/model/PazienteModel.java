@@ -1,14 +1,12 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-
-import bean.Medico;
 import bean.Paziente;
 import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
@@ -165,5 +163,17 @@ public class PazienteModel {
 		}
 		return listaPazienti;
 	}
-
+	
+	/**
+	 * Query che modifica la password del paziente
+	 * @param daAggiornare codice fiscale del paziente
+	 * @param password aggiornata
+	 */
+	public static void changePassword(String daAggiornare,String password) {
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		BasicDBObject nuovoPaziente = new BasicDBObject();
+		nuovoPaziente.append("$set", new Document().append("Password", password));
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
+		pazienti.updateOne(searchQuery, nuovoPaziente);
+	}
 }
