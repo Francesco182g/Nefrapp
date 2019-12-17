@@ -70,5 +70,5 @@ public class AmministratoreModel {
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
 		amministratore.updateOne(searchQuery, nuovoAmministratore);
 	}
-		
+	
 }
