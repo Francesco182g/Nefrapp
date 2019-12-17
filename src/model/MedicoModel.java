@@ -1,11 +1,14 @@
 package model;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
+import bean.Paziente;
 import utility.CreaBeanUtility;
 
 public class MedicoModel {
@@ -53,17 +56,21 @@ public class MedicoModel {
 		medico.insertOne(doc);	
 	}
 	
-	public static boolean controllaCodiceFiscaleMedico(String codiceFiscale) {
-		MongoCollection<Document> medico = DriverConnection.getConnection().getCollection("Medico");
-		if (medico.find(new BasicDBObject("CodiceFiscale", codiceFiscale)) != null)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+	/**
+	 * Query che ricerca un medico per codice fiscale
+	 * @param codiceFiscale del medico da ricercare
+	 * @return medico se trovato, altrimenti null
+	 */
+	public static Medico getMedicoByCF(String codiceFiscale) {
 		
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		Medico medico = null;
+		Document datiMedico = medici.find(eq("CodiceFiscale", codiceFiscale)).first();
+		if(datiMedico != null)
+			medico = CreaBeanUtility.daDocumentAMedico(datiMedico);
+		
+		return medico;
 	}
+
 	
 }
