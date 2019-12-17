@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -41,35 +42,15 @@ public class GestioneAmministratore extends HttpServlet {
 						response.getWriter().write(new Gson().toJson("Errore generato dalla richiesta!"));
 						return;
 					}
+					
 					HttpSession session=request.getSession();
 					String operazione = request.getParameter("operazione");
+					
 					if(operazione.equals("rimuoviAccount")) {
-						Object daRimuovere=(Object)session.getAttribute("daRimuovere");
-						if(daRimuovere instanceof Medico) {
-							MedicoModel.removeMedico(((Medico)daRimuovere).getCodiceFiscale());;
-						}
-						else if(daRimuovere instanceof Paziente) {
-							PazienteModel.removePaziente(((Paziente) daRimuovere).getCodiceFiscale());
-						}
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp"); 
-						dispatcher.forward(request, response);
-					}else if(operazione.equals("ModificaPassword")) {
-						Amministratore amministratore= (Amministratore) session.getAttribute("amministratore");
-						if(amministratore!=null) {
-							String vecchiaPassword=request.getParameter("vecchiaPassword");
-							String nuovaPassword=request.getParameter("nuovaPassword");
-							String confermaPassword=request.getParameter("confermaPassword");
-							if(validazione(vecchiaPassword,nuovaPassword,confermaPassword)) {
-								String password= AmministratoreModel.getPassword(amministratore.getCodiceFiscale());
-								vecchiaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(vecchiaPassword);
-								if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
-									nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
-									AmministratoreModel.updateAmministratore(amministratore.getCodiceFiscale(),nuovaPassword);
-								}
-							}
-						}
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp"); 
-						dispatcher.forward(request, response);
+						rimuoviAccount(request,response,session);
+					}
+					else if(operazione.equals("modificaDatiPersonali")) {
+						modificaDatiPersonali(request, response, session);
 					}else {
 						throw new Exception("Operazione invalida");
 					}	
@@ -77,7 +58,8 @@ public class GestioneAmministratore extends HttpServlet {
 					System.out.println("Errore in gestione parametri:");
 					e.printStackTrace();		
 				}
-				return;	
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp"); 
+				dispatcher.forward(request, response);
 	}
 
 	/**
@@ -98,6 +80,83 @@ public class GestioneAmministratore extends HttpServlet {
 		if (!Pattern.matches(expPassword, confermaPassword) || confermaPassword.length() < 6 || confermaPassword.length() > 20)
 			valido = false;
 		return valido;
+	}
+	
+	private void rimuoviAccount(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		Object daRimuovere=(Object)session.getAttribute("daRimuovere");
+		if(daRimuovere instanceof Medico) {
+			MedicoModel.removeMedico(((Medico)daRimuovere).getCodiceFiscale());;
+		}
+		else if(daRimuovere instanceof Paziente) {
+			PazienteModel.removePaziente(((Paziente) daRimuovere).getCodiceFiscale());
+		}
+	}
+	
+	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String codiceFiscale = request.getParameter("codiceFiscale");
+		
+		Amministratore amministratore=AmministratoreModel.getAmministratoreByCF(codiceFiscale);
+		
+		if(amministratore!=null) {
+			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("amministratore");
+			if(amministratoreLoggato!=null) {
+				String vecchiaPassword=request.getParameter("vecchiaPassword");
+				String nuovaPassword=request.getParameter("nuovaPassword");
+				String confermaPassword=request.getParameter("confermaPassword");
+				if(validazione(vecchiaPassword,nuovaPassword,confermaPassword)) {
+					String password= AmministratoreModel.getPassword(amministratoreLoggato.getCodiceFiscale());
+					vecchiaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(vecchiaPassword);
+					if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
+						nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
+						AmministratoreModel.updateAmministratore(amministratoreLoggato.getCodiceFiscale(),nuovaPassword);
+					}
+				}
+			}
+		}
+		else {
+			String nome = request.getParameter("nome");
+			String cognome = request.getParameter("cognome");
+			String sesso = request.getParameter("sesso");
+			String dataDiNascita=request.getParameter("dataDiNascita");
+			String luogoDiNascita=request.getParameter("luogoDiNascita");
+			String email = request.getParameter("email");
+			String residenza=request.getParameter("residenza");
+			String password = request.getParameter("password");
+			String confermaPassword=request.getParameter("confermaPassword");
+		
+			Paziente paziente=PazienteModel.getPazienteByCF(codiceFiscale);
+			if(paziente!=null) {
+				paziente.setCognome(cognome);
+				paziente.setNome(nome);
+				paziente.setDataDiNascita(LocalDate.parse(dataDiNascita));
+				paziente.setEmail(email);
+				paziente.setResidenza(residenza);
+				paziente.setLuogoDiNascita(luogoDiNascita);
+				paziente.setSesso(sesso);
+				if (validazione(password,password,confermaPassword) && password.equals(confermaPassword)) {
+					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+					PazienteModel.changePassword(codiceFiscale, password);
+				}
+				PazienteModel.updatePaziente(paziente);
+			}
+			else {
+				Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
+				if(medico!=null) {
+					medico.setCognome(cognome);
+					medico.setNome(nome);
+					medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
+					medico.setEmail(email);
+					medico.setResidenza(residenza);
+					medico.setLuogoDiNascita(luogoDiNascita);
+					medico.setSesso(sesso);
+					if (validazione(password,password,confermaPassword) && password.equals(confermaPassword)) {
+						password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+						MedicoModel.changePassword(codiceFiscale, password);
+					}
+					MedicoModel.updateMedico(medico);
+				}
+			}
+		}
 	}
 
 }
