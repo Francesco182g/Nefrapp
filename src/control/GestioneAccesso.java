@@ -119,26 +119,27 @@ public class GestioneAccesso extends HttpServlet {
 		String password = request.getParameter("password");
 		String operazione=request.getParameter("operazione");
 		String ricordaUtente = request.getParameter("ricordaUtente");
+		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
 		
-		if(operazione.equalsIgnoreCase("paziente")){
+		Paziente paziente = null;
+		Medico medico = null;
+		
+		paziente = PazienteModel.getPazienteByCF(codiceFiscale);
+		medico = MedicoModel.getMedicoByCF(codiceFiscale);
+		
+		if(paziente!=null){
 			
 			Cookie[] cookies = request.getCookies();
 			
 			if(cookies != null){
 				for(Cookie cookie: cookies){
-					if(cookie.getName().equals("salvaPass")){
-						password = cookie.getValue();
-					}
-					
-					if(cookie.getName().equals("salvaCF")){
-						codiceFiscale = cookie.getValue();
+					if(cookie.getName().equals("pazienteID")){
+						idPaziente = cookie.getValue();
 					}
 				}
 			}
 			
-			Cookie salvaPass;
-			Cookie salvaCF;
-			Paziente paziente = null;
+			Cookie pazienteID;
 			
 			if(controllaParametri(codiceFiscale, password)){					
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);  
@@ -149,12 +150,9 @@ public class GestioneAccesso extends HttpServlet {
 					session.setAttribute("accessDone", true);
 					
 					if(ricordaUtente != null){
-						salvaPass= new Cookie ("salvaPass", password);
-						salvaCF = new Cookie ("salvaCF", codiceFiscale);
-						salvaPass.setMaxAge(50000);
-						salvaCF.setMaxAge(50000);
-						response.addCookie(salvaPass);
-						response.addCookie(salvaCF);
+						pazienteID = new Cookie ("pazienteID", idPaziente);
+						pazienteID.setMaxAge(50000);
+						response.addCookie(pazienteID);
 					}
 					
 					response.sendRedirect("view/dashboard.jsp");
@@ -167,8 +165,7 @@ public class GestioneAccesso extends HttpServlet {
 			}
 		}
 		
-		else if(operazione.equalsIgnoreCase("medico")){
-			Medico medico = null;
+		else if(medico!=null){
 			if(controllaParametri(codiceFiscale, password)){
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 				medico = MedicoModel.checkLogin(codiceFiscale, password);

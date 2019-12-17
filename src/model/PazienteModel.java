@@ -7,6 +7,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import bean.Paziente;
+import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
 
 import static com.mongodb.client.model.Filters.*;
@@ -110,6 +111,28 @@ public class PazienteModel {
 			paziente = CreaBeanUtility.daDocumentAPaziente(datiPaziente);
 		
 		return paziente;
+	}
+	
+	/**
+	 * 
+	 * Query che ricerca l'id di un paziente per codice fiscale
+	 * @param codiceFiscale del paziente da ricercare
+	 * @return id del paziente se trovato, altrimenti null
+	 */
+	public static String getIdPazienteByCF(String codiceFiscale)
+	{
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		
+		Document datiPaziente = pazienti.find(eq("CodiceFiscale", codiceFiscale)).first();
+		
+		
+		if(datiPaziente != null) {
+			String pazienteID=AlgoritmoCriptazioneUtility.criptaConMD5(datiPaziente.getObjectId("_id").toString());
+			return pazienteID;
+		}
+		
+		return null;
+		
 	}
 	
 
