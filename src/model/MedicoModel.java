@@ -3,6 +3,7 @@ package model;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
@@ -77,7 +78,7 @@ public class MedicoModel {
 		
 		return medico;
 	}
-
+	
 	/**
 	 * Query che rimuove un medico dal database
 	 * @param daRimuovere codice fiscale del medico da rimuovere
@@ -89,5 +90,21 @@ public class MedicoModel {
 		document.put("CodiceFiscale", daRimuovere);
 		medici.deleteOne(document);
 	}
-		
+	
+	/**
+	 * Metodo che restituisce tutti i medici che sono presenti nel database
+	 * @return un arraylist di medici
+	 */
+	public static ArrayList<Medico> getAllMedici() {
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		ArrayList<Medico>listaMedici = new ArrayList<Medico>();
+		for(Document d :medici.find())
+		{
+			listaMedici.add(CreaBeanUtility.daDocumentAMedico(d));
+			
+		}
+		return listaMedici;
+	}
+	
+
 }

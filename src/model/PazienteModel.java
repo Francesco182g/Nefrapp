@@ -1,11 +1,14 @@
 package model;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+
+import bean.Medico;
 import bean.Paziente;
 import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
@@ -146,6 +149,20 @@ public class PazienteModel {
 		BasicDBObject document = new BasicDBObject();
 		document.put("CodiceFiscale", daRimuovere);
 		pazienti.deleteOne(document);
+	}
+	
+	/**
+	 * Metodo che restituisce tutti i pazienti che sono presenti nel database
+	 * @return un arraylist di pazienti
+	 */
+	public static ArrayList<Paziente> getAllPazienti() {
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Medico");
+		ArrayList<Paziente>listaPazienti = new ArrayList<Paziente>();
+		for(Document d :pazienti.find())
+		{
+			listaPazienti.add(CreaBeanUtility.daDocumentAPaziente(d));
+		}
+		return listaPazienti;
 	}
 
 }
