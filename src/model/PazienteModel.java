@@ -112,6 +112,16 @@ public class PazienteModel {
 		return paziente;
 	}
 	
-
+	/**
+	 * Query che rimuove un paziente dal database
+	 * @param daRimuovere codice fiscale del paziente da rimuovere
+	 */
+	public static void removePaziente(String daRimuovere) {
+		
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		BasicDBObject document = new BasicDBObject();
+		document.put("CodiceFiscale", daRimuovere);
+		pazienti.deleteOne(document);
+	}
 	
 }
