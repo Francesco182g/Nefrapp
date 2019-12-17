@@ -3,8 +3,12 @@ package bean;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * 
+ * @author Sara Corrente
+ * Questa classe rappresenta il paziente
+ */
 public class Paziente{
-	//variabili
 	private String sesso;
 	private String codiceFiscale;
 	private String nome;
@@ -14,27 +18,9 @@ public class Paziente{
 	private Date dataDiNascita;
 	private Boolean attivo;
 	private ArrayList<String> medici;
-	
-	//costruttori
-	/**
-	 * Paziente è un oggetto che rappresenta la figura dell'paziente
-	 */
-	public Paziente() {
-	
-	}
 
-	/**
-	 * Paziente è un oggetto che rappresenta la figura del paziente
-	 * @param codiceFiscale rappresenta il codice fiscale del paziente
-	 * @param nome rappresenta il nome del paziente
-	 * @param cognome rappresenta il cognome del paziente
-	 * @param sesso rappresenta il sesso del paziente
-	 * @param email rappresenta l'email del paziente
-	 * @param residenza rappresenta la residenza del paziente
-	 * @param dataDiNascita rappresenta la data di nascita del paziente
-	 * @param attivo rappresenta se l'account del paziente � stato disabilitato o meno
-	 * @param medici rappresenta i medici che seguono paziente
-	 */
+	public Paziente() {}
+
 	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza,Date dataDiNascita, Boolean attivo, ArrayList<String> medici) {
 		this.sesso = sesso;
 		this.codiceFiscale = codiceFiscale;
@@ -47,7 +33,6 @@ public class Paziente{
 		this.medici = medici;
 	}
 	
-	//metodi
 	public String getSesso() {
 		return sesso;
 	}
@@ -130,5 +115,4 @@ public class Paziente{
 				+ cognome + ", email=" + email + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita
 				+ ", attivo=" + attivo + ", medici=" + medici + "]";
 	}
-	
 }

@@ -2,7 +2,7 @@ package bean;
 
 /**
  * 
- * @author Eugenio
+ * @author Eugenio Corbisiero
  * Questa classe rappresenta l'amministratore
  */
 public class Amministratore{
@@ -11,7 +11,7 @@ public class Amministratore{
 	private String cognome;
 	private String email;
 	
-	public Amministratore() { }
+	public Amministratore() {}
 	
 	public Amministratore(String codiceFiscale, String nome, String cognome, String email) {
 		this.codiceFiscale = codiceFiscale;

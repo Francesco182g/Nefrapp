@@ -1,32 +1,27 @@
 package bean;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
- * @author matte
- *
+ * 
+ * @author Matteo Falco
+ * Questa classe rappresenta il piano terapeutico
  */
 public class PianoTerapeutico {
-	//variabili
 	private String codiceFiscalePaziente;
 	private String diagnosi;
 	private String farmaco;
-	private Date dataFineTerapia;
+	private LocalDate dataFineTerapia;
 
-	//costruttori
-	public PianoTerapeutico() {
+	public PianoTerapeutico() {}
 
-	}
-
-	public PianoTerapeutico(String codiceFiscalePaziente, String diagnosi, String farmaco, Date dataFineTerapia) {
-		super();
+	public PianoTerapeutico(String codiceFiscalePaziente, String diagnosi, String farmaco, LocalDate dataFineTerapia) {
 		this.codiceFiscalePaziente = codiceFiscalePaziente;
 		this.diagnosi = diagnosi;
 		this.farmaco = farmaco;
 		this.dataFineTerapia = dataFineTerapia;
 	}
 
-	//metodi
 	public String getCodiceFiscalePaziente() {
 		return codiceFiscalePaziente;
 	}
@@ -51,12 +46,16 @@ public class PianoTerapeutico {
 		this.farmaco = farmaco;
 	}
 
-	public Date getDataFineTerapia() {
+	public LocalDate getDataFineTerapia() {
 		return dataFineTerapia;
 	}
 
-	public void setDataFineTerapia(Date dataFineTerapia) {
+	public void setDataFineTerapia(LocalDate dataFineTerapia) {
 		this.dataFineTerapia = dataFineTerapia;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "PianoTerapeutico [codiceFiscalePaziente=" + codiceFiscalePaziente + ", diagnosi=" + diagnosi + ", farmaco=" + farmaco + ", dataFineTerapia=" + dataFineTerapia + "]";
+	}
 }
