@@ -49,13 +49,13 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="../inserimentoParametriView.jsp">
+            <a class="nav-link" href="./inserimentoParametriView.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Inserimento Scheda Parametri </span></a>
         </li>
         
         <li class="nav-item">
-             <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+             <a class="nav-link" href="./parametri?operazione=visualizzaScheda">
                  <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Schede Parametri</span></a>
         </li>
