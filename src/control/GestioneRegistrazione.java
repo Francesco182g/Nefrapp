@@ -118,7 +118,7 @@ public class GestioneRegistrazione extends HttpServlet {
 					}
 				}
 			}
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/index.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
 			requestDispatcher.forward(request, response);
 		} catch(Exception e) {
 			System.out.println("Errore in Inserisci indirizzo:");
