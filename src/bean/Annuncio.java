@@ -5,39 +5,24 @@ import java.util.Date;
 
 /**
  * @author Davide Benedetto Strianese
- *
+ * Questa classe rappresenta l'annuncio
  */
 public class Annuncio {
-	
 	private Medico medico; //Riferimento al medico che ha pubblicato l'annuncio
 	private List<Paziente> pazienti; //Riferimento ai pazienti a cui è rivolto
 	private String titolo;
 	private String testo;
 	private String allegato; //può essere una presentazione pp o un video, tenere traccia tramite path
-	private String ora;
 	private Date data;
 	
-	public Annuncio() {
-		
-	}
+	public Annuncio() {}
 	
-	/**
-	 * Annuncio è un oggetto che rappresenta l'annuncio 
-	 * @param medico indica il medico che ha pubblicato l'annuncio 
-	 * @param pazienti indica i pazienti a cui è rivolto l'annuncio
-	 * @param titolo indica il titolo dell'annuncio
-	 * @param testo indica il contenuto dell'annuncio
-	 * @param allegato indica l'allegato all'annuncio
-	 * @param ora indica l'ora in cui è stato inviato l'annuncio
-	 * @param data indica il giorno in cui è stato inviato l'annuncio
-	 */
-	public Annuncio(Medico medico, List<Paziente> pazienti, String titolo, String testo, String allegato, String ora, Date data) {
+	public Annuncio(Medico medico, List<Paziente> pazienti, String titolo, String testo, String allegato, Date data) {
 		this.medico = medico;
 		this.pazienti = pazienti;
 		this.titolo = titolo;
 		this.testo = testo;
 		this.allegato = allegato;
-		this.ora = ora;
 		this.data = data;
 	}
 
@@ -81,19 +66,21 @@ public class Annuncio {
 		this.allegato = allegato;
 	}
 
-	public String getOra() {
-		return ora;
-	}
-
-	public void setOra(String ora) {
-		this.ora = ora;
-	}
-
 	public Date getData() {
 		return data;
 	}
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+	
+	@Override
+	public String toString() {
+		String infoPazienti = "";
+		for(Paziente p: pazienti)
+			infoPazienti = infoPazienti + p.getNome() + p.getCognome() + "\n";
+		
+		return "Annuncio [Medico=" + medico.getNome() + medico.getCognome() + ", pazienti=" + infoPazienti + ", titolo=" + titolo
+				+ ", testo=" + testo + ", data=" + data + "]";
 	}
 }

@@ -3,11 +3,11 @@
  */
 package bean;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
- * @author Davide Benedetto Strianese
- *
+ * @author Luca Esposito
+ * Questa classe rappresenta il messaggio
  */
 public class Messaggio {
 	
@@ -17,23 +17,11 @@ public class Messaggio {
 	private String testo;
 	private String allegato;
 	private String ora;
-	private Date data;
+	private LocalDate data;
 	
-	public Messaggio() {
-		
-	}
+	public Messaggio() {}
 
-	/**
-	 * Messaggio è un oggetto che rappresenta un messaggio
-	 * @param codiceFiscaleMittente indica il codice fiscale del mittente che può essere un medico o un paziente
-	 * @param codiceFiscaleDestinatario indica il codice fiscale del destinatario che può essere un medico o un paziente
-	 * @param oggetto indica l'oggetto del messaggio
-	 * @param testo indica il testo del messaggio
-	 * @param allegato indica un allegato nel messaggio
-	 * @param ora indica l'ora in cui è stato spedito il messaggio
-	 * @param data indica la data in cui è stato spedito il messaggio
-	 */
-	public Messaggio(String codiceFiscaleMittente, String codiceFiscaleDestinatario, String oggetto, String testo, String allegato, String ora, Date data) {
+	public Messaggio(String codiceFiscaleMittente, String codiceFiscaleDestinatario, String oggetto, String testo, String allegato, String ora, LocalDate data) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 		this.codiceFiscaleDestinatario = codiceFiscaleDestinatario;
 		this.oggetto = oggetto;
@@ -91,11 +79,17 @@ public class Messaggio {
 		this.ora = ora;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
+	
+	@Override
+	public String toString() {
+		return "Messaggio [mittente=" + codiceFiscaleMittente + ", destinatario=" + codiceFiscaleDestinatario + ", oggetto=" + oggetto
+				+ ", testo=" + testo + ", ora=" + ora + ", data=" + data + "]";
+	}	
 }
