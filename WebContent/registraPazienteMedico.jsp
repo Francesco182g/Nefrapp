@@ -50,7 +50,7 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Registra Paziente</h1>
 							              </div>
-							              <form class="user" method="post"  action="../GestioneRegistrazione?operazione=registraPaziente">
+							              <form class="user" method="post"  action="./GestioneRegistrazione?operazione=registraPazienteMedico">
 							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
@@ -79,7 +79,7 @@
                   							</div>
                   							<div class="form-group row col-lg-12">
                   							Data di nascita:
-							                  <input type="date" class="form-control form-control-user" name="dataNascita" id="dataNascita" placeholder="Data di nascita" required="required">
+							                  <input type="date" class="form-control form-control-user" name="dataDiNascita" id="dataDiNascita" placeholder="Data di nascita" required="required">
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Residenza:

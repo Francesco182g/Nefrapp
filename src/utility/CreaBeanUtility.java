@@ -35,12 +35,13 @@ public class CreaBeanUtility {
 		paziente.setNome(datiPaziente.getString("Nome"));
 		paziente.setCognome(datiPaziente.getString("Cognome"));
 		paziente.setSesso(datiPaziente.getString("Sesso"));
-		paziente.setDataDiNascita(datiPaziente.getDate("DataDiNascita"));
 		paziente.setEmail("Email");
 		paziente.setResidenza(datiPaziente.getString("Residenza"));
 		paziente.setAttivo(datiPaziente.getBoolean("Attivo"));
 		paziente.setMedici((ArrayList<String>) datiPaziente.get("Medici"));
-		
+		Date temp = datiPaziente.getDate("DataDiNascita");
+		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		paziente.setDataDiNascita(data);
 		return paziente;
 	}
 	

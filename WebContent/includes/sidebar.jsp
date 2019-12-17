@@ -88,7 +88,7 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="./registraPaziente.jsp">
+            <a class="nav-link" href="./registraPazienteMedico.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Registra paziente</span></a>
         </li>

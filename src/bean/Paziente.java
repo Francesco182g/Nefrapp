@@ -1,7 +1,7 @@
 package bean;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * 
@@ -15,13 +15,13 @@ public class Paziente{
 	private String cognome;
 	private String email;
 	private String residenza;
-	private Date dataDiNascita;
+	private LocalDate dataDiNascita;
 	private Boolean attivo;
 	private ArrayList<String> medici;
 
 	public Paziente() {}
 
-	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza,Date dataDiNascita, Boolean attivo, ArrayList<String> medici) {
+	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza, LocalDate dataDiNascita, Boolean attivo, ArrayList<String> medici) {
 		this.sesso = sesso;
 		this.codiceFiscale = codiceFiscale;
 		this.nome = nome;
@@ -81,11 +81,11 @@ public class Paziente{
 		this.residenza = residenza;
 	}
 
-	public Date getDataDiNascita() {
+	public LocalDate getDataDiNascita() {
 		return dataDiNascita;
 	}
 
-	public void setDataDiNascita(Date dataDiNascita) {
+	public void setDataDiNascita(LocalDate dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
 
