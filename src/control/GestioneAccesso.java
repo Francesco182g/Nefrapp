@@ -51,13 +51,13 @@ public class GestioneAccesso extends HttpServlet {
 			HttpSession session = request.getSession();
 			synchronized (session) {
 				
-				if(operazione.equalsIgnoreCase("logout")) {
+				if(operazione.equals("logout")) {
 					logout(request);
 					response.sendRedirect("index.jsp");
 				}
 					
 				
-				else if(operazione.equalsIgnoreCase("loginAdmin")){
+				else if(operazione.equals("loginAdmin")){
 					//Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
 				}
@@ -92,6 +92,7 @@ public class GestioneAccesso extends HttpServlet {
 				session.setAttribute("amministratore", amministratore);
 				session.setAttribute("accessDone", true);
 				response.sendRedirect("dashboard.jsp");
+			
 			}
 			else{
 				session.setAttribute("notifica","login fallito");

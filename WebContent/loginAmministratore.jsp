@@ -23,7 +23,7 @@
 		<!-- Script per la registrazione -->
    	 	<script src="../js/ParameterControl.js"></script>
    	 	<c:if test='${not empty sessionScope.amministratore}'>
-			<c:redirect url = "/view/dashboard.jsp"/>
+			<c:redirect url = "/dashboard.jsp"/>
 		</c:if>
 		
 	</head>
@@ -55,7 +55,7 @@
 							                <h1 class="h4 text-gray-900 mb-4">Login Amministratore</h1>
 							                
 							              </div>
-							              <form class="user" method="post" action="../GestioneAccesso">
+							              <form class="user" method="post" action="./GestioneAccesso">
 							                <div class="form-group">
 							                <input type="hidden" name="operazione" value="loginAdmin">
 							                <input type="hidden" id="notifica" n value="${sessionScope.notifica}"> 
