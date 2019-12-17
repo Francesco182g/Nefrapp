@@ -30,29 +30,11 @@ public class GestioneAccesso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	/*
-	 * Questo metodo si occupa di effettuare il logout
-	 * @precondition l'utente deve essere loggato
-	 * @postcondition utente disconnesso dal sistema
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response){
-		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
+		doPost(request, response);
+		return;
+	}
 		
-			logout(request);
-			response.sendRedirect("index.jsp");
-			
-			}catch(Exception e) {
-				System.out.println("Errore in Gestione accesso:");
-				e.printStackTrace();
-			}
-		}
-	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
@@ -63,17 +45,23 @@ public class GestioneAccesso extends HttpServlet {
 				dispatcher.forward(request, response);
 				return;
 			}
-			
+				
 			String operazione = request.getParameter("operazione");
 			
 			HttpSession session = request.getSession();
 			synchronized (session) {
-			
-				if(operazione != null && operazione.equalsIgnoreCase("loginAdmin")){
+				
+				if(operazione.equalsIgnoreCase("logout")) {
+					logout(request);
+					response.sendRedirect("index.jsp");
+				}
+					
+				
+				else if(operazione.equalsIgnoreCase("loginAdmin")){
 					//Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
 				}
-				
+					
 				else {
 					//Aggiungere un try-catch per catturare IOException
 					loginUtente(request, response, session);
@@ -83,7 +71,6 @@ public class GestioneAccesso extends HttpServlet {
 			System.out.println("Errore in gestione parametri:");
 			e.printStackTrace();		
 		}
-		
 		return;	
 	}
 	/**
@@ -104,7 +91,6 @@ public class GestioneAccesso extends HttpServlet {
 				session.removeAttribute("notifica");
 				session.setAttribute("amministratore", amministratore);
 				session.setAttribute("accessDone", true);
-				
 				response.sendRedirect("dashboard.jsp");
 			}
 			else{
@@ -113,20 +99,19 @@ public class GestioneAccesso extends HttpServlet {
 			}
 		}
 	}
-	
+		
 	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		String ricordaUtente = request.getParameter("ricordaUtente");
 		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
-		
+			
 		Paziente paziente = null;
 		Medico medico = null;
-		
-		paziente = PazienteModel.getPazienteByCF(codiceFiscale);
-		
-		if(paziente!=null){
 			
+		paziente = PazienteModel.getPazienteByCF(codiceFiscale);
+			
+		if(paziente!=null){
 			Cookie[] cookies = request.getCookies();
 			
 			if(cookies != null){
@@ -136,37 +121,36 @@ public class GestioneAccesso extends HttpServlet {
 					}
 				}
 			}
-			
+				
 			Cookie pazienteID;
-			
+				
 			if(controllaParametri(codiceFiscale, password)){					
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);  
 				paziente = PazienteModel.checkLogin(codiceFiscale, password);
-			
+				
 				if(paziente != null){
 					session.setAttribute("paziente", paziente);
 					session.setAttribute("accessDone", true);
-					
+						
 					if(ricordaUtente != null){
 						pazienteID = new Cookie ("pazienteID", idPaziente);
 						pazienteID.setMaxAge(50000);
 						response.addCookie(pazienteID);
 					}
-					
+						
 					response.sendRedirect("dashboard.jsp");
 					return;
 				}
-				
+					
 				else {
-						response.sendRedirect("login.jsp");
-					}
+					response.sendRedirect("login.jsp");
+				}
 			}
 		}
-		
+			
 		else { 
-				medico = MedicoModel.getMedicoByCF(codiceFiscale);
-				
-				if(medico!=null){
+			medico = MedicoModel.getMedicoByCF(codiceFiscale);
+			if(medico!=null){
 				if(controllaParametri(codiceFiscale, password)){
 					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 					medico = MedicoModel.checkLogin(codiceFiscale, password);
@@ -186,7 +170,7 @@ public class GestioneAccesso extends HttpServlet {
 			}
 		}
 	}
-	
+		
 	/**
 	 * Funzione che permette di effettuare il logout
 	 * @param request è il client in cui risiede la sessione che deve essere invalidata
@@ -197,7 +181,7 @@ public class GestioneAccesso extends HttpServlet {
 			session.invalidate();
 		}
 	}
-	
+		
 	/**
 	 * Funzione che controlla i parametri codice fiscale e password dell' amministratore e dell'utente
 	 * @param codiceFiscale indica il codice fiscale dell' amministratore o dell'utente 
@@ -209,7 +193,7 @@ public class GestioneAccesso extends HttpServlet {
 		boolean valido=true;
 		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 		String expPassword="^[a-zA-Z0-9]*$";
-		
+			
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale)||codiceFiscale.length()!=16)
 			valido=false;
 		if (!Pattern.matches(expPassword, password)||password.length()<6||password.length()>20)
