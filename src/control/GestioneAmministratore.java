@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -58,11 +59,13 @@ public class GestioneAmministratore extends HttpServlet {
 							String vecchiaPassword=request.getParameter("vecchiaPassword");
 							String nuovaPassword=request.getParameter("nuovaPassword");
 							String confermaPassword=request.getParameter("confermaPassword");
-							String password= AmministratoreModel.getPassword(amministratore.getCodiceFiscale());
-							vecchiaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(vecchiaPassword);
-							if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
-								nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
-								AmministratoreModel.updateAmministratore(amministratore.getCodiceFiscale(),nuovaPassword);
+							if(validazione(vecchiaPassword,nuovaPassword,confermaPassword)) {
+								String password= AmministratoreModel.getPassword(amministratore.getCodiceFiscale());
+								vecchiaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(vecchiaPassword);
+								if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
+									nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
+									AmministratoreModel.updateAmministratore(amministratore.getCodiceFiscale(),nuovaPassword);
+								}
 							}
 						}
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp"); 
@@ -84,6 +87,18 @@ public class GestioneAmministratore extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private boolean validazione(String vecchiaPassword,String nuovaPassword,String confermaPassword) {
+		boolean valido = true;
+		String expPassword = "^[a-zA-Z0-9]*$";
+		if (!Pattern.matches(expPassword, vecchiaPassword) || vecchiaPassword.length() < 6 || vecchiaPassword.length() > 20)
+			valido = false;
+		if (!Pattern.matches(expPassword, nuovaPassword) || nuovaPassword.length() < 6 || nuovaPassword.length() > 20)
+			valido = false;
+		if (!Pattern.matches(expPassword, confermaPassword) || confermaPassword.length() < 6 || confermaPassword.length() > 20)
+			valido = false;
+		return valido;
 	}
 
 }
