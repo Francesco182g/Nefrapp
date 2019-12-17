@@ -21,7 +21,7 @@ import model.SchedaParametriModel;
 
 /**
  * @author Antonio Donnarumma, Davide Benedetto Strianese,
- * Questa classe è una servlet che si occupa della gestione dei parametri del paziente
+ * Questa classe ï¿½ una servlet che si occupa della gestione dei parametri del paziente
  */
 @WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
@@ -57,9 +57,8 @@ public class GestioneParametri extends HttpServlet {
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request, response);
-				//response.sendRedirect(request.getContextPath() + "/view/monitoraggioParametriView.jsp");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/monitoraggioParametriView.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/view/monitoraggioParametriView.jsp");
+				
 			}
 			
 		}catch (Exception e) {
