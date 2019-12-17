@@ -14,7 +14,7 @@ import static com.mongodb.client.model.Filters.*;
 
 /**
  * 
- * @author Antonio Donnarumma, Luca Esposito
+ * @author Antonio Donnarumma, Luca Esposito 
  * 
  */
 
@@ -114,6 +114,7 @@ public class PazienteModel {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * 
 	 * Query che ricerca l'id di un paziente per codice fiscale
 	 * @param codiceFiscale del paziente da ricercare
@@ -135,6 +136,16 @@ public class PazienteModel {
 		
 	}
 	
+	/**
+	 * Query che rimuove un paziente dal database
+	 * @param daRimuovere codice fiscale del paziente da rimuovere
+	 */
+	public static void removePaziente(String daRimuovere) {
+		
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		BasicDBObject document = new BasicDBObject();
+		document.put("CodiceFiscale", daRimuovere);
+		pazienti.deleteOne(document);
+	}
 
-	
 }

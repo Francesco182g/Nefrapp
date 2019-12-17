@@ -11,11 +11,11 @@
 
     	
     	<!-- Custom fonts for this template-->
-    	<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     	<!-- Custom styles for this template-->
-   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+   	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">
 	</head>
 	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<body id="page-top">
@@ -24,7 +24,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../view/dashboard.jsp">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./dashboard.jsp">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -49,13 +49,13 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="../view/inserimentoParametriView.jsp">
+            <a class="nav-link" href="./inserimentoParametriView.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Inserimento Scheda Parametri </span></a>
         </li>
         
         <li class="nav-item">
-             <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+             <a class="nav-link" href="./parametri?operazione=visualizzaScheda">
                  <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Schede Parametri</span></a>
         </li>
@@ -82,7 +82,7 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="../GestioneMedico?operazione=VisualizzaPazientiSeguiti">
+            <a class="nav-link" href="./GestioneMedico?operazione=VisualizzaPazientiSeguiti">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Lista Pazienti</span></a>
         </li>
@@ -144,7 +144,7 @@
                 <span>Conosci il prodotto</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="../view/team.jsp">
+            <a class="nav-link" href="./team.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Conosci il team!</span></a>
         </li>

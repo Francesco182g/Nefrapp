@@ -11,6 +11,12 @@ import bean.Medico;
 import bean.Paziente;
 import utility.CreaBeanUtility;
 
+/**
+ * 
+ * @author Luca Esposito
+ * 
+ */
+
 public class MedicoModel {
 
 	/**
@@ -72,5 +78,16 @@ public class MedicoModel {
 		return medico;
 	}
 
-	
+	/**
+	 * Query che rimuove un medico dal database
+	 * @param daRimuovere codice fiscale del medico da rimuovere
+	 */
+	public static void removeMedico(String daRimuovere) {
+		
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		BasicDBObject document = new BasicDBObject();
+		document.put("CodiceFiscale", daRimuovere);
+		medici.deleteOne(document);
+	}
+		
 }
