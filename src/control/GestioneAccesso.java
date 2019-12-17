@@ -69,7 +69,7 @@ public class GestioneAccesso extends HttpServlet {
 			HttpSession session = request.getSession();
 			synchronized (session) {
 			
-				if(operazione.equalsIgnoreCase("loginAdmin")){
+				if(operazione != null && operazione.equalsIgnoreCase("loginAdmin")){
 					//Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
 				}
@@ -117,7 +117,6 @@ public class GestioneAccesso extends HttpServlet {
 	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
-		String operazione=request.getParameter("operazione");
 		String ricordaUtente = request.getParameter("ricordaUtente");
 		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
 		
@@ -125,7 +124,6 @@ public class GestioneAccesso extends HttpServlet {
 		Medico medico = null;
 		
 		paziente = PazienteModel.getPazienteByCF(codiceFiscale);
-		medico = MedicoModel.getMedicoByCF(codiceFiscale);
 		
 		if(paziente!=null){
 			
@@ -165,22 +163,26 @@ public class GestioneAccesso extends HttpServlet {
 			}
 		}
 		
-		else if(medico!=null){
-			if(controllaParametri(codiceFiscale, password)){
-				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
-				medico = MedicoModel.checkLogin(codiceFiscale, password);
-				if(medico != null){
-					session.setAttribute("medico", medico);
-					session.setAttribute("accessDone", true);
-					response.sendRedirect("dashboard.jsp");
+		else { 
+				medico = MedicoModel.getMedicoByCF(codiceFiscale);
+				
+				if(medico!=null){
+				if(controllaParametri(codiceFiscale, password)){
+					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+					medico = MedicoModel.checkLogin(codiceFiscale, password);
+					if(medico != null){
+						session.setAttribute("medico", medico);
+						session.setAttribute("accessDone", true);
+						response.sendRedirect("dashboard.jsp");
+					}
+					else{
+						response.sendRedirect("login.jsp");
+						//reindirizzamento login per il medico/paziente
+					}
 				}
-				else{
+				else {
 					response.sendRedirect("login.jsp");
-					//reindirizzamento login per il medico/paziente
 				}
-			}
-			else {
-				response.sendRedirect("login.jsp");
 			}
 		}
 	}
