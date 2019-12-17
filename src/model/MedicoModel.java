@@ -59,6 +59,7 @@ public class MedicoModel {
 				.append("DataDiNascita", toAdd.getDataDiNascita())
 				.append("Sesso", toAdd.getSesso())
 				.append("Residenza", toAdd.getResidenza())
+				.append("LuogoDiNascita", toAdd.getLuogoDiNascita())
 				.append("Email", toAdd.getEmail());
 		medico.insertOne(doc);	
 	}

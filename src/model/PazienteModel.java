@@ -80,6 +80,7 @@ public class PazienteModel {
 				.append("DataDiNascita", daAggiungere.getDataDiNascita())
 				.append("Sesso", daAggiungere.getSesso())
 				.append("Residenza", daAggiungere.getResidenza())
+				.append("LuogoDiNascita", daAggiungere.getLuogoDiNascita())
 				.append("Email", daAggiungere.getEmail());
 		paziente.insertOne(doc);	
 	}
