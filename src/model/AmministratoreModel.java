@@ -13,11 +13,13 @@ import utility.CreaBeanUtility;
 
 /**
  * 
- * @author Eugenio
- *
+ * @author Eugenio Corbisiero
+ * Questa classe è un manager che si occupa di interagire con il database.
+ * Gestisce le query riguardanti l'amministratore
  */
 public class AmministratoreModel {
 	/**
+	 * 
 	 * Metodo che effettua il login per l'amministratore
 	 * @param codiceFiscale codice fiscale dell'amministratore
 	 * @param password password dell'amministratore
@@ -37,9 +39,6 @@ public class AmministratoreModel {
 		if(datiAmministratore != null) {
 			amministratore = CreaBeanUtility.daDocumentAdAmministratore(datiAmministratore);
 		}
-		
 		return amministratore;
 	}
-	
-
 }
