@@ -1,6 +1,6 @@
 package bean;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author Antonio Donnarumma
@@ -9,15 +9,16 @@ import java.util.Date;
 public class Medico{ 
 	private String sesso; 
 	private String residenza;
-	private Date dataDiNascita;
+	private LocalDate dataDiNascita;
 	private String codiceFiscale;
 	private String nome;
 	private String cognome;
 	private String email;
+	private String luogoDiNascita;
 	
 	public Medico() {}
 
-	public Medico(String sesso, String residenza, Date dataDiNascita, String codiceFiscale, String nome, String cognome,String email) {
+	public Medico(String sesso, String residenza, LocalDate dataDiNascita, String codiceFiscale, String nome, String cognome,String email,String luogoDiNascita) {
 		this.sesso = sesso;
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
@@ -25,6 +26,7 @@ public class Medico{
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;
+		this.luogoDiNascita=luogoDiNascita;
 	}
 
 	public String getSesso() {
@@ -43,11 +45,11 @@ public class Medico{
 		this.residenza = residenza;
 	}
 
-	public Date getDataDiNascita() {
+	public LocalDate getDataDiNascita() {
 		return dataDiNascita;
 	}
 
-	public void setDataDiNascita(Date dataDiNascita) {
+	public void setDataDiNascita(LocalDate dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
 
@@ -82,11 +84,19 @@ public class Medico{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getLuogoDiNascita() {
+		return luogoDiNascita;
+	}
+	
+	public void setLuogoDiNascita(String luogoDiNascita) {
+		this.luogoDiNascita=luogoDiNascita;
+	}
 
 	@Override
 	public String toString() {
 		return "Medico [sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita
 				+ ", codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email
-				+ "]";
-	}	
+				+ ", luogoDiNascita=" + luogoDiNascita + "]";
+	}
 }
