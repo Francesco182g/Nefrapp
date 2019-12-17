@@ -21,7 +21,7 @@ import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 
 /**
- * @author Antonio Donnarumma, Davide Benedetto Strianese,
+ * @author Luca Esposito, Antonio Donnarumma, Davide Benedetto Strianese,
  * Questa classe � una servlet che si occupa della registrazione di un utente del sistema.
  */
 @WebServlet("/GestioneRegistrazione")
