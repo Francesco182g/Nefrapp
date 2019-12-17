@@ -47,7 +47,7 @@ public class GestioneAccesso extends HttpServlet {
 			}
 				
 			String operazione = request.getParameter("operazione");
-			
+			System.out.println(operazione);
 			HttpSession session = request.getSession();
 			synchronized (session) {
 				

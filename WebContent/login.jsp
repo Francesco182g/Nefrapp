@@ -53,6 +53,7 @@
 							                <h1 class="h4 text-gray-900 mb-4">Effettua il login</h1>
 							              </div>
 							              <form class="user" method="post" action="./GestioneAccesso">
+							              		<input type="hidden" name="operazione" value="loginUtente">
 												<div class="form-group">
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
