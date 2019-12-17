@@ -59,11 +59,6 @@
 							                <div class="form-group">
 							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20"> 
 							                </div>
-							                <div class="form-group">
-							                Tipologia utente:<br>
-  								                <input type="radio" name="operazione" value="paziente"> Paziente
-												<input type="radio" name="operazione" value="medico"> Medico<br>
-							                </div>
 							                <div class="p-6">
 								                  <a href="#">
 								                  Password dimenticata?
