@@ -22,7 +22,8 @@ import utility.AlgoritmoCriptazioneUtility;
 /**
  * 
  * @author Eugenio Corbisiero, Davide Benedetto Strianese
- * Questa classe � una servlet che si occupa della gestione dell'accesso al sistema uffa
+ * Questa classe � una servlet che si occupa della gestione dell'accesso al sistema 
+ * altro
  *
  */
 @WebServlet("/GestioneAccesso")
