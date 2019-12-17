@@ -43,8 +43,8 @@ public class GestioneMedico extends HttpServlet {
 			}else if(operazione.equals("ModificaDatiPersonali")) {
 				//cose da fare
 			}else if (operazione.equals("VisualizzaPazientiSeguiti")) {
-				visualizzaPazientiseguiti(request);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("listaPazientiView.jsp"); //reindirizzamento view per la visualizzazione della lista pazienti
+				visualizzaPazientiseguiti(request);				
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); //reindirizzamento view per la visualizzazione della lista pazienti
 				dispatcher.forward(request, response);
 				
 			}else {

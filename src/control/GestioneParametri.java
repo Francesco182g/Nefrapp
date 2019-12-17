@@ -57,8 +57,8 @@ public class GestioneParametri extends HttpServlet {
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request, response);
-				response.sendRedirect(request.getContextPath() + "/monitoraggioParametriView.jsp");
-				
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 		}catch (Exception e) {
