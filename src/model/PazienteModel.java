@@ -87,7 +87,7 @@ public class PazienteModel {
 	 * Query che aggiorna i medici di un paziente
 	 * @param daAggiornare paziente a cui aggiornare i medici
 	 */
-	public static void updatePaziente(Paziente daAggiornare) {
+	public static void updateMediciDelPaziente(Paziente daAggiornare) {
 		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
 		
 		BasicDBObject nuovoPaziente = new BasicDBObject();
@@ -174,6 +174,24 @@ public class PazienteModel {
 		BasicDBObject nuovoPaziente = new BasicDBObject();
 		nuovoPaziente.append("$set", new Document().append("Password", password));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
+		pazienti.updateOne(searchQuery, nuovoPaziente);
+	}
+	
+	/**
+	 * Query che aggiorna il paziente
+	 * @param daAggiornare paziente
+	 */
+	public static void updatePaziente(Paziente daAggiornare) {
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		BasicDBObject nuovoPaziente = new BasicDBObject();
+		nuovoPaziente.append("$set", new Document().append("Nome", daAggiornare.getNome()));
+		nuovoPaziente.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
+		nuovoPaziente.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
+		nuovoPaziente.append("$set", new Document().append("Email", daAggiornare.getEmail()));
+		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
+		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
+		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
 		pazienti.updateOne(searchQuery, nuovoPaziente);
 	}
 }

@@ -116,4 +116,22 @@ public class MedicoModel {
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
 		medici.updateOne(searchQuery, nuovoMedico);
 	}
+	
+	/**
+	 * Query che aggiorna il medico
+	 * @param daAggiornare medico
+	 */
+	public static void updateMedico(Medico daAggiornare) {
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		BasicDBObject nuovoMedico = new BasicDBObject();
+		nuovoMedico.append("$set", new Document().append("Nome", daAggiornare.getNome()));
+		nuovoMedico.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
+		nuovoMedico.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
+		nuovoMedico.append("$set", new Document().append("Email", daAggiornare.getEmail()));
+		nuovoMedico.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
+		nuovoMedico.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
+		nuovoMedico.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+		medici.updateOne(searchQuery, nuovoMedico);
+	}
 }
