@@ -77,7 +77,6 @@ public class GestioneAmministratore extends HttpServlet {
 					System.out.println("Errore in gestione parametri:");
 					e.printStackTrace();		
 				}
-				
 				return;	
 	}
 
