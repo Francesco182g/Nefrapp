@@ -42,13 +42,15 @@ public class GestioneParametri extends HttpServlet {
 			if(operazione.equals("inserisciScheda")) {
 				// Valutare la possibilitÃƒÂ  di inserire flag di controllo anche se questo ÃƒÂ¨
 				// l'unico metodo eseguito da una post request
-				inserisciParametri(request.getParameter("PazienteCodiceFiscale"), request.getParameter("Peso"),
+				HttpSession session=request.getSession();
+				Paziente pazienteLoggato= (Paziente) session.getAttribute("paziente");
+				inserisciParametri(pazienteLoggato.getCodiceFiscale(), request.getParameter("Peso"),
 						request.getParameter("PaMin"), request.getParameter("PaMax"),
 						request.getParameter("ScaricoIniziale"), request.getParameter("UF"),
 						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
 						request.getParameter("Carico"));
 
-				response.sendRedirect(request.getContextPath() + "dashboard.jsp");
+				response.sendRedirect(request.getContextPath() + "/monitoraggioParametriView.jsp");
 			}
 			//Download report
 			else if(operazione.equals("")) {
