@@ -11,6 +11,12 @@ import bean.Medico;
 import bean.Paziente;
 import utility.CreaBeanUtility;
 
+/**
+ * 
+ * @author Luca Esposito
+ * 
+ */
+
 public class MedicoModel {
 
 	/**
