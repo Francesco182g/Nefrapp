@@ -1,18 +1,12 @@
 package model;
 
 import static com.mongodb.client.model.Filters.eq;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bson.Document;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
-
 import bean.Amministratore;
-import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
 
 /**
@@ -71,4 +65,19 @@ public class AmministratoreModel {
 		amministratore.updateOne(searchQuery, nuovoAmministratore);
 	}
 	
+	/**
+	 * Query che ricerca l'amministratore per codice fiscale
+	 * @param codiceFiscale dell'amministratore
+	 * @return amministratore se trovato, altrimenti null
+	 */
+	public static Amministratore getAmministratoreByCF(String codiceFiscale) {
+		
+		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
+		Amministratore admin = null;
+		Document datiAmministratore = amministratore.find(eq("CodiceFiscale", codiceFiscale)).first();
+		if(datiAmministratore != null)
+			admin = CreaBeanUtility.daDocumentAdAmministratore(datiAmministratore);
+		
+		return admin;
+	}
 }
