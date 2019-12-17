@@ -2,6 +2,7 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import bean.Amministratore;
-import bean.Medico;
+import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
 
 /**
@@ -51,11 +52,23 @@ public class AmministratoreModel {
 	 * @return password dell'amministratore
 	 */
 	public static String getPassword(String codiceFiscale) {
-		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
-		Amministratore admin = null;
-		Document datiAmministratore = amministratore.find(eq("CodiceFiscale", codiceFiscale)).first();
+		MongoCollection<Document> amministratori = DriverConnection.getConnection().getCollection("Amministratore");
+		Document datiAmministratore = amministratori.find(eq("CodiceFiscale", codiceFiscale)).first();
 		String password=datiAmministratore.getString("Password");
 		return password;
 	}
 	
+	/**
+	 * Query che aggiorna l'amministratore
+	 * @param daAggiornare amministratore
+	 * @param password aggiornata
+	 */
+	public static void updateAmministratore(String daAggiornare,String password) {
+		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
+		BasicDBObject nuovoAmministratore = new BasicDBObject();
+		nuovoAmministratore.append("$set", new Document().append("Password", password));
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
+		amministratore.updateOne(searchQuery, nuovoAmministratore);
+	}
+		
 }
