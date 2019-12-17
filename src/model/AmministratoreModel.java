@@ -1,5 +1,7 @@
 package model;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +11,12 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import bean.Amministratore;
+import bean.Medico;
 import utility.CreaBeanUtility;
 
 /**
  * 
- * @author Eugenio Corbisiero
+ * @author Luca Esposito, Eugenio Corbisiero
  * Questa classe è un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti l'amministratore
  */
@@ -41,4 +44,18 @@ public class AmministratoreModel {
 		}
 		return amministratore;
 	}
+	
+	/**
+	 * Query che ricerca la password dell'amministratore
+	 * @param codiceFiscale dell'amministratore
+	 * @return password dell'amministratore
+	 */
+	public static String getPassword(String codiceFiscale) {
+		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
+		Amministratore admin = null;
+		Document datiAmministratore = amministratore.find(eq("CodiceFiscale", codiceFiscale)).first();
+		String password=datiAmministratore.getString("Password");
+		return password;
+	}
+	
 }
