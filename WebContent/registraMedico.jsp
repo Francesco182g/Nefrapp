@@ -24,7 +24,7 @@
    	 	<script src="../js/ParameterControl.js"></script>	
    	 	
    	 	<c:if test='${empty sessionScope.amministratore}'>
-			<c:redirect url = "/view/loginAmministratore.jsp"/>
+			<c:redirect url = "/loginAmministratore.jsp"/>
 		</c:if>
 	</head>
 
@@ -80,6 +80,18 @@
                     								</div>
                     								<br>	
                   							</div>
+                  							<div class="form-group row col-lg-12">
+                  							Data di nascita:
+							                  <input type="date" class="form-control form-control-user" name="dataDiNascita" id="dataDiNascita" placeholder="Data di nascita">
+							                </div>
+							                <div class="form-group row col-lg-12">
+                  							Luogo di Nascita:
+							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita" placeholder="Luogo di nascita" min="5" max="50" maxlength="50">
+							                </div>
+							                <div class="form-group row col-lg-12">
+                  							Residenza:
+							                  <input type="text" class="form-control form-control-user" name="residenza" min="5" max="50" maxlength="50">
+							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
 							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50" maxlength="50">

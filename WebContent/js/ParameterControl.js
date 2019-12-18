@@ -95,15 +95,21 @@
 	function checkValidityRegistrazioneMedico() {
 		var valido=[true];
 		var expCodiceFiscale=new RegExp("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$");
-		var expNome=RegExp("^[A-Z][a-zA-Z ]*$");
-		var expCognome=RegExp("^[A-Z][a-zA-Z ]*$");
+		var expNome=RegExp("^[A-Z][a-zA-Z ']*$");
+		var expCognome=RegExp("^[A-Z][a-zA-Z ']*$");
 		var expSesso=RegExp("^[MF]$");
+		var expDataDiNascita=RegExp("^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$");
+		var expLuogoDiNascita=RegExp("^[A-Z][a-zA-Z ']*$");
+		var expResidenza=RegExp("^[A-Z][a-zA-Z ']*$");
 		var expEmail=RegExp("^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$");
 		var expPassword=RegExp("^[a-zA-Z0-9]*$");
 		var codiceFiscale = $("#codiceFiscale").val();
 		var nome = $("#nome").val();
 		var cognome = $("#cognome").val();
 		var sesso = $("input[name='sesso']:checked").val();
+		var dataDiNascita = $("#dataDiNascita").val();
+		var luogoDiNascita = $("#luogoDiNascita").val();
+		var residenza = $("#residenza").val();
 		var email = $("#email").val();
 		var password = $("#password").val();
 		
@@ -120,6 +126,16 @@
 		else if (!expEmail.test(email))
 			valido=[false,"formato email non valido"];
 		
+		if(dataDiNascita.length!=0)
+			if (!expDataDiNascita.test(dataDiNascita))
+				valido=[false,"formato data di nascita non valido"];
+		else if (luogoDiNascita.length!=0)
+			if (!expLuogoDiNascita.test(luogoDiNascita))
+				valido=[false,"formato luogo di nascita non valido"];
+		else if (residenza.length!=0)
+			if (!expResidenza.test(residenza))
+				valido=[false,"formato residenza non valido"];
+				
 		return valido;
 	}
 	/**

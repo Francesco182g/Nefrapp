@@ -82,12 +82,16 @@
 							                  <input type="date" class="form-control form-control-user" name="dataDiNascita" id="dataDiNascita" placeholder="Data di nascita" required="required">
 							                </div>
 							                <div class="form-group row col-lg-12">
+                  							Luogo di Nascita:
+							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita" placeholder="Luogo di nascita" required="required" min="5" max="50" maxlength="50">
+							                </div>
+							                <div class="form-group row col-lg-12">
                   							Residenza:
 							                  <input type="text" class="form-control form-control-user" name="residenza" id="residenza" placeholder="Residenza" required="required" min="5" max="50" maxlength="50">
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
-							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50" maxlength="50">
+							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email"  min="6" max="50" maxlength="50">
 							                </div>
 							                <div class="form-group row col-lg-12">
 							                Password:
