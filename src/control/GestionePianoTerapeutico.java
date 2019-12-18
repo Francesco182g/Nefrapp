@@ -65,10 +65,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	 */
 	private void visualizzaPiano(HttpServletRequest request, HttpServletResponse response) {
 		PianoTerapeutico pianoTerapeutico = null;
-		HttpSession session;
-		session = request.getSession();
-		Paziente paziente = (Paziente)session.getAttribute("paziente");
-		String codiceFiscalePaziente = paziente.getCodiceFiscale();
+		String codiceFiscalePaziente = request.getParameter("CFPaziente");
 		
 		pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
 		request.setAttribute("pianoTerapeutico", pianoTerapeutico);
