@@ -21,7 +21,7 @@ import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 /**
  * 
- * @author Eugenio Corbisiero, Davide Benedetto Strianese
+ * @author Eugenio Corbisiero, Davide Benedetto Strianese, Silvio Di Martino
  * Questa classe � una servlet che si occupa della gestione dell'accesso al sistema
  *
  */
@@ -116,6 +116,7 @@ public class GestioneAccesso extends HttpServlet {
 			Cookie[] cookies = request.getCookies();
 			
 			if(cookies != null){
+
 				for(Cookie cookie: cookies){
 					if(cookie.getName().equals("pazienteID")){
 						idPaziente = cookie.getValue();
@@ -147,6 +148,10 @@ public class GestioneAccesso extends HttpServlet {
 					response.sendRedirect("login.jsp");
 				}
 			}
+			
+			else {
+				response.sendRedirect("login.jsp");
+			}
 		}
 			
 		else { 
@@ -168,6 +173,9 @@ public class GestioneAccesso extends HttpServlet {
 				else {
 					response.sendRedirect("login.jsp");
 				}
+			}
+			else {
+				response.sendRedirect("login.jsp");
 			}
 		}
 	}
