@@ -1,10 +1,12 @@
 package model;
 import static com.mongodb.client.model.Filters.eq;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-
+import com.mongodb.client.model.Filters;
 import bean.SchedaParametri;
 import utility.CreaBeanUtility;
 
@@ -25,6 +27,12 @@ public class SchedaParametriModel {
 		return schedeParametri;
 	}
 
+	
+	/**
+	 * 
+	 * Query che aggiunge una scheda parametri al database
+	 * @param daAggiungere scheda da aggiungere
+	 */
 	public static void addSchedaParametri(SchedaParametri daAggiungere) 
 	{
 		MongoCollection<Document> scheda = DriverConnection.getConnection().getCollection("SchedaParametri");
@@ -41,4 +49,27 @@ public class SchedaParametriModel {
 				.append("Data", daAggiungere.getData());
 		scheda.insertOne(doc);	
 	}
+	
+	
+	/**
+	 * 
+	 * Query che prende tutte le schede per un dato range di date di un paziente
+	 * @param codiceFiscalePaziente codice fiscale del paziente di cui si vuole ottenere il report
+	 * @param dataInizio data di inizio da cui generare il report
+	 * @param dataFine data di fine da cui generare il report
+	 * @return ArrayList contenente tutte le schede del report richiest
+	 */
+	public static ArrayList<SchedaParametri> getReportByPaziente(String codiceFiscalePaziente, LocalDate dataInizio, LocalDate dataFine){
+		
+		MongoCollection<Document> schedeParametriDB = DriverConnection.getConnection().getCollection("SchedaParametri");
+		ArrayList<SchedaParametri> schedeParametri = new ArrayList<SchedaParametri>();
+		MongoCursor<Document> documenti = schedeParametriDB.find(Filters.and(Filters.gte("Data", dataInizio), Filters.lte("Data",  dataFine), Filters.eq("PazienteCodiceFiscale", codiceFiscalePaziente))).iterator();
+		while(documenti.hasNext()) {
+			schedeParametri.add(CreaBeanUtility.daDocumentASchedaParametri(documenti.next()));
+		}
+		return schedeParametri;
+	}
+	
+
+	
 }

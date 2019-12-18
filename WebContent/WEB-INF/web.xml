@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <display-name>Nefrapp</display-name>
   <welcome-file-list>
-    <welcome-file>/view/index.jsp</welcome-file>
+    <welcome-file>/dashboard.jsp</welcome-file>
   </welcome-file-list>
   
     
@@ -14,5 +14,15 @@
   <servlet-mapping>
     <servlet-name>GestioneParametri</servlet-name>
     <url-pattern>/parametri</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>GestionePianoTerapeutico</servlet-name>
+    <servlet-class>control.GestionePianoTerapeutico</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>GestionePianoTerapeutico</servlet-name>
+    <url-pattern>/piano</url-pattern>
   </servlet-mapping>
 </web-app>
