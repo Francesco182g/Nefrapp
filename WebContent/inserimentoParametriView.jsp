@@ -23,7 +23,7 @@
 <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
 <!-- Script per l'inserimento -->
-<script type="text/javascript" src="js/inserimentoControl.js"></script>
+<script type="text/javascript" src="/js/inserimentoControl.js"></script>
 </head>
 
 <body id="page-top">
