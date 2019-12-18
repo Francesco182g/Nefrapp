@@ -1,19 +1,15 @@
 package control;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
@@ -72,7 +68,7 @@ public class GestioneRegistrazione extends HttpServlet {
 									if(PazienteModel.getPazienteByCF(codiceFiscale) != null) {
 										Paziente paziente = PazienteModel.getPazienteByCF(codiceFiscale);
 										paziente.addMedico(medicoLoggato.getCodiceFiscale());
-										PazienteModel.updatePaziente(paziente);
+										PazienteModel.updateMediciDelPaziente(paziente);
 									}else {
 										//TODO gestione errore nel caso in cui paziente non registrato
 									}
@@ -114,7 +110,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			
 			if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
 				//TODO controllare esistenza all'interno del db
-				Medico medico = new Medico(sesso, "", null, codiceFiscale, nome, cognome, email);
+				Medico medico = new Medico(sesso, "", null, codiceFiscale, nome, cognome, email,"");
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
 				MedicoModel.addMedico(medico, password);
 			}else {
@@ -134,11 +130,12 @@ public class GestioneRegistrazione extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = AlgoritmoCriptazioneUtility.criptaConMD5(request.getParameter("password"));
 			String residenza = request.getParameter("residenza");
+			String luogoDiNascita=request.getParameter("luogoDiNascita");
 			String dataDiNascita = request.getParameter("dataDiNascita");
 			Paziente paziente = null;
 			
 			if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
-					paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, LocalDate.parse(dataDiNascita), true, medici);
+					paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita), true, medici);
 					PazienteModel.addPaziente(paziente,password);
 			}else {
 				System.out.print("errore");
