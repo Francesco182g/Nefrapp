@@ -29,10 +29,12 @@
 	</head>
 
 	<body id="page-top">
+	<script>
+	</script>
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
 			<%@include file="./includes/sidebar.jsp" %>		
-	
+				
 	        <!-- Content Wrapper -->
 	        <div id="content-wrapper" class="d-flex flex-column">
 	
@@ -53,7 +55,7 @@
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
 							              <form class="user" method="post"  action="./GestioneRegistrazione">
-							                <p>Hello ${param.notifica}!</p>
+							                <%-- if/else condition --%>
 							                <input type="hidden" name="operazione" value="registraMedico">
 							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:

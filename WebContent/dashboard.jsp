@@ -11,6 +11,7 @@
 		<title>Nefrapp</title>
     	
     	<!-- Custom fonts for this template-->
+    	<script src="./vendor/jquery/jquery.min.js"></script>
     	
 	</head>
 	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -19,6 +20,7 @@
 	<body id="page-top">
 		<!-- session attribute -->
 		<c:set var="paziente" value='${sessionScope["paziente"]}'/>
+		<c:set var="amministratore" value='${sessionScope.amministratore}'/>
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
 			<%@include file="../includes/sidebar.jsp" %>		
@@ -33,7 +35,9 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-	
+						<c:if test="${not empty amministratore}">
+							<script src="./js/loadObject.js" ></script>	
+						</c:if>	
 	
 							  <div class="container login">
 							
