@@ -68,7 +68,7 @@ public class GestioneRegistrazione extends HttpServlet {
 									if(PazienteModel.getPazienteByCF(codiceFiscale) != null) {
 										Paziente paziente = PazienteModel.getPazienteByCF(codiceFiscale);
 										paziente.addMedico(medicoLoggato.getCodiceFiscale());
-										PazienteModel.updateMediciDelPaziente(paziente);
+										PazienteModel.updatePaziente(paziente);
 									}else {
 										//TODO gestione errore nel caso in cui paziente non registrato
 									}
@@ -107,12 +107,21 @@ public class GestioneRegistrazione extends HttpServlet {
 			String sesso = request.getParameter("sesso");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
+			String residenza = request.getParameter("residenza");
+			String luogoDiNascita=request.getParameter("luogoDiNascita");
+			String dataDiNascita = request.getParameter("dataDiNascita");
 			
-			if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
-				//TODO controllare esistenza all'interno del db
-				Medico medico = new Medico(sesso, "", null, codiceFiscale, nome, cognome, email,"");
-				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
-				MedicoModel.addMedico(medico, password);
+			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
+				if(MedicoModel.getMedicoByCF(codiceFiscale)==null) {
+					Medico medico = new Medico(sesso, residenza, null, codiceFiscale, nome, cognome, email,luogoDiNascita);
+					if(!dataDiNascita.equals("")) {
+						medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
+					}
+					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
+					MedicoModel.addMedico(medico, password);
+				}else {
+					//TODO gestione medico già presente nel DB
+				}
 			}else {
 			//TODO gestione errore validazione
 			return;
@@ -126,17 +135,17 @@ public class GestioneRegistrazione extends HttpServlet {
 			String nome = request.getParameter("nome");
 			String cognome = request.getParameter("cognome");
 			String sesso = request.getParameter("sesso");
-			System.out.println(sesso);
 			String email = request.getParameter("email");
-			String password = AlgoritmoCriptazioneUtility.criptaConMD5(request.getParameter("password"));
+			String password = request.getParameter("password");
 			String residenza = request.getParameter("residenza");
 			String luogoDiNascita=request.getParameter("luogoDiNascita");
 			String dataDiNascita = request.getParameter("dataDiNascita");
 			Paziente paziente = null;
 			
-			if (validazione(codiceFiscale, nome, cognome, sesso, email, password)) {
-					paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita), true, medici);
-					PazienteModel.addPaziente(paziente,password);
+			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
+				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita), true, medici);
+				PazienteModel.addPaziente(paziente,password);
 			}else {
 				System.out.print("errore");
 				//TODO gestire caso di errore di validazione
@@ -149,14 +158,17 @@ public class GestioneRegistrazione extends HttpServlet {
 	
 	
 	
-	private boolean validazione(String codiceFiscale, String nome, String cognome,String sesso, String email,String password) {
+	private boolean validazione(String codiceFiscale, String nome, String cognome,String sesso, String email,String password,String residenza,String luogoDiNascita,String dataDiNascita) {
 		boolean valido = true;
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String expNome = "^[A-Z][a-zA-Z ]*$";
-		String expCognome = "^[A-Z][a-zA-Z ]*$";
+		String expNome = "^[A-Z][a-zA-Z ']*$";
+		String expCognome = "^[A-Z][a-zA-Z ']*$";
 		String expSesso = "^[MF]$";
 		String expEmail = "^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
 		String expPassword = "^[a-zA-Z0-9]*$";
+		String expResidenza= "^[A-Z][a-zA-Z ']*$";
+		String expLuogoDiNascita= "^[A-Z][a-zA-Z ']*$";
+		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 		
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
 			valido = false;
@@ -168,8 +180,18 @@ public class GestioneRegistrazione extends HttpServlet {
 			valido = false;
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
 			valido = false;
-		if (!Pattern.matches(expEmail, email))
-			valido = false;
+		if(!email.equals(""))
+			if (!Pattern.matches(expEmail, email))
+				valido = false;
+		if(!residenza.equals(""))
+			if(!Pattern.matches(expResidenza, residenza))
+				valido=false;
+		if(!luogoDiNascita.equals(""))
+			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
+				valido=false;
+		if(!dataDiNascita.equals(""))
+			if(!Pattern.matches(expDataDiNascita, dataDiNascita))
+				valido=false;
 		return valido;
 	}
 }
