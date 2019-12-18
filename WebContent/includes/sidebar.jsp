@@ -108,7 +108,7 @@
         </c:when>
          <c:when test='${amministratore!=null}'>
          <li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="./registraMedico.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Registra Medico</span></a>
         </li>

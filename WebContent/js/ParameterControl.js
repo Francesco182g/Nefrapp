@@ -5,7 +5,6 @@
   "use strict"; // Start of use strict
   var sub = false
   $(document).ready(function(){
-	  checkNotification()
 	  var button1 = $("#registrazioneMedicoButton")
 	  var button2 = $("#accediAdminButton") 
 	  var button3 = $("#loginUtente")
@@ -30,10 +29,12 @@
    */
 	function registraMedicoValidator(){
 		$("#registrazioneMedicoButton").click(function(){
+			console.log("sono qui")
 			var valid = checkValidityRegistrazioneMedico();
 			if (!valid [0])
 				{
 					sub = false;
+					console.log(valid[1])
 					alert(valid[1])
 				}
 			else
@@ -130,10 +131,10 @@
 			if (!expDataDiNascita.test(dataDiNascita))
 				valido=[false,"formato data di nascita non valido"];
 		else if (luogoDiNascita.length!=0)
-			if (!expLuogoDiNascita.test(luogoDiNascita))
+			if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
 				valido=[false,"formato luogo di nascita non valido"];
 		else if (residenza.length!=0)
-			if (!expResidenza.test(residenza))
+			if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
 				valido=[false,"formato residenza non valido"];
 				
 		return valido;
@@ -156,17 +157,8 @@
 		return valido;
 	}
 	
-	function checkNotification()
-	{
-		var notifica = $("#notifica").val()
-		if (notifica.length>0)
-			{
-				alert(notifica)
-			}
-	}
 	
-  
-
+ 
 })(jQuery); // End of use strict
 
 	
