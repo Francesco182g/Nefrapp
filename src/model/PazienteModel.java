@@ -82,23 +82,7 @@ public class PazienteModel {
 				.append("Email", daAggiungere.getEmail());
 		paziente.insertOne(doc);	
 	}
-	
-	/**
-	 * Query che aggiorna i medici di un paziente
-	 * @param daAggiornare paziente a cui aggiornare i medici
-	 */
-	public static void updateMediciDelPaziente(Paziente daAggiornare) {
-		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
 		
-		BasicDBObject nuovoPaziente = new BasicDBObject();
-		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
-
-		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
-
-		paziente.updateOne(searchQuery, nuovoPaziente);
-		
-	}
-	
 	/**
 	 * Query che ricerca un paziente per codice fiscale
 	 * @param codiceFiscale del paziente da ricercare
@@ -191,6 +175,7 @@ public class PazienteModel {
 		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
 		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
 		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
+		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
 		pazienti.updateOne(searchQuery, nuovoPaziente);
 	}

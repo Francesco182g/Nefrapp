@@ -50,7 +50,7 @@ public class GestioneParametri extends HttpServlet {
 						request.getParameter("TempoSosta"), request.getParameter("Scarico"), 
 						request.getParameter("Carico"));
 
-				response.sendRedirect(request.getContextPath() + "/monitoraggioParametriView.jsp");
+				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
 			}
 			//Download report
 			else if(operazione.equals("")) {

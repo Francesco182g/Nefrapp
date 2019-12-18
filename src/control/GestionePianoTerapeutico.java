@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Paziente;
 import bean.PianoTerapeutico;
-import model.PianoTerapeuticoModel;
+
 /**
  * 
  * @author Davide Benedetto Strianese
@@ -61,13 +61,13 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	 * @param request
 	 * @param response
 	 * 
-	 * @author nico
+	 * @author Domenico Musone
 	 */
 	private void visualizzaPiano(HttpServletRequest request, HttpServletResponse response) {
 		PianoTerapeutico pianoTerapeutico = null;
 		String codiceFiscalePaziente = request.getParameter("CFPaziente");
 		
-		pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
+		//pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
 		request.setAttribute("pianoTerapeutico", pianoTerapeutico);
 	}
 	

@@ -42,7 +42,8 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente (Nome, cognome) </h1>
+          <c:set var="paziente" value='${sessionScope["paziente"]}'/>
+          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente ${paziente.nome} ${paziente.cognome} </h1>
           
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
