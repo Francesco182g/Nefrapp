@@ -1,18 +1,19 @@
 package control;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import bean.Paziente;
 import bean.PianoTerapeutico;
+import model.PianoTerapeuticoModel;
 /**
  * 
  * @author Davide Benedetto Strianese
- * Questa classe è una servlet che si occupa della gestione del piano terapeutico
+ * Questa classe Ã¨ una servlet che si occupa della gestione del piano terapeutico
  */
 @WebServlet("/GestionePianoTerapeutico")
 public class GestionePianoTerapeutico extends HttpServlet {
@@ -28,21 +29,15 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			}
 			
 			String operazione = request.getParameter("operazione");
-			String codiceFiscalePaziente = request.getParameter("CFPaziente");
 			
 			if(operazione.equals("visualizza")) {
-				PianoTerapeutico pianoTerapeutico = null;
-				
-				//TODO query per prendere il piano terapeutico del paziente
-				//pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByCF(codiceFiscalePaziente); controllare nome metodo sull'ODD
-				
-				request.setAttribute("pianoTerapeutico", pianoTerapeutico);
+				visualizzaPiano(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
 				requestDispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("modifica")) {
-				//TODO modifica piano terapeutico
+				modificaPiano(request, response);
 			}
 			
 			//prova, TODO eliminare
@@ -60,5 +55,26 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 		doGet(request, response);
 		return;
+	}
+	
+	/**Questo metodo richiama dal database il piano terapeutico del paziente che ne ha richiesto la visualizzazione.
+	 * @param request
+	 * @param response
+	 * 
+	 * @author nico
+	 */
+	private void visualizzaPiano(HttpServletRequest request, HttpServletResponse response) {
+		PianoTerapeutico pianoTerapeutico = null;
+		HttpSession session;
+		session = request.getSession();
+		Paziente paziente = (Paziente)session.getAttribute("paziente");
+		String codiceFiscalePaziente = paziente.getCodiceFiscale();
+		
+		pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
+		request.setAttribute("pianoTerapeutico", pianoTerapeutico);
+	}
+	
+	private void modificaPiano(HttpServletRequest request, HttpServletResponse response) {
+		
 	}
 }
