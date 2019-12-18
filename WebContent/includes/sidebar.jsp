@@ -61,7 +61,7 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href='./GestionePianoTerapeutico?operazione=visualizza&CFPaziente=${sessionScope["paziente"].codiceFiscale}'>
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Piano Terapeutico</span></a>
         </li>

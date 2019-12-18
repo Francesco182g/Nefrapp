@@ -46,7 +46,7 @@
 	                	
 	                	<c:set var="pianoTerapeutico" value='${requestScope["pianoTerapeutico"]}'/>
 	                	
-	                	<c:when test='${pianoTerapeutico != null}'>
+	                	<c:if test='${pianoTerapeutico != null}'>
 	                	<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Diagnosi</h6>
@@ -73,15 +73,15 @@
                   				<p class="mb-0">${pianoTerapeutico.dataFineTerapia}</p>
                   			</div>
               			</div>
-              			</c:when>
+              			</c:if>
               			
-              			<c:when test='${pianoTerapeutico == null}'>
+              			<c:if test='${pianoTerapeutico == null}'>
               			<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h3 class="m-0 font-weight-bold text-primary">Piano terapeutico non presente</h3>
                 			</div>
                 		</div>
-              			</c:when>
+              			</c:if>
 	
 	                </div>
 	                <!-- /.container-fluid -->

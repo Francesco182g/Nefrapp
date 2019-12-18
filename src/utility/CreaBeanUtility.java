@@ -117,7 +117,7 @@ public class CreaBeanUtility {
 		piano.setCodiceFiscalePaziente(datiPiano.getString("PazienteCodiceFiscale"));
 		piano.setDiagnosi(datiPiano.getString("Diagnosi"));
 		piano.setFarmaco(datiPiano.getString("Farmaco"));
-		Date temp = datiPiano.getDate("Data");
+		Date temp = datiPiano.getDate("FineTerapia");
 		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		piano.setDataFineTerapia(data);
 
