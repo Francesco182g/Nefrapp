@@ -12,16 +12,16 @@
 		<title>Pagina bianca</title>
     	
     	<!-- Custom fonts for this template-->
-    	<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     	<!-- Custom styles for this template-->
-   	 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+   	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">
    	 	
-   	 	<script src="../vendor/jquery/jquery.min.js"></script>
+   	 	<script src="./vendor/jquery/jquery.min.js"></script>
    	 	
    	 	<!-- Script per la registrazione -->
-   	 	<script src="../js/ParameterControl.js"></script>	
+   	 	<script src="./js/ParameterControl.js"></script>	
    	 	
    	 	<c:if test='${empty sessionScope.amministratore}'>
 			<c:redirect url = "/loginAmministratore.jsp"/>
@@ -31,14 +31,14 @@
 	<body id="page-top">
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
-			<%@include file="../includes/sidebar.jsp" %>		
+			<%@include file="./includes/sidebar.jsp" %>		
 	
 	        <!-- Content Wrapper -->
 	        <div id="content-wrapper" class="d-flex flex-column">
 	
 	            <!-- Main Content -->
 	            <div id="content">
-					<%@include file="../includes/header.jsp" %>
+					<%@include file="./includes/header.jsp" %>
 	
 	
 	                <!-- Begin Page Content -->
@@ -52,7 +52,8 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
-							              <form class="user" method="post"  action="../GestioneRegistrazione">
+							              <form class="user" method="post"  action="./GestioneRegistrazione">
+							                <p>Hello ${param.notifica}!</p>
 							                <input type="hidden" name="operazione" value="registraMedico">
 							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:
@@ -90,7 +91,7 @@
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Residenza:
-							                  <input type="text" class="form-control form-control-user" name="residenza" min="5" max="50" maxlength="50">
+							                  <input type="text" class="form-control form-control-user" name="residenza" placeholder="Residenza" min="5" max="50" maxlength="50" >
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
@@ -121,7 +122,7 @@
 	            </div>
 	            <!-- End of Main Content -->
 	           </div>
-				<%@include file="../includes/footer.jsp" %>	
+				<%@include file="./includes/footer.jsp" %>	
 	        
 	        <!-- End of Content Wrapper -->
 	

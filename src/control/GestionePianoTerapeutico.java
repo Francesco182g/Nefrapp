@@ -19,7 +19,6 @@ import model.PianoTerapeuticoModel;
  * @author Davide Benedetto Strianese
  * Questa classe è una servlet che si occupa della gestione del piano terapeutico
  */
-@WebServlet("/GestionePianoTerapeutico")
 public class GestionePianoTerapeutico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

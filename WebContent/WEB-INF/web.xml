@@ -15,4 +15,14 @@
     <servlet-name>GestioneParametri</servlet-name>
     <url-pattern>/parametri</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>GestionePianoTerapeutico</servlet-name>
+    <servlet-class>control.GestionePianoTerapeutico</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>GestionePianoTerapeutico</servlet-name>
+    <url-pattern>/piano</url-pattern>
+  </servlet-mapping>
 </web-app>

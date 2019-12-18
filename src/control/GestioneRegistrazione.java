@@ -1,10 +1,12 @@
 package control;
 
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,11 +50,11 @@ public class GestioneRegistrazione extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			String operazione = request.getParameter("operazione");
-			
+			System.out.println(operazione);
 			if(operazione.equals("registraMedico")) {
 				Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
 				if(amministratore != null) {
-					registraMedico(request);
+					registraMedico(request,response);
 				}
 			}else if(operazione.equals("registraPazienteMedico")) { //registrazione paziente per il medico
 					Medico medicoLoggato = (Medico) session.getAttribute("medico");
@@ -99,7 +101,7 @@ public class GestioneRegistrazione extends HttpServlet {
 		return;
 	}
 	
-	private void registraMedico(HttpServletRequest request) {
+	private void registraMedico(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		
 			String codiceFiscale = request.getParameter("codiceFiscale");
 			String nome = request.getParameter("nome");
@@ -120,7 +122,11 @@ public class GestioneRegistrazione extends HttpServlet {
 					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
 					MedicoModel.addMedico(medico, password);
 				}else {
-					//TODO gestione medico già presente nel DB
+					//TODO gestione medico giï¿½ presente nel DB
+					System.out.println();
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
+					request.setAttribute("notifica","Medico giÃ  presente");
+					requestDispatcher.forward(request,response);
 				}
 			}else {
 			//TODO gestione errore validazione

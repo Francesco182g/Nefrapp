@@ -61,7 +61,7 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href='./GestionePianoTerapeutico?operazione=visualizza&CFPaziente=${sessionScope["paziente"].codiceFiscale}'>
+            <a class="nav-link" href='./piano?operazione=visualizza&CFPaziente=${sessionScope["paziente"].codiceFiscale}'>
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Visualizza Piano Terapeutico</span></a>
         </li>
@@ -108,7 +108,7 @@
         </c:when>
          <c:when test='${amministratore!=null}'>
          <li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="./registraMedico.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Registra Medico</span></a>
         </li>
