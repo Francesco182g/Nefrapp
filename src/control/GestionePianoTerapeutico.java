@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Paziente;
 import bean.PianoTerapeutico;
+import model.PianoTerapeuticoModel;
 
 /**
  * 
@@ -67,7 +68,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 		PianoTerapeutico pianoTerapeutico = null;
 		String codiceFiscalePaziente = request.getParameter("CFPaziente");
 		
-		//pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
+		pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
 		request.setAttribute("pianoTerapeutico", pianoTerapeutico);
 	}
 	
