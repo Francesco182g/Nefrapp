@@ -5,6 +5,7 @@
   "use strict"; // Start of use strict
   var sub = false
   $(document).ready(function(){
+	  checkNotifica();
 	  var button1 = $("#registrazioneMedicoButton")
 	  var button2 = $("#accediAdminButton") 
 	  var button3 = $("#loginUtente")
@@ -113,7 +114,6 @@
 		var residenza = $("#residenza").val();
 		var email = $("#email").val();
 		var password = $("#password").val();
-		alert(dataDiNascita)
 			
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
 			valido=[false,"formato codiceFiscale non valido"];
@@ -158,6 +158,13 @@
 		return valido;
 	}
 	
+	function checkNotifica(){
+		var notifica = $("#notifica").val()
+		if(notifica.length!=0)
+			{
+				alert(notifica)
+			}
+	}
 	
  
 })(jQuery); // End of use strict

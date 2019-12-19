@@ -17,21 +17,20 @@
 
     	<!-- Custom styles for this template-->
    	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">
-   	 	
-   	 	<script src="./vendor/jquery/jquery.min.js"></script>
-   	 	
+   	 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   	 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
    	 	<!-- Script per la registrazione -->
    	 	<script src="./js/ParameterControl.js"></script>	
+   	 	<script src="./js/dataPicker.js"></script>
    	 	
    	 	<c:if test='${empty sessionScope.amministratore}'>
 			<c:redirect url = "/loginAmministratore.jsp"/>
 		</c:if>
-		<c:param name="notifica" value="${requestScope.notifica }"></c:param>
+		
 	</head>
 
 	<body id="page-top">
-	<script>
-	</script>
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
 			<%@include file="./includes/sidebar.jsp" %>		
@@ -55,10 +54,9 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
-							              <form class="user" method="post"  action="./GestioneRegistrazione">
-											
-							                <input type="hidden" name="operazione" value="registraMedico">
-							                <div class="form-group row col-lg-12">
+							              <form class="user" method="post"  action="./GestioneRegistrazione?operazione=registraMedico">
+											<input type="hidden" id="notifica" value="${requestScope.notifica}">
+											<div class="form-group row col-lg-12">
 							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
@@ -86,7 +84,7 @@
                   							</div>
                   							<div class="form-group row col-lg-12">
                   							Data di nascita:
-							                  <input type="date" class="form-control form-control-user" name="dataDiNascita" id="dataDiNascita" placeholder="Data di nascita">
+							                  <input type="text" class="form-control form-control-user" id="dataDiNascita" name="dataDiNascita" placeholder="DD-MM-YYYY" autocomplete="off">
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Luogo di Nascita:
@@ -114,7 +112,7 @@
 							            </div>
 							          </div>
 							        </div>
-							        <input type="hidden" name="notifica" value="registraMedico">
+							        
 							      </div>
 							    </div>
 						

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,12 +17,16 @@
 
     	<!-- Custom styles for this template-->
    	 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+   	 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
    	 	
-   	 	<script src="vendor/jquery/jquery.min.js"></script>
    	 	
    	 	<!-- Script per la registrazione -->
    	 	<script src="js/ParameterControl.js"></script>
    	 	<script src="js/registrazione.js"></script>
+   	 	
+   	 	
+   	 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
    	 	<!--  aggiungere i controlli per questo form -->
    	 	<script src="./js/dataPicker.js"></script>
    	 	
@@ -52,6 +57,7 @@
 							                <h1 class="h4 text-gray-900 mb-4">Registra Paziente</h1>
 							              </div>
 							              <form class="user" method="post"  action="./GestioneRegistrazione?operazione=registraPazienteMedico">
+							                <input type="hidden" id="notifica" value="${requestScope.notifica }">
 							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
@@ -110,6 +116,7 @@
                     								</div>
                     								<br>	
                   							</div>
+                  							
 							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
 							                	<button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">Registra Paziente</button>
 							               </div>
