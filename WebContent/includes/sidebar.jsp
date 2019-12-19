@@ -67,9 +67,9 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./inserimentoMessaggioView.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Invia Foto</span></a>
+                <span>Invia Messaggio</span></a>
         </li>
         </c:when>
        
@@ -94,7 +94,7 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="../parametri?operazione=visualizzaScheda">
+            <a class="nav-link" href="./inserimentoMessaggioView.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Messaggi</span></a>
         </li>
