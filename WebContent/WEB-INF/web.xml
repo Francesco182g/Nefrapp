@@ -25,4 +25,14 @@
     <servlet-name>GestionePianoTerapeutico</servlet-name>
     <url-pattern>/piano</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>GestioneMessaggi</servlet-name>
+    <servlet-class>control.GestioneMessaggi</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>GestioneMessaggi</servlet-name>
+    <url-pattern>/messaggi</url-pattern>
+  </servlet-mapping>
 </web-app>

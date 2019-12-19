@@ -56,22 +56,22 @@
 														aria-labelledby="dropdownMenuButton">
 														<!--<c:set var="dottori" value='${paziente.medici}'/>-->
 														<!--<c:forEach items="${dottori}" var="item">-->
-														<a class="dropdown-item" href="#">Medico1</a> <a
-															class="dropdown-item" href="#">Medico2</a> <a
-															class="dropdown-item" href="#">Medico3</a>
+														<a class="dropdown-item" href="#">${item.nome} ${item.cognome}</a> 
 														<!--</c:forEach>-->	
 													</div>
 												</c:when>
 												<c:when test='${medico!=null}'>
+												<!--<c:set var="pazienti" value='${requestScope[pazientiSeguiti]}'/>-->
 													<button class="btn btn-secondary dropdown-toggle"
 														type="button" id="dropdownMenuButton"
 														data-toggle="dropdown" aria-haspopup="true"
 														aria-expanded="false">Elenco Pazienti</button>
 													<div class="dropdown-menu"
 														aria-labelledby="dropdownMenuButton">
-														<a class="dropdown-item" href="#">Assegno1</a> <a
-															class="dropdown-item" href="#">Assegno2</a> <a
-															class="dropdown-item" href="#">Assegno3</a>
+												<!--<c:forEach items="${pazienti}" var="item">
+														<a class="dropdown-item" href="#">${item.nome} ${item.cognome}</a>
+												</c:forEach>-->
+														 
 													</div>
 												</c:when>
 											</c:choose>

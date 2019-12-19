@@ -67,7 +67,7 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="./inserimentoMessaggioView.jsp">
+            <a class="nav-link" href="./messaggi?operazione=inserimentoMessaggioView">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Invia Messaggio</span></a>
         </li>
@@ -94,7 +94,7 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="./inserimentoMessaggioView.jsp">
+            <a class="nav-link" href="./GestioneMessaggi?operazione=inserimentoMessaggioView">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Messaggi</span></a>
         </li>
