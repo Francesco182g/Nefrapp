@@ -26,6 +26,7 @@
    	 	<c:if test='${empty sessionScope.amministratore}'>
 			<c:redirect url = "/loginAmministratore.jsp"/>
 		</c:if>
+		<c:param name="notifica" value="${requestScope.notifica }"></c:param>
 	</head>
 
 	<body id="page-top">
@@ -55,7 +56,7 @@
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
 							              <form class="user" method="post"  action="./GestioneRegistrazione">
-							                <%-- if/else condition --%>
+											
 							                <input type="hidden" name="operazione" value="registraMedico">
 							                <div class="form-group row col-lg-12">
 							                Codice Fiscale:
@@ -113,6 +114,7 @@
 							            </div>
 							          </div>
 							        </div>
+							        <input type="hidden" name="notifica" value="registraMedico">
 							      </div>
 							    </div>
 						

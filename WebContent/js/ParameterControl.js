@@ -114,7 +114,6 @@
 		var email = $("#email").val();
 		var password = $("#password").val();
 		var data = new Date(dataDiNascita);
-		dataDiNascita = ('0' + data.getDate()).slice(-2) + '/' + ('0' + (data.getMonth()+1)).slice(-2) + '/'+ data.getFullYear();
 		
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
 			valido=[false,"formato codiceFiscale non valido"];
