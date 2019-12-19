@@ -61,8 +61,11 @@ public class CreaBeanUtility {
 		medico.setCognome(datiMedico.getString("Cognome"));
 		medico.setSesso(datiMedico.getString("Sesso"));
 		Date temp=datiMedico.getDate("DataDiNascita");
-		LocalDate data=temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		medico.setDataDiNascita(data);
+		if(temp != null)
+		{
+			LocalDate data=temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			medico.setDataDiNascita(data);
+		}
 		medico.setEmail("Email");
 		medico.setResidenza(datiMedico.getString("Residenza"));
 		medico.setLuogoDiNascita(datiMedico.getString("LuogoDiNascita"));

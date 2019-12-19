@@ -86,8 +86,7 @@ public class GestioneRegistrazione extends HttpServlet {
 				}
 			}
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-			requestDispatcher.forward(request, response);
+			
 		} catch(Exception e) {
 			System.out.println("Errore in Inserisci indirizzo:");
 			e.printStackTrace();
@@ -123,9 +122,10 @@ public class GestioneRegistrazione extends HttpServlet {
 					MedicoModel.addMedico(medico, password);
 				}else {
 					//TODO gestione medico gi� presente nel DB
-					System.out.println();
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
 					request.setAttribute("notifica","Medico già presente");
+					
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
+					
 					requestDispatcher.forward(request,response);
 				}
 			}else {

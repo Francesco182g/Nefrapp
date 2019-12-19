@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -24,7 +25,7 @@ import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * @author Luca Esposito
- * Questa classe è una servlet che si occupa della gestione delle funzionalità dell'amministratore
+ * Questa classe ï¿½ una servlet che si occupa della gestione delle funzionalitï¿½ dell'amministratore
  */
 @WebServlet("/GestioneAmministratore")
 public class GestioneAmministratore extends HttpServlet {
@@ -35,14 +36,8 @@ public class GestioneAmministratore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
+				
 				try {
-					if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-						response.setContentType("application/json");
-						response.setHeader("Cache-Control", "no-cache");
-						response.getWriter().write(new Gson().toJson("Errore generato dalla richiesta!"));
-						return;
-					}
-					
 					HttpSession session=request.getSession();
 					String operazione = request.getParameter("operazione");
 					
@@ -51,7 +46,18 @@ public class GestioneAmministratore extends HttpServlet {
 					}
 					else if(operazione.equals("modificaDatiPersonali")) {
 						modificaDatiPersonali(request, response, session);
-					}else {
+					}
+					else if(operazione.equals("caricaMedPaz")) {
+						ArrayList<Object> list = new ArrayList<Object>();
+						list.add(MedicoModel.getAllMedici());
+						list.add(PazienteModel.getAllPazienti());
+						response.setContentType("application/json");
+						response.setCharacterEncoding("UTF-8");
+						Gson gg = new Gson();
+						
+						response.getWriter().write(gg.toJson(list));
+					}
+					else {
 						throw new Exception("Operazione invalida");
 					}	
 				} catch (Exception e) {
