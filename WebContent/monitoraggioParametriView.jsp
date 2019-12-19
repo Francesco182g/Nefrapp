@@ -94,7 +94,7 @@
                       <td>${item.tempoSosta}</td>
                       <td>${item.scarico}</td>
                       <td>${item.carico}</td>
-                      <td>${item.data}</td>
+                      <td>${item.dataFormattata}</td>
                     </tr>
                     </c:forEach>
                   </tbody>

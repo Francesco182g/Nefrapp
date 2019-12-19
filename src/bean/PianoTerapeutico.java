@@ -1,6 +1,7 @@
 package bean;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 
@@ -48,6 +49,11 @@ public class PianoTerapeutico {
 
 	public LocalDate getDataFineTerapia() {
 		return dataFineTerapia;
+	}
+	
+	public String getDataFormattata() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return dataFineTerapia.format(format);
 	}
 
 	public void setDataFineTerapia(LocalDate dataFineTerapia) {

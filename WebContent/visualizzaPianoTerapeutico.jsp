@@ -83,7 +83,7 @@
                   				<h6 class="m-0 font-weight-bold text-primary">Data fine terapia</h6>
                 			</div>
                 			<div class="card-body">
-                  				<p class="mb-0">${pianoTerapeutico.dataFineTerapia}</p>
+                  				<p class="mb-0">${pianoTerapeutico.dataFormattata}</p>
                   			</div>
               			</div>
               			</c:if>
