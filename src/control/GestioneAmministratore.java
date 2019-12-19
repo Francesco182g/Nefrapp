@@ -48,14 +48,7 @@ public class GestioneAmministratore extends HttpServlet {
 						modificaDatiPersonali(request, response, session);
 					}
 					else if(operazione.equals("caricaMedPaz")) {
-						ArrayList<Object> list = new ArrayList<Object>();
-						list.add(MedicoModel.getAllMedici());
-						list.add(PazienteModel.getAllPazienti());
-						response.setContentType("application/json");
-						response.setCharacterEncoding("UTF-8");
-						Gson gg = new Gson();
-						
-						response.getWriter().write(gg.toJson(list));
+						scaricaDatiPazienteMedico(request,response);
 					}
 					else {
 						throw new Exception("Operazione invalida");
@@ -64,8 +57,24 @@ public class GestioneAmministratore extends HttpServlet {
 					System.out.println("Errore in gestione parametri:");
 					e.printStackTrace();		
 				}
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp"); 
-				dispatcher.forward(request, response);
+				
+	}
+
+	/**
+	 * Metodo che permette ad una chiamata asincrona di prendere dal database i dati di medici e pazienti e di restituirli in formato JSON
+	 * @param request indica il client che ha fatto la richiesta 
+	 * @param response indica il server che risponde alla richiesta
+	 * @throws IOException eccezione che viene lanciata in caso si verifichi un errore di scrittura del file JSON
+	 */
+	private void scaricaDatiPazienteMedico(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add(MedicoModel.getAllMedici());
+		list.add(PazienteModel.getAllPazienti());
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		Gson gg = new Gson();
+		response.getWriter().write(gg.toJson(list));
+		return;
 	}
 
 	/**
