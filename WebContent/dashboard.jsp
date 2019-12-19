@@ -52,7 +52,8 @@
 					                      <th>Cognome</th>
 					                      <th>Email</th>
 					                      <th>Data di nascita</th>
-					                      <th>luogo di nascita</th>
+					                      <th>Luogo di nascita</th>
+					                      <th>Residenza</th>
 					                      <th>Sesso</th>
 					                    </tr>
 					                  </thead>
@@ -64,6 +65,9 @@
 					                      <td>61</td>
 					                      <td>2011/04/25</td>
 					                      <td>$320,800</td>
+					                      					                      <td>$320,800</td>
+					                      
+					                      
 					                    </tr>
 					                    
 					                  </tbody>
