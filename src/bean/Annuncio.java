@@ -1,7 +1,8 @@
 package bean;
 
 import java.util.List;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Davide Benedetto Strianese
@@ -9,15 +10,15 @@ import java.util.Date;
  */
 public class Annuncio {
 	private Medico medico; //Riferimento al medico che ha pubblicato l'annuncio
-	private List<Paziente> pazienti; //Riferimento ai pazienti a cui è rivolto
+	private List<Paziente> pazienti; //Riferimento ai pazienti a cui ï¿½ rivolto
 	private String titolo;
 	private String testo;
-	private String allegato; //può essere una presentazione pp o un video, tenere traccia tramite path
-	private Date data;
+	private String allegato; //puï¿½ essere una presentazione pp o un video, tenere traccia tramite path
+	private LocalDate data;
 	
 	public Annuncio() {}
 	
-	public Annuncio(Medico medico, List<Paziente> pazienti, String titolo, String testo, String allegato, Date data) {
+	public Annuncio(Medico medico, List<Paziente> pazienti, String titolo, String testo, String allegato, LocalDate data) {
 		this.medico = medico;
 		this.pazienti = pazienti;
 		this.titolo = titolo;
@@ -66,11 +67,16 @@ public class Annuncio {
 		this.allegato = allegato;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
+	
+	public String getDataFormattata() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return data.format(format);
+	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	

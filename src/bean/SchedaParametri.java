@@ -2,6 +2,7 @@ package bean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 
@@ -110,6 +111,11 @@ public class SchedaParametri {
 
 	public LocalDate getData() {
 		return data;
+	}
+	
+	public String getDataFormattata() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return data.format(format);
 	}
 
 	public void setData(LocalDate data) {
