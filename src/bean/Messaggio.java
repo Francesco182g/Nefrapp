@@ -4,7 +4,9 @@
 package bean;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * @author Luca Esposito
@@ -13,18 +15,18 @@ import java.time.format.DateTimeFormatter;
 public class Messaggio {
 	
 	private String codiceFiscaleMittente;
-	private String codiceFiscaleDestinatario;
+	private ArrayList<String> codiceFiscaleDestinatario;
 	private String oggetto;
 	private String testo;
 	private String allegato;
-	private String ora;
+	private LocalTime ora;
 	private LocalDate data;
 	
 	public Messaggio() {}
 
-	public Messaggio(String codiceFiscaleMittente, String codiceFiscaleDestinatario, String oggetto, String testo, String allegato, String ora, LocalDate data) {
+	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, LocalTime ora, LocalDate data) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
-		this.codiceFiscaleDestinatario = codiceFiscaleDestinatario;
+		this.codiceFiscaleDestinatario.addAll(codiceFiscaleDestinatario);
 		this.oggetto = oggetto;
 		this.testo = testo;
 		this.allegato = allegato;
@@ -40,12 +42,12 @@ public class Messaggio {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 	}
 
-	public String getCodiceFiscaleDestinatario() {
+	public ArrayList<String> getCodiceFiscaleDestinatario() {
 		return codiceFiscaleDestinatario;
 	}
 
-	public void setCodiceFiscaleDestinatario(String codiceFiscaleDestinatario) {
-		this.codiceFiscaleDestinatario = codiceFiscaleDestinatario;
+	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario) {
+		this.codiceFiscaleDestinatario.addAll(codiceFiscaleDestinatario);
 	}
 
 	public String getOggetto() {
@@ -72,11 +74,11 @@ public class Messaggio {
 		this.allegato = allegato;
 	}
 
-	public String getOra() {
+	public LocalTime getOra() {
 		return ora;
 	}
 
-	public void setOra(String ora) {
+	public void setOra(LocalTime ora) {
 		this.ora = ora;
 	}
 

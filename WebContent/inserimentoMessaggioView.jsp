@@ -37,7 +37,7 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							<form class="user" action="./messaggio" method="POST">
+							<form class="user" action="./messaggio" method="POST" enctype="multipart/form-data">
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
 									<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
@@ -79,7 +79,7 @@
 									</div>
 									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row">
 										<input type="text" class="form-control form-control-user"
-											id="destinatario" name="destinatario"
+											id="cfdestinatario" name="cfdestinatario"
 											placeholder="Esempio: CRRSRA90A50A091Q" required="required">
 									</div>
 								</div>
@@ -90,8 +90,7 @@
 									</div>
 									<div class="col-lg-10 col-sm-12 mb-12 mb-sm-12 row">
 										<input type="text" class="form-control form-control-user"
-											id="destinatario" name="destinatario"
-											placeholder="Esempio: CRRSRA90A50A091Q" required="required">
+											id="oggeto" name="oggetto" required="required">
 									</div>
 
 								</div>
@@ -101,7 +100,7 @@
 										<p style="text-align: center">Testo:</p>
 									</div>
 									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row">
-										<textarea name="testo" maxlength="1000" id="testo"
+										<textarea name="testo" maxlength="1000" id="testo" 
 											class="form-control " placeholder="" required="required"
 											style="resize: none; height: 180px"></textarea>
 									</div>
@@ -110,7 +109,7 @@
 									<div class="file-field">
 										<div class="d-flex justify-content-center">
 											<div class="btn btn-mdb-color btn-rounded float-left">
-												<span>Allegato</span> <input type="file">
+												<span>Allegato</span> <input type="file" name="allegato" id="allegato">
 											</div>
 										</div>
 									</div>
