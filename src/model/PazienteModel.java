@@ -139,7 +139,7 @@ public class PazienteModel {
 	 * @return un arraylist di pazienti
 	 */
 	public static ArrayList<Paziente> getAllPazienti() {
-		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Medico");
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
 		ArrayList<Paziente>listaPazienti = new ArrayList<Paziente>();
 		for(Document d :pazienti.find())
 		{

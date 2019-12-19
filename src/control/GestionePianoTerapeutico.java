@@ -20,6 +20,7 @@ import model.PianoTerapeuticoModel;
  * @author Davide Benedetto Strianese
  * Questa classe è una servlet che si occupa della gestione del piano terapeutico
  */
+@WebServlet("/GestionePianoTerapeutico")
 public class GestionePianoTerapeutico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -88,7 +89,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 		Medico medico = (Medico) request.getSession().getAttribute("medico");
 		if(medico != null) {
 			final String REGEX_DATA = "^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
-			String dataFine = request.getParameter("dataFine");
+			String dataFine = request.getParameter("data");
 			if(Pattern.matches(REGEX_DATA, dataFine)) {
 				String codiceFiscalePaziente = request.getParameter("CFPaziente");
 				String diagnosi = request.getParameter("diagnosi");

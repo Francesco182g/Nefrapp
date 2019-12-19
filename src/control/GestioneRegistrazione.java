@@ -39,7 +39,7 @@ public class GestioneRegistrazione extends HttpServlet {
 	 * 				 password != null && password.matches("^[a-zA-Z0-9]*$") && (password.lenght() > 4 && password.lenght() < 21),
 	 * @postcondition L'utente � stato registrato nel sistema
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response){
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
@@ -64,7 +64,7 @@ public class GestioneRegistrazione extends HttpServlet {
 							if(registrato.equals("No")) { //paziente non registrato
 								ArrayList<String> medici = new ArrayList<String>();
 								medici.add(medicoLoggato.getCodiceFiscale());
-								registraPaziente(request, medici);
+								registraPaziente(request, response, medici);
 								response.sendRedirect("/dashboard.jsp");
 								
 							}else { // solo aggiunta del cf del medico tra i seguiti (paziente già registrato)
@@ -76,29 +76,25 @@ public class GestioneRegistrazione extends HttpServlet {
 										response.sendRedirect("/dashboard.jsp");
 									}else {
 										//TODO gestione errore nel caso in cui paziente non registrato
+										request.setAttribute("notifica","Il paziente non è stato registratro");
+										RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraPazienteMedico.jsp");
+										requestDispatcher.forward(request,response);
 									}
 							}
 					}
-			}else if(operazione.equals("registraPazienteAmministratore")) { //registrazione
-				String codiceFiscalePaziente = request.getParameter("codiceFiscale");
-				Paziente paziente = PazienteModel.getPazienteByCF(codiceFiscalePaziente);
-				if ( paziente == null) { //aggiunta paziente
-					registraPaziente(request, new ArrayList<String>());
-				}else{
-					//TODO errore paziente già presente
-				}
 			}
 			
 			
 		} catch(Exception e) {
-			System.out.println("Errore in Inserisci indirizzo:");
-			e.printStackTrace();
+			request.setAttribute("notifica",e.getMessage());
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			requestDispatcher.forward(request,response);
 		}
 		
 		return;
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response){
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		doGet(request, response);
 		return;
 	}
@@ -124,20 +120,18 @@ public class GestioneRegistrazione extends HttpServlet {
 					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
 					MedicoModel.addMedico(medico, password);
 				}else {
-					//TODO gestione medico gi� presente nel DB
-					request.setAttribute("notifica","Medico già presente");
-					
+					request.setAttribute("notifica","Medico già presente.");
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
-					
 					requestDispatcher.forward(request,response);
 				}
 			}else {
-			//TODO gestione errore validazione
-			return;
+				request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
+				requestDispatcher.forward(request,response);
 		}
 	}
 	
-	private void registraPaziente(HttpServletRequest request, ArrayList<String> medici) {
+	private void registraPaziente(HttpServletRequest request,HttpServletResponse response, ArrayList<String> medici) throws ServletException, IOException {
 		//TODO gestione della data
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		if(PazienteModel.getPazienteByCF(codiceFiscale) == null) {
@@ -157,11 +151,14 @@ public class GestioneRegistrazione extends HttpServlet {
 				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd-MM-yyyy")), true, medici);
 				PazienteModel.addPaziente(paziente,password);
 			}else {
-				System.out.print("errore");
-				//TODO gestire caso di errore di validazione
+				request.setAttribute("notifica","Uno o più parametri del paziente non sono validi.");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraPazienteMedico.jsp");
+				requestDispatcher.forward(request,response);
 			} 
 		} else {
-			//TODO errore nel caso in cui paziente già presente
+			request.setAttribute("notifica","Paziente già presente.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraPazienteMedico.jsp");
+			requestDispatcher.forward(request,response);
 		}
 	}
 	

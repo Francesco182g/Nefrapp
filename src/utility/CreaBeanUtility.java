@@ -42,8 +42,11 @@ public class CreaBeanUtility {
 		paziente.setAttivo(datiPaziente.getBoolean("Attivo"));
 		paziente.setMedici((ArrayList<String>) datiPaziente.get("Medici"));
 		Date temp = datiPaziente.getDate("DataDiNascita");
-		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		paziente.setDataDiNascita(data);
+		if(temp != null)
+		{
+			LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			paziente.setDataDiNascita(data);
+		}
 		return paziente;
 	}
 	
