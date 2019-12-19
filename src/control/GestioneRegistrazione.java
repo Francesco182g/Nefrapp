@@ -2,9 +2,14 @@ package control;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
+
+import javax.lang.model.element.NestingKind;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -146,6 +151,8 @@ public class GestioneRegistrazione extends HttpServlet {
 			String residenza = request.getParameter("residenza");
 			String luogoDiNascita=request.getParameter("luogoDiNascita");
 			String dataDiNascita = request.getParameter("dataDiNascita");
+			
+			
 			Paziente paziente = null;
 			
 			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
@@ -172,7 +179,7 @@ public class GestioneRegistrazione extends HttpServlet {
 		String expSesso = "^[MF]$";
 		String expEmail = "^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
 		String expPassword = "^[a-zA-Z0-9]*$";
-		String expResidenza= "^[A-Z][a-zA-Z ']*$";
+		String expResidenza= "^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$";
 		String expLuogoDiNascita= "^[A-Z][a-zA-Z ']*$";
 		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 		
