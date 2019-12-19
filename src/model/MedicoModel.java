@@ -7,6 +7,7 @@ import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
+import bean.Paziente;
 import utility.CreaBeanUtility;
 
 /**
@@ -133,5 +134,20 @@ public class MedicoModel {
 		nuovoMedico.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
 		medici.updateOne(searchQuery, nuovoMedico);
+	}
+	
+	
+	/**
+	 * Query che ottiene tutti i dati dei medici che seguino un paziente
+	 * @param codiciFiscaliMedici array contenente i codici fiscali dei medici che seguono il paziente
+	 * @return oggetti medico richiesti
+	 */
+	public static ArrayList<Medico> getMediciByPazienteSeguito(ArrayList<String> codiciFiscaliMedici) {
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		ArrayList<Medico> datimedici = new ArrayList<Medico>();
+		for(String codiceFiscale: codiciFiscaliMedici) {
+			datimedici.add(getMedicoByCF(codiceFiscale));
+		}
+		return datimedici;
 	}
 }
