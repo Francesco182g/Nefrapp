@@ -43,12 +43,12 @@
 	
 							  <div class="container login">
 							
-							    <div class="card o-hidden border-0 shadow-lg my-5">
-							      <div class="card-body p-0">
+							    <div class="my-5">
+							      <div class="card-body p-0 d-flex justify-content-center">
 							        <!-- Nested Row within Card Body -->
 							        <div class="row">
-							          <div class="col-lg-12">
-							            <div class="p-5">
+							          <div class="col-sm-12">
+							            <div class="card o-hidden border-0 shadow-sm p-5">
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Effettua il login</h1>
 							              </div>
@@ -64,6 +64,8 @@
 								                  <a href="#">
 								                  Password dimenticata?
 								                  </a>
+								            </div>
+								            <div class="mt-6 p-6">
 								                  <button class="btn btn-primary btn-user" type="submit" id="loginUtente" style="float:right">
 								                  Accedi
 								                  </button>
