@@ -12,13 +12,28 @@
 				'format': 'dd/mm/yyyy',
 				'autoclose': true
 			});
-	  		$("#bottone").click(function(){
-	  			console.log($('#dataInizio').val())
-	  		})
+	  		
 		
   
   });
  
 })(jQuery); // End of use strict
+
+(function($) {
+	  "use strict"; // Start of use strict
+	  var sub = false
+	  $(document).ready(function(){
+		 
+		  		console.log($('#dataFine'))
+				$('#dataFine').datepicker({
+					'format': 'dd/mm/yyyy',
+					'autoclose': true
+				});
+		  		
+			
+	  
+	  });
+	 
+	})(jQuery); // End of use strict
 
 		

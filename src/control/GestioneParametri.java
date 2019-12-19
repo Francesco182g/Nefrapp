@@ -53,7 +53,7 @@ public class GestioneParametri extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
 			}
 			//Download report
-			else if(operazione.equals("")) {
+			else if(operazione.equals("download")) {
 				//TODO
 			} 
 			//Visualizza la scheda dei parametri del paziente selezionato

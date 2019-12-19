@@ -110,13 +110,18 @@
                     </c:forEach>
                   </tbody>
                  </table>
+                 <form action="/GestioneParametri" method="post" id="rangeForm">
                  <div class="dates" style="margin-top:100px;color:#2471a3;">
 					<label>Data inizio</label>
     				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataInizio" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
-    				<button id="bottone">premi qui</button>
+    				<label>Data fine</label>
+    				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataFine" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
+    				<input id="operazione" type="hidden" value="download">
   				</div>
-                
-              </div>
+  				</form>
+  				<div class="my-2"></div>
+  				<button type="submit" form="rangeForm" class="btn btn-info btn-icon-split">Scarica report</button>
+  			</div>
             </div>
           </div>
 
