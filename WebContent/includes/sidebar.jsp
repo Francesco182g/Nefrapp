@@ -244,7 +244,15 @@
 
     </ul>
     <!-- End of Sidebar -->
-				
+        <!-- Core plugin JavaScript-->
 
-	</body>
+
+        <!-- Custom scripts for all pages-->
+
+
+
+
+        <!-- Page level plugins -->
+
+        <!-- Page level custom scripts -->
 </html>
