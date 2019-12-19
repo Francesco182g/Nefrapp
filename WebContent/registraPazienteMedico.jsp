@@ -23,6 +23,7 @@
    	 	<script src="js/ParameterControl.js"></script>
    	 	<script src="js/registrazione.js"></script>
    	 	<!--  aggiungere i controlli per questo form -->
+   	 	<script src="./js/dataPicker.js"></script>
    	 	
 	</head>
 
@@ -79,7 +80,7 @@
                   							</div>
                   							<div class="form-group row col-lg-12">
                   							Data di nascita:
-							                  <input type="date" class="form-control form-control-user" name="dataDiNascita" id="dataDiNascita" placeholder="Data di nascita" required="required">
+                  							  <input type="text" class="form-control form-control-user" id="dataDiNascita" name="dataDiNascita" placeholder="DD-MM-YYYY" autocomplete="off">
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Luogo di Nascita:
