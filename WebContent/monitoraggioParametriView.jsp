@@ -54,7 +54,16 @@
 
           <!-- Page Heading -->
           <c:set var="paziente" value='${sessionScope["paziente"]}'/>
+          <c:set var="medico" value='${sessionScope["medico"]}'/>
+          <c:set var="scheda" value='${requestScope["schedaParametri"]}'/>
+          <c:choose>
+          <c:when test='${paziente!=null}'>
           <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente ${paziente.nome} ${paziente.cognome} </h1>
+          </c:when>
+          <c:when test='${medico!=null}'>
+          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti</h1>
+          </c:when>
+          </c:choose>
           
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
@@ -92,7 +101,7 @@
                   </tfoot>
                   <tbody>
                   	
-                  	<c:set var="scheda" value='${requestScope["schedaParametri"]}'/>
+                  	
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
              		<c:forEach items="${scheda}" var="item">
@@ -110,6 +119,8 @@
                     </c:forEach>
                   </tbody>
                  </table>
+                 <c:choose>
+                 <c:when test='${medico!=null}'>
                  <form action="/GestioneParametri" method="post" id="rangeForm">
                  <div class="dates" style="margin-top:100px;color:#2471a3;">
 					<label>Data inizio</label>
@@ -121,6 +132,8 @@
   				</form>
   				<div class="my-2"></div>
   				<button type="submit" form="rangeForm" class="btn btn-info btn-icon-split">Scarica report</button>
+  				</c:when>
+  				</c:choose>
   			</div>
             </div>
           </div>
