@@ -1,6 +1,7 @@
 package bean;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -93,6 +94,11 @@ public class Paziente{
 
 	public LocalDate getDataDiNascita() {
 		return dataDiNascita;
+	}
+	
+	public String getDataFormattata() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return dataDiNascita.format(format);
 	}
 
 	public void setDataDiNascita(LocalDate dataDiNascita) {
