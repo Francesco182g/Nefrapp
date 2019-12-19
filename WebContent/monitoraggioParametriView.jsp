@@ -18,6 +18,17 @@
 
     	<!-- Custom styles for this template-->
    	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">	
+   	 	
+   	 	<!-- DatePicker -->
+   	 	
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
+		
+		<!-- Script per la registrazione -->
+   	 	<script src="./js/dataPicker.js"></script>
+
+  		
 	</head>
 	
 	<body id="page-top">
@@ -98,8 +109,13 @@
                     </tr>
                     </c:forEach>
                   </tbody>
-                 
-                </table>
+                 </table>
+                 <div class="dates" style="margin-top:100px;color:#2471a3;">
+					<label>Data inizio</label>
+    				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataInizio" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
+    				<button id="bottone">premi qui</button>
+  				</div>
+                
               </div>
             </div>
           </div>
@@ -120,5 +136,6 @@
 	    <a class="scroll-to-top rounded" href="#page-top">
 	        <i class="fas fa-angle-up"></i>
 	    </a>
+	   	
 	</body>
 </html>
