@@ -34,6 +34,7 @@
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
 					<c:set var="paziente" value='${sessionScope["paziente"]}'/>
+					<c:set var="medico" value='${sessionScope["medico"]}'/>
 					<c:if test='${paziente != null}'>
 	                	<div class="card shadow mb-4">
                 			<div class="card-header py-3">
@@ -60,12 +61,17 @@
 	                	<c:set var="pianoTerapeutico" value='${requestScope["pianoTerapeutico"]}'/>
 	                	
 	                	<c:if test='${pianoTerapeutico != null}'>
+	                	<form action="/GestionePianoTerapeutico" method="post" id="modificaPiano">
+	                	<input id="CFPaziente" type="hidden" value="${pianoTerapeutico.codiceFiscalePaziente}">
+	                	<input id="operazione" type="hidden" value="modifica">
 	                	<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Diagnosi</h6>
                 			</div>
                 			<div class="card-body">
-                  				<p class="mb-0">${pianoTerapeutico.diagnosi}</p>
+                  				<div class="form-group row col-lg-12">
+							    	<input type="text" class="form-control form-control-user" id="diagnosi" value="${pianoTerapeutico.diagnosi}" required="required" disabled >
+							    </div>
                   			</div>
               			</div>
               			
@@ -74,7 +80,9 @@
                   				<h6 class="m-0 font-weight-bold text-primary">Farmaci prescritti</h6>
                 			</div>
                 			<div class="card-body">
-                  				<p class="mb-0">${pianoTerapeutico.farmaco}</p>
+                  				<div class="form-group row col-lg-12">
+							    	<input type="text" class="form-control form-control-user" id="farmaci" value="${pianoTerapeutico.farmaco}" required="required" disabled >
+							    </div>
                   			</div>
               			</div>
               			
@@ -83,9 +91,18 @@
                   				<h6 class="m-0 font-weight-bold text-primary">Data fine terapia</h6>
                 			</div>
                 			<div class="card-body">
-                  				<p class="mb-0">${pianoTerapeutico.dataFormattata}</p>
+                  				<div class="form-group row col-lg-12">
+							    	<input type="text" class="form-control form-control-user" id="data" value="${pianoTerapeutico.dataFineTerapia}" required="required" disabled >
+							    </div>
                   			</div>
               			</div>
+              			</form>
+              			<c:if test='${medico != null}'>
+              			<div class="my-2"></div>
+  						<button type="submit" class="btn btn-info btn-icon-split" id="bottoneModifca">Modifica</button>
+              			<div class="my-2"></div>
+  						<button type="submit" form="modificaPiano" class="btn btn-info btn-icon-split" id="bottoneConferma" disabled>Applica modifiche</button>
+              			</c:if>
               			</c:if>
               			
               			<c:if test='${pianoTerapeutico == null}'>
@@ -112,5 +129,18 @@
 	    <a class="scroll-to-top rounded" href="#page-top">
 	        <i class="fas fa-angle-up"></i>
 	    </a>
+	    <script>
+		    $(document).ready(function(){
+		      	$("#bottoneModifica").click(function(){
+		      		$("#diagnosi").prop("disabled", false)
+		      		$("#farmaci").prop("disabled", false)
+		      		$("#data").prop("disabled", false)
+		      		$('#bottoneModifica').prop("disabled", true)
+		      		$('#bottoneConferma').prop("disabled", false)
+		    	});
+		    });
+	    
+	    </script>
+	    
 	</body>
 </html>
