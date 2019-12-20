@@ -3,6 +3,10 @@ package model;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+
 /**
  * 
  * @author Sara
@@ -14,8 +18,15 @@ public class MessaggioModel {
 	 * Metodo che permette l'aggiunta di un messaggio al database
 	 * @param messsaggio messaggio da aggiungere
 	 */
-	public static void addMessaggio(Messaggio messaggio) {
-		//fai cose
+	public static void addMessaggio(Messaggio toAdd) {
+		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
+		Document doc = new Document("MittenteCodiceFiscale", toAdd.getCodiceFiscaleMittente())
+				.append("DestinatarioCodiceFiscale", toAdd.getCodiceFiscaleDestinatario())
+				.append("Oggetto", toAdd.getOggetto())
+				.append("Testo",toAdd.getTesto())
+				.append("Allegato", toAdd.getAllegato())
+				.append("Data", toAdd.getData());
+		messaggio.insertOne(doc);	
 	}
 	/**
 	 * Query che ricerca i messaggi per codice fiscale dei destinatari
