@@ -70,9 +70,9 @@ public class GestioneMessaggi extends HttpServlet {
 				requestDispatcher.forward(request, response);
 				// forward temporaneo alla dashboard, bisogna decidere cosa fare
 			}
-			if (operazione.equals("visualizzaMessaggio")) {
+			if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaMessaggio(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiRicevuti.jsp");
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
@@ -213,6 +213,7 @@ public class GestioneMessaggi extends HttpServlet {
 			ArrayList<Messaggio> m=new ArrayList <Messaggio>();
 			m=MessaggioModel.getMessaggioByCFDestinatario(paziente.getCodiceFiscale());
 			System.out.println(m.toString());
+			request.setAttribute("messaggio", m);
 		}
 
 		else if (paziente == null && medico != null) {

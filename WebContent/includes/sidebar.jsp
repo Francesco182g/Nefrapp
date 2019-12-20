@@ -77,7 +77,7 @@
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Invia
 							Messaggio</span></a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="./messaggio?operazione=visualizzaMessaggio"> <i
+					href="./messaggio?operazione=visualizzaElencoMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Leggi
 							Messaggi</span></a></li>
 			</c:when>
