@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
 import bean.Messaggio;
+import bean.Paziente;
 import utility.CreaBeanUtility;
 
 /**
@@ -33,7 +35,8 @@ public class MessaggioModel {
 				.append("Oggetto", daAggiungere.getOggetto())
 				.append("Testo", daAggiungere.getTesto())
 				.append("Allegato", daAggiungere.getAllegato())
-				.append("Data", daAggiungere.getData());
+				.append("Data", daAggiungere.getData())
+				.append("Visualizzato", daAggiungere.getVisualizzato());
 		messaggio.insertOne(doc);	
 	}
 	
@@ -60,16 +63,16 @@ public class MessaggioModel {
 	 * @return messaggio se trovato almeno un messaggio, altrimenti null
 	 */
 	public static ArrayList<Messaggio> getMessaggioByCFDestinatario(String CFDestinatario) {
-		ArrayList<Messaggio> messaggi=new ArrayList<Messaggio>();
-		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
+		MongoCollection<Document> messaggiDB = DriverConnection.getConnection().getCollection("Messaggio");
+		ArrayList<Messaggio> messaggi= new ArrayList<Messaggio>();
+		MongoCursor<Document> documenti = messaggiDB.find(eq("DestinatarioCodiceFiscale", CFDestinatario)).iterator();
 		
-		//non penso funzioni
-		MongoCursor<Document> documenti = messaggioDB.find(eq("DestinatarioCodiceFiscale", CFDestinatario)).iterator();
-		//non ho idea di come fare la query in un array mongo
-		
-		if (documenti.hasNext())
+		while(documenti.hasNext()) {
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggio(documenti.next()));
-		return messaggi;
+		}
+		
+		return messaggi;	
 	}
+
 
 }

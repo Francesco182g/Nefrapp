@@ -152,6 +152,7 @@ public class CreaBeanUtility {
 		LocalTime ora = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 		messaggio.setData(data);
 		messaggio.setOra(ora);
+		messaggio.setVisualizzato(datiMessaggio.getBoolean("Visualizzato"));
 
 		return messaggio;
 	}

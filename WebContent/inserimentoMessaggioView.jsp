@@ -58,16 +58,12 @@
 												    </select>
 												</c:when>
 												<c:when test='${medico!=null}'>
-												<!--<c:set var="pazienti" value='${requestScope[pazientiSeguiti]}'/>-->
-													<button class="btn btn-secondary dropdown-toggle"
-														type="button" id="dropdownMenuButton"
-														data-toggle="dropdown" aria-haspopup="true"
-														aria-expanded="false">Elenco Pazienti</button>
-													<div class="dropdown-menu"
-														aria-labelledby="dropdownMenuButton">
-												<!--<c:forEach items="${pazienti}" var="item">
-														<a class="dropdown-item" href="#">${item.nome} ${item.cognome}</a>
-												</c:forEach>-->
+												<select name="selectPaziente" id="selectPaziente" multiple>
+												      <option value="" disabled>Scegli destinatari:</option>
+														<c:set var="pazienti" value='${requestScope[pazientiSeguiti]}'/>
+													<c:forEach items="${dottori}" var="item">
+														<option value="${item.codiceFiscale}">${item.nome} ${item.cognome}</option></a> 
+														</c:forEach>	
 														 
 													</div>
 												</c:when>
