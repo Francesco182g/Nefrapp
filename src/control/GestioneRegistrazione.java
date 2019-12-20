@@ -175,7 +175,7 @@ public class GestioneRegistrazione extends HttpServlet {
 		String expPassword = "^[a-zA-Z0-9]*$";
 		String expResidenza= "^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$";
 		String expLuogoDiNascita= "^[A-Z][a-zA-Z ']*$";
-		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}$";
+		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 		
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
 			valido = false;
