@@ -30,12 +30,7 @@
   		
 	</head>
 	
-	<body id="page-top">
-<%-- 	<jsp:include page="/parametri">
-   <jsp:param name="codiceFiscale" value="NTNNTN80A01B963Y"/>
-   <jsp:param name="flag" value="1"/>
-  </jsp:include> --%>
-	
+	<body id="page-top">	
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
 			<%@include file="../includes/sidebar.jsp" %>		
