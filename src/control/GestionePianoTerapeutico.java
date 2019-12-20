@@ -72,9 +72,14 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	private void visualizzaPiano(HttpServletRequest request) {
 		PianoTerapeutico pianoTerapeutico = null;
 		String codiceFiscalePaziente = request.getParameter("CFPaziente");
+		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 		
-		pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
-		request.setAttribute("pianoTerapeutico", pianoTerapeutico);
+		if (Pattern.matches(REGEX_CF, codiceFiscalePaziente)) {
+			pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
+			request.setAttribute("pianoTerapeutico", pianoTerapeutico);
+		} else {
+			//TODO Messaggio d'errore, CF non valido
+		}
 	}
 	
 	
@@ -97,7 +102,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 				LocalDate dataFineTerapia  = LocalDate.parse(dataFine);
 				PianoTerapeuticoModel.updatePianoTerapeutico(new PianoTerapeutico(codiceFiscalePaziente, diagnosi, farmaci, dataFineTerapia));
 			}else {
-				//TODO ritorna messaggio errore, data non valida
+				//TODO Messaggio d'errore, CF non valido
 			}
 		}else {
 			//TODO messaggio errore perchè il medico non ha loggato
