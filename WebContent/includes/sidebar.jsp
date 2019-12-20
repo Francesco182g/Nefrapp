@@ -67,7 +67,7 @@
         </li>
         
 		<li class="nav-item">
-            <a class="nav-link" href="./messaggi?operazione=inserimentoMessaggioView">
+            <a class="nav-link" href="./messaggio?operazione=inserimentoMessaggioView">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Invia Messaggio</span></a>
         </li>

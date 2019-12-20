@@ -33,6 +33,6 @@
   
   <servlet-mapping>
     <servlet-name>GestioneMessaggi</servlet-name>
-    <url-pattern>/messaggi</url-pattern>
+    <url-pattern>/messaggio</url-pattern>
   </servlet-mapping>
 </web-app>

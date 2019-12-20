@@ -111,10 +111,6 @@ public class GestioneParametri extends HttpServlet {
 			System.out.println("Utente deve esssere loggato");
 		}
 		
-		//stampa di controllo. TODO da eliminare
-		for (SchedaParametri s : scheda)
-			System.out.println(s.toString());
-		
 		request.setAttribute("schedaParametri", scheda);
 	}
 	

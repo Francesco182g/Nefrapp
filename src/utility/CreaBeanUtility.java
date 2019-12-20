@@ -1,6 +1,7 @@
 package utility;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 
 import java.util.ArrayList;
@@ -8,8 +9,11 @@ import java.util.Date;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBList;
+
 import bean.Amministratore;
 import bean.Medico;
+import bean.Messaggio;
 import bean.Paziente;
 import bean.PianoTerapeutico;
 import bean.SchedaParametri;
@@ -25,7 +29,7 @@ import bean.SchedaParametri;
 public class CreaBeanUtility {
 
 	/**
-	 * Classe che converte il documento inviato in paziente
+	 * Metodo che converte il documento inviato in paziente
 	 * @param datiPaziente documento che continee i dati del paziente
 	 * @return paziente convertito dal documento
 	 */
@@ -51,14 +55,12 @@ public class CreaBeanUtility {
 	}
 	
 	/**
-	 * Classe che converte il documento inviato in medico
+	 * Metodo che converte il documento inviato in medico
 	 * @param datiMedico documento che continee i dati del medico
 	 * @return medico convertito dal documento
 	 */
 	public static Medico daDocumentAMedico(Document datiMedico) {
 		Medico medico = new Medico();
-		
-		medico = new Medico();
 		medico.setCodiceFiscale(datiMedico.getString("CodiceFiscale"));
 		medico.setNome(datiMedico.getString("Nome"));
 		medico.setCognome(datiMedico.getString("Cognome"));
@@ -77,14 +79,12 @@ public class CreaBeanUtility {
 	}
 	
 	/**
-	 * Classe che converte il documento inviato in amministratore
+	 * Metodo che converte il documento inviato in amministratore
 	 * @param datiAmministratore documento che continee i dati dell' amministratore
 	 * @return amministratore convertito dal documento
 	 */
 	public static Amministratore daDocumentAdAmministratore(Document datiAmministratore) {
 		Amministratore amministratore = new Amministratore();
-		
-		amministratore = new Amministratore();
 		amministratore.setCodiceFiscale(datiAmministratore.getString("CodiceFiscale"));
 		amministratore.setNome(datiAmministratore.getString("Nome"));
 		amministratore.setCognome(datiAmministratore.getString("Cognome"));
@@ -94,13 +94,12 @@ public class CreaBeanUtility {
 	}
 
 	/**
-	 * Classe che converte il documento inviato in una SchedaParametri
+	 * Metodo che converte il documento inviato in una SchedaParametri
 	 * @param datiSchedaParametri documento che continee i dati della scheda
 	 * @return schedaParametri convertito dal documento
 	 */
 	public static SchedaParametri daDocumentASchedaParametri(Document datiSchedaParametri) {
 		SchedaParametri schedaParametri= new SchedaParametri();
-		schedaParametri = new SchedaParametri();
 		schedaParametri.setPazienteCodiceFiscale(datiSchedaParametri.getString("PazienteCodiceFiscale"));
 		schedaParametri.setPeso(new BigDecimal(String.valueOf(datiSchedaParametri.get("Peso"))));
 		schedaParametri.setPaMin(datiSchedaParametri.getInteger("PaMin"));
@@ -117,9 +116,13 @@ public class CreaBeanUtility {
 		return schedaParametri;
 	}
 	
+	/**
+	 * Metodo che converte il documento inviato in un PianoTerapeutico
+	 * @param datiSchedaParametri documento che continee i dati della scheda
+	 * @return schedaParametri convertito dal documento
+	 */
 	public static PianoTerapeutico daDocumentAPianoTerapeutico(Document datiPiano) {
 		PianoTerapeutico piano= new PianoTerapeutico();
-		piano = new PianoTerapeutico();
 		piano.setCodiceFiscalePaziente(datiPiano.getString("PazienteCodiceFiscale"));
 		piano.setDiagnosi(datiPiano.getString("Diagnosi"));
 		piano.setFarmaco(datiPiano.getString("Farmaco"));
@@ -128,6 +131,34 @@ public class CreaBeanUtility {
 		piano.setDataFineTerapia(data);
 
 		return piano;
+	}
+	
+	/**
+	 * Metodo che converte il documento inviato in un Messaggio
+	 * @param datiSchedaParametri documento che continee i dati della scheda
+	 * @return schedaParametri convertito dal documento
+	 */
+	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
+		Messaggio messaggio = new Messaggio();
+		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
+		BasicDBList result = (BasicDBList) datiMessaggio.get("DestinatariCodiceFiscale");
+		
+		ArrayList<String> destinatariCF = new ArrayList<String>();
+		for(Object element: result) {
+		     destinatariCF.add((String) element);
+		}
+		messaggio.setCodiceFiscaleDestinatario(destinatariCF);
+		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
+		messaggio.setTesto(datiMessaggio.getString("Testo"));
+		messaggio.setAllegato(datiMessaggio.getString("Allegato"));
+		
+		Date temp = datiMessaggio.getDate("Data");
+		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalTime ora = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+		messaggio.setData(data);
+		messaggio.setOra(ora);
+
+		return messaggio;
 	}
 	
 }

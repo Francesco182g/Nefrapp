@@ -37,7 +37,8 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							<form class="user" action="./messaggio" method="POST" enctype="multipart/form-data">
+						Select in forma temporanea: per ora usare CTRL+click per selezionare e deselezionare destinatari<br><br>
+							<form class="user" action="./messaggio" method="POST" >
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
 									<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
@@ -48,17 +49,13 @@
 											<!-- Se utente==paziente, il pulsante mostra l'elenco dei medico, viceversa altrimenti -->
 											<c:choose>
 												<c:when test='${paziente!=null}'>
-													<button class="btn btn-secondary dropdown-toggle"
-														type="button" id="dropdownMenuButton"
-														data-toggle="dropdown" aria-haspopup="true"
-														aria-expanded="false">Elenco Medici</button>
-													<div class="dropdown-menu"
-														aria-labelledby="dropdownMenuButton">
-														<!--<c:set var="dottori" value='${paziente.medici}'/>-->
-														<!--<c:forEach items="${dottori}" var="item">-->
-														<a class="dropdown-item" href="#">${item.nome} ${item.cognome}</a> 
-														<!--</c:forEach>-->	
-													</div>
+												    <select name="selectMedico" id="selectMedico" multiple>
+												      <option value="" disabled>Scegli destinatari:</option>
+												      	<c:set var="dottori" value='${requestScope["mediciCuranti"]}'/>
+														<c:forEach items="${dottori}" var="item">
+														<option value="${item.codiceFiscale}">${item.nome} ${item.cognome}</option></a> 
+														</c:forEach>	
+												    </select>
 												</c:when>
 												<c:when test='${medico!=null}'>
 												<!--<c:set var="pazienti" value='${requestScope[pazientiSeguiti]}'/>-->
@@ -77,11 +74,11 @@
 											</c:choose>
 										</div>
 									</div>
-									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row">
-										<input type="text" class="form-control form-control-user"
-											id="cfdestinatario" name="cfdestinatario"
-											placeholder="Esempio: CRRSRA90A50A091Q" required="required">
-									</div>
+<!-- 									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row"> -->
+<!-- 										<input type="text" class="form-control form-control-user" -->
+<!-- 											id="cfdestinatario" name="cfdestinatario" -->
+<!-- 											placeholder="Esempio: CRRSRA90A50A091Q" required="required"> -->
+<!-- 									</div> -->
 								</div>
 								<!-- oggetto del messaggio -->
 								<div class="form-group row">

@@ -26,7 +26,7 @@ public class Messaggio {
 
 	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, LocalTime ora, LocalDate data) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
-		this.codiceFiscaleDestinatario.addAll(codiceFiscaleDestinatario);
+		this.codiceFiscaleDestinatario = codiceFiscaleDestinatario;
 		this.oggetto = oggetto;
 		this.testo = testo;
 		this.allegato = allegato;
@@ -47,7 +47,7 @@ public class Messaggio {
 	}
 
 	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario) {
-		this.codiceFiscaleDestinatario.addAll(codiceFiscaleDestinatario);
+		this.codiceFiscaleDestinatario = codiceFiscaleDestinatario;
 	}
 
 	public String getOggetto() {
