@@ -141,8 +141,9 @@ public class CreaBeanUtility {
 	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
 		Messaggio messaggio = new Messaggio();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
-		BasicDBList result = (BasicDBList) datiMessaggio.get("DestinatariCodiceFiscale");
 		
+		//la conversione dell'array di mongo in arraylist di stringhe non funziona, trovare un altro modo
+		BasicDBList result = (BasicDBList) datiMessaggio.get("DestinatariCodiceFiscale");
 		ArrayList<String> destinatariCF = new ArrayList<String>();
 		for(Object element: result) {
 		     destinatariCF.add((String) element);
