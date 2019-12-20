@@ -1,7 +1,7 @@
 package control;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -9,11 +9,15 @@ import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import bean.Medico;
 import bean.Messaggio;
@@ -26,7 +30,7 @@ import model.PazienteModel;
  * Servlet implementation class GestioneMessaggio
  */
 @WebServlet("/GestioneMessaggi")
-
+@MultipartConfig
 public class GestioneMessaggi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public GestioneMessaggi() {
@@ -115,14 +119,18 @@ public class GestioneMessaggi extends HttpServlet {
 	 * Metodo che prende mittente, destinatari, oggetto, testo e allegato del messaggio
 	 * e lo salva nel database
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 * @throws ServletException 
+	 * @throws IOException 
 	 */
-	private void inviaMessaggio(HttpServletRequest request) {
+	private void inviaMessaggio(HttpServletRequest request) throws IOException, ServletException {
 
 		Medico medico = null;
 		Paziente paziente = null;
 		HttpSession session = request.getSession();
 		Messaggio messaggio = null;
-
+		
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		System.out.println(isMultipart);
 		medico = (Medico) session.getAttribute("medico");
 		paziente = (Paziente) session.getAttribute("paziente");
 
@@ -131,8 +139,17 @@ public class GestioneMessaggi extends HttpServlet {
 			String CFMittente = paziente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
-			// encoding dell'allegato da fare (nel pacchetto utility)
-			String allegato = request.getParameter("allegato");
+			String allegato=null;
+	        if (isMultipart) {
+	        	System.out.println("ho capito che c'è un file da prendere");
+	        	Part filePart = request.getPart("file"); // <input type="file" name="file">
+	        	System.out.println(filePart.toString());
+	            //String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+	            InputStream fileContent=null;	
+	            fileContent = filePart.getInputStream();
+	            allegato= fileContent.toString(); 
+	            System.out.println(allegato);
+	        }
 			
 			//inserire qui controlli backend
 			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, LocalTime.now(), LocalDateTime.now());

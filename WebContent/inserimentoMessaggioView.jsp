@@ -38,7 +38,7 @@
 					<div class="card shadow mb-4">
 						<div class="card-body">
 						Select in forma temporanea: per ora usare CTRL+click per selezionare e deselezionare destinatari<br><br>
-							<form class="user" action="./messaggio" method="POST" >
+							<form class="user" action="./messaggio" method="POST" enctype="multipart/form-data" >
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
 									<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
@@ -106,7 +106,7 @@
 									<div class="file-field">
 										<div class="d-flex justify-content-center">
 											<div class="btn btn-mdb-color btn-rounded float-left">
-												<span>Allegato</span> <input type="file" name="allegato" id="allegato">
+												<span>Allegato</span> <input type="file" name="file" id="allegato">
 											</div>
 										</div>
 									</div>
