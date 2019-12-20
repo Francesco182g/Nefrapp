@@ -21,6 +21,7 @@ public class Messaggio {
 	private String allegato;
 	private LocalTime ora;
 	private LocalDate data;
+	private Boolean visualizzato;
 	
 	public Messaggio() {}
 
@@ -32,6 +33,7 @@ public class Messaggio {
 		this.allegato = allegato;
 		this.ora = ora;
 		this.data = data;
+		this.visualizzato=false;
 	}
 
 	public String getCodiceFiscaleMittente() {
@@ -95,9 +97,17 @@ public class Messaggio {
 		this.data = data;
 	}
 	
+	public void setVisualizzato(Boolean visualizzato) {
+		this.visualizzato=visualizzato;
+	}
+	
+	public Boolean getVisualizzato() {
+		return this.visualizzato;
+	}
+	
 	@Override
 	public String toString() {
 		return "Messaggio [mittente=" + codiceFiscaleMittente + ", destinatario=" + codiceFiscaleDestinatario + ", oggetto=" + oggetto
-				+ ", testo=" + testo + ", ora=" + ora + ", data=" + data + "]";
+				+ ", testo=" + testo + ", ora=" + ora + ", data=" + data + ", visualizzato="+ visualizzato+"]";
 	}	
 }
