@@ -1,6 +1,7 @@
 package utility;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
@@ -141,20 +142,13 @@ public class CreaBeanUtility {
 	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
 		Messaggio messaggio = new Messaggio();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
-		
-		//la conversione dell'array di mongo in arraylist di stringhe non funziona, trovare un altro modo
-		BasicDBList result = (BasicDBList) datiMessaggio.get("DestinatariCodiceFiscale");
-		ArrayList<String> destinatariCF = new ArrayList<String>();
-		for(Object element: result) {
-		     destinatariCF.add((String) element);
-		}
-		messaggio.setCodiceFiscaleDestinatario(destinatariCF);
+		messaggio.setCodiceFiscaleDestinatario((ArrayList<String>) datiMessaggio.get("DestinatarioCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
 		messaggio.setTesto(datiMessaggio.getString("Testo"));
 		messaggio.setAllegato(datiMessaggio.getString("Allegato"));
 		
 		Date temp = datiMessaggio.getDate("Data");
-		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDateTime data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		LocalTime ora = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 		messaggio.setData(data);
 		messaggio.setOra(ora);

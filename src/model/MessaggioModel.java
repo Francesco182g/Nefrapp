@@ -48,7 +48,7 @@ public class MessaggioModel {
 		ArrayList<Messaggio> messaggi = new ArrayList<>();
 		MongoCursor<Document> documenti = messaggioDB.find(eq("MittenteCodiceFiscale", codiceFiscaleMittente)).iterator();
 		
-		if (documenti.hasNext())
+		while (documenti.hasNext())
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggio(documenti.next()));
 		
 		return messaggi;

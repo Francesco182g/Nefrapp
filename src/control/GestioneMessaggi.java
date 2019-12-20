@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -134,7 +135,7 @@ public class GestioneMessaggi extends HttpServlet {
 			String allegato = request.getParameter("allegato");
 			
 			//inserire qui controlli backend
-			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, LocalTime.now(), LocalDate.now());
+			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, LocalTime.now(), LocalDateTime.now());
 			MessaggioModel.addMessaggio(messaggio);
 			// qua verrebbe un notify() ai medici se avessimo un observer
 
@@ -149,7 +150,7 @@ public class GestioneMessaggi extends HttpServlet {
 
 			String allegato = request.getParameter("allegato");
 			LocalTime ora = LocalTime.now();
-			LocalDate date = LocalDate.now();
+			LocalDateTime date = LocalDateTime.now();
 
 			messaggio = new Messaggio(CFMittente, elencoCFDestinatari, oggetto, testo, allegato, ora, date);
 			MessaggioModel.addMessaggio(messaggio);

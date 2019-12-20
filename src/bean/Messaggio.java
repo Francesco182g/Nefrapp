@@ -4,6 +4,7 @@
 package bean;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,12 +21,12 @@ public class Messaggio {
 	private String testo;
 	private String allegato;
 	private LocalTime ora;
-	private LocalDate data;
+	private LocalDateTime data;
 	private Boolean visualizzato;
 	
 	public Messaggio() {}
 
-	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, LocalTime ora, LocalDate data) {
+	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, LocalTime ora, LocalDateTime data) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 		this.codiceFiscaleDestinatario = new ArrayList<String> (codiceFiscaleDestinatario);
 		this.oggetto = oggetto;
@@ -84,7 +85,7 @@ public class Messaggio {
 		this.ora = ora;
 	}
 
-	public LocalDate getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 	
@@ -93,7 +94,7 @@ public class Messaggio {
 		return data.format(format);
 	}
 
-	public void setData(LocalDate data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 	
