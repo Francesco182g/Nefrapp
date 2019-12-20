@@ -68,38 +68,32 @@
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Diagnosi</h6>
                 			</div>
-                			<div class="card-body">
-                  				<div class="form-group row col-lg-12">
-							    	<input type="text" class="form-control form-control-user" id="diagnosi" value="${pianoTerapeutico.diagnosi}" required="required" disabled >
-							    </div>
-                  			</div>
+							<div class="card-body">
+               					<p class="mb-0">${pianoTerapeutico.diagnosi}</p>
+               				</div>
               			</div>
               			
               			<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Farmaci prescritti</h6>
                 			</div>
-                			<div class="card-body">
-                  				<div class="form-group row col-lg-12">
-							    	<input type="text" class="form-control form-control-user" id="farmaci" value="${pianoTerapeutico.farmaco}" required="required" disabled >
-							    </div>
-                  			</div>
+							<div class="card-body">
+               					<p class="mb-0">${pianoTerapeutico.farmaco}</p>
+               				</div>
               			</div>
               			
               			<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Data fine terapia</h6>
                 			</div>
-                			<div class="card-body">
-                  				<div class="form-group row col-lg-12">
-							    	<input type="text" class="form-control form-control-user" id="data" value="${pianoTerapeutico.dataFineTerapia}" required="required" disabled >
-							    </div>
-                  			</div>
+							<div class="card-body">
+               					<p class="mb-0">${pianoTerapeutico.dataFormattata}</p>
+               				</div>
               			</div>
               			</form>
               			<c:if test='${medico != null}'>
               			<div class="my-2"></div>
-  						<button type="submit" class="btn btn-info btn-icon-split" id="bottoneModifca">Modifica</button>
+  						<button type="submit" class="btn btn-info btn-icon-split" id="bottoneModifica">Modifica</button>
               			<div class="my-2"></div>
   						<button type="submit" form="modificaPiano" class="btn btn-info btn-icon-split" id="bottoneConferma" disabled>Applica modifiche</button>
               			</c:if>
