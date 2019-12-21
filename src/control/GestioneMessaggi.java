@@ -1,11 +1,6 @@
 package control;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -29,7 +24,6 @@ import bean.Paziente;
 import model.MedicoModel;
 import model.MessaggioModel;
 import model.PazienteModel;
-import utility.uploadFileUtility;
 /**
  * @author Sara, Nico
  */
@@ -38,7 +32,7 @@ import utility.uploadFileUtility;
  */
 @WebServlet("/GestioneMessaggi")
 @MultipartConfig
-public class GestioneMessaggi extends HttpServlet {
+public class GestioneMessaggi extends GestioneComunicazione {
 	private static final long serialVersionUID = 1L;
 
 	public GestioneMessaggi() {
@@ -61,21 +55,11 @@ public class GestioneMessaggi extends HttpServlet {
 
 			String operazione = request.getParameter("operazione");
 
-			// questo if permette alla pagina che si occupa dell'invio del messaggio di
-			// caricare nella request i possibili destinatari
-			// sia dal lato medico che dal lato paziente (non ho ancora la query pushata da
-			// Antonio per il lato paziente)
-			if (operazione.equals("inserimentoMessaggioView")) {
-				caricaDestinatari(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
-				requestDispatcher.forward(request, response);
-			}
-
 			if (operazione.equals("inviaMessaggio")) {
 				inviaMessaggio(request,response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
-				// forward temporaneo alla dashboard, bisogna decidere cosa fare
+				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
 			}
 			if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaListaMessaggi(request);
@@ -101,39 +85,6 @@ public class GestioneMessaggi extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
-	}
-
-	private void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Medico medico = null;
-		Paziente paziente = null;
-		HttpSession session = request.getSession();
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
-
-		if (paziente != null && medico == null) {
-			ArrayList<Medico> mediciCuranti = new ArrayList<>();
-			for (String cf : paziente.getMedici()) {
-				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
-			}
-			request.setAttribute("mediciCuranti", mediciCuranti);
-		}
-
-		// da Nico: per dare i medici al paziente loggato ho usato l'array di medici
-		// curanti presente sia nella collection che nel bean del paziente.
-		// Vi suggerisco di dare anche al medico il campo con l'array di pazienti
-		// associati (il fatto che la cosa non sia simmetrica e' molto strano peraltro)
-		// ma non ho voluto farlo io perche' ora state dormendo e non posso chiedervi il
-		// permesso. Ciao.
-		else if (medico != null && paziente == null) {
-			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
-			pazientiSeguiti.addAll(PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale()));
-			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-		}
-
-		else {
-			System.out.println("L'utente deve essere loggato");
-		}
 	}
 
 	/**
@@ -245,6 +196,7 @@ public class GestioneMessaggi extends HttpServlet {
 		}
 
 	}
+	
 	private void visualizzaMessaggio(HttpServletRequest request) {
 		String idMessaggio=request.getParameter("idMessaggio");
 		Messaggio messaggio=MessaggioModel.getMessaggioById(idMessaggio);
