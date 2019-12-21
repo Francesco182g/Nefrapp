@@ -57,7 +57,7 @@
           <div class="card shadow mb-4">
             
             <div class="card-body">
-              <div class="table-responsive">
+              <div class="table-responsive" id="tablecont">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
@@ -84,9 +84,9 @@
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
              		<c:forEach items="${messaggio}" var="item">
-                    <tr>
+                    <tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&idMessaggio=${item.idMessaggio}'>
                       <c:set var="cognome" value="${item.codiceFiscaleMittente}" />
-                      <td><a href="./messaggio?operazione=visualizzaMessaggio&idMessaggio=${item.idMessaggio}">Dott. ${requestScope[cognome]}</a></td>
+                      <td>Dott. ${requestScope[cognome]}</a></td>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
                       <td>${item.oraFormattata}</td>
@@ -108,6 +108,14 @@
 	
 	    </div>
 	    <!-- End of Page Wrapper -->
+<!-- 	    spostare in un file -->
+	    <script type="text/javascript">
+	    jQuery(document).ready(function($) {
+	        $(".clickable-row").click(function() {
+	            window.location = $(this).data("href");
+	        });
+	    });
+	    </script>
 	
 	    <!-- Scroll to Top Button-->
 	    <a class="scroll-to-top rounded" href="#page-top">

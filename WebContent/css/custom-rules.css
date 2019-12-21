@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+/* regola per le righe cliccabili in listaMessaggiView */
+.riga-messaggio:hover {
+background-color: paleturquoise;
+opacity: 1.0;
+}
