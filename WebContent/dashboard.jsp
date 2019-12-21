@@ -12,7 +12,7 @@
     	
     	<!-- Custom fonts for this template-->
     	<script src="./vendor/jquery/jquery.min.js"></script>
-    	
+    		
 	</head>
 	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	
@@ -37,44 +37,35 @@
 	                <div class="container-fluid">
 						<c:if test="${not empty amministratore}">
 							<script src="./js/loadObject.js" ></script>	
-							<!-- DataTales Example -->
-					          <div class="card shadow mb-4">
-					            <div class="card-header py-3">
-					              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-					            </div>
-					            <div class="card-body">
-					              <div class="table-responsive">
-					                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-					                  <thead>
-					                    <tr>
-					                      <th>Codice Fiscale</th>
-					                      <th>Nome</th>
-					                      <th>Cognome</th>
-					                      <th>Email</th>
-					                      <th>Data di nascita</th>
-					                      <th>Luogo di nascita</th>
-					                      <th>Residenza</th>
-					                      <th>Sesso</th>
-					                    </tr>
-					                  </thead>
-					                  <tbody>
-					                    <tr>
-					                      <td>Tiger Nixon</td>
-					                      <td>System Architect</td>
-					                      <td>Edinburgh</td>
-					                      <td>61</td>
-					                      <td>2011/04/25</td>
-					                      <td>$320,800</td>
-					                      					                      <td>$320,800</td>
-					                      
-					                      
-					                    </tr>
-					                    
-					                  </tbody>
-					                </table>
-					              </div>
-					            </div>
-					          </div>
+							  <div class="row">
+							  	<div class="col-sm-6 mt-3 ">
+							  		 <div class="card ">
+							  		 	<div class="card-header py-3">
+                                    		<h6 class="m-0 font-weight-bold text-primary">Medici</h6>
+                               			</div>
+                               			<div class="card-body">
+                               				<ul class="list-group pull-down pre-scrollable" id="tabellaMedici">
+                               				</ul>
+                               			</div>
+                               			<div class="col-sm-12 mb-3 d-flex justify-content-center">
+                                   		 <a href="./registraMedico.jsp" class="btn btn-primary btn-user btn-circle btn-xl"><i class="fas fa-user-plus"></i></a>
+                                		</div>
+							  		 </div>
+							  		  	
+							  	</div>
+							  	<div class="col-sm-6 mt-3">
+							  		 <div class="card">
+							  		 	<div class="card-header py-3">
+                                    		<h6 class="m-0 font-weight-bold text-primary">Pazienti</h6>
+                               			</div>
+                               			<div class="card-body">
+                               				<ul class="list-group pull-down pre-scrollable" id="tabellaPazienti">
+                               				</ul>
+                               			</div>
+							  		 </div>
+							  	</div>
+							  </div>
+
 						</c:if>	
 	
 							  <div class="container login">

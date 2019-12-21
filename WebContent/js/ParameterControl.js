@@ -9,6 +9,8 @@
 	  var button1 = $("#registrazioneMedicoButton")
 	  var button2 = $("#accediAdminButton") 
 	  var button3 = $("#loginUtente")
+	  var button4 = $("#resetPswButton")
+	  var button5 = $("#richiestaReset")
 	  $(document).submit(function(){
 				  return sub; 
 		  });
@@ -20,6 +22,14 @@
 	  	{
 		  loginValidator();
 	  	}
+	  else if(button4.length>0)
+		  {
+		  	resetPasswordValidator()
+		  }
+	  else if(button5.length>0)
+	  {
+	  
+	  }
 	  
 	  
 	});
@@ -166,6 +176,9 @@
 			}
 	}
 	
+	function resetPasswordValidator(){
+		var 
+	}
  
 })(jQuery); // End of use strict
 

@@ -39,7 +39,7 @@ public class GestioneMedico extends HttpServlet {
 			String operazione = request.getParameter("operazione");
 			
 			if(operazione.equals("modifica")) {
-				request.setAttribute("notifica","Modifica effettuata con successo"); //Se ciò non avviene la stringa viene cambiata dal metodo
+				request.setAttribute("notifica","Modifica effettuata con successo"); //Se ciï¿½ non avviene la stringa viene cambiata dal metodo
 				modifica(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); //TODO reindirizzamento pagina di modifica
 				requestDispatcher.forward(request, response);
@@ -55,8 +55,8 @@ public class GestioneMedico extends HttpServlet {
 				
 			}
 			else if(operazione.equals("elimina")) {
-				Medico medico = (Medico) request.getSession().getAttribute("medico");
-				MedicoModel.removeMedico(medico.getCodiceFiscale());
+				String codiceFiscale = request.getParameter("codiceFiscale");
+				MedicoModel.removeMedico(codiceFiscale);
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
@@ -115,7 +115,7 @@ public class GestioneMedico extends HttpServlet {
 				//TODO aggiorna dati del medico, anche la password
 			}
 			else {
-				request.setAttribute("notifica","Non è stato trovato il medico da aggiornare");
+				request.setAttribute("notifica","Non ï¿½ stato trovato il medico da aggiornare");
 			}
 		}
 		else {
