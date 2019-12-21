@@ -29,12 +29,7 @@ public class GestioneMedico extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
+			//messaggio da eugenio ho rimosso il controllo della chiamata asincrona perchè mi serviva che lo fosse per l'eliminazione del medico da parte del amministratore
 			
 			String operazione = request.getParameter("operazione");
 			
@@ -56,6 +51,7 @@ public class GestioneMedico extends HttpServlet {
 			}
 			else if(operazione.equals("elimina")) {
 				String codiceFiscale = request.getParameter("codiceFiscale");
+				
 				MedicoModel.removeMedico(codiceFiscale);
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
