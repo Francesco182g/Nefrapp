@@ -1,7 +1,11 @@
 package control;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -25,7 +29,10 @@ import bean.Paziente;
 import model.MedicoModel;
 import model.MessaggioModel;
 import model.PazienteModel;
-
+import utility.uploadFileUtility;
+/**
+ * @author Sara, Nico
+ */
 /**
  * Servlet implementation class GestioneMessaggio
  */
@@ -65,7 +72,7 @@ public class GestioneMessaggi extends HttpServlet {
 			}
 
 			if (operazione.equals("inviaMessaggio")) {
-				inviaMessaggio(request);
+				inviaMessaggio(request,response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
 				// forward temporaneo alla dashboard, bisogna decidere cosa fare
@@ -138,7 +145,7 @@ public class GestioneMessaggi extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void inviaMessaggio(HttpServletRequest request) throws IOException, ServletException {
+	private void inviaMessaggio(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		Medico medico = null;
 		Paziente paziente = null;
@@ -156,19 +163,25 @@ public class GestioneMessaggi extends HttpServlet {
 			String CFMittente = paziente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
-			String allegato = null;
-			
-			if (isMultipart) {
-//				System.out.println("ho capito che c'è un file da prendere");
-				Part filePart = request.getPart("file"); // <input type="file" name="file">
-//				System.out.println(filePart.toString());
-				// String fileName =
-				// Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+			Part filePart = request.getPart("file");
+			String allegato = filePart.getSubmittedFileName();
+
+			/*if (isMultipart) {
+				
+				final String fileName = uploadFileUtility.getFileName(filePart);
+				OutputStream out = null;
 				InputStream fileContent = null;
+				out = new FileOutputStream(new File(File.separator + fileName));
 				fileContent = filePart.getInputStream();
-				allegato = fileContent.toString();
-//				System.out.println(allegato);
-			}
+				int read = 0;
+		        final byte[] bytes = new byte[1024];
+		        while ((read = fileContent.read(bytes)) != -1) {
+		            out.write(bytes, 0, read);
+		        }
+		        allegato=out.toString();
+		        out.close();
+				System.out.println(allegato);
+			}*/
 
 			// inserire qui controlli backend
 			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
@@ -233,7 +246,9 @@ public class GestioneMessaggi extends HttpServlet {
 
 	}
 	private void visualizzaMessaggio(HttpServletRequest request) {
-		Messaggio messaggio=MessaggioModel.getMessaggioById("idMessaggio");
+		String idMessaggio=request.getParameter("idMessaggio");
+		Messaggio messaggio=MessaggioModel.getMessaggioById(idMessaggio);
+		MessaggioModel.updateMessaggio(idMessaggio, true);
 		request.setAttribute("messaggio", messaggio);
 	}
 	

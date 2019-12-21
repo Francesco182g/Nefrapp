@@ -51,12 +51,10 @@
 														data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
 														class="selectpicker bootstrap-select w-100">
 														<option value="" disabled>Scegli destinatari:</option>
-														<c:set var="dottori"
-															value='${requestScope["mediciCuranti"]}' />
+														<c:set var="dottori" value='${requestScope["mediciCuranti"]}' />
 														<c:forEach items="${dottori}" var="item">
 															<option value="${item.codiceFiscale}">${item.nome}
 																${item.cognome}</option>
-															</a>
 														</c:forEach>
 													</select>
 												</c:when>
@@ -68,9 +66,8 @@
 														<c:forEach items="${dottori}" var="item">
 															<option value="${item.codiceFiscale}">${item.nome}
 																${item.cognome}</option>
-															</a>
 														</c:forEach>
-										</div>
+													</select>
 										</c:when>
 										</c:choose>
 									</div>
@@ -109,7 +106,7 @@
 								<div class="d-flex justify-content-center">
 									<div class="btn btn-mdb-color btn-rounded float-left">
 										<span>Allegato</span> <input type="file" name="file"
-											id="allegato">
+											id="file">
 									</div>
 								</div>
 							</div>

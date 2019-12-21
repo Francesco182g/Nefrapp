@@ -1,4 +1,4 @@
-<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,14 +77,9 @@
 										</tr>
 									</thead>
 									<tbody>
-
-										<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
-
 										<tr>
-											<c:set var="cognome"
-												value="${messaggio.codiceFiscaleMittente}" />
 											<td>Dott.
-													${requestScope[cognome]}</td>
+													${messaggio.codiceFiscaleMittente}</td>
 											<td>${messaggio.oggetto}</td>
 											<td>${messaggio.dataFormattata}</td>
 											<td>${messaggio.oraFormattata}</td>

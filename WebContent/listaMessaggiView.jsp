@@ -82,7 +82,7 @@
                   	
                   	
                   	
-                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
+                  	<!-- Inizio iterazione dei risultati ottenuti dalla servlet) -->
              		<c:forEach items="${messaggio}" var="item">
                     <tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&idMessaggio=${item.idMessaggio}'>
                       <c:set var="cognome" value="${item.codiceFiscaleMittente}" />
