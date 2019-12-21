@@ -3,9 +3,7 @@
  */
 package bean;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -20,19 +18,17 @@ public class Messaggio {
 	private String oggetto;
 	private String testo;
 	private String allegato;
-	private LocalTime ora;
-	private LocalDateTime data;
+	private ZonedDateTime data;
 	private Boolean visualizzato;
 	
 	public Messaggio() {}
 
-	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, LocalTime ora, LocalDateTime data) {
+	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, ZonedDateTime data) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 		this.codiceFiscaleDestinatario = new ArrayList<String> (codiceFiscaleDestinatario);
 		this.oggetto = oggetto;
 		this.testo = testo;
 		this.allegato = allegato;
-		this.ora = ora;
 		this.data = data;
 		this.visualizzato=false;
 	}
@@ -76,16 +72,13 @@ public class Messaggio {
 	public void setAllegato(String allegato) {
 		this.allegato = allegato;
 	}
-
-	public LocalTime getOra() {
-		return ora;
+	
+	public String getOraFormattata() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+		return data.format(format);
 	}
 
-	public void setOra(LocalTime ora) {
-		this.ora = ora;
-	}
-
-	public LocalDateTime getData() {
+	public ZonedDateTime getData() {
 		return data;
 	}
 	
@@ -94,7 +87,7 @@ public class Messaggio {
 		return data.format(format);
 	}
 
-	public void setData(LocalDateTime data) {
+	public void setData(ZonedDateTime data) {
 		this.data = data;
 	}
 	
@@ -109,6 +102,6 @@ public class Messaggio {
 	@Override
 	public String toString() {
 		return "Messaggio [mittente=" + codiceFiscaleMittente + ", destinatario=" + codiceFiscaleDestinatario + ", oggetto=" + oggetto
-				+ ", testo=" + testo + ", ora=" + ora + ", data=" + data + ", visualizzato="+ visualizzato+"]";
+				+ ", testo=" + testo + ", data=" + data + ", visualizzato="+ visualizzato+"]";
 	}	
 }

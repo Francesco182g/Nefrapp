@@ -87,8 +87,8 @@
                     <tr>
                       <td>${item.codiceFiscaleMittente}</td>
                       <td>${item.oggetto}</td>
-                      <td>${item.data}</td>
-                      <td>${item.ora}</td>
+                      <td>${item.dataFormattata}</td>
+                      <td>${item.oraFormattata}</td>
                     </tr>
                     </c:forEach>
                   </tbody>

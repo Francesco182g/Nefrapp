@@ -1,16 +1,12 @@
 package utility;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
-
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.bson.Document;
-
-import com.mongodb.BasicDBList;
 
 import bean.Amministratore;
 import bean.Medico;
@@ -145,13 +141,10 @@ public class CreaBeanUtility {
 		messaggio.setCodiceFiscaleDestinatario((ArrayList<String>) datiMessaggio.get("DestinatarioCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
 		messaggio.setTesto(datiMessaggio.getString("Testo"));
-		messaggio.setAllegato(datiMessaggio.getString("Allegato"));
-		
+		messaggio.setAllegato(datiMessaggio.getString("Allegato"));	
 		Date temp = datiMessaggio.getDate("Data");
-		LocalDateTime data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		LocalTime ora = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
-		messaggio.setOra(ora);
 		messaggio.setVisualizzato(datiMessaggio.getBoolean("Visualizzato"));
 
 		return messaggio;

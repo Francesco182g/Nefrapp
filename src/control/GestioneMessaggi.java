@@ -2,8 +2,8 @@ package control;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -98,8 +98,6 @@ public class GestioneMessaggi extends HttpServlet {
 		HttpSession session = request.getSession();
 		medico = (Medico) session.getAttribute("medico");
 		paziente = (Paziente) session.getAttribute("paziente");
-		System.out.println(medico);
-		System.out.println(paziente);
 
 		if (paziente != null && medico == null) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
@@ -143,7 +141,7 @@ public class GestioneMessaggi extends HttpServlet {
 		Messaggio messaggio = null;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		System.out.println(isMultipart);
+//		System.out.println(isMultipart);
 		medico = (Medico) session.getAttribute("medico");
 		paziente = (Paziente) session.getAttribute("paziente");
 
@@ -154,21 +152,21 @@ public class GestioneMessaggi extends HttpServlet {
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
 			String allegato = null;
+			
 			if (isMultipart) {
-				System.out.println("ho capito che c'è un file da prendere");
+//				System.out.println("ho capito che c'è un file da prendere");
 				Part filePart = request.getPart("file"); // <input type="file" name="file">
-				System.out.println(filePart.toString());
+//				System.out.println(filePart.toString());
 				// String fileName =
 				// Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 				InputStream fileContent = null;
 				fileContent = filePart.getInputStream();
 				allegato = fileContent.toString();
-				System.out.println(allegato);
+//				System.out.println(allegato);
 			}
 
 			// inserire qui controlli backend
-			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, LocalTime.now(),
-					LocalDateTime.now());
+			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			MessaggioModel.addMessaggio(messaggio);
 			// qua verrebbe un notify() ai medici se avessimo un observer
 
@@ -182,11 +180,11 @@ public class GestioneMessaggi extends HttpServlet {
 			// encoding dell'allegato da fare (nel pacchetto utility)
 
 			String allegato = request.getParameter("allegato");
-			LocalTime ora = LocalTime.now();
-			LocalDateTime date = LocalDateTime.now();
+			ZonedDateTime date = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
 
-			messaggio = new Messaggio(CFMittente, elencoCFDestinatari, oggetto, testo, allegato, ora, date);
+			messaggio = new Messaggio(CFMittente, elencoCFDestinatari, oggetto, testo, allegato, date);
 			MessaggioModel.addMessaggio(messaggio);
+
 			// observer per i pazienti
 		} else {
 			System.out.println("Utente deve esssere loggato");
@@ -200,11 +198,9 @@ public class GestioneMessaggi extends HttpServlet {
 	 *                attributi
 	 */
 	private void visualizzaMessaggio(HttpServletRequest request) {
-		System.out.println("voglio leggere");
 		Medico medico = null;
 		Paziente paziente = null;
 		HttpSession session = request.getSession();
-		Messaggio messaggio = null;
 
 		medico = (Medico) session.getAttribute("medico");
 		paziente = (Paziente) session.getAttribute("paziente");
@@ -212,7 +208,6 @@ public class GestioneMessaggi extends HttpServlet {
 		if (paziente != null && medico == null) {
 			ArrayList<Messaggio> m=new ArrayList <Messaggio>();
 			m=MessaggioModel.getMessaggioByCFDestinatario(paziente.getCodiceFiscale());
-			System.out.println(m.toString());
 			request.setAttribute("messaggio", m);
 		}
 

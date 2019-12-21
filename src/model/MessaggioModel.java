@@ -35,7 +35,7 @@ public class MessaggioModel {
 				.append("Oggetto", daAggiungere.getOggetto())
 				.append("Testo", daAggiungere.getTesto())
 				.append("Allegato", daAggiungere.getAllegato())
-				.append("Data", daAggiungere.getData())
+				.append("Data", daAggiungere.getData().toInstant())
 				.append("Visualizzato", daAggiungere.getVisualizzato());
 		messaggio.insertOne(doc);	
 	}

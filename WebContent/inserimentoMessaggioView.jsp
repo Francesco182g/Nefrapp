@@ -37,96 +37,103 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-body">
-						Select in forma temporanea: per ora usare CTRL+click per selezionare e deselezionare destinatari<br><br>
-							<form class="user" action="./messaggio" method="POST" enctype="multipart/form-data" >
+							<form class="user" action="./messaggio" method="POST"
+								enctype="multipart/form-data">
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
-									<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
-										<p style="text-align: center">Destinatari:</p>
-									</div>
-									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12 row">
+									<div class="col-lg-6 col-sm-6 mb-6 mb-sm-12 row">
 										<div class="dropdown">
 											<!-- Se utente==paziente, il pulsante mostra l'elenco dei medico, viceversa altrimenti -->
 											<c:choose>
 												<c:when test='${paziente!=null}'>
-												    <select name="selectMedico" id="selectMedico" multiple>
-												      <option value="" disabled>Scegli destinatari:</option>
-												      	<c:set var="dottori" value='${requestScope["mediciCuranti"]}'/>
+													<select name="selectMedico" id="selectMedico"
+														title="Scegli destinatari:" multiple
+														data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
+														class="selectpicker bootstrap-select w-100">
+														<option value="" disabled>Scegli destinatari:</option>
+														<c:set var="dottori"
+															value='${requestScope["mediciCuranti"]}' />
 														<c:forEach items="${dottori}" var="item">
-														<option value="${item.codiceFiscale}">${item.nome} ${item.cognome}</option></a> 
-														</c:forEach>	
-												    </select>
+															<option value="${item.codiceFiscale}">${item.nome}
+																${item.cognome}</option>
+															</a>
+														</c:forEach>
+													</select>
 												</c:when>
 												<c:when test='${medico!=null}'>
-												<select name="selectPaziente" id="selectPaziente" multiple>
-												      <option value="" disabled>Scegli destinatari:</option>
-														<c:set var="pazienti" value='${requestScope[pazientiSeguiti]}'/>
-													<c:forEach items="${dottori}" var="item">
-														<option value="${item.codiceFiscale}">${item.nome} ${item.cognome}</option></a> 
-														</c:forEach>	
-														 
-													</div>
-												</c:when>
-											</c:choose>
+													<select name="selectPaziente" id="selectPaziente" multiple>
+														<option value="" disabled>Scegli destinatari:</option>
+														<c:set var="pazienti"
+															value='${requestScope[pazientiSeguiti]}' />
+														<c:forEach items="${dottori}" var="item">
+															<option value="${item.codiceFiscale}">${item.nome}
+																${item.cognome}</option>
+															</a>
+														</c:forEach>
 										</div>
-									</div>
-<!-- 									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row"> -->
-<!-- 										<input type="text" class="form-control form-control-user" -->
-<!-- 											id="cfdestinatario" name="cfdestinatario" -->
-<!-- 											placeholder="Esempio: CRRSRA90A50A091Q" required="required"> -->
-<!-- 									</div> -->
-								</div>
-								<!-- oggetto del messaggio -->
-								<div class="form-group row">
-									<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
-										<p style="text-align: center">Oggetto:</p>
-									</div>
-									<div class="col-lg-10 col-sm-12 mb-12 mb-sm-12 row">
-										<input type="text" class="form-control form-control-user"
-											id="oggeto" name="oggetto" required="required">
-									</div>
-
-								</div>
-								<!-- Inizio area testo -->
-								<div class="form-group row">
-									<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
-										<p style="text-align: center">Testo:</p>
-									</div>
-									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row">
-										<textarea name="testo" maxlength="1000" id="testo" 
-											class="form-control " placeholder="" required="required"
-											style="resize: none; height: 180px"></textarea>
+										</c:when>
+										</c:choose>
 									</div>
 								</div>
-								<div class="form-group row">
-									<div class="file-field">
-										<div class="d-flex justify-content-center">
-											<div class="btn btn-mdb-color btn-rounded float-left">
-												<span>Allegato</span> <input type="file" name="file" id="allegato">
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<button class="btn btn-primary btn-user" type="submit"
-										id="inviaMessaggio" style="float: right">Invia
-										Messaggio</button>
-								</div>
-
-							</form>
+								<!-- 									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row"> -->
+								<!-- 										<input type="text" class="form-control form-control-user" -->
+								<!-- 											id="cfdestinatario" name="cfdestinatario" -->
+								<!-- 											placeholder="Esempio: CRRSRA90A50A091Q" required="required"> -->
+								<!-- 									</div> -->
 						</div>
+						<!-- oggetto del messaggio -->
+						<br><br>
+						<div class="form-group row">
+							<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
+								<p style="text-align: center">Oggetto:</p>
+							</div>
+							<div class="col-lg-10 col-sm-12 mb-12 mb-sm-12 row">
+								<input type="text" class="form-control form-control-user"
+									id="oggeto" name="oggetto" required="required">
+							</div>
+
+						</div>
+						<!-- Inizio area testo -->
+						<div class="form-group row">
+							<div class="col-lg-2 col-sm-3 mb-3 mb-sm-12 row">
+								<p style="text-align: center">Testo:</p>
+							</div>
+							<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row">
+								<textarea name="testo" maxlength="1000" id="testo"
+									class="form-control " placeholder="" required="required"
+									style="resize: none; height: 180px"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="file-field">
+								<div class="d-flex justify-content-center">
+									<div class="btn btn-mdb-color btn-rounded float-left">
+										<span>Allegato</span> <input type="file" name="file"
+											id="allegato">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<button class="btn btn-primary btn-user" type="submit"
+								id="inviaMessaggio" style="float: right">Invia
+								Messaggio</button>
+						</div>
+
+						</form>
 					</div>
 				</div>
-
-
-				<!-- /.container-fluid -->
-
 			</div>
-			<!-- End of Main Content -->
-			<%@include file="./includes/footer.jsp"%>
-		</div>
-		<!-- End of Content Wrapper -->
 
+
+			<!-- /.container-fluid -->
+
+		</div>
+		<!-- End of Main Content -->
+		<%@include file="./includes/footer.jsp"%>
+	</div>
+	<!-- End of Content Wrapper -->
+	
 	</div>
 	<!-- End of Page Wrapper -->
 
