@@ -70,13 +70,13 @@
                     </tr>
                   </thead>
                   <tfoot> <!-- Sarebbe il footer della tabella-->
-                    <tr>
-                      <th>Mittente</th>
-                      <th>Oggetto</th>
-                      <th>Data</th>
-                      <th>Ora</th>
-                      <!-- Possibile aggiunta di altri campi -->
-                    </tr>
+<!--                     <tr> -->
+<!--                       <th>Mittente</th> -->
+<!--                       <th>Oggetto</th> -->
+<!--                       <th>Data</th> -->
+<!--                       <th>Ora</th> -->
+<!--                       Possibile aggiunta di altri campi -->
+<!--                     </tr> -->
                   </tfoot>
                   <tbody>
                   	
@@ -85,7 +85,8 @@
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
              		<c:forEach items="${messaggio}" var="item">
                     <tr>
-                      <td>${item.codiceFiscaleMittente}</td>
+                    	 <c:set var="cognome" value="${item.codiceFiscaleMittente}" />
+                      <td>Dott. ${requestScope[cognome]}</td>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
                       <td>${item.oraFormattata}</td>

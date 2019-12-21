@@ -72,8 +72,9 @@ public class MedicoModel {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		Medico medico = null;
 		Document datiMedico = medici.find(eq("CodiceFiscale", codiceFiscale)).first();
-		if(datiMedico != null)
+		if(datiMedico != null) {
 			medico = CreaBeanUtility.daDocumentAMedico(datiMedico);
+		}
 		
 		return medico;
 	}

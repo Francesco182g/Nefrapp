@@ -206,9 +206,15 @@ public class GestioneMessaggi extends HttpServlet {
 		paziente = (Paziente) session.getAttribute("paziente");
 
 		if (paziente != null && medico == null) {
-			ArrayList<Messaggio> m=new ArrayList <Messaggio>();
-			m=MessaggioModel.getMessaggioByCFDestinatario(paziente.getCodiceFiscale());
-			request.setAttribute("messaggio", m);
+			ArrayList<Messaggio> messaggi = new ArrayList <Messaggio>();
+			messaggi = MessaggioModel.getMessaggioByCFDestinatario(paziente.getCodiceFiscale());
+			request.setAttribute("messaggio", messaggi);
+			
+			for (Messaggio m : messaggi)
+			{
+				Medico dottore = MedicoModel.getMedicoByCF(m.getCodiceFiscaleMittente());
+				request.setAttribute(m.getCodiceFiscaleMittente(), dottore.getCognome());
+			}
 		}
 
 		else if (paziente == null && medico != null) {
