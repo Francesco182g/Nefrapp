@@ -85,11 +85,14 @@
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet (parametri inseriti dal paziente) -->
              		<c:forEach items="${messaggio}" var="item">
                     <tr>
-                    	 <c:set var="cognome" value="${item.codiceFiscaleMittente}" />
+                      <c:set var="cognome" value="${item.codiceFiscaleMittente}" />
                       <td>Dott. ${requestScope[cognome]}</td>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
                       <td>${item.oraFormattata}</td>
+                    </tr>
+                    <tr>
+                    	<td colspan="4">${item.testo}<br><br></td>
                     </tr>
                     </c:forEach>
                   </tbody>
