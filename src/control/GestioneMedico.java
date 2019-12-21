@@ -29,17 +29,12 @@ public class GestioneMedico extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
+			//messaggio da eugenio ho rimosso il controllo della chiamata asincrona perchÃ¨ mi serviva che lo fosse per l'eliminazione del medico da parte del amministratore
 			
 			String operazione = request.getParameter("operazione");
 			
 			if(operazione.equals("modifica")) {
-				request.setAttribute("notifica","Modifica effettuata con successo"); //Se ciò non avviene la stringa viene cambiata dal metodo
+				request.setAttribute("notifica","Modifica effettuata con successo"); //Se ciï¿½ non avviene la stringa viene cambiata dal metodo
 				modifica(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); //TODO reindirizzamento pagina di modifica
 				requestDispatcher.forward(request, response);
@@ -55,8 +50,9 @@ public class GestioneMedico extends HttpServlet {
 				
 			}
 			else if(operazione.equals("elimina")) {
-				Medico medico = (Medico) request.getSession().getAttribute("medico");
-				MedicoModel.removeMedico(medico.getCodiceFiscale());
+				String codiceFiscale = request.getParameter("codiceFiscale");
+				
+				MedicoModel.removeMedico(codiceFiscale);
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
@@ -115,7 +111,7 @@ public class GestioneMedico extends HttpServlet {
 				//TODO aggiorna dati del medico, anche la password
 			}
 			else {
-				request.setAttribute("notifica","Non è stato trovato il medico da aggiornare");
+				request.setAttribute("notifica","Non ï¿½ stato trovato il medico da aggiornare");
 			}
 		}
 		else {
