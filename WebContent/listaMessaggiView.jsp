@@ -23,6 +23,9 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
 	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
+	
+	<script type="text/javascript" src="./js/customscripts.js"></script>
+<!-- 	metti lo script a fine pagina qui dentro ^ -->
 		
 		<!-- Script per la registrazione -->
    	 	<script src="./js/dataPicker.js"></script>
@@ -58,7 +61,7 @@
             
             <div class="card-body">
               <div class="table-responsive" id="tablecont">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Mittente</th>
@@ -69,24 +72,15 @@
                       <!-- Possibile aggiunta di atri campi -->
                     </tr>
                   </thead>
-                  <tfoot> <!-- Sarebbe il footer della tabella-->
-<!--                     <tr> -->
-<!--                       <th>Mittente</th> -->
-<!--                       <th>Oggetto</th> -->
-<!--                       <th>Data</th> -->
-<!--                       <th>Ora</th> -->
-<!--                       Possibile aggiunta di altri campi -->
-<!--                     </tr> -->
-                  </tfoot>
                   <tbody>
                   	
                   	
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet) -->
              		<c:forEach items="${messaggio}" var="item">
-                    <tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&idMessaggio=${item.idMessaggio}'>
-                      <c:set var="cognome" value="${item.codiceFiscaleMittente}" />
-                      <td>Dott. ${requestScope[cognome]}</a></td>
+             		<c:set var="cognome" value="${item.codiceFiscaleMittente}" />
+                    <tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'>
+                      <td width = "300px">Dott. ${requestScope[cognome]}</a></td>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
                       <td>${item.oraFormattata}</td>

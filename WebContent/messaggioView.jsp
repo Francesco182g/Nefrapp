@@ -78,8 +78,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>Dott.
-													${messaggio.codiceFiscaleMittente}</td>
+											<td>Dott. ${param['cognome']}</td>
 											<td>${messaggio.oggetto}</td>
 											<td>${messaggio.dataFormattata}</td>
 											<td>${messaggio.oraFormattata}</td>
@@ -116,6 +115,9 @@
 									</tbody>
 								</table>
 							</div>
+							<a class="btn btn-primary float-right" 
+							href="./comunicazione?operazione=caricaDestinatariMessaggio&destinatario=${messaggio.codiceFiscaleMittente}" 
+							role="button">Rispondi</a>
 						</div>
 					</div>
 

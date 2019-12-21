@@ -182,7 +182,9 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			for (Messaggio m : messaggi)
 			{
 				Medico dottore = MedicoModel.getMedicoByCF(m.getCodiceFiscaleMittente());
-				request.setAttribute(m.getCodiceFiscaleMittente(), dottore.getCognome());
+				if (dottore != null) {
+					request.setAttribute(m.getCodiceFiscaleMittente(), dottore.getCognome());
+				}
 			}
 		}
 
