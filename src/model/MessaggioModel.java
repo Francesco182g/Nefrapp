@@ -12,6 +12,7 @@ import com.mongodb.client.MongoCursor;
 
 import bean.Messaggio;
 import bean.Paziente;
+import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
 
 /**
@@ -72,6 +73,16 @@ public class MessaggioModel {
 		}
 		
 		return messaggi;	
+	}
+	
+	public static Messaggio getMessaggioById(String idMessaggio) {
+		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
+		Document messaggioDoc = messaggi.find(eq("_id", idMessaggio)).first();
+		if(messaggioDoc != null) {
+			Messaggio messaggio=CreaBeanUtility.daDocumentAMessaggio(messaggioDoc);
+			return messaggio;
+		}
+		return null;	
 	}
 
 

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Messaggio {
 	
+	private String idMessaggio;
 	private String codiceFiscaleMittente;
 	private ArrayList<String> codiceFiscaleDestinatario;
 	private String oggetto;
@@ -97,6 +98,13 @@ public class Messaggio {
 	
 	public Boolean getVisualizzato() {
 		return this.visualizzato;
+	}
+	
+	public void setIdMessaggio(String idMessaggio) {
+		this.idMessaggio=idMessaggio;
+	}
+	public String getIdMessaggio() {
+		return this.idMessaggio;
 	}
 	
 	@Override

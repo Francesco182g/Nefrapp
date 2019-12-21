@@ -71,8 +71,13 @@ public class GestioneMessaggi extends HttpServlet {
 				// forward temporaneo alla dashboard, bisogna decidere cosa fare
 			}
 			if (operazione.equals("visualizzaElencoMessaggio")) {
+				visualizzaListaMessaggi(request);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			if(operazione.equals("visualizzaMessaggio")) {
 				visualizzaMessaggio(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiRicevuti.jsp");
+				RequestDispatcher requestDispatcher =request.getRequestDispatcher("./messaggioView.jsp");
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
@@ -197,7 +202,7 @@ public class GestioneMessaggi extends HttpServlet {
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
 	 */
-	private void visualizzaMessaggio(HttpServletRequest request) {
+	private void visualizzaListaMessaggi(HttpServletRequest request) {
 		Medico medico = null;
 		Paziente paziente = null;
 		HttpSession session = request.getSession();
@@ -223,8 +228,14 @@ public class GestioneMessaggi extends HttpServlet {
 			System.out.println(m.toString());
 		} else {
 			System.out.println("Utente deve esssere loggato");
+
 		}
 
 	}
+	private void visualizzaMessaggio(HttpServletRequest request) {
+		Messaggio messaggio=MessaggioModel.getMessaggioById("idMessaggio");
+		request.setAttribute("messaggio", messaggio);
+	}
+	
 
 }

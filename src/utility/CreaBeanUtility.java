@@ -146,7 +146,7 @@ public class CreaBeanUtility {
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
 		messaggio.setVisualizzato(datiMessaggio.getBoolean("Visualizzato"));
-
+		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
 		return messaggio;
 	}
 	
