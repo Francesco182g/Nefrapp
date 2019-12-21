@@ -39,6 +39,7 @@ public class GestioneResetPasswordMedico extends HttpServlet {
 			Paziente paziente = (Paziente) session.getAttribute("paziente");
 			Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
 			
+			//Controllo per verifica se c'è un utente in sessione, se è presente allora si reindirizza alla home
 			if(medico != null || paziente != null || amministratore != null) {
 				request.setAttribute("notifica", "Non è possibile effettuare questa operazione se si è loggati");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");

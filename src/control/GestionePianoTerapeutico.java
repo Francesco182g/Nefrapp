@@ -26,7 +26,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home dell'utente
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp"); 
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -44,9 +44,10 @@ public class GestionePianoTerapeutico extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/listaPazientiView.jsp");
 			}
 			
-			//prova, TODO eliminare
 			else {
-				System.out.println("Errore nel selezionare il tipo di operazione");
+				request.setAttribute("notifica", "Operazione scelta non valida");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+				dispatcher.forward(request, response);
 			}
 			
 		}catch (Exception e) {
