@@ -7,8 +7,16 @@
   $(document).ready(function(){
 	
 	caricaDati();
+	$(".eliminaButton").click(function(){
+		console.log(this)
+		console.log("premuto il tasto di eliminazione")
+	});
   });
   
+  /**
+   * funzione che esegue una chimata asincrona per poter prensere i dati del paziente e del medico dalla 
+   * servlet
+   */
   function caricaDati(){
 	  $.post("GestioneAmministratore",{operazione:"caricaMedPaz"},function(data){
 			
@@ -19,7 +27,9 @@
 	  }).fail(function(){alert("si è verificato un errore")});
   }
   
-  
+  /**
+   * funzione che carica i dati del medico nella tabella
+   */
   function loadTabellaMedici(medici){
 	  var tabellaMedici = $("#tabellaMedici")
 	  var riga = ""
@@ -34,12 +44,15 @@
 			riga +="<td><p>"+medici[i].codiceFiscale+"</p></td></tr>"
 			riga +="<tr><td><p>Email: </p></td>"
 			riga +="<td><p>"+medici[i].email+"</p></td></tr>"
-			riga+="</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' class='btn btn-primary btn-user mr-sm-5'>Modifica</button><button type='button' class='btn btn-danger btn-user '>Elimina</button></div>"
+			riga+="</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' class='btn btn-primary btn-user mr-sm-5'>Modifica</button><button type='button' class='btn btn-danger btn-user eliminaButton'>Elimina</button></div>"
 	  }
 
 	  tabellaMedici.append(riga)
 	  
   }
+  /**
+   * funzione che carica i dati del paziente nella tabella
+   */
   function loadTabellaPazienti(pazienti){
 	  var tabellaPazienti = $("#tabellaPazienti")
 	  var riga = ""

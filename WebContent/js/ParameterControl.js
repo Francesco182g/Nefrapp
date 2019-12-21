@@ -24,11 +24,11 @@
 	  	}
 	  else if(button4.length>0)
 		  {
-		  	resetPasswordValidator()
+		  	resetPasswordValidator(0)
 		  }
 	  else if(button5.length>0)
 	  {
-	  
+		  resetPasswordValidator(1)
 	  }
 	  
 	  
@@ -167,19 +167,104 @@
 			valido=[false,"formato password non valido"];
 		return valido;
 	}
-	
+	/**
+	 * funzione che verifica se c'è il campo nascosto notifica che viene utilizzato per stampare un 
+	 * errore generato da una servlet
+	 */
 	function checkNotifica(){
 		var notifica = $("#notifica").val()
-		if(notifica.length!=0)
+		if (notifica != undefined)
+			{
+			if(notifica.length!=0)
 			{
 				alert(notifica)
 			}
+			}
+		
 	}
-	
-	function resetPasswordValidator(){
-		var 
+	/**
+	 * la funzione serve a controllare la validita dei parametri della pagina resetPasswordView e 
+	 * richiestaResetView il parametro num indica a quale pagina facciamo riferimento
+	 */
+	function resetPasswordValidator(num){
+		if(num == 0)
+			{
+				$("#resetPswButton").click(function(){
+					var valid = checkResetPsw()
+					if (!valid [0])
+					{
+						sub = false;
+						alert(valid[1])
+					}
+					else
+					{
+						console.log("controlli ok")
+						sub = true;
+						$(document).submit();
+					}
+				
+				});
+			}
+		else if (num == 1)
+			{
+				$("#richiestaReset").click(function(){
+					var valid = checkEmail()
+					if (!valid [0])
+					{
+						sub = false;
+						alert(valid[1])
+					}
+					else
+					{
+						console.log("controlli ok")
+						sub = true;
+						$(document).submit();
+					}
+			
+				});
+			}
+		
+		
 	}
- 
+	/**
+	 * funzione che permette di controlla se i parametri della form di modifica password sono corretti
+	 */
+	function checkResetPsw(){
+		var codiceFiscale = $("#codiceFiscale").val()
+		var email = $("#email").val()
+		var password = $("#password").val()
+		var confermaPsw = $("#confermaPsw").val()
+		var expCodiceFiscale=new RegExp("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$");
+		var expEmail=RegExp("^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$");
+		var expPassword=RegExp("^[a-zA-Z0-9]*$");
+		var valido=[true];
+		
+		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
+			valido=[false,"formato codiceFiscale non valido"];
+		else if (!expPassword.test(password)||password.length<6||password.length>20)
+			valido=[false,"formato password non valido"];
+		else if (!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
+			valido=[false,"formato conferma password non valido"];
+		else if (!expEmail.test(email))
+			valido=[false,"formato email non valido"];
+		
+		return valido
+		
+	}
+	/**
+	 * funzione che permette di controllare se la mail è valida
+	 */
+	function checkEmail(){
+		var email = $("#email").val()
+		var expEmail=RegExp("^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$");
+		var valido=[true];
+		
+		if (!expEmail.test(email))
+			valido=[false,"formato email non valido"];
+		
+		return valido
+		
+	}
 })(jQuery); // End of use strict
 
 	
