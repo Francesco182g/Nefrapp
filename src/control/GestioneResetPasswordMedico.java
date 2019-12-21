@@ -24,6 +24,7 @@ import utility.InvioEmailUtility;
 @WebServlet("/GestioneResetPasswordMedico")
 public class GestioneResetPasswordMedico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -51,56 +52,16 @@ public class GestioneResetPasswordMedico extends HttpServlet {
 			
 			//Viene scelta l'operaizione per richiedere il reset della password
 			if(operazione.equals("richiesta")) {
-				String email = request.getParameter("email");
-				
-				if(validazione(email)) {
-					try {
-						request.setAttribute("notifica", "Richiesta reset password inviata");
-						InvioEmailUtility.inviaEmail(email);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-						dispatcher.forward(request, response);
-					}catch(Exception e) {
-						request.setAttribute("notifica", "Si è veriifcato un'erorre durante l'invio dell'eamil. Riprova");
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
-						dispatcher.forward(request, response);
-						return;
-					}
-				}
-				else{
-					request.setAttribute("notifica", "Email inserita non valida");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
-					dispatcher.forward(request, response);	
-				}
+				gestioneRichiesta(request, response);
+				dispatcher.forward(request, response);
+				return;
 			}
 			
 			//Operaizone per effettuare il reset della password
 			else if(operazione.equals("reset")) {
-				
-				String email = request.getParameter("email");
-				String codiceFiscale = request.getParameter("codiceFiscale");
-				String password = request.getParameter("password");
-				String confermaPsw = request.getParameter("confermaPsw");
-				
-				if(validazioneReset(email, codiceFiscale, password, confermaPsw)) {
-					medico = MedicoModel.getMedicoByCF(codiceFiscale);
-					
-					if(medico.getEmail().equals(email)) {
-						//TODO modificare password nel db
-						request.setAttribute("notifica", "Reset password avvenuto con successo");
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-						dispatcher.forward(request, response);
-					}
-					else{
-						request.setAttribute("notifica", "Codice fiscale ed indirizzo email non appartengono allo stesso accounto. Riprova");
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-						dispatcher.forward(request, response);
-					}
-				}
-				else {
-					request.setAttribute("notifica", "Formato parametri non valido");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
-					dispatcher.forward(request, response);
-				}
+				gestioneReset(request, response);
+				dispatcher.forward(request, response);
+				return;
 			}
 			
 			else {
@@ -121,6 +82,58 @@ public class GestioneResetPasswordMedico extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 		return; 
+	}
+	
+	private void gestioneRichiesta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = request.getParameter("email");
+		
+		if(validazione(email)) {
+			try {
+				request.setAttribute("notifica", "Richiesta reset password inviata");
+				InvioEmailUtility.inviaEmail(email);
+				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				return;
+				
+			}catch(Exception e) {
+				request.setAttribute("notifica", "Si è veriifcato un'erorre durante l'invio dell'eamil. Riprova");
+				dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
+				return;
+			}
+		}
+		else{
+			request.setAttribute("notifica", "Email inserita non valida");
+			dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
+			return;
+		}
+	}
+	
+	private void gestioneReset(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String email = request.getParameter("email");
+		String codiceFiscale = request.getParameter("codiceFiscale");
+		String password = request.getParameter("password");
+		String confermaPsw = request.getParameter("confermaPsw");
+		
+		if(validazioneReset(email, codiceFiscale, password, confermaPsw)) {
+			Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
+			
+			if(medico.getEmail().equals(email)) {
+				//TODO modificare password nel db
+				request.setAttribute("notifica", "Reset password avvenuto con successo");
+				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				return;
+			}
+			else{
+				request.setAttribute("notifica", "Codice fiscale ed indirizzo email non appartengono allo stesso accounto. Riprova");
+				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				return;
+			}
+		}
+		else {
+			request.setAttribute("notifica", "Formato parametri non valido");
+			dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
+			return;
+		}
 	}
 	
 	private boolean validazione(String email) {
