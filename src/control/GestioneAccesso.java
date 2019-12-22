@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
@@ -107,12 +108,14 @@ public class GestioneAccesso extends HttpServlet {
 		String ricordaUtente = request.getParameter("ricordaUtente");
 		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
 			
-		Paziente paziente = null;
-		Medico medico = null;
+		Utente utente;
+		
+		utente = MedicoModel.getMedicoByCF(codiceFiscale);
+		if (utente == null)
+			utente = PazienteModel.getPazienteByCF(codiceFiscale);
 			
-		paziente = PazienteModel.getPazienteByCF(codiceFiscale);
-			
-		if(paziente!=null){
+		//non so cos'è questa roba e perché vale solo per il paziente
+		if(utente!=null){
 			Cookie[] cookies = request.getCookies();
 			
 			if(cookies != null){
@@ -128,10 +131,11 @@ public class GestioneAccesso extends HttpServlet {
 				
 			if(controllaParametri(codiceFiscale, password)){					
 				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);  
-				paziente = PazienteModel.checkLogin(codiceFiscale, password);
+				utente = MedicoModel.getMedicoByCFPassword(codiceFiscale, password);
+				utente = PazienteModel.getPazienteByCFPassword(codiceFiscale, password);
 				
-				if(paziente != null){
-					session.setAttribute("paziente", paziente);
+				if(utente != null){
+					session.setAttribute("utente", utente);
 					session.setAttribute("accessDone", true);
 						
 					if(ricordaUtente != null){
@@ -149,31 +153,6 @@ public class GestioneAccesso extends HttpServlet {
 				}
 			}
 			
-			else {
-				response.sendRedirect("login.jsp");
-			}
-		}
-			
-		else { 
-			medico = MedicoModel.getMedicoByCF(codiceFiscale);
-			if(medico!=null){
-				if(controllaParametri(codiceFiscale, password)){
-					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
-					medico = MedicoModel.checkLogin(codiceFiscale, password);
-					if(medico != null){
-						session.setAttribute("medico", medico);
-						session.setAttribute("accessDone", true);
-						response.sendRedirect("dashboard.jsp");
-					}
-					else{
-						response.sendRedirect("login.jsp");
-						//reindirizzamento login per il medico/paziente
-					}
-				}
-				else {
-					response.sendRedirect("login.jsp");
-				}
-			}
 			else {
 				response.sendRedirect("login.jsp");
 			}

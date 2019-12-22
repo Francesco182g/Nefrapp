@@ -27,7 +27,7 @@ public class PazienteModel {
 	 * @param password password del paziente
 	 * @return dati del paziente se le credenziali sono corrette, null altrimenti
 	 */
-	public static Paziente checkLogin(String codiceFiscale, String password) {
+	public static Paziente getPazienteByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
 		Paziente paziente = null;
 		BasicDBObject andQuery = new BasicDBObject();
