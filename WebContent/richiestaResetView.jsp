@@ -52,7 +52,7 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Richiedi il reset</h1>
 							              </div>
-							              <form class="user" method="post" action="" > <!-- TODO controllo in js per il formato dell'email -->
+							              <form class="user" method="post" action="./GestioneResetPasswordMedico" > <!-- TODO controllo in js per il formato dell'email -->
 							              		<input type="hidden" name="operazione" value="richiesta">
 												<div class="form-group">
 							                  <input type="text" class="form-control form-control-user" name="email" id="email" placeholder="email" required="required" min="6" max="50" maxlength="50">
