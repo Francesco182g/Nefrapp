@@ -71,7 +71,7 @@ public class GestioneComunicazione extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
+	protected void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Medico medico = null;
 		Paziente paziente = null;

@@ -60,7 +60,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			}
 
 			String operazione = request.getParameter("operazione");
-
+			if (operazione.equals("caricaDestinatariMessaggio")) {
+				caricaDestinatari(request,response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
+				requestDispatcher.forward(request, response);
+			}
 			if (operazione.equals("inviaMessaggio")) {
 				inviaMessaggio(request,response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
