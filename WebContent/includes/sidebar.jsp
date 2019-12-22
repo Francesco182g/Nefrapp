@@ -73,7 +73,7 @@
 				</a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href="./messaggio?operazione=inserimentoMessaggioView"> <i
+					href="./comunicazione?operazione=caricaDestinatariMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Invia
 							Messaggio</span></a></li>
 				<li class="nav-item"><a class="nav-link"

@@ -9,14 +9,14 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Nefrapp</title>
+<title>Nuovo Messaggio - Nefrapp</title>
 
 <!-- Custom fonts for this template-->
 
 <!-- Custom styles for this template-->
+<script type="text/javascript" src="./js/messaggi.js"></script>
 </head>
-
-<body id="page-top">
+<body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')"> 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<%@include file="./includes/sidebar.jsp"%>
@@ -46,7 +46,8 @@
 											<!-- Se utente==paziente, il pulsante mostra l'elenco dei medico, viceversa altrimenti -->
 											<c:choose>
 												<c:when test='${paziente!=null}'>
-													<select name="selectMedico" id="selectMedico"
+													<select 
+														name="selectMedico" id="selectMedico"
 														title="Scegli destinatari:" multiple
 														data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
 														class="selectpicker bootstrap-select w-100">
@@ -68,15 +69,10 @@
 																${item.cognome}</option>
 														</c:forEach>
 													</select>
-										</c:when>
+											</c:when>
 										</c:choose>
 									</div>
 								</div>
-								<!-- 									<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row"> -->
-								<!-- 										<input type="text" class="form-control form-control-user" -->
-								<!-- 											id="cfdestinatario" name="cfdestinatario" -->
-								<!-- 											placeholder="Esempio: CRRSRA90A50A091Q" required="required"> -->
-								<!-- 									</div> -->
 						</div>
 						<!-- oggetto del messaggio -->
 						<br><br>
@@ -133,7 +129,6 @@
 	
 	</div>
 	<!-- End of Page Wrapper -->
-
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>

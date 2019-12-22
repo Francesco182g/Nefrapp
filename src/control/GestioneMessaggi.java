@@ -1,11 +1,10 @@
-package control;
+	package control;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import bean.Medico;
@@ -29,7 +29,7 @@ import bean.Paziente;
 import model.MedicoModel;
 import model.MessaggioModel;
 import model.PazienteModel;
-import utility.uploadFileUtility;
+import utility.AlgoritmoCriptazioneUtility;
 /**
  * @author Sara, Nico
  */
@@ -38,7 +38,7 @@ import utility.uploadFileUtility;
  */
 @WebServlet("/GestioneMessaggi")
 @MultipartConfig
-public class GestioneMessaggi extends HttpServlet {
+public class GestioneMessaggi extends GestioneComunicazione {
 	private static final long serialVersionUID = 1L;
 
 	public GestioneMessaggi() {
@@ -61,21 +61,11 @@ public class GestioneMessaggi extends HttpServlet {
 
 			String operazione = request.getParameter("operazione");
 
-			// questo if permette alla pagina che si occupa dell'invio del messaggio di
-			// caricare nella request i possibili destinatari
-			// sia dal lato medico che dal lato paziente (non ho ancora la query pushata da
-			// Antonio per il lato paziente)
-			if (operazione.equals("inserimentoMessaggioView")) {
-				caricaDestinatari(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
-				requestDispatcher.forward(request, response);
-			}
-
 			if (operazione.equals("inviaMessaggio")) {
 				inviaMessaggio(request,response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
-				// forward temporaneo alla dashboard, bisogna decidere cosa fare
+				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
 			}
 			if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaListaMessaggi(request);
@@ -103,39 +93,6 @@ public class GestioneMessaggi extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Medico medico = null;
-		Paziente paziente = null;
-		HttpSession session = request.getSession();
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
-
-		if (paziente != null && medico == null) {
-			ArrayList<Medico> mediciCuranti = new ArrayList<>();
-			for (String cf : paziente.getMedici()) {
-				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
-			}
-			request.setAttribute("mediciCuranti", mediciCuranti);
-		}
-
-		// da Nico: per dare i medici al paziente loggato ho usato l'array di medici
-		// curanti presente sia nella collection che nel bean del paziente.
-		// Vi suggerisco di dare anche al medico il campo con l'array di pazienti
-		// associati (il fatto che la cosa non sia simmetrica e' molto strano peraltro)
-		// ma non ho voluto farlo io perche' ora state dormendo e non posso chiedervi il
-		// permesso. Ciao.
-		else if (medico != null && paziente == null) {
-			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
-			pazientiSeguiti.addAll(PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale()));
-			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-		}
-
-		else {
-			System.out.println("L'utente deve essere loggato");
-		}
-	}
-
 	/**
 	 * Metodo che prende mittente, destinatari, oggetto, testo e allegato del
 	 * messaggio e lo salva nel database
@@ -153,7 +110,6 @@ public class GestioneMessaggi extends HttpServlet {
 		Messaggio messaggio = null;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-//		System.out.println(isMultipart);
 		medico = (Medico) session.getAttribute("medico");
 		paziente = (Paziente) session.getAttribute("paziente");
 
@@ -163,26 +119,35 @@ public class GestioneMessaggi extends HttpServlet {
 			String CFMittente = paziente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
+			String allegato = new String();
+			
 			Part filePart = request.getPart("file");
-			String allegato = filePart.getSubmittedFileName();
-
-			/*if (isMultipart) {
-				
-				final String fileName = uploadFileUtility.getFileName(filePart);
-				OutputStream out = null;
-				InputStream fileContent = null;
-				out = new FileOutputStream(new File(File.separator + fileName));
-				fileContent = filePart.getInputStream();
-				int read = 0;
-		        final byte[] bytes = new byte[1024];
-		        while ((read = fileContent.read(bytes)) != -1) {
-		            out.write(bytes, 0, read);
-		        }
-		        allegato=out.toString();
-		        out.close();
-				System.out.println(allegato);
-			}*/
-
+		    InputStream fileContent = filePart.getInputStream();
+		    File f = new File(getServletContext() + "temp");
+		    OutputStream outputStream = null;
+		   
+		    if (isMultipart) {
+			    try
+			    {
+			        outputStream = new FileOutputStream(f);
+			        
+			        int read = 0;
+			        byte[] bytes = new byte[1024];
+			        while ((read = fileContent.read(bytes)) != -1) {
+			            outputStream.write(bytes, 0, read);
+			        }
+			        allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
+			    }
+			    finally
+			    {
+			        if(outputStream != null)
+			        {
+			            outputStream.close();
+			            f.delete();
+			        }
+			    }
+		    }
+		    
 			// inserire qui controlli backend
 			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			MessaggioModel.addMessaggio(messaggio);
@@ -231,7 +196,9 @@ public class GestioneMessaggi extends HttpServlet {
 			for (Messaggio m : messaggi)
 			{
 				Medico dottore = MedicoModel.getMedicoByCF(m.getCodiceFiscaleMittente());
-				request.setAttribute(m.getCodiceFiscaleMittente(), dottore.getCognome());
+				if (dottore != null) {
+					request.setAttribute(m.getCodiceFiscaleMittente(), dottore.getCognome());
+				}
 			}
 		}
 
@@ -245,6 +212,7 @@ public class GestioneMessaggi extends HttpServlet {
 		}
 
 	}
+	
 	private void visualizzaMessaggio(HttpServletRequest request) {
 		String idMessaggio=request.getParameter("idMessaggio");
 		Messaggio messaggio=MessaggioModel.getMessaggioById(idMessaggio);
