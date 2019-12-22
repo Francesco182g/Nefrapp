@@ -77,8 +77,11 @@
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet) -->
              		<c:forEach items="${messaggio}" var="item">
+             		
              		<c:set var="cognome" value="${item.codiceFiscaleMittente}" />
-                    <tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'>
+                    <c:if test="${not item.visualizzato}"><tr class = "clickable-row riga-messaggio" style="font-weight: bolder" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'></c:if>
+                    <c:if test="${item.visualizzato}"><tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'></c:if>
+                      
                       <td width = "300px">Dott. ${requestScope[cognome]}</a></td>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
