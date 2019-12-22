@@ -185,16 +185,22 @@ public class GestioneParametri extends HttpServlet {
 		return false;
 	}
 	
-	
+	/**Questo metodo preleva le schede parametri per un dato intervallo di tempo e inserisce i parametri in un file excel.
+	 * 
+	 * @author Matteo Falco
+	 */
 	
 	private void creaExcel(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDate dataInizio = LocalDate.parse(request.getParameter("dataInizio"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		LocalDate dataFine = LocalDate.parse(request.getParameter("dataFine"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
-		String pazienteCF = request.getParameter("CFpaziente");
+		String pazienteCF = request.getParameter("CFPaziente");
 		ArrayList<SchedaParametri> report = SchedaParametriModel.getReportByPaziente(pazienteCF, dataInizio, dataFine);
+		
+		String fileName = "ReportPaziente-"+ pazienteCF + "-" + dataFine.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition", "attachment; filename="+ fileName);
 		try {
 			PrintWriter out = response.getWriter();
 			out.println("Paziente:\t" + pazienteCF);

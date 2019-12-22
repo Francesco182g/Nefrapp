@@ -11,6 +11,9 @@
 	  var button3 = $("#loginUtente")
 	  var button4 = $("#resetPswButton")
 	  var button5 = $("#richiestaReset")
+	  var button6 = $("#modificaPazienteButton")
+	  var button7 = $("#modificaMedicoButton")
+	  
 	  $(document).submit(function(){
 				  return sub; 
 		  });
@@ -30,6 +33,10 @@
 	  {
 		  resetPasswordValidator(1)
 	  }
+	  else if(button6.length>0 || button7.length>0)
+	  	{
+		  modificaValidator();
+	  	}
 	  
 	  
 	});
@@ -97,8 +104,88 @@
 		});
 	}
 
+	function modificaValidator()
+	{
+		$("#modificaPazienteButton").click(function(){
+			var valid = checkValidityModifica();
+			if (!valid [0])
+				{
+					sub = false;
+					alert(valid[1])
+				}
+			else
+				{
+					sub = true;
+					$(this).prop("disabled",true);
+					$(document).submit();
+				}
+			
+		});
+		$("#modificaMedicoButton").click(function(){
+			var valid = checkValidityModifica();
+			if (!valid [0])
+				{
+					sub = false;
+					alert(valid[1])
+				}
+			else
+				{
+					sub = true;
+					$(this).prop("disabled",true);
+					$(document).submit();
+				}
+			
+		});
+	}
+	function checkValidityModifica(){
+		var valido=[true];
+		var expCodiceFiscale=new RegExp("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$");
+		var expNome=RegExp("^[A-Z][a-zA-Z ']*$");
+		var expCognome=RegExp("^[A-Z][a-zA-Z ']*$");
+		var expSesso=RegExp("^[MF]$");
+		var expDataDiNascita=RegExp("^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$");
+		var expLuogoDiNascita=RegExp("^[A-Z][a-zA-Z ']*$");
+		var expResidenza=RegExp("^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$");
+		var expEmail=RegExp("^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$");
+		var expPassword=RegExp("^[a-zA-Z0-9]*$");
+		var codiceFiscale = $("#codiceFiscale").val();
+		var nome = $("#nome").val();
+		var cognome = $("#cognome").val();
+		var sesso = $("input[name='sesso']:checked").val();
+		var dataDiNascita = $("#dataDiNascita").val();
+		var luogoDiNascita = $("#luogoDiNascita").val();
+		var residenza = $("#residenza").val();
+		var email = $("#email").val();
+		var password = $("#password").val();
+		var confermaPsw = $("#confermaPassword").val();
 	
-	
+		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
+			valido=[false,"formato codiceFiscale non valido"];
+		else if (!expNome.test(nome)||nome.length<2||nome.length>30)
+			valido=[false,"formato nome non valido"];
+		else if (!expCognome.test(cognome)||cognome.length<2||cognome.length>30)
+			valido=[false,"formato cognome non valido"];
+		else if (!expPassword.test(password)||password.length<6||password.length>20)
+			valido=[false,"formato password non valido"];
+		else if (!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
+			valido=[false,"formato conferma password non valido"];
+		else if (!expSesso.test(sesso)||sesso.length!=1)
+			valido=[false,"formato sesso non valido"];
+		else if (!expEmail.test(email))
+			valido=[false,"formato email non valido"];
+		
+		if(dataDiNascita.length!=0)
+			if (!expDataDiNascita.test(dataDiNascita))
+				valido=[false,"formato data di nascita non valido"];
+		else if (luogoDiNascita.length!=0)
+			if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
+				valido=[false,"formato luogo di nascita non valido"];
+		else if (residenza.length!=0)
+			if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
+				valido=[false,"formato residenza non valido"];
+				
+		return valido;
+	}
 	/**
 	 * funzione che controlla tutti i campi della form se un campo non è valido restituisce un arrai il cui primo elemnto è un booleano
 	 * il secondo elemento indica quale campo non è valido e nel caso in cui tutti i campi siano validi viene restituito un 
