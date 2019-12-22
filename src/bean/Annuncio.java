@@ -2,6 +2,7 @@ package bean;
 
 import java.util.List;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -9,16 +10,17 @@ import java.time.format.DateTimeFormatter;
  * Questa classe rappresenta l'annuncio
  */
 public class Annuncio {
+	private String idAnnuncio;
 	private Medico medico; //Riferimento al medico che ha pubblicato l'annuncio
 	private List<Paziente> pazienti; //Riferimento ai pazienti a cui � rivolto
 	private String titolo;
 	private String testo;
 	private String allegato; //pu� essere una presentazione pp o un video, tenere traccia tramite path
-	private LocalDate data;
+	private ZonedDateTime data;
 	
 	public Annuncio() {}
 	
-	public Annuncio(Medico medico, List<Paziente> pazienti, String titolo, String testo, String allegato, LocalDate data) {
+	public Annuncio(Medico medico, List<Paziente> pazienti, String titolo, String testo, String allegato, ZonedDateTime data) {
 		this.medico = medico;
 		this.pazienti = pazienti;
 		this.titolo = titolo;
@@ -67,7 +69,7 @@ public class Annuncio {
 		this.allegato = allegato;
 	}
 
-	public LocalDate getData() {
+	public ZonedDateTime getData() {
 		return data;
 	}
 	
@@ -76,8 +78,15 @@ public class Annuncio {
 		return data.format(format);
 	}
 
-	public void setData(LocalDate data) {
+	public void setData(ZonedDateTime data) {
 		this.data = data;
+	}
+	
+	public void setIdAnnuncio(String idAnnuncio) {
+		this.idAnnuncio = idAnnuncio;
+	}
+	public String getIdMessaggio() {
+		return this.idAnnuncio;
 	}
 	
 	@Override
