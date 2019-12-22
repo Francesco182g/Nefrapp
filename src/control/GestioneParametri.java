@@ -1,5 +1,6 @@
 package control;
 
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import bean.SchedaParametri;
 import model.SchedaParametriModel;
 
 /**
- * @author Antonio Donnarumma, Davide Benedetto Strianese,
+ * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
  * Questa classe � una servlet che si occupa della gestione dei parametri del paziente
  */
 @WebServlet("/GestioneParametri")
@@ -43,7 +44,7 @@ public class GestioneParametri extends HttpServlet {
 			}
 			//Download report
 			else if(operazione.equals("download")) {
-				//TODO
+				creaExcel(request, response);
 			} 
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
@@ -181,5 +182,36 @@ public class GestioneParametri extends HttpServlet {
 		}
 		
 		return false;
+	}
+	
+	
+	
+	private void creaExcel(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		LocalDate dataInizio = (LocalDate) session.getAttribute("dataInizio");
+		LocalDate dataFine = (LocalDate) session.getAttribute("dataFine");
+		Paziente paziente = (Paziente) session.getAttribute("paziente");
+		ArrayList<SchedaParametri> report = SchedaParametriModel.getReportByPaziente(paziente.getCodiceFiscale(), dataInizio, dataFine);
+		response.setContentType("application/vnd.ms-excel");
+		try {
+			PrintWriter out = response.getWriter();
+			out.println("Paziente:\t" + paziente.getCognome() + "\t" + paziente.getNome());
+			out.println("Data\tPeso\tPressione Min\tPressione Max\tScarico Iniziale\tCarico\tScarico\tTempoSosta\tUF");
+			for (SchedaParametri scheda : report) {
+				out.println(scheda.getDataFormattata()+"\t"+
+							scheda.getPeso()+"\t"+
+							scheda.getPaMin()+"\t"+
+							scheda.getPaMax()+"\t"+
+							scheda.getScaricoIniziale()+"\t"+
+							scheda.getCarico()+"\t"+
+							scheda.getScarico()+"\t"+
+							scheda.getTempoSosta()+"\t"+
+							scheda.getUF());
+			}
+		} catch (Exception e) {
+			System.out.println("Errore in gestione parametri:");
+			e.printStackTrace();
+		}
+		
 	}
 }
