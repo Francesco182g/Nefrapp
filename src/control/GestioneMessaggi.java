@@ -189,15 +189,35 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		paziente = (Paziente) session.getAttribute("paziente");
 
 		if (paziente != null && medico == null) {
+			ArrayList<String> cache = new ArrayList<String>();
+			ArrayList<Medico> mediciCache = new ArrayList<Medico>();
+			Medico dottoreSelezionato = null;
 			ArrayList<Messaggio> messaggi = new ArrayList <Messaggio>();
 			messaggi = MessaggioModel.getMessaggioByCFDestinatario(paziente.getCodiceFiscale());
 			request.setAttribute("messaggio", messaggi);
 			
-			for (Messaggio m : messaggi)
-			{
-				Medico dottore = MedicoModel.getMedicoByCF(m.getCodiceFiscaleMittente());
-				if (dottore != null) {
-					request.setAttribute(m.getCodiceFiscaleMittente(), dottore.getCognome());
+			//piccolo sistema di caching per minimizzare le query sui dottori che hanno mandato messaggi
+			//prima di fare la query sul dottore controlla se ce l'ha già in cache attraverso il suo CF.
+			//Se ce l'ha lo usa per ottenere le informazioni che servono alla pagina jsp
+			//se non ce l'ha effettua la query.
+			//In questo modo se ci sono 200 messaggi da 5 medici fa 5 query e non 200.
+			for (Messaggio m : messaggi) {
+				if (!cache.contains(m.getCodiceFiscaleMittente())) {
+					cache.add(m.getCodiceFiscaleMittente());
+					dottoreSelezionato = MedicoModel.getMedicoByCF(m.getCodiceFiscaleMittente());
+					mediciCache.add(dottoreSelezionato);
+				}
+				if (cache.contains(m.getCodiceFiscaleMittente())) {
+					for (Medico dott : mediciCache) {
+						if (dott.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
+							dottoreSelezionato = dott;
+							break;
+						}
+					}
+				}
+
+				if (dottoreSelezionato != null) {
+					request.setAttribute(m.getCodiceFiscaleMittente(), dottoreSelezionato.getCognome());
 				}
 			}
 		}
