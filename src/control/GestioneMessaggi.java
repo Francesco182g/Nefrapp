@@ -136,6 +136,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			        while ((read = fileContent.read(bytes)) != -1) {
 			            outputStream.write(bytes, 0, read);
 			        }
+			        allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
 			    }
 			    finally
 			    {
@@ -145,7 +146,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			            f.delete();
 			        }
 			    }
-			    allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
 		    }
 		    
 			// inserire qui controlli backend
