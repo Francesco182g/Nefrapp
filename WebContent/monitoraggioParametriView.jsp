@@ -22,14 +22,11 @@
    	 	<!-- DatePicker -->
    	 	
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
-	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
-		
-		<!-- Script per la registrazione -->
-   	 	<script src="./js/dataPicker.js"></script>
+		<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
+		<script src="./js/dataPicker.js"></script>
 
-  		
-	</head>
+  		</head>
 	
 	<body id="page-top">
 <%-- 	<jsp:include page="/parametri">
@@ -50,21 +47,21 @@
 	
 	
 	                <!-- Begin Page Content -->
-        <div class="container-fluid">
+        	<div class="container-fluid">
 
           <!-- Page Heading -->
           <c:set var="paziente" value='${sessionScope["paziente"]}'/>
           <c:set var="medico" value='${sessionScope["medico"]}'/>
           <c:set var="scheda" value='${requestScope["schedaParametri"]}'/>
-          <c:choose>
-          <c:when test='${paziente!=null}'>
-          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti dal paziente ${paziente.nome} ${paziente.cognome} </h1>
-          </c:when>
-          <c:when test='${medico!=null}'>
-          <h1 class="h3 mb-2 text-gray-800">Parametri inseriti</h1>
-          </c:when>
-          </c:choose>
           
+          <h1 class="h3 mb-2 text-gray-800">Scheda parametri</h1>
+          
+          <c:choose>
+          <c:when test="${scheda.size()==0}">
+          	<h2 class="h3 mb-2 text-gray-800">Nessuna scheda presente</h2>
+          </c:when>
+          
+          <c:otherwise>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             
@@ -121,13 +118,14 @@
                  </table>
                  <c:choose>
                  <c:when test='${medico!=null}'>
-                 <form action="/GestioneParametri" method="post" id="rangeForm">
+                 <form action="./GestioneParametri" method="post" id="rangeForm">
                  <div class="dates" style="margin-top:100px;color:#2471a3;">
 					<label>Data inizio</label>
     				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataInizio" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
     				<label>Data fine</label>
     				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataFine" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
-    				<input id="operazione" type="hidden" value="download">
+    				<input type="hidden" name="operazione"  value="download">
+    				<input type="hidden" name="CFPaziente" value="${scheda.get(0).getPazienteCodiceFiscale()}">
   				</div>
   				</form>
   				<div class="my-2"></div>
@@ -137,6 +135,8 @@
   			</div>
             </div>
           </div>
+          </c:otherwise>
+          </c:choose>
 
         </div>
 	                <!-- /.container-fluid -->

@@ -44,7 +44,7 @@
             <c:set var= "dataDiNascita" value="${sessionScope.paziente.dataDiNascita}"></c:set>
             <c:set var= "luogoDiNascita" value="${sessionScope.paziente.luogoDiNascita}"></c:set>
             <c:set var= "residenza" value="${sessionScope.paziente.residenza}"></c:set>
-			<c:set var= "medici" value="${sessionScope.paziente.medici}"></c:set>
+			<c:set var="dottori" value='${requestScope["mediciCuranti"]}' />
          </c:when>
          
          <c:when test = "${not empty sessionScope.medico}">
@@ -96,12 +96,18 @@
                       	  
          				  <h2 class="h4 mb-4 text-gray-500">Residenza: <span class="h3 mb-4 text-gray-800">${residenza}</span></h2>
          				  
+         				  <!-- se è loggato il paziente, mostra l'elenco dei medici che lo seguono -->
          				  <c:if test="${not empty paziente}">
-         				   <h2 class="h4 mb-4 text-gray-500">Seguito da: 
-         				   <c:forEach  items="${medici}" var = "item" begin = "0" end = "${medici.size()}">
-         						<span class="h3 mb-4 text-gray-800"> <c:out value = "${item}"/> </span> <br>
-     					   </c:forEach>		
-     					   </h2>
+         				   <h2 class="h4 mb-4 text-gray-500">Seguito da:
+         				     <c:forEach items="${dottori}" var="item" varStatus="loop">
+         				     		<c:if test="${loop.index eq 0}">
+												<span class="h3 mb-4 text-gray-800">${item.nome} ${item.cognome} </span>
+									</c:if>
+									<c:if test="${loop.index gt 0 }">		
+												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 127px; line-height: 1px;">${item.nome} ${item.cognome} </h3>
+									</c:if>			
+							</c:forEach>
+							</h2>	
          				  </c:if>
          				
                    </div>
