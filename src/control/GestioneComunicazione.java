@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
 import model.MedicoModel;
 import model.PazienteModel;
 
@@ -73,29 +74,23 @@ public class GestioneComunicazione extends HttpServlet {
 	 */
 	protected void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Medico medico = null;
-		Paziente paziente = null;
+		//questa non si può generalizzare perchè il medico non ha la lista di pazienti associati
+		//e vanno trattati diversamente
+		
 		HttpSession session = request.getSession();
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
+		Utente utente = (Utente)session.getAttribute("utente");
 
-		if (paziente != null && medico == null) {
+		if ((boolean)session.getAttribute("ispaziente")==true) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
-			for (String cf : paziente.getMedici()) {
+			for (String cf : ((Paziente) utente).getMedici()) {
 				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
 			}
 			request.setAttribute("mediciCuranti", mediciCuranti);
 		}
 
-		// da Nico: per dare i medici al paziente loggato ho usato l'array di medici
-		// curanti presente sia nella collection che nel bean del paziente.
-		// Vi suggerisco di dare anche al medico il campo con l'array di pazienti
-		// associati (il fatto che la cosa non sia simmetrica e' molto strano peraltro)
-		// ma non ho voluto farlo io perche' ora state dormendo e non posso chiedervi il
-		// permesso. Ciao.
-		else if (medico != null && paziente == null) {
+		else if ((boolean)session.getAttribute("ismedico")==true) {
 			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
-			pazientiSeguiti.addAll(PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale()));
+			pazientiSeguiti.addAll(PazienteModel.getPazientiSeguiti(utente.getCodiceFiscale()));
 			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
 		}
 

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import bean.Medico;
 import bean.Paziente;
 import bean.SchedaParametri;
+import bean.Utente;
 import model.SchedaParametriModel;
 
 /**
@@ -84,21 +85,19 @@ public class GestioneParametri extends HttpServlet {
 		 */
 		
 		HttpSession session = request.getSession();
-		Medico medico = null;
-		Paziente paziente = null;
+		Utente utente = null;
 		ArrayList<SchedaParametri> scheda = null;
 		
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
+		utente = (Utente) session.getAttribute("utente");
 		
-		if (paziente != null && medico == null){
-			scheda = SchedaParametriModel.getSchedaParametriByCF(paziente.getCodiceFiscale());
+		if ((boolean)session.getAttribute("ispaziente") == true){
+			scheda = SchedaParametriModel.getSchedaParametriByCF(utente.getCodiceFiscale());
 		}	
-		else if(paziente == null && medico != null) {
+		else if ((boolean)session.getAttribute("ismedico") == true) {
 			scheda = SchedaParametriModel.getSchedaParametriByCF(request.getParameter("CFPaziente"));
 		}
 		else {
-			//TODO messaggio di errore
+
 			System.out.println("Utente deve esssere loggato");
 		}
 		
@@ -126,7 +125,7 @@ public class GestioneParametri extends HttpServlet {
 	private void inserisciParametri(HttpServletRequest request)
 	{
 		HttpSession session=request.getSession();
-		Paziente pazienteLoggato= (Paziente) session.getAttribute("paziente");
+		Paziente pazienteLoggato = (Paziente) session.getAttribute("utente");
 		
 		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 		String cf = pazienteLoggato.getCodiceFiscale(); 

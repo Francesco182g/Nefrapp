@@ -77,7 +77,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
 			request.setAttribute("pianoTerapeutico", pianoTerapeutico);
 		} else {
-			//TODO Messaggio d'errore, CF non valido
+			System.out.println("visualizzaPiano: errore nel CF passato");
 		}
 	}
 	

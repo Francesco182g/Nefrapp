@@ -26,9 +26,11 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import bean.Medico;
 import bean.Messaggio;
 import bean.Paziente;
+import bean.Utente;
 import model.MedicoModel;
 import model.MessaggioModel;
 import model.PazienteModel;
+import model.UtenteModel;
 import utility.AlgoritmoCriptazioneUtility;
 /**
  * @author Sara, Nico
@@ -106,133 +108,107 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void inviaMessaggio(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void inviaMessaggio(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 
-		Medico medico = null;
-		Paziente paziente = null;
+		Utente utente = null;
 		HttpSession session = request.getSession();
 		Messaggio messaggio = null;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
+		utente = (Utente) session.getAttribute("utente");
 
-		if (paziente != null && medico == null) {
+		if ((boolean) session.getAttribute("accessDone") == true) {
 			ArrayList<String> destinatari = new ArrayList<String>(
 					Arrays.asList(request.getParameterValues("selectMedico")));
-			String CFMittente = paziente.getCodiceFiscale();
+			String CFMittente = utente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
 			String allegato = new String();
-			
+
 			Part filePart = request.getPart("file");
-		    InputStream fileContent = filePart.getInputStream();
-		    File f = new File(getServletContext() + "temp");
-		    OutputStream outputStream = null;
-		   
-		    if (isMultipart) {
-			    try
-			    {
-			        outputStream = new FileOutputStream(f);
-			        
-			        int read = 0;
-			        byte[] bytes = new byte[1024];
-			        while ((read = fileContent.read(bytes)) != -1) {
-			            outputStream.write(bytes, 0, read);
-			        }
-			        allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
-			    }
-			    finally
-			    {
-			        if(outputStream != null)
-			        {
-			            outputStream.close();
-			            f.delete();
-			        }
-			    }
-		    }
-		    
+			InputStream fileContent = filePart.getInputStream();
+			File f = new File(getServletContext() + "temp");
+			OutputStream outputStream = null;
+
+			if (isMultipart) {
+				try {
+					outputStream = new FileOutputStream(f);
+
+					int read = 0;
+					byte[] bytes = new byte[1024];
+					while ((read = fileContent.read(bytes)) != -1) {
+						outputStream.write(bytes, 0, read);
+					}
+					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
+				} finally {
+					if (outputStream != null) {
+						outputStream.close();
+						f.delete();
+					}
+				}
+			}
+
 			// inserire qui controlli backend
-			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
+			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato,
+					ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			MessaggioModel.addMessaggio(messaggio);
 			// qua verrebbe un notify() ai medici se avessimo un observer
 
-		} else if (paziente == null && medico != null) {
-			String CFMittente = medico.getCodiceFiscale();
-			String CFDestinatari = request.getParameter("cfdestinataro");
-			ArrayList<String> elencoCFDestinatari = new ArrayList<String>();
-			elencoCFDestinatari.add(CFDestinatari);
-			String oggetto = request.getParameter("oggetto");
-			String testo = request.getParameter("testo");
-			// encoding dell'allegato da fare (nel pacchetto utility)
-
-			String allegato = request.getParameter("allegato");
-			ZonedDateTime date = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
-
-			messaggio = new Messaggio(CFMittente, elencoCFDestinatari, oggetto, testo, allegato, date);
-			MessaggioModel.addMessaggio(messaggio);
-
-			// observer per i pazienti
 		} else {
-			System.out.println("Utente deve esssere loggato");
+			System.out.println("L'utente deve essere loggato");
 		}
 	}
 
 	/**
-	 * Metodo che prende il messaggio e lo salva nella richiesta
+	 * Metodo che prende la lista dei messaggi ricevuti dall'utente e lo salva nella richiesta
 	 * 
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
 	 */
 	private void visualizzaListaMessaggi(HttpServletRequest request) {
-		Medico medico = null;
-		Paziente paziente = null;
+		Utente utente = null;
 		HttpSession session = request.getSession();
 
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
+		utente = (Utente) session.getAttribute("utente");
 
-		if (paziente != null && medico == null) {
-			ArrayList<String> cache = new ArrayList<String>();
-			ArrayList<Medico> mediciCache = new ArrayList<Medico>();
-			Medico dottoreSelezionato = null;
-			ArrayList<Messaggio> messaggi = new ArrayList <Messaggio>();
-			messaggi = MessaggioModel.getMessaggioByCFDestinatario(paziente.getCodiceFiscale());
+		if ((boolean) session.getAttribute("accessDone") == true) {
+			ArrayList<String> cache = new ArrayList<>();
+			ArrayList<Utente> utentiCache = new ArrayList<>();
+			Utente utenteSelezionato = null;
+			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
+			messaggi = MessaggioModel.getMessaggioByCFDestinatario(utente.getCodiceFiscale());
 			request.setAttribute("messaggio", messaggi);
-			
-			//piccolo sistema di caching per minimizzare le query sui dottori che hanno mandato messaggi
-			//prima di fare la query sul dottore controlla se ce l'ha già in cache attraverso il suo CF.
-			//Se ce l'ha lo usa per ottenere le informazioni che servono alla pagina jsp
-			//se non ce l'ha effettua la query.
-			//In questo modo se ci sono 200 messaggi da 5 medici fa 5 query e non 200.
+
+			// piccolo sistema di caching per minimizzare le query sui destinatari che hanno
+			// mandato messaggi
+			// prima di fare la query sul destinatario controlla se ce l'ha già in cache
+			// attraverso il suo CF.
+			// Se ce l'ha lo usa per ottenere le informazioni che servono alla pagina jsp
+			// se non ce l'ha effettua la query.
+			// In questo modo se ci sono 200 messaggi da 5 medici fa 5 query e non 200.
 			for (Messaggio m : messaggi) {
 				if (!cache.contains(m.getCodiceFiscaleMittente())) {
 					cache.add(m.getCodiceFiscaleMittente());
-					dottoreSelezionato = MedicoModel.getMedicoByCF(m.getCodiceFiscaleMittente());
-					mediciCache.add(dottoreSelezionato);
+					utenteSelezionato = UtenteModel.getUtenteByCF(m.getCodiceFiscaleMittente());
+					utentiCache.add(utenteSelezionato);
 				}
 				if (cache.contains(m.getCodiceFiscaleMittente())) {
-					for (Medico dott : mediciCache) {
-						if (dott.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
-							dottoreSelezionato = dott;
+					for (Utente ut : utentiCache) {
+						if (ut.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
+							utenteSelezionato = ut;
 							break;
 						}
 					}
 				}
 
-				if (dottoreSelezionato != null) {
-					request.setAttribute(m.getCodiceFiscaleMittente(), dottoreSelezionato.getCognome());
+				if (utenteSelezionato != null) {
+					request.setAttribute(m.getCodiceFiscaleMittente(), utenteSelezionato.getNome() 
+							+ " " + utenteSelezionato.getCognome());
 				}
 			}
-		}
-
-		else if (paziente == null && medico != null) {
-			ArrayList<Messaggio> m=new ArrayList <Messaggio>();
-			m=MessaggioModel.getMessaggioByCFDestinatario(medico.getCodiceFiscale());
-			System.out.println(m.toString());
 		} else {
-			System.out.println("Utente deve esssere loggato");
-
+			System.out.println("L'utente deve essere loggato");
 		}
 
 	}

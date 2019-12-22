@@ -33,20 +33,22 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-					<c:set var="paziente" value='${sessionScope["paziente"]}'/>
-					<c:set var="medico" value='${sessionScope["medico"]}'/>
-					<c:if test='${paziente != null}'>
+					<c:set var="utente" value='${sessionScope["utente"]}'/>
+					<c:set var="ismedico" value='${sessionScope["ismedico"]}'/>
+					<c:set var="ispaziente" value='${sessionScope["ispaziente"]}'/>
+					
+					<c:if test='${ispaziente == true}'>
 	                	<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Paziente</h6>
                 			</div>
                 			<div class="card-body">
-                  				<p class="mb-0">${paziente.nome} ${paziente.cognome}</p>
+                  				<p class="mb-0">${utente.nome} ${utente.cognome}</p>
                   			</div>
               			</div>
               		</c:if>
               		
-              		<c:if test='${paziente == null}'>
+              		<c:if test='${ismedico == true}'>
 <!--               			inserire logica di visualizzazione da parte del medico -->
 <!--               			 <div class="card shadow mb-4"> -->
 <!--                 			<div class="card-header py-3"> -->

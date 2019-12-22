@@ -100,7 +100,6 @@ public class PazienteModel {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * 
 	 * Query che ricerca l'id di un paziente per codice fiscale
 	 * @param codiceFiscale del paziente da ricercare
