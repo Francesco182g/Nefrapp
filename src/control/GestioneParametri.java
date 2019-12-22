@@ -3,6 +3,7 @@ package control;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -187,15 +188,19 @@ public class GestioneParametri extends HttpServlet {
 	
 	
 	private void creaExcel(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		LocalDate dataInizio = (LocalDate) session.getAttribute("dataInizio");
-		LocalDate dataFine = (LocalDate) session.getAttribute("dataFine");
-		Paziente paziente = (Paziente) session.getAttribute("paziente");
-		ArrayList<SchedaParametri> report = SchedaParametriModel.getReportByPaziente(paziente.getCodiceFiscale(), dataInizio, dataFine);
+//		LocalDate dataInizio = LocalDate.parse(request.getParameter("dataInizio"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//		LocalDate dataFine = LocalDate.parse(request.getParameter("dataFine"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//		la JSP non manda la data correttamente, per il momento vengono usate date placeholder
+		
+		LocalDate dataInizio = LocalDate.parse("2019-12-01");
+		LocalDate dataFine = LocalDate.parse("2019-12-31");
+		
+		String pazienteCF = request.getParameter("CFpaziente");
+		ArrayList<SchedaParametri> report = SchedaParametriModel.getReportByPaziente(pazienteCF, dataInizio, dataFine);
 		response.setContentType("application/vnd.ms-excel");
 		try {
 			PrintWriter out = response.getWriter();
-			out.println("Paziente:\t" + paziente.getCognome() + "\t" + paziente.getNome());
+			out.println("Paziente:\t" + pazienteCF);
 			out.println("Data\tPeso\tPressione Min\tPressione Max\tScarico Iniziale\tCarico\tScarico\tTempoSosta\tUF");
 			for (SchedaParametri scheda : report) {
 				out.println(scheda.getDataFormattata()+"\t"+
