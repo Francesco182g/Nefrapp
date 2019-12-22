@@ -18,19 +18,9 @@
 	<!-- session attribute -->
 	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
 	<c:choose>     
-         <c:when test = "${not empty sessionScope.amministratore}">
-            <c:set var = "nome" value="${sessionScope.amministratore.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.amministratore.cognome}"></c:set>
-         </c:when>
-         
-         <c:when test = "${not empty sessionScope.paziente}">
-            <c:set var = "nome" value="${sessionScope.paziente.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.paziente.cognome}"></c:set>
-         </c:when>
-         
-         <c:when test = "${not empty sessionScope.medico}">
-            <c:set var = "nome" value="${sessionScope.medico.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.medico.cognome}"></c:set>
+         <c:when test = "${not empty sessionScope['utente']}">
+            <c:set var = "nome" value="${sessionScope['utente'].nome}"></c:set>
+            <c:set var = "cognome" value="${sessionScope['utente'].cognome}"></c:set>
          </c:when>
          
       </c:choose>

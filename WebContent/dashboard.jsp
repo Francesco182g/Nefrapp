@@ -19,8 +19,8 @@
 
 	<body id="page-top">
 		<!-- session attribute -->
-		<c:set var="paziente" value='${sessionScope["paziente"]}'/>
-		<c:set var="amministratore" value='${sessionScope.amministratore}'/>
+		<c:set var="ispaziente" value='${sessionScope["ispaziente"]}'/>
+		<c:set var="isamministratore" value='${sessionScope.isamministratore}'/>
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
 			<%@include file="../includes/sidebar.jsp" %>		
@@ -35,7 +35,7 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-						<c:if test="${not empty amministratore}">
+						<c:if test="${isamministratore==true && sessionScope.accessDone==true}">
 							<script src="./js/loadObject.js" ></script>	
 							  <div class="row">
 							  	<div class="col-sm-6 mt-3 ">

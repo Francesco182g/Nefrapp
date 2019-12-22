@@ -46,11 +46,12 @@
 
 		<!-- Nav Item - Dashboard -->
 
-		<c:set var="paziente" value='${sessionScope["paziente"]}' />
-		<c:set var="medico" value='${sessionScope["medico"]}' />
-		<c:set var="amministratore" value='${sessionScope["amministratore"]}' />
+		<c:set var="ispaziente" value='${sessionScope["ispaziente"]}' />
+		<c:set var="ismedico" value='${sessionScope["ismedico"]}' />
+		<c:set var="isamministratore" value='${sessionScope["isamministratore"]}' />
+		<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
 		<c:choose>
-			<c:when test='${paziente!=null}'>
+			<c:when test='${ispaziente==true && accessDone==true}'>
 
 				<li class="nav-item"><a class="nav-link" href="#"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
@@ -67,7 +68,7 @@
 							Schede Parametri</span></a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href='./piano?operazione=visualizza&CFPaziente=${sessionScope["paziente"].codiceFiscale}'>
+					href='./piano?operazione=visualizza&CFPaziente=${sessionScope["utente"].codiceFiscale}'>
 						<i class="fas fa-fw fa-tachometer-alt"></i> <span>Visualizza
 							Piano Terapeutico</span>
 				</a></li>
@@ -82,7 +83,7 @@
 							Messaggi</span></a></li>
 			</c:when>
 
-			<c:when test='${medico!=null}'>
+			<c:when test='${ismedico==true && accessDone==true}'>
 
 				<li class="nav-item"><a class="nav-link" href="#"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
@@ -114,7 +115,7 @@
 							Annuncio</span></a></li>
 
 			</c:when>
-			<c:when test='${amministratore!=null}'>
+			<c:when test='${isamministratore==true && accessDone==true}'>
 				<li class="nav-item"><a class="nav-link"
 					href="./registraMedico.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Registra
@@ -140,7 +141,7 @@
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Rimuovi
 							account Paziente</span></a></li>
 			</c:when>
-			<c:otherwise>
+			<c:when test='${accessDone==null || accessDone==false}'>
 				<li class="nav-item"><a class="nav-link" href="#"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Conosci il
 							prodotto</span></a></li>
@@ -148,7 +149,7 @@
 						<i class="fas fa-fw fa-tachometer-alt"></i> <span>Conosci
 							il team!</span>
 				</a></li>
-			</c:otherwise>
+			</c:when>
 		</c:choose>
 
 		<!-- Divider -->

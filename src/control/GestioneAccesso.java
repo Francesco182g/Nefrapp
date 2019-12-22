@@ -20,172 +20,180 @@ import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
+
 /**
  * 
  * @author Eugenio Corbisiero, Davide Benedetto Strianese, Silvio Di Martino
- * Questa classe � una servlet che si occupa della gestione dell'accesso al sistema
+ *         Questa classe � una servlet che si occupa della gestione dell'accesso
+ *         al sistema
  *
  */
 @WebServlet("/GestioneAccesso")
 public class GestioneAccesso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response){
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		doPost(request, response);
 		return;
 	}
-		
+
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response){
-		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
+		// ok)
 		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
-				
+
 			String operazione = request.getParameter("operazione");
 
 			HttpSession session = request.getSession();
 			synchronized (session) {
-				
-				if(operazione.equals("logout")) {
+
+				if (operazione.equals("logout")) {
 					logout(request);
 					response.sendRedirect("index.jsp");
 				}
-					
-				
-				else if(operazione.equals("loginAdmin")){
-					//Aggiungere un try-catch per catturare IOException
+
+				else if (operazione.equals("loginAdmin")) {
+					// Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
 				}
-					
+
 				else {
-					//Aggiungere un try-catch per catturare IOException
+					// Aggiungere un try-catch per catturare IOException
 					loginUtente(request, response, session);
 				}
 			}
 		} catch (Exception e) {
 			System.out.println("Errore in gestione parametri:");
-			e.printStackTrace();		
+			e.printStackTrace();
 		}
-		return;	
+		return;
 	}
+
 	/**
-	 * Metodo che permette di effettuare la login dell'amministratore 
-	 * @param request la richiesta al server 
+	 * Metodo che permette di effettuare la login dell'amministratore
+	 * 
+	 * @param request  la richiesta al server
 	 * @param response la risposta del server
-	 * @param session la sessione in cui deve essere salvato l'amministratore se avviene con successo la login
-	 * @throws IOException lancia un eccezione se si verifica un errore di input / output
+	 * @param session  la sessione in cui deve essere salvato l'amministratore se
+	 *                 avviene con successo la login
+	 * @throws IOException lancia un eccezione se si verifica un errore di input /
+	 *                     output
 	 */
-	private void loginAmministratore(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+	private void loginAmministratore(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws IOException {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		Amministratore amministratore = null;
-		if(controllaParametri(codiceFiscale, password)){
+		if (controllaParametri(codiceFiscale, password)) {
 			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
-			amministratore = AmministratoreModel.checkLogin(codiceFiscale, password);
-			if(amministratore != null){
+			amministratore = AmministratoreModel.getAmministratoreByCFPassword(codiceFiscale, password);
+			if (amministratore != null) {
 				session.removeAttribute("notifica");
-				session.setAttribute("amministratore", amministratore);
+				session.setAttribute("isamministratore", true);
+				session.setAttribute("utente", amministratore);
 				session.setAttribute("accessDone", true);
 				response.sendRedirect("dashboard.jsp");
-			
-			}
-			else{
-				session.setAttribute("notifica","login fallito");
+
+			} else {
+				session.setAttribute("notifica", "login fallito");
 				response.sendRedirect("loginAmministratore.jsp");
 			}
 		}
 	}
-		
-	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+
+	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws IOException {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		String ricordaUtente = request.getParameter("ricordaUtente");
 		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
-			
-		Utente utente;
-		
-		utente = MedicoModel.getMedicoByCF(codiceFiscale);
-		if (utente == null)
-			utente = PazienteModel.getPazienteByCF(codiceFiscale);
-			
-		//non so cos'è questa roba e perché vale solo per il paziente
-		if(utente!=null){
-			Cookie[] cookies = request.getCookies();
-			
-			if(cookies != null){
+		Cookie pazienteID;
+		Utente utente = null;
 
-				for(Cookie cookie: cookies){
-					if(cookie.getName().equals("pazienteID")){
-						idPaziente = cookie.getValue();
-					}
+		if (controllaParametri(codiceFiscale, password)) {
+			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+			utente = MedicoModel.getMedicoByCFPassword(codiceFiscale, password);
+			if (utente == null)
+			{
+				utente = PazienteModel.getPazienteByCFPassword(codiceFiscale, password);
+				if (utente!=null) {
+					session.setAttribute("ispaziente", true);
 				}
 			}
-				
-			Cookie pazienteID;
-				
-			if(controllaParametri(codiceFiscale, password)){					
-				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);  
-				utente = MedicoModel.getMedicoByCFPassword(codiceFiscale, password);
-				utente = PazienteModel.getPazienteByCFPassword(codiceFiscale, password);
-				
-				if(utente != null){
-					session.setAttribute("utente", utente);
-					session.setAttribute("accessDone", true);
-						
-					if(ricordaUtente != null){
-						pazienteID = new Cookie ("pazienteID", idPaziente);
+			else {
+				session.setAttribute("ismedico", true);
+			}
+
+			if (utente != null) {
+				session.setAttribute("utente", utente);
+				session.setAttribute("accessDone", true);
+
+				if (ricordaUtente != null) {
+					Cookie[] cookies = request.getCookies();
+
+					if (cookies != null) {
+
+						for (Cookie cookie : cookies) {
+							if (cookie.getName().equals("pazienteID")) {
+								idPaziente = cookie.getValue();
+							}
+						}
+
+						pazienteID = new Cookie("pazienteID", idPaziente);
 						pazienteID.setMaxAge(50000);
 						response.addCookie(pazienteID);
 					}
-						
-					response.sendRedirect("dashboard.jsp");
-					return;
+
 				}
-					
-				else {
-					response.sendRedirect("login.jsp");
-				}
+				response.sendRedirect("dashboard.jsp");
+				return;
+
 			}
-			
 			else {
 				response.sendRedirect("login.jsp");
 			}
 		}
 	}
-		
+
 	/**
 	 * Funzione che permette di effettuare il logout
-	 * @param request è il client in cui risiede la sessione che deve essere invalidata
+	 * 
+	 * @param request è il client in cui risiede la sessione che deve essere
+	 *                invalidata
 	 */
 	private void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if(session != null) {
+		if (session != null) {
 			session.invalidate();
 		}
 	}
-		
+
 	/**
-	 * Funzione che controlla i parametri codice fiscale e password dell' amministratore e dell'utente
-	 * @param codiceFiscale indica il codice fiscale dell' amministratore o dell'utente 
-	 * @param password indica la password dell'amministratore o dell'utente
+	 * Funzione che controlla i parametri codice fiscale e password dell'
+	 * amministratore e dell'utente
+	 * 
+	 * @param codiceFiscale indica il codice fiscale dell' amministratore o
+	 *                      dell'utente
+	 * @param password      indica la password dell'amministratore o dell'utente
 	 * @return true se i controlli vanno a buon fine false altrimenti
 	 */
-	public boolean controllaParametri(String codiceFiscale, String password)
-	{
-		boolean valido=true;
-		String expCodiceFiscale="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String expPassword="^[a-zA-Z0-9]*$";
-			
-		if (!Pattern.matches(expCodiceFiscale, codiceFiscale)||codiceFiscale.length()!=16)
-			valido=false;
-		if (!Pattern.matches(expPassword, password)||password.length()<6||password.length()>20)
-			valido=false;
+	public boolean controllaParametri(String codiceFiscale, String password) {
+		boolean valido = true;
+		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
+		String expPassword = "^[a-zA-Z0-9]*$";
+
+		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
+			valido = false;
+		if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20)
+			valido = false;
 		return valido;
 	}
 }

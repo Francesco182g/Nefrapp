@@ -12,7 +12,7 @@ import utility.CreaBeanUtility;
 /**
  * 
  * @author Luca Esposito, Eugenio Corbisiero
- * Questa classe è un manager che si occupa di interagire con il database.
+ * Questa classe ï¿½ un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti l'amministratore
  */
 public class AmministratoreModel {
@@ -23,7 +23,7 @@ public class AmministratoreModel {
 	 * @param password password dell'amministratore
 	 * @return dati dell'amministratore se le credenziali sono corrette, null altrimenti
 	 */
-	public static Amministratore checkLogin(String codiceFiscale, String password) {
+	public static Amministratore getAmministratoreByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> amministratori = DriverConnection.getConnection().getCollection("Amministratore");
 		Amministratore amministratore = null;
 		BasicDBObject andQuery = new BasicDBObject();
