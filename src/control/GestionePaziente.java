@@ -35,14 +35,28 @@ public class GestionePaziente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String operazione = request.getParameter("operazione");
 		
-		if(operazione.equals("visualizzaProfilo"))
-		{
-			caricaMedici(request,response);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
-			requestDispatcher.forward(request, response);
-		}
+		try {
+			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+				request.setAttribute("notification", "Errore generato dalla richiesta!");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp"); // TODO reindirizzamento home
+				dispatcher.forward(request, response);
+				return;
+			}	
+	
+			String operazione = request.getParameter("operazione");
+			
+			if(operazione.equals("visualizzaProfilo"))
+			{
+				caricaMedici(request,response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			
+			} catch (Exception e) {
+				System.out.println("Errore durante il caricamento della pagina:");
+				e.printStackTrace();
+			}
 	}
 
 	/**
