@@ -5,43 +5,16 @@ package bean;
  * @author Eugenio Corbisiero
  * Questa classe rappresenta l'amministratore
  */
-public class Amministratore{
-	private String codiceFiscale;
-	private String nome;
-	private String cognome;
+public class Amministratore extends Utente{
 	private String email;
 	
-	public Amministratore() {}
+	public Amministratore() {
+		super();
+	}
 	
 	public Amministratore(String codiceFiscale, String nome, String cognome, String email) {
-		this.codiceFiscale = codiceFiscale;
-		this.nome = nome;
-		this.cognome = cognome;
+		super(codiceFiscale, nome, cognome);
 		this.email = email;
-	}
-
-	public String getCodiceFiscale() {
-		return codiceFiscale;
-	}
-
-	public void setCodiceFiscale(String codiceFiscale) {
-		this.codiceFiscale = codiceFiscale;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
 	}
 
 	public String getEmail() {
@@ -54,7 +27,7 @@ public class Amministratore{
 
 	@Override
 	public String toString() {
-		return "Amministratore [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email="
+		return super.toString() + ", email="
 				+ email + "]";
 	}
 }

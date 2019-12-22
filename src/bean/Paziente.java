@@ -9,11 +9,8 @@ import java.util.ArrayList;
  * @author Sara Corrente
  * Questa classe rappresenta il paziente
  */
-public class Paziente{
+public class Paziente extends Utente{
 	private String sesso;
-	private String codiceFiscale;
-	private String nome;
-	private String cognome;
 	private String email;
 	private String residenza;
 	private String luogoDiNascita;
@@ -24,10 +21,8 @@ public class Paziente{
 	public Paziente() {}
 
 	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza, String luogoDiNascita, LocalDate dataDiNascita, Boolean attivo, ArrayList<String> medici) {
+		super(codiceFiscale, nome, cognome);
 		this.sesso = sesso;
-		this.codiceFiscale = codiceFiscale;
-		this.nome = nome;
-		this.cognome = cognome;
 		this.email = email;
 		this.residenza = residenza;
 		this.luogoDiNascita=luogoDiNascita;
@@ -42,30 +37,6 @@ public class Paziente{
 
 	public void setSesso(String sesso) {
 		this.sesso = sesso;
-	}
-
-	public String getCodiceFiscale() {
-		return codiceFiscale;
-	}
-
-	public void setCodiceFiscale(String codiceFiscale) {
-		this.codiceFiscale = codiceFiscale;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
 	}
 
 	public String getEmail() {
@@ -127,8 +98,10 @@ public class Paziente{
 
 	@Override
 	public String toString() {
-		return "Paziente [sesso=" + sesso + ", codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome="
-				+ cognome + ", email=" + email + ", residenza=" + residenza + ", luogoDiNascita=" + luogoDiNascita
-				+ ", dataDiNascita=" + dataDiNascita + ", attivo=" + attivo + ", medici=" + medici + "]";
+		return "Paziente [sesso=" + sesso + ", email=" + email + ", residenza=" + residenza + ", luogoDiNascita="
+				+ luogoDiNascita + ", dataDiNascita=" + dataDiNascita + ", attivo=" + attivo + ", medici=" + medici
+				+ ", codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome() + ", cognome="
+				+ getCognome() + "]";
 	}
+	
 }

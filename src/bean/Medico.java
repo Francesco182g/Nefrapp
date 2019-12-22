@@ -7,25 +7,22 @@ import java.time.format.DateTimeFormatter;
  * @author Antonio Donnarumma
  * Questa classe rappresenta il medico
  */
-public class Medico{ 
+public class Medico extends Utente{ 
 	private String sesso; 
 	private String residenza;
 	private LocalDate dataDiNascita;
-	private String codiceFiscale;
-	private String nome;
-	private String cognome;
 	private String email;
 	private String luogoDiNascita;
 	
-	public Medico() {}
+	public Medico() {
+		super();
+	}
 
 	public Medico(String sesso, String residenza, LocalDate dataDiNascita, String codiceFiscale, String nome, String cognome,String email,String luogoDiNascita) {
+		super(codiceFiscale, nome, cognome);
 		this.sesso = sesso;
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
-		this.codiceFiscale = codiceFiscale;
-		this.nome = nome;
-		this.cognome = cognome;
 		this.email = email;
 		this.luogoDiNascita=luogoDiNascita;
 	}
@@ -59,28 +56,11 @@ public class Medico{
 		this.dataDiNascita = dataDiNascita;
 	}
 
-	public String getCodiceFiscale() {
-		return codiceFiscale;
-	}
-	
-	public void setCodiceFiscale(String codiceFiscale) {
-		this.codiceFiscale = codiceFiscale;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	@Override
+	public String toString() {
+		return "Medico [sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita + ", email="
+				+ email + ", luogoDiNascita=" + luogoDiNascita + ", codiceFiscale=" + getCodiceFiscale()
+				+ ", nome=" + getNome() + ", cognome=" + getCognome() + "]";
 	}
 
 	public String getEmail() {
@@ -99,10 +79,5 @@ public class Medico{
 		this.luogoDiNascita=luogoDiNascita;
 	}
 
-	@Override
-	public String toString() {
-		return "Medico [sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita
-				+ ", codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email
-				+ ", luogoDiNascita=" + luogoDiNascita + "]";
-	}
+
 }
