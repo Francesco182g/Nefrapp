@@ -37,6 +37,7 @@
 	                <div class="container-fluid">
 						<c:if test="${isamministratore==true && sessionScope.accessDone==true}">
 							<script src="./js/loadObject.js" ></script>	
+						
 							  <div class="row">
 							  	<div class="col-sm-6 mt-3 ">
 							  		 <div class="card ">

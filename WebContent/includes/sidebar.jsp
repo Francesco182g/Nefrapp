@@ -53,7 +53,7 @@
 		<c:choose>
 			<c:when test='${ispaziente==true && accessDone==true}'>
 
-				<li class="nav-item"><a class="nav-link" href="#"> <i
+				<li class="nav-item"><a class="nav-link" href="./profilo.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
 
@@ -74,7 +74,7 @@
 				</a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href="./comunicazione?operazione=caricaDestinatariMessaggio"> <i
+					href="./messaggio?operazione=caricaDestinatariMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Invia
 							Messaggio</span></a></li>
 				<li class="nav-item"><a class="nav-link"
