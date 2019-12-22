@@ -188,12 +188,9 @@ public class GestioneParametri extends HttpServlet {
 	
 	
 	private void creaExcel(HttpServletRequest request, HttpServletResponse response) {
-//		LocalDate dataInizio = LocalDate.parse(request.getParameter("dataInizio"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//		LocalDate dataFine = LocalDate.parse(request.getParameter("dataFine"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//		la JSP non manda la data correttamente, per il momento vengono usate date placeholder
-		
-		LocalDate dataInizio = LocalDate.parse("2019-12-01");
-		LocalDate dataFine = LocalDate.parse("2019-12-31");
+
+		LocalDate dataInizio = LocalDate.parse(request.getParameter("dataInizio"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		LocalDate dataFine = LocalDate.parse(request.getParameter("dataFine"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
 		String pazienteCF = request.getParameter("CFpaziente");
 		ArrayList<SchedaParametri> report = SchedaParametriModel.getReportByPaziente(pazienteCF, dataInizio, dataFine);

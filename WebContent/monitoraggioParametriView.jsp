@@ -121,9 +121,9 @@
                  <form action="./GestioneParametri" method="post" id="rangeForm">
                  <div class="dates" style="margin-top:100px;color:#2471a3;">
 					<label>Data inizio</label>
-    				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataInizio" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
+    				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataInizio" name="dataInizio" placeholder="DD-MM-YYYY" autocomplete="off">
     				<label>Data fine</label>
-    				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataFine" name="event_date" placeholder="DD-MM-YYYY" autocomplete="off">
+    				<input type="text" style="width:200px;background-color:#aed6f1;" class="form-control" id="dataFine" name="dataFine" placeholder="DD-MM-YYYY" autocomplete="off">
     				<input type="hidden" name="operazione"  value="download">
     				<input type="hidden" name="CFPaziente" value="${scheda.get(0).getPazienteCodiceFiscale()}">
   				</div>
