@@ -1,11 +1,19 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import bean.Medico;
+import bean.Paziente;
+import model.MedicoModel;
 
 /**
  * Servlet implementation class GestionePaziente
@@ -27,6 +35,14 @@ public class GestionePaziente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String operazione = request.getParameter("operazione");
+		
+		if(operazione.equals("visualizzaProfilo"))
+		{
+			caricaMedici(request,response);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
+			requestDispatcher.forward(request, response);
+		}
 	}
 
 	/**
@@ -41,7 +57,7 @@ public class GestionePaziente extends HttpServlet {
 	 * Metodo che preleva il paziente che richiede il cambio password lo inserisce nella richiesta
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
-	private void richiediResetPassword(HttpServletRequest request, HttpServlet response) {
+	private void richiediResetPassword(HttpServletRequest request, HttpServletResponse response) {
 		
 	}
 	
@@ -49,7 +65,7 @@ public class GestionePaziente extends HttpServlet {
 	 * Metodo che preleva il paziente che richiede la disattivazione del proprio account e lo inserisce nella richiesta
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
-	private void disattivaAccount(HttpServletRequest request, HttpServlet response) {
+	private void disattivaAccount(HttpServletRequest request, HttpServletResponse response) {
 		
 	}
 	
@@ -57,9 +73,30 @@ public class GestionePaziente extends HttpServlet {
 	 * Metodo che aggiorna i dati personali di un paziente
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
-	private void modificaDatipersonali(HttpServletRequest request, HttpServlet response) {
+	private void modificaDatipersonali(HttpServletRequest request, HttpServletResponse response) {
 		
 	}
+	
+	/**
+	 * Metodo che carica i medici che seguono il paziente in sessione
+	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 */	
+	private void caricaMedici(HttpServletRequest request, HttpServletResponse response)
+	{
+		Paziente paziente = null;
+		HttpSession session = request.getSession();
+		paziente = (Paziente) session.getAttribute("paziente");
+		
+		if(paziente!=null){
+			ArrayList<Medico> mediciCuranti = new ArrayList<>();
+			for (String cf : paziente.getMedici()) {
+				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
+				}
+			request.setAttribute("mediciCuranti", mediciCuranti);
+			}
+		
+	}
+		
 	
 
 }
