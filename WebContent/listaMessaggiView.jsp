@@ -24,8 +24,7 @@
 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
 	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
 	
-	<script type="text/javascript" src="./js/customscripts.js"></script>
-<!-- 	metti lo script a fine pagina qui dentro ^ -->
+	<script type="text/javascript" src="./js/messaggi.js"></script>
 		
 		<!-- Script per la registrazione -->
    	 	<script src="./js/dataPicker.js"></script>
@@ -102,14 +101,6 @@
 	
 	    </div>
 	    <!-- End of Page Wrapper -->
-<!-- 	    spostare in un file -->
-	    <script type="text/javascript">
-	    jQuery(document).ready(function($) {
-	        $(".clickable-row").click(function() {
-	            window.location = $(this).data("href");
-	        });
-	    });
-	    </script>
 	
 	    <!-- Scroll to Top Button-->
 	    <a class="scroll-to-top rounded" href="#page-top">

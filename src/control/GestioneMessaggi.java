@@ -1,6 +1,10 @@
-package control;
+	package control;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import bean.Medico;
@@ -24,6 +29,7 @@ import bean.Paziente;
 import model.MedicoModel;
 import model.MessaggioModel;
 import model.PazienteModel;
+import utility.AlgoritmoCriptazioneUtility;
 /**
  * @author Sara, Nico
  */
@@ -104,7 +110,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		Messaggio messaggio = null;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-//		System.out.println(isMultipart);
 		medico = (Medico) session.getAttribute("medico");
 		paziente = (Paziente) session.getAttribute("paziente");
 
@@ -114,26 +119,35 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			String CFMittente = paziente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
+			String allegato = new String();
+			
 			Part filePart = request.getPart("file");
-			String allegato = filePart.getSubmittedFileName();
-
-			/*if (isMultipart) {
-				
-				final String fileName = uploadFileUtility.getFileName(filePart);
-				OutputStream out = null;
-				InputStream fileContent = null;
-				out = new FileOutputStream(new File(File.separator + fileName));
-				fileContent = filePart.getInputStream();
-				int read = 0;
-		        final byte[] bytes = new byte[1024];
-		        while ((read = fileContent.read(bytes)) != -1) {
-		            out.write(bytes, 0, read);
-		        }
-		        allegato=out.toString();
-		        out.close();
-				System.out.println(allegato);
-			}*/
-
+		    InputStream fileContent = filePart.getInputStream();
+		    File f = new File(getServletContext() + "temp");
+		    OutputStream outputStream = null;
+		   
+		    if (isMultipart) {
+			    try
+			    {
+			        outputStream = new FileOutputStream(f);
+			        
+			        int read = 0;
+			        byte[] bytes = new byte[1024];
+			        while ((read = fileContent.read(bytes)) != -1) {
+			            outputStream.write(bytes, 0, read);
+			        }
+			    }
+			    finally
+			    {
+			        if(outputStream != null)
+			        {
+			            outputStream.close();
+			            f.delete();
+			        }
+			    }
+			    allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
+		    }
+		    
 			// inserire qui controlli backend
 			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			MessaggioModel.addMessaggio(messaggio);

@@ -14,7 +14,7 @@
 <!-- Custom fonts for this template-->
 
 <!-- Custom styles for this template-->
-<script type="text/javascript" src="./js/customscripts.js"></script>
+<script type="text/javascript" src="./js/messaggi.js"></script>
 </head>
 <body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')"> 
 	<!-- Page Wrapper -->

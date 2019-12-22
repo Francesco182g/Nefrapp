@@ -110,7 +110,14 @@
 
 									<tbody>
 										<tr>
-											<td>${messaggio.allegato}</td>
+											<td>
+											<c:if test="${messaggio.allegato!=null}">
+												<img src="data:image/jpeg;base64, ${messaggio.allegato}">
+											</c:if>
+											<c:if test="${messaggio.allegato==null}">
+												Nessun allegato
+											</c:if>
+											</td>
 										</tr>
 									</tbody>
 								</table>
