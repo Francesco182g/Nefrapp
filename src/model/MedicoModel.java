@@ -151,4 +151,39 @@ public class MedicoModel {
 		}
 		return datimedici;
 	}
+	
+	/**
+	 * Query che ricerca un medico per email
+	 * @param email del medico da ricercare
+	 * @return medico se trovato, altrimenti null
+	 */
+	public static Medico getMedicoByEmail(String email) {
+		
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		Medico medico = null;
+		Document datiMedico = medici.find(eq("Email", email)).first();
+		if(datiMedico != null) {
+			medico = CreaBeanUtility.daDocumentAMedico(datiMedico);
+		}
+		
+		return medico;
+	}
+	
+	/**
+	 * Query che aggiorna la password per un medico
+	 * @param codiceFiscale del medico da aggiornare
+	 * @param nuovaPassword per il medico da aggiornare
+	 */
+	public static void updatePasswordMedico(String codiceFiscale, String nuovaPassword) {
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		BasicDBObject nuovoMedico = new BasicDBObject();
+		
+		nuovoMedico.append("$set", new Document().append("Password", nuovaPassword));
+		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", codiceFiscale);
+		
+		medici.updateOne(searchQuery, nuovoMedico);
+	}	
+	
+	
+	
 }
