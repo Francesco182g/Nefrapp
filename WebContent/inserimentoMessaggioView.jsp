@@ -14,7 +14,9 @@
 <!-- Custom fonts for this template-->
 
 <!-- Custom styles for this template-->
+<script src="./vendor/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="./js/messaggi.js"></script>
+<script src="js/ParameterControl.js"></script>
 </head>
 <body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')"> 
 	<!-- Page Wrapper -->
@@ -84,7 +86,7 @@
 							</div>
 							<div class="col-lg-10 col-sm-12 mb-12 mb-sm-12 row">
 								<input type="text" class="form-control form-control-user"
-									id="oggeto" name="oggetto" required="required">
+									id="oggetto" name="oggetto" required="required">
 							</div>
 
 						</div>
@@ -103,7 +105,7 @@
 							<div class="file-field">
 								<div class="d-flex justify-content-center">
 									<div class="btn btn-mdb-color btn-rounded float-left">
-										<span>Allegato</span> <input type="file" name="file"
+										<span>Allegato</span> <input type="file" accept=".bmp,.png,.jpg, .jpeg, .jfif, .pjpeg, .pjp" name="file"
 											id="file">
 									</div>
 								</div>
