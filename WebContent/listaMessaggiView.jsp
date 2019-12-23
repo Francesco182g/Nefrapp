@@ -19,7 +19,13 @@
    	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">	
    	 	
    	 	<!-- DatePicker -->
-   	 	
+   	 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
+		
+		<!-- Messaggio per Nico da parte di Sara: ho dovuto riaggiungere le librerie che hai tolto perchè altrimenti non funziona
+		il click dei messaggi. Per sicurezza le ho rimesse tutte e tre. Ovviamente potremmo trovare ciò che ci serve per far funzionare 
+		la cosa e cancellare il resto -->
 <!-- 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 <!-- 		<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script> -->
 <!-- 		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" > -->
