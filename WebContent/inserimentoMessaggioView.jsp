@@ -60,11 +60,13 @@
 													</select>
 												</c:when>
 												<c:when test='${isMedico==true}'>
-													<select name="selectPaziente" id="selectPaziente" multiple>
+													<select name="selectPaziente" id="selectPaziente" title="Scegli destinatari:" multiple
+														data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
+														class="selectpicker bootstrap-select w-100">
 														<option value="" disabled>Scegli destinatari:</option>
 														<c:set var="pazienti"
 															value='${requestScope["pazientiSeguiti"]}' />
-														<c:forEach items="${dottori}" var="item">
+														<c:forEach items="${pazienti}" var="item">
 															<option value="${item.codiceFiscale}">${item.nome}
 																${item.cognome}</option>
 														</c:forEach>
