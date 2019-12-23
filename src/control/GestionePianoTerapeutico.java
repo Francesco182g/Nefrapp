@@ -1,6 +1,7 @@
 package control;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Medico;
 import bean.PianoTerapeutico;
+import bean.Utente;
 import model.PianoTerapeuticoModel;
 
 /**
@@ -90,15 +92,17 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	 * @author Antonio Donnarumma
 	 */
 	private void modificaPiano(HttpServletRequest request) {
-		Medico medico = (Medico) request.getSession().getAttribute("medico");
+		Medico medico = (Medico) request.getSession().getAttribute("utente");
+
 		if(medico != null) {
 			final String REGEX_DATA = "^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 			String dataFine = request.getParameter("data");
 			if(Pattern.matches(REGEX_DATA, dataFine)) {
+				System.out.println(dataFine);
 				String codiceFiscalePaziente = request.getParameter("CFPaziente");
 				String diagnosi = request.getParameter("diagnosi");
 				String farmaci = request.getParameter("farmaci");
-				LocalDate dataFineTerapia  = LocalDate.parse(dataFine);
+				LocalDate dataFineTerapia  = LocalDate.parse(dataFine, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				PianoTerapeuticoModel.updatePianoTerapeutico(new PianoTerapeutico(codiceFiscalePaziente, diagnosi, farmaci, dataFineTerapia));
 			}else {
 				//TODO Messaggio d'errore, CF non valido

@@ -11,8 +11,7 @@
 	  var button3 = $("#loginUtente")
 	  var button4 = $("#resetPswButton")
 	  var button5 = $("#richiestaReset")
-	  var button6 = $("#modificaPazienteButton")
-	  var button7 = $("#modificaMedicoButton")
+	  var button6 = $("#inviaMessaggio")
 	  
 	  $(document).submit(function(){
 				  return sub; 
@@ -33,10 +32,41 @@
 	  {
 		  resetPasswordValidator(1)
 	  }
+	  else if(button6.length>0)
+		  {
+		  	inviaMessaggioValidator()
+		  }
 	 
 	  
 	  
 	});
+
+  /**
+   * funzione che permette di validare l'invio di un messaggio
+   */
+
+  function inviaMessaggioValidator(){
+	  $("#inviaMessaggio").click(function(){
+			
+			
+		var valid = inviaMessaggioCheck()
+		console.log(valid)
+			if (!valid [0])
+				{
+					sub = false;
+					
+					alert(valid[1])
+				}
+			else
+				{
+					sub = true;
+					$(document).submit();
+				}
+			
+		}); 
+	
+  }
+
 	
   /**
    * Funzione che permette di eseguire la richiesta di registrazione del medico alla servlet però fa prima dei controlli 
@@ -101,39 +131,6 @@
 		});
 	}
 
-	function modificaValidator()
-	{
-		$("#modificaPazienteButton").click(function(){
-			var valid = checkValidityModifica();
-			if (!valid [0])
-				{
-					sub = false;
-					alert(valid[1])
-				}
-			else
-				{
-					sub = true;
-					$(this).prop("disabled",true);
-					$(document).submit();
-				}
-			
-		});
-		$("#modificaMedicoButton").click(function(){
-			var valid = checkValidityModifica();
-			if (!valid [0])
-				{
-					sub = false;
-					alert(valid[1])
-				}
-			else
-				{
-					sub = true;
-					$(this).prop("disabled",true);
-					$(document).submit();
-				}
-			
-		});
-	}
 	
 	/**
 	 * funzione che controlla tutti i campi della form se un campo non è valido restituisce un arrai il cui primo elemnto è un booleano
@@ -309,6 +306,40 @@
 		return valido
 		
 	}
+	  /*
+	   * Funzione che permette di ottenere l'estenzione di un file
+	   * */
+	  function getFileExtension(filename)
+	  {
+	    var ext = /^.+\.([^.]+)$/.exec(filename);
+	    return ext == null ? "" : ext[1];
+	  }
+	  /*
+	   * Funzione che controlla se tutti i campi dell'invio del messaggio sono validi
+	   * */
+		function inviaMessaggioCheck(){
+			var valido=[true];
+			var selettore = $('.selectpicker').val()
+			var oggetto = $("#oggetto").val()
+			var testo = $("#testo").val()
+			var testoExp = new RegExp("^[A-Za-z0-9 èòù']+$")
+			var fileExt = getFileExtension($('#file').val());
+			console.log(fileExt)
+			
+			if (selettore.length<=0)
+				valido=[false,"selezionare un destinatario"];
+			else if (!testoExp.test(testo)||testo.length<1||testo.length>1000)
+				valido=[false,"formato testo non valido"];
+			else if (!testoExp.test(oggetto)||oggetto.length<1||oggetto.length>75)
+				valido=[false,"formato oggetto non valido"];
+			else if (fileExt!="jpg" && fileExt!="jpeg" && fileExt!="png" && fileExt!="pjpeg" && fileExt!="pjp" && fileExt!="jfif" && fileExt!="bmp")  {
+				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"]
+			}
+			
+			return valido;
+			
+		}
+	
 })(jQuery); // End of use strict
 
 	

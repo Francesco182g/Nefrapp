@@ -4,11 +4,15 @@ package model;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.and;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.taglibs.standard.lang.jstl.AndOperator;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
@@ -68,6 +72,21 @@ public class AnnuncioModel {
 		}
 		
 		return annunci;
+	}
+	
+	public static int countAnnunciNonLetti(String codiceFiscalePaziente) {
+		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
+		//nuova query, da testare
+		BasicDBObject andQuery = new BasicDBObject();
+		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
+		obj.add(new BasicDBObject("Visualizzato", true));
+		andQuery.put("$and", obj);
+		int n= (int) annunciDB.count(andQuery);
+		//Query vecchia, ma non mi fido
+		//Document annuncio = annunciDB.find(eq("_id", new ObjectId(codiceFiscalePaziente))).first().append("Visualizzato", true);
+		//int n=(int) annunciDB.count(annuncio);
+		return n;
 	}
 	
 	/*

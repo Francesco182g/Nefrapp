@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,7 +41,9 @@ import utility.AlgoritmoCriptazioneUtility;
  * Servlet implementation class GestioneMessaggio
  */
 @WebServlet("/GestioneMessaggi")
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
+		maxFileSize = 15728640, // 15MB
+		maxRequestSize = 15728640) // 15MB
 public class GestioneMessaggi extends GestioneComunicazione {
 	private static final long serialVersionUID = 1L;
 
@@ -116,37 +119,47 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		HttpSession session = request.getSession();
 		Messaggio messaggio = null;
 		utente = (Utente) session.getAttribute("utente");
-		ArrayList<String> destinatari =null;
+		ArrayList<String> destinatari = null;
 		if ((boolean) session.getAttribute("accessDone") == true) {
-			if (session.getAttribute("isPaziente")!=null && (boolean)session.getAttribute("isPaziente")==true) {
-			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));}
-			else if (session.getAttribute("isMedico")!=null && (boolean)session.getAttribute("isMedico")==true) {
-			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));}
+			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
+				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
+			} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
+				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
+			}
 			String CFMittente = utente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
 			String allegato = new String();
-			
+
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
-			InputStream fileContent = filePart.getInputStream();
-			if (isMultipart) {
-				try {
-					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
-				} catch (IOException e) {
-					System.out.println("InvioMessaggio: errore nella codifica dell'allegato");
-				} finally {
-					if (fileContent != null) {
-						fileContent.close();
-					}
+			if (controllaParametri(CFMittente,oggetto,testo,filePart.getSubmittedFileName(),filePart.getSize())) 
+			{
+				InputStream fileContent = filePart.getInputStream();
+				if (isMultipart) 
+				{
+					try 
+					{
+						allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
+					} finally 
+					{
+						if (fileContent != null) {
+							fileContent.close();
+						}
+						
+			}
 				}
+			}
+			else {
+				
+				//inserire il request dispatcher con la variabile notifica ricordare di mettere anche il campo hidden nella jsp
 			}
 
 			// inserire qui controlli backend
 			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato,
 					ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			MessaggioModel.addMessaggio(messaggio);
-			
+
 			// qua verrebbe un notify() ai medici se avessimo un observer
 
 		} else {
@@ -214,6 +227,34 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
 		MessaggioModel.updateMessaggio(idMessaggio, true);
 		request.setAttribute("messaggio", messaggio);
+	}
+
+	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo, String nomeFile, long dimensioneFile) {
+		boolean valido = false;
+		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
+		String expTesto = "^[A-Za-z0-9 èòù']+$";
+		int indice = nomeFile.indexOf(".");
+		String estensione = nomeFile.substring(indice);
+		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
+			valido = false;
+		else if(!Pattern.matches(expTesto, oggetto) || oggetto.length() <1|| oggetto.length() > 75)
+		{
+			valido = false;
+		}
+		else if(!Pattern.matches(expTesto, testo) || testo.length() <1|| testo.length() > 1000)
+		{
+			valido = false;
+		}
+		else if(!estensione.equals("jpg") && !estensione.equals("jpeg") && !estensione.equals("png") && !estensione.equals("pjpeg") && !estensione.equals("pjp") && !estensione.equals("jfif") && !estensione.equals("bmp"))
+		{
+			valido = false;
+		}
+		else if(dimensioneFile>15728640l)
+		{
+			valido = false;
+		}
+
+		return valido;
 	}
 
 }
