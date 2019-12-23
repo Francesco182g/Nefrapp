@@ -24,6 +24,8 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import bean.Annuncio;
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
+import model.AnnuncioModel;
 import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 
@@ -65,7 +67,6 @@ public class GestioneAnnunci extends HttpServlet {
 			}
 			
 			else if(operazione.equals("visualizzaPersonali")) {
-				//TODO visulizzazione annunci personali (scritti o ricevuti)
 				visualizzaAnnunciPersonali(request, response);
 				dispatcher.forward(request, response);
 				return;
@@ -94,7 +95,7 @@ public class GestioneAnnunci extends HttpServlet {
 	
 	private void creaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
+		Medico medico = (Medico) session.getAttribute("utente");
 		
 		if(medico != null) {
 			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
@@ -118,7 +119,7 @@ public class GestioneAnnunci extends HttpServlet {
 	 */
 	private void inviaAnnuncio(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
+		Medico medico = (Medico) session.getAttribute("utente");
 		Annuncio annuncio = new Annuncio();
 		
 		if(medico != null) {
@@ -147,8 +148,8 @@ public class GestioneAnnunci extends HttpServlet {
 			}
 			
 		    annuncio = new Annuncio(medico, pazienti, titolo, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
-			//TODO aggiunta dell'annuncio nel db
-		    
+		    AnnuncioModel.addAnnuncio(annuncio);
+			
 			request.setAttribute("notifica", "Annuncio inviato con successo");
 			dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento homeMedico
 			return;
@@ -166,14 +167,13 @@ public class GestioneAnnunci extends HttpServlet {
 	 */
 	private void visualizzaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
-		Paziente paziente = (Paziente) session.getAttribute("paziente");
+		Utente utente = (Utente) session.getAttribute("utente");
 		
-		if(medico != null || paziente != null) {
+		if(utente != null) {
 			Annuncio annuncio = new Annuncio();
 			String idAnnuncio = request.getParameter("idAnnuncio");
 			
-			//TODO fare query per prendere l'annuncio tramite id
+			annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
 			
 			request.setAttribute("annuncio", annuncio);
 			dispatcher = getServletContext().getRequestDispatcher("/annuncioView.jsp");
@@ -188,22 +188,26 @@ public class GestioneAnnunci extends HttpServlet {
 	
 	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
-		Paziente paziente = (Paziente) session.getAttribute("paziente");
+		boolean isMedico = (boolean) session.getAttribute("isMedico");
+		boolean isPaziente = (boolean) session.getAttribute("isPaziente");
 		
-		if(medico != null && paziente == null) {
+		if(isMedico != false && isPaziente == false) {
+			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
-			//annunci = AnnuncioModel.getAnnuncioByCFMedico(medico.getCodiceFiscale());
+			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
+			
 			request.setAttribute("annunci", annunci);
 			dispatcher = getServletContext().getRequestDispatcher("/listaAnnunciView.jsp");
 			return;
 		}
 		
-		else if(medico == null && paziente != null) {
+		else if(isMedico == false && isPaziente != false) {
+			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
-			//annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
+			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
+			
 			request.setAttribute("annunci", annunci);
-			dispatcher = getServletContext().getRequestDispatcher("/annunciPersonaliView.jsp");
+			dispatcher = getServletContext().getRequestDispatcher("/listaAnnunciView.jsp");
 			return;
 		}
 		
