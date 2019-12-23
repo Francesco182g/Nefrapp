@@ -22,9 +22,7 @@
 		
 		<!-- Script per la registrazione -->
    	 	<script src="./js/ParameterControl.js"></script>
-   	 	<c:if test="${isAmministratore == true} ">
-   	 		 <c:redirect url ="dashboard.jsp"></c:redirect>	
-   	 	</c:if>
+   	 	
 		
 	</head>
 	
@@ -37,7 +35,10 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="./includes/header.jsp" %>
-	
+					<c:if test="${isAmministratore == true} ">
+					<c:out value="wa fra si l'amministrator"></c:out>
+   	 		 			<c:redirect url ="./dashboard.jsp"></c:redirect>	
+   	 				</c:if>
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
