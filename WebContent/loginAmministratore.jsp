@@ -22,7 +22,7 @@
 		
 		<!-- Script per la registrazione -->
    	 	<script src="./js/ParameterControl.js"></script>
-   	 	<c:if test='${not empty sessionScope.amministratore}'>
+   	 	<c:if test='${isAmministratore==false || isAmministratore==null}'>
 			<c:redirect url = "/dashboard.jsp"/>
 		</c:if>
 		

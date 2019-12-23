@@ -80,7 +80,7 @@ public class GestioneComunicazione extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utente utente = (Utente)session.getAttribute("utente");
 
-		if ((boolean)session.getAttribute("ispaziente")==true) {
+		if ((boolean)session.getAttribute("isPaziente")==true) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
 			for (String cf : ((Paziente) utente).getMedici()) {
 				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
@@ -88,7 +88,7 @@ public class GestioneComunicazione extends HttpServlet {
 			request.setAttribute("mediciCuranti", mediciCuranti);
 		}
 
-		else if ((boolean)session.getAttribute("ismedico")==true) {
+		else if ((boolean)session.getAttribute("isMedico")==true) {
 			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
 			pazientiSeguiti.addAll(PazienteModel.getPazientiSeguiti(utente.getCodiceFiscale()));
 			request.setAttribute("pazientiSeguiti", pazientiSeguiti);

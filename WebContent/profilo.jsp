@@ -32,30 +32,28 @@
 	</head>
 	
 	<body id="page-top">
-	<!-- session attribute -->
-	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
 	<c:choose>     
-         <c:when test = "${not empty sessionScope.paziente}">
-            <c:set var = "nome" value="${sessionScope.paziente.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.paziente.cognome}"></c:set>
-			<c:set var= "sesso" value="${sessionScope.paziente.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${sessionScope.paziente.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${sessionScope.paziente.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${sessionScope.paziente.dataDiNascita}"></c:set>
-            <c:set var= "luogoDiNascita" value="${sessionScope.paziente.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${sessionScope.paziente.residenza}"></c:set>
+         <c:when test = "${isPaziente == true}">
+            <c:set var = "nome" value="${utente.nome}"></c:set>
+            <c:set var = "cognome" value="${utente.cognome}"></c:set>
+			<c:set var= "sesso" value="${utente.sesso}"></c:set>
+			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var= "email" value="${utente.email}"></c:set>
+            <c:set var= "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var= "residenza" value="${utente.residenza}"></c:set>
 			<c:set var="dottori" value='${requestScope["mediciCuranti"]}' />
          </c:when>
          
-         <c:when test = "${not empty sessionScope.medico}">
-            <c:set var = "nome" value="${sessionScope.medico.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.medico.cognome}"></c:set>
-    		<c:set var= "sesso" value="${sessionScope.medico.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${sessionScope.medico.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${sessionScope.medico.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${sessionScope.medico.dataDiNascita}"></c:set>
-            <c:set var= "luogoDiNascita" value="${sessionScope.medico.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${sessionScope.medico.residenza}"></c:set>
+         <c:when test = "${isMedico == true}">
+            <c:set var = "nome" value="${utente.nome}"></c:set>
+            <c:set var = "cognome" value="${utente.cognome}"></c:set>
+    		<c:set var= "sesso" value="${utente.sesso}"></c:set>
+			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var= "email" value="${utente.email}"></c:set>
+            <c:set var= "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var= "residenza" value="${utente.residenza}"></c:set>
          </c:when>
          
       </c:choose>
@@ -97,7 +95,7 @@
          				  <h2 class="h4 mb-4 text-gray-500">Residenza: <span class="h3 mb-4 text-gray-800">${residenza}</span></h2>
          				  
          				  <!-- se è loggato il paziente, mostra l'elenco dei medici che lo seguono -->
-         				  <c:if test="${not empty paziente}">
+         				  <c:if test="${isPaziente}">
          				   <h2 class="h4 mb-4 text-gray-500">Seguito da:
          				     <c:forEach items="${dottori}" var="item" varStatus="loop">
          				     		<c:if test="${loop.index eq 0}">

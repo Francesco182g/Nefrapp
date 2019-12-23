@@ -97,7 +97,7 @@ public class GestioneAccesso extends HttpServlet {
 			amministratore = AmministratoreModel.getAmministratoreByCFPassword(codiceFiscale, password);
 			if (amministratore != null) {
 				session.removeAttribute("notifica");
-				session.setAttribute("isamministratore", true);
+				session.setAttribute("isAmministratore", true);
 				session.setAttribute("utente", amministratore);
 				session.setAttribute("accessDone", true);
 				response.sendRedirect("dashboard.jsp");
@@ -125,11 +125,11 @@ public class GestioneAccesso extends HttpServlet {
 			{
 				utente = PazienteModel.getPazienteByCFPassword(codiceFiscale, password);
 				if (utente!=null) {
-					session.setAttribute("ispaziente", true);
+					session.setAttribute("isPaziente", true);
 				}
 			}
 			else {
-				session.setAttribute("ismedico", true);
+				session.setAttribute("isMedico", true);
 			}
 
 			if (utente != null) {

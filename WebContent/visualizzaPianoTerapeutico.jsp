@@ -33,11 +33,8 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-					<c:set var="utente" value='${sessionScope["utente"]}'/>
-					<c:set var="ismedico" value='${sessionScope["ismedico"]}'/>
-					<c:set var="ispaziente" value='${sessionScope["ispaziente"]}'/>
 					
-					<c:if test='${ispaziente == true}'>
+					<c:if test='${isPaziente == true}'>
 	                	<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Paziente</h6>
@@ -48,7 +45,7 @@
               			</div>
               		</c:if>
               		
-              		<c:if test='${ismedico == true}'>
+              		<c:if test='${isMedico == true}'>
 <!--               			inserire logica di visualizzazione da parte del medico -->
 <!--               			 <div class="card shadow mb-4"> -->
 <!--                 			<div class="card-header py-3"> -->

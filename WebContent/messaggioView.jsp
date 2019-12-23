@@ -53,8 +53,6 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<c:set var="paziente" value='${sessionScope["paziente"]}' />
-					<c:set var="medico" value='${sessionScope["medico"]}' />
 					<c:set var="messaggio" value='${requestScope["messaggio"]}' />
 					<h1 class="h3 mb-2 text-gray-800">Messaggio ricevuto:</h1>
 
@@ -112,7 +110,7 @@
 										<tr>
 											<td>
 											<c:if test="${messaggio.allegato!=null}">
-												<img src="data:image/jpeg;base64, ${messaggio.allegato}">
+												<img class="img-fluid" src="data:image/jpeg;base64, ${messaggio.allegato}">
 											</c:if>
 											<c:if test="${messaggio.allegato==null}">
 												Nessun allegato

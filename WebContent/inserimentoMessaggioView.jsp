@@ -45,7 +45,7 @@
 										<div class="dropdown">
 											<!-- Se utente==paziente, il pulsante mostra l'elenco dei medico, viceversa altrimenti -->
 											<c:choose>
-												<c:when test='${ispaziente==true}'>
+												<c:when test='${isPaziente==true}'>
 													<select 
 														name="selectMedico" id="selectMedico"
 														title="Scegli destinatari:" multiple
@@ -59,7 +59,7 @@
 														</c:forEach>
 													</select>
 												</c:when>
-												<c:when test='${ismedico==true}'>
+												<c:when test='${isMedico==true}'>
 													<select name="selectPaziente" id="selectPaziente" multiple>
 														<option value="" disabled>Scegli destinatari:</option>
 														<c:set var="pazienti"

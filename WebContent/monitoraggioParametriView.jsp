@@ -29,10 +29,6 @@
   		</head>
 	
 	<body id="page-top">
-<%-- 	<jsp:include page="/parametri">
-   <jsp:param name="codiceFiscale" value="NTNNTN80A01B963Y"/>
-   <jsp:param name="flag" value="1"/>
-  </jsp:include> --%>
 	
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
@@ -50,9 +46,6 @@
         	<div class="container-fluid">
 
           <!-- Page Heading -->
-          <c:set var="utente" value='${sessionScope["utente"]}'/>
-          <c:set var="ispaziente" value='${sessionScope["ispaziente"]}'/>
-          <c:set var="ismedico" value='${sessionScope["ismedico"]}'/>
           <c:set var="scheda" value='${requestScope["schedaParametri"]}'/>
           
           <h1 class="h3 mb-2 text-gray-800">Scheda parametri</h1>

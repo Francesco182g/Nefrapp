@@ -24,7 +24,7 @@
    	 	<script src="./js/ParameterControl.js"></script>	
    	 	<script src="./js/dataPicker.js"></script>
    	 	
-   	 	<c:if test='${empty sessionScope.amministratore}'>
+   	 	<c:if test='${isAmministratore==false || isAmministratore==null}'>
 			<c:redirect url = "/loginAmministratore.jsp"/>
 		</c:if>
 		

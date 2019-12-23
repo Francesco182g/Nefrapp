@@ -46,12 +46,12 @@
 
 		<!-- Nav Item - Dashboard -->
 
-		<c:set var="ispaziente" value='${sessionScope["ispaziente"]}' />
-		<c:set var="ismedico" value='${sessionScope["ismedico"]}' />
-		<c:set var="isamministratore" value='${sessionScope["isamministratore"]}' />
+		<c:set var="isPaziente" value='${sessionScope["isPaziente"]}' />
+		<c:set var="isMedico" value='${sessionScope["isMedico"]}' />
+		<c:set var="isAmministratore" value='${sessionScope["isAmministratore"]}' />
 		<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
 		<c:choose>
-			<c:when test='${ispaziente==true && accessDone==true}'>
+			<c:when test='${isPaziente==true && accessDone==true}'>
 
 				<li class="nav-item"><a class="nav-link" href="./profilo.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
@@ -83,7 +83,7 @@
 							Messaggi</span></a></li>
 			</c:when>
 
-			<c:when test='${ismedico==true && accessDone==true}'>
+			<c:when test='${isMedico==true && accessDone==true}'>
 
 				<li class="nav-item"><a class="nav-link" href="#"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
@@ -115,7 +115,7 @@
 							Annuncio</span></a></li>
 
 			</c:when>
-			<c:when test='${isamministratore==true && accessDone==true}'>
+			<c:when test='${isAmministratore==true && accessDone==true}'>
 				<li class="nav-item"><a class="nav-link"
 					href="./registraMedico.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Registra
