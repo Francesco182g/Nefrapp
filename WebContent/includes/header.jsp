@@ -23,9 +23,12 @@
 			<c:set var="nome" value="${sessionScope['utente'].nome}"></c:set>
 			<c:set var="cognome" value="${sessionScope['utente'].cognome}"></c:set>
 		</c:when>
-
 	</c:choose>
-
+	
+	<c:set var="isPaziente" value='${sessionScope["isPaziente"]}' />
+	<c:set var="isMedico" value='${sessionScope["isMedico"]}' />
+	<c:set var="isAmministratore" value='${sessionScope["isAmministratore"]}' />
+	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
 
 	<!-- Topbar -->
 	<nav

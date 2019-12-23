@@ -46,10 +46,7 @@
 
 		<!-- Nav Item - Dashboard -->
 
-		<c:set var="isPaziente" value='${sessionScope["isPaziente"]}' />
-		<c:set var="isMedico" value='${sessionScope["isMedico"]}' />
-		<c:set var="isAmministratore" value='${sessionScope["isAmministratore"]}' />
-		<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
+		
 		<c:choose>
 			<c:when test='${isPaziente==true && accessDone==true}'>
 
