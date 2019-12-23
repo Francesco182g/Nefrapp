@@ -76,7 +76,8 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>Dott. ${param['cognome']}</td>
+											<c:if test="${isPaziente}"><td>Dott. ${param['cognome']}</td></c:if>
+											<c:if test="${isMedico}"><td>${param['cognome']}</td></c:if>
 											<td>${messaggio.oggetto}</td>
 											<td>${messaggio.dataFormattata}</td>
 											<td>${messaggio.oraFormattata}</td>

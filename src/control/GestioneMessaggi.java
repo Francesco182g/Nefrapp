@@ -186,16 +186,16 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				if (!cache.contains(m.getCodiceFiscaleMittente())) {
 					cache.add(m.getCodiceFiscaleMittente());
 					utenteSelezionato = UtenteModel.getUtenteByCF(m.getCodiceFiscaleMittente());
-					utentiCache.add(utenteSelezionato);
-					System.out.println(m.getCodiceFiscaleMittente());
-					request.setAttribute(m.getCodiceFiscaleMittente(),
-							utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
+					if (utenteSelezionato != null) {
+						utentiCache.add(utenteSelezionato);
+						request.setAttribute(m.getCodiceFiscaleMittente(),
+								utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
+					}
 				}
 				else if (cache.contains(m.getCodiceFiscaleMittente())) {
 					for (Utente ut : utentiCache) {
 						if (ut.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
 							utenteSelezionato = ut;
-							System.out.println(m.getCodiceFiscaleMittente());
 							request.setAttribute(m.getCodiceFiscaleMittente(),
 									utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 						}
