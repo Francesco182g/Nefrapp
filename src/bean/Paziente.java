@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class Paziente extends Utente{
 	private String sesso;
-	private String email;
 	private String residenza;
 	private String luogoDiNascita;
 	private LocalDate dataDiNascita;
@@ -21,9 +20,8 @@ public class Paziente extends Utente{
 	public Paziente() {}
 
 	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza, String luogoDiNascita, LocalDate dataDiNascita, Boolean attivo, ArrayList<String> medici) {
-		super(codiceFiscale, nome, cognome);
+		super(codiceFiscale, nome, cognome,email);
 		this.sesso = sesso;
-		this.email = email;
 		this.residenza = residenza;
 		this.luogoDiNascita=luogoDiNascita;
 		this.dataDiNascita = dataDiNascita;
@@ -37,14 +35,6 @@ public class Paziente extends Utente{
 
 	public void setSesso(String sesso) {
 		this.sesso = sesso;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getResidenza() {
@@ -98,7 +88,7 @@ public class Paziente extends Utente{
 
 	@Override
 	public String toString() {
-		return "Paziente [sesso=" + sesso + ", email=" + email + ", residenza=" + residenza + ", luogoDiNascita="
+		return "Paziente [sesso=" + sesso + ", email=" + getEmail() + ", residenza=" + residenza + ", luogoDiNascita="
 				+ luogoDiNascita + ", dataDiNascita=" + dataDiNascita + ", attivo=" + attivo + ", medici=" + medici
 				+ ", codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome() + ", cognome="
 				+ getCognome() + "]";

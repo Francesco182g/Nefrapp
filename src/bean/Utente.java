@@ -4,13 +4,17 @@ public class Utente {
 	private String codiceFiscale;
 	private String nome;
 	private String cognome;
+	private String email;
+	
 	
 	public Utente() {}
 	
-	public Utente(String codiceFiscale, String nome, String cognome) {
+	public Utente(String codiceFiscale, String nome, String cognome,String email) {
 		this.codiceFiscale = codiceFiscale;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.email = email;
+		
 	}
 
 	public String getCodiceFiscale() {
@@ -36,11 +40,24 @@ public class Utente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	@Override
 	public String toString() {
-		return "Utente [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + "]";
+		return getClass().getName()+" [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email
+				+ "]";
 	}
+
+	
 
 }
 

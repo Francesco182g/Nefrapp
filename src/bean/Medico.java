@@ -11,7 +11,6 @@ public class Medico extends Utente{
 	private String sesso; 
 	private String residenza;
 	private LocalDate dataDiNascita;
-	private String email;
 	private String luogoDiNascita;
 	
 	public Medico() {
@@ -19,11 +18,10 @@ public class Medico extends Utente{
 	}
 
 	public Medico(String sesso, String residenza, LocalDate dataDiNascita, String codiceFiscale, String nome, String cognome,String email,String luogoDiNascita) {
-		super(codiceFiscale, nome, cognome);
+		super(codiceFiscale, nome, cognome,email);
 		this.sesso = sesso;
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
-		this.email = email;
 		this.luogoDiNascita=luogoDiNascita;
 	}
 
@@ -59,16 +57,8 @@ public class Medico extends Utente{
 	@Override
 	public String toString() {
 		return "Medico [sesso=" + sesso + ", residenza=" + residenza + ", dataDiNascita=" + dataDiNascita + ", email="
-				+ email + ", luogoDiNascita=" + luogoDiNascita + ", codiceFiscale=" + getCodiceFiscale()
+				+ getEmail() + ", luogoDiNascita=" + luogoDiNascita + ", codiceFiscale=" + getCodiceFiscale()
 				+ ", nome=" + getNome() + ", cognome=" + getCognome() + "]";
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	
 	public String getLuogoDiNascita() {

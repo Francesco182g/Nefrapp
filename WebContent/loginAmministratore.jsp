@@ -22,6 +22,9 @@
 		
 		<!-- Script per la registrazione -->
    	 	<script src="./js/ParameterControl.js"></script>
+   	 	<c:if test="${isAmministratore == true} ">
+   	 		 <c:redirect url ="dashboard.jsp"></c:redirect>	
+   	 	</c:if>
 		
 	</head>
 	
