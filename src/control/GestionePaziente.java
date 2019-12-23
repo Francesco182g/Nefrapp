@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
+import model.PazienteModel;
 
 /**
  * Servlet implementation class GestionePaziente
@@ -53,6 +54,13 @@ public class GestionePaziente extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 			
+			else if(operazione.equals("disattivaAccount"))
+			{
+				disattivaAccount(request, response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./login.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			
 			} catch (Exception e) {
 				System.out.println("Errore durante il caricamento della pagina:");
 				e.printStackTrace();
@@ -80,6 +88,16 @@ public class GestionePaziente extends HttpServlet {
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
 	private void disattivaAccount(HttpServletRequest request, HttpServletResponse response) {
+		Paziente paziente = null;
+		HttpSession session = request.getSession();
+		paziente = (Paziente) session.getAttribute("utente");
+		
+		if(paziente!=null){
+			paziente.setAttivo(false);
+			PazienteModel.updatePaziente(paziente);
+			}
+		
+		session.removeAttribute("utente");
 		
 	}
 	
@@ -95,11 +113,10 @@ public class GestionePaziente extends HttpServlet {
 	 * Metodo che carica i medici che seguono il paziente in sessione
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */	
-	private void caricaMedici(HttpServletRequest request, HttpServletResponse response)
-	{
+	private void caricaMedici(HttpServletRequest request, HttpServletResponse response){
 		Paziente paziente = null;
 		HttpSession session = request.getSession();
-		paziente = (Paziente) session.getAttribute("paziente");
+		paziente = (Paziente) session.getAttribute("utente");
 		
 		if(paziente!=null){
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();

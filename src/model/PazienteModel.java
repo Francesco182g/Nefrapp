@@ -175,6 +175,7 @@ public class PazienteModel {
 		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
 		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
 		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
+		nuovoPaziente.append("$set", new Document().append("Attivo", daAggiornare.getAttivo()));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
 		pazienti.updateOne(searchQuery, nuovoPaziente);
 	}

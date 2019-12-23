@@ -65,11 +65,10 @@
 								                  Password dimenticata?
 								                  </a>
 								            </div>
-								            <div class="mt-6 p-6">
-								                  <button class="btn btn-primary btn-user" type="submit" id="loginUtente" style="float:right">
-								                  Accedi
-								                  </button>
-							                </div>
+								         <button  class="btn btn-primary btn-user btn-block mt-3" id="accediAdminButton">
+							                  Accedi
+							                </button>
+							                
 							              </form>
 							              
 							            </div>

@@ -10,7 +10,7 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     	<meta name="description" content="">
     	<meta name="author" content="">
-		<title>Scheda Parametri - Nefrapp</title>
+		<title>Profilo - Nefrapp</title>
     	
     	<!-- Custom fonts for this template-->
     	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -101,8 +101,12 @@
          				     		<c:if test="${loop.index eq 0}">
 												<span class="h3 mb-4 text-gray-800">${item.nome} ${item.cognome} </span>
 									</c:if>
-									<c:if test="${loop.index gt 0 }">		
+									<c:if test="${loop.index gt 0 and loop.index lt dottore.size()-1}">		
 												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 127px; line-height: 1px;">${item.nome} ${item.cognome} </h3>
+									</c:if>		
+									<c:if test="${loop.index eq dottori.size()-1 }">		
+												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 127px; line-height: 1px;">${item.nome} ${item.cognome} <span>
+												<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disattivaModal" style="float:right;">Disattiva account</button></span> </h3>
 									</c:if>			
 							</c:forEach>
 							</h2>	
@@ -121,3 +125,31 @@
 	
 	    </div>
 	    <!-- End of Page Wrapper -->
+	    </div>
+	    <!-- disattiva Modal-->
+	<div class="modal fade" id="disattivaModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Sei sicuro?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Seleziona "Disattiva" qui sotto se sei
+					sicuro di voler disattivare il tuo account.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Annulla</button>
+					<form action="./GestionePaziente" method="get">
+						<input type="hidden" name="operazione" value="disattivaAccount">
+						<button class="btn btn-warning">Disattiva</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	    </body>
+	    </html>

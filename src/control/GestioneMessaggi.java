@@ -1,4 +1,4 @@
-	package control;
+package control;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +32,7 @@ import model.MessaggioModel;
 import model.PazienteModel;
 import model.UtenteModel;
 import utility.AlgoritmoCriptazioneUtility;
+
 /**
  * @author Sara, Nico
  */
@@ -63,13 +64,13 @@ public class GestioneMessaggi extends GestioneComunicazione {
 
 			String operazione = request.getParameter("operazione");
 			if (operazione.equals("caricaDestinatariMessaggio")) {
-				caricaDestinatari(request,response);
+				caricaDestinatari(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
 				requestDispatcher.forward(request, response);
 			}
 			if (operazione.equals("inviaMessaggio")) {
-				inviaMessaggio(request,response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
+				inviaMessaggio(request, response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
 				requestDispatcher.forward(request, response);
 				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
 			}
@@ -78,9 +79,9 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
 				requestDispatcher.forward(request, response);
 			}
-			if(operazione.equals("visualizzaMessaggio")) {
+			if (operazione.equals("visualizzaMessaggio")) {
 				visualizzaMessaggio(request);
-				RequestDispatcher requestDispatcher =request.getRequestDispatcher("./messaggioView.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./messaggioView.jsp");
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
@@ -115,10 +116,12 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		HttpSession session = request.getSession();
 		Messaggio messaggio = null;
 		utente = (Utente) session.getAttribute("utente");
-
+		ArrayList<String> destinatari =null;
 		if ((boolean) session.getAttribute("accessDone") == true) {
-			ArrayList<String> destinatari = new ArrayList<String>(
-					Arrays.asList(request.getParameterValues("selectMedico")));
+			if (session.getAttribute("isPaziente")!=null && (boolean)session.getAttribute("isPaziente")==true) {
+			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));}
+			else if (session.getAttribute("isMedico")!=null && (boolean)session.getAttribute("isMedico")==true) {
+			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));}
 			String CFMittente = utente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
@@ -143,6 +146,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato,
 					ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			MessaggioModel.addMessaggio(messaggio);
+			
 			// qua verrebbe un notify() ai medici se avessimo un observer
 
 		} else {
@@ -151,7 +155,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	}
 
 	/**
-	 * Metodo che prende la lista dei messaggi ricevuti dall'utente e lo salva nella richiesta
+	 * Metodo che prende la lista dei messaggi ricevuti dall'utente e lo salva nella
+	 * richiesta
 	 * 
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
@@ -193,8 +198,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				}
 
 				if (utenteSelezionato != null) {
-					request.setAttribute(m.getCodiceFiscaleMittente(), utenteSelezionato.getNome() 
-							+ " " + utenteSelezionato.getCognome());
+					request.setAttribute(m.getCodiceFiscaleMittente(),
+							utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 				}
 			}
 		} else {
@@ -202,13 +207,12 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		}
 
 	}
-	
+
 	private void visualizzaMessaggio(HttpServletRequest request) {
-		String idMessaggio=request.getParameter("idMessaggio");
-		Messaggio messaggio=MessaggioModel.getMessaggioById(idMessaggio);
+		String idMessaggio = request.getParameter("idMessaggio");
+		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
 		MessaggioModel.updateMessaggio(idMessaggio, true);
 		request.setAttribute("messaggio", messaggio);
 	}
-	
 
 }
