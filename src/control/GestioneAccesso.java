@@ -124,17 +124,25 @@ public class GestioneAccesso extends HttpServlet {
 			if (utente == null)
 			{
 				utente = PazienteModel.getPazienteByCFPassword(codiceFiscale, password);
-				if (utente!=null) {
+				Paziente paziente = (Paziente) utente;
+				if (utente!=null && paziente.getAttivo()==true) {
 					session.setAttribute("isPaziente", true);
+					session.setAttribute("accessDone", true);
+				}
+				
+				else {
+					session.setAttribute("accessDone", false);
+					response.sendRedirect("login.jsp");
+					return;
 				}
 			}
 			else {
 				session.setAttribute("isMedico", true);
+				session.setAttribute("accessDone", true);
 			}
 
 			if (utente != null) {
 				session.setAttribute("utente", utente);
-				session.setAttribute("accessDone", true);
 
 				if (ricordaUtente != null) {
 					Cookie[] cookies = request.getCookies();
@@ -160,6 +168,10 @@ public class GestioneAccesso extends HttpServlet {
 			else {
 				response.sendRedirect("login.jsp");
 			}
+		}
+		
+		else {
+			response.sendRedirect("login.jsp");
 		}
 	}
 
