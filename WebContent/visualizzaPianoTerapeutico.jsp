@@ -60,15 +60,23 @@
 	                	<c:set var="pianoTerapeutico" value='${requestScope["pianoTerapeutico"]}'/>
 	                	
 	                	<c:if test='${pianoTerapeutico != null}'>
-	                	<form action="/GestionePianoTerapeutico" method="post" id="modificaPiano">
-	                	<input id="CFPaziente" type="hidden" value="${pianoTerapeutico.codiceFiscalePaziente}">
-	                	<input id="operazione" type="hidden" value="modifica">
+	                	<form action="./GestionePianoTerapeutico" method="post" id="modificaPiano">
+	                	<input name="CFPaziente" type="hidden" value="${pianoTerapeutico.codiceFiscalePaziente}">
+	                	<input name="operazione" type="hidden" value="modifica">
 	                	<div class="card shadow mb-4">
                 			<div class="card-header py-3">
                   				<h6 class="m-0 font-weight-bold text-primary">Diagnosi</h6>
                 			</div>
 							<div class="card-body">
+								<c:if test="${isMedico}">
+								<div class="form-group row col-lg-12">
+							    	<input type="text" class="form-control form-control-user" 
+							    	id="diagnosi" name="diagnosi" value="${pianoTerapeutico.diagnosi}" required="required" disabled >
+							    </div>
+							    </c:if>
+							    <c:if test="${isPaziente}">
                					<p class="mb-0">${pianoTerapeutico.diagnosi}</p>
+               					</c:if>
                				</div>
               			</div>
               			
@@ -77,7 +85,14 @@
                   				<h6 class="m-0 font-weight-bold text-primary">Farmaci prescritti</h6>
                 			</div>
 							<div class="card-body">
+								<c:if test="${isMedico}">
+								<div class="form-group row col-lg-12">
+							    	<input type="text" class="form-control form-control-user" id="farmaci" name="farmaci" value="${pianoTerapeutico.farmaco}" required="required" disabled >
+							    </div>
+								</c:if>
+								<c:if test="${isPaziente}">
                					<p class="mb-0">${pianoTerapeutico.farmaco}</p>
+               					</c:if>
                				</div>
               			</div>
               			
@@ -86,11 +101,18 @@
                   				<h6 class="m-0 font-weight-bold text-primary">Data fine terapia</h6>
                 			</div>
 							<div class="card-body">
+								<c:if test="${isMedico}">
+								<div class="form-group row col-lg-12">
+							    	<input type="text" class="form-control form-control-user" id="data" name="data" value="${pianoTerapeutico.dataFormattata}" required="required" disabled >
+							    </div>
+								</c:if>
+								<c:if test="${isPaziente}">
                					<p class="mb-0">${pianoTerapeutico.dataFormattata}</p>
+               					</c:if>
                				</div>
               			</div>
               			</form>
-              			<c:if test='${medico != null}'>
+              			<c:if test='${isMedico}'>
               			<div class="my-2"></div>
   						<button type="submit" class="btn btn-info btn-icon-split" id="bottoneModifica">Modifica</button>
               			<div class="my-2"></div>

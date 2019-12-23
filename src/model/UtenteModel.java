@@ -16,12 +16,15 @@ public class UtenteModel {
 		Utente utente = null;
 		Document datiUtente = utenti.find(eq("CodiceFiscale", codiceFiscale)).first();
 		
-		if(datiUtente != null) {
+		if(datiUtente != null && !datiUtente.isEmpty()) {
 			utente = CreaBeanUtility.daDocumentAMedico(datiUtente);
-		} else {
+			return utente; 
+		} else if (datiUtente == null || datiUtente.isEmpty()){
 			utenti = DriverConnection.getConnection().getCollection("Paziente");
 			datiUtente = utenti.find(eq("CodiceFiscale", codiceFiscale)).first();
-			utente = CreaBeanUtility.daDocumentAPaziente(datiUtente);
+			if (datiUtente!=null && !datiUtente.isEmpty()) {
+				utente = CreaBeanUtility.daDocumentAPaziente(datiUtente);
+			}
 		}
 		
 		return utente;

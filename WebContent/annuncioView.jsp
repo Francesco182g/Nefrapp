@@ -10,7 +10,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Messaggi - Nefrapp</title>
+<title>Annuncio - Nefrapp</title>
 
 <!-- Custom fonts for this template-->
 <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -53,8 +53,8 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<c:set var="messaggio" value='${requestScope["messaggio"]}' />
-					<h1 class="h3 mb-2 text-gray-800">Messaggio ricevuto:</h1>
+					<c:set var="messaggio" value='${requestScope["annuncio"]}' />
+					<h1 class="h3 mb-2 text-gray-800">Annuncio ricevuto:</h1>
 
 
 					<!-- DataTales Example -->
@@ -66,21 +66,20 @@
 									cellspacing="0">
 									<thead>
 										<tr>
-											<th>Mittente</th>
-											<th>Oggetto</th>
+											<th>Medico</th>
+											<th>Titolo</th>
 											<th>Data</th>
-											<th>Ora</th>
+											
 
 											<!-- Possibile aggiunta di atri campi -->
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<c:if test="${isPaziente}"><td>Dott. ${param['cognome']}</td></c:if>
-											<c:if test="${isMedico}"><td>${param['cognome']}</td></c:if>
-											<td>${messaggio.oggetto}</td>
-											<td>${messaggio.dataFormattata}</td>
-											<td>${messaggio.oraFormattata}</td>
+											<td>Dott. ${param['cognome']}</td>
+											<td>${annuncio.titolo}</td>
+											<td>${annuncio.dataFormattata}</td>
+											
 										</tr>
 									</tbody>
 								</table>
@@ -95,7 +94,7 @@
 
 									<tbody>
 										<tr>
-											<td>${messaggio.testo}</td>
+											<td>${annuncio.testo}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -110,10 +109,10 @@
 									<tbody>
 										<tr>
 											<td>
-											<c:if test="${messaggio.allegato!=null}">
-												<img class="img-fluid" src="data:image/jpeg;base64, ${messaggio.allegato}">
+											<c:if test="${annuncio.allegato!=null}">
+												<img class="img-fluid" src="data:image/jpeg;base64, ${annuncio.allegato}">
 											</c:if>
-											<c:if test="${messaggio.allegato==null}">
+											<c:if test="${annuncio.allegato==null}">
 												Nessun allegato
 											</c:if>
 											</td>
@@ -121,9 +120,7 @@
 									</tbody>
 								</table>
 							</div>
-							<a class="btn btn-primary float-right" 
-							href="./comunicazione?operazione=caricaDestinatariMessaggio&destinatario=${messaggio.codiceFiscaleMittente}" 
-							role="button">Rispondi</a>
+							
 						</div>
 					</div>
 

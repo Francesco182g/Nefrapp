@@ -3,6 +3,7 @@ package model;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -102,6 +103,22 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		messaggi.updateOne( new BasicDBObject("_id", new ObjectId(idMessaggio)),
 			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+	}
+	
+	public static int countMessaggiNonLetti(String CFDestinatario) {
+		
+		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
+		//query nuova, da testare
+		BasicDBObject andQuery = new BasicDBObject();
+		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+		obj.add(new BasicDBObject("PazienteCodiceFiscale", CFDestinatario));
+		obj.add(new BasicDBObject("Visualizzato", true));
+		andQuery.put("$and", obj);
+		int n= (int) messaggioDB.count(andQuery);
+		//query vecchia, ma non mi fido
+		//Document query= messaggioDB.find(eq("_id", new ObjectId(CFDestinatario))).first().append("Visualizzato", true);
+		//int n = (int) messaggioDB.count(query);
+		return n;
 	}
 
 }

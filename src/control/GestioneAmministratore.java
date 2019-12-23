@@ -108,7 +108,7 @@ public class GestioneAmministratore extends HttpServlet {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 				
 		if(request.getParameter("tipoUtente").equals("amministratore")) {
-			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("amministratore");
+			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("utente");
 			if(amministratoreLoggato!=null) {
 				String vecchiaPassword=request.getParameter("vecchiaPassword");
 				String nuovaPassword=request.getParameter("nuovaPassword");

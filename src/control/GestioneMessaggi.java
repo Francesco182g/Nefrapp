@@ -133,16 +133,21 @@ public class GestioneMessaggi extends GestioneComunicazione {
 
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
-			if (controllaParametri(CFMittente,oggetto,testo,filePart.getSubmittedFileName(),filePart.getSize())) {
+			if (controllaParametri(CFMittente,oggetto,testo,filePart.getSubmittedFileName(),filePart.getSize())) 
+			{
 				InputStream fileContent = filePart.getInputStream();
-				if (isMultipart) {
-					try {
+				if (isMultipart) 
+				{
+					try 
+					{
 						allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
-					} finally {
+					} finally 
+					{
 						if (fileContent != null) {
 							fileContent.close();
 						}
-					}
+						
+			}
 				}
 			}
 			else {
@@ -178,7 +183,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		if ((boolean) session.getAttribute("accessDone") == true) {
 			ArrayList<String> cache = new ArrayList<>();
 			ArrayList<Utente> utentiCache = new ArrayList<>();
-			Utente utenteSelezionato = null;
+			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
 			messaggi = MessaggioModel.getMessaggioByCFDestinatario(utente.getCodiceFiscale());
 			request.setAttribute("messaggio", messaggi);
@@ -194,20 +199,21 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				if (!cache.contains(m.getCodiceFiscaleMittente())) {
 					cache.add(m.getCodiceFiscaleMittente());
 					utenteSelezionato = UtenteModel.getUtenteByCF(m.getCodiceFiscaleMittente());
-					utentiCache.add(utenteSelezionato);
+					if (utenteSelezionato != null) {
+						utentiCache.add(utenteSelezionato);
+						request.setAttribute(m.getCodiceFiscaleMittente(),
+								utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
+					}
 				}
-				if (cache.contains(m.getCodiceFiscaleMittente())) {
+				else if (cache.contains(m.getCodiceFiscaleMittente())) {
 					for (Utente ut : utentiCache) {
 						if (ut.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
 							utenteSelezionato = ut;
-							break;
+							request.setAttribute(m.getCodiceFiscaleMittente(),
+									utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 						}
 					}
-				}
 
-				if (utenteSelezionato != null) {
-					request.setAttribute(m.getCodiceFiscaleMittente(),
-							utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 				}
 			}
 		} else {

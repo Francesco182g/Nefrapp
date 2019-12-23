@@ -53,12 +53,12 @@ public class GestioneRegistrazione extends HttpServlet {
 			String operazione = request.getParameter("operazione");
 			System.out.println(operazione);
 			if(operazione.equals("registraMedico")) {
-				Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
+				Amministratore amministratore = (Amministratore) session.getAttribute("utente");
 				if(amministratore != null) {
 					registraMedico(request,response);
 				}
 			}else if(operazione.equals("registraPazienteMedico")) { //registrazione paziente per il medico
-					Medico medicoLoggato = (Medico) session.getAttribute("medico");
+					Medico medicoLoggato = (Medico) session.getAttribute("utente");
 					if(medicoLoggato != null) {
 						String registrato = request.getParameter("registrato");
 							if(registrato.equals("No")) { //paziente non registrato
