@@ -37,19 +37,11 @@ public class AlgoritmoCriptazioneUtility {
 		        return null;
 		   }
 	
-	public static String codificaInBase64(InputStream file){
+	public static String codificaInBase64(InputStream file) throws IOException{
         String encodedfile = null;
-        try {
-        	byte[] targetArray = new byte[file.available()];
-            file.read(targetArray);
-            encodedfile = new String(Base64.encodeBase64(targetArray), "UTF-8");
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        byte[] targetArray = new byte[file.available()];
+        file.read(targetArray);
+        encodedfile = new String(Base64.encodeBase64(targetArray), "UTF-8");
 
         return encodedfile;
     }

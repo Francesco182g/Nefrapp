@@ -74,13 +74,18 @@
                   	
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet) -->
+
              		<c:forEach items="${messaggio}" var="item">
-             		
-             		<c:set var="cognome" value="${item.codiceFiscaleMittente}" />
-                    <c:if test="${not item.visualizzato}"><tr class = "clickable-row riga-messaggio" style="font-weight: bolder" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'></c:if>
-                    <c:if test="${item.visualizzato}"><tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'></c:if>
-                      
-                      <td width = "300px">Dott. ${requestScope[cognome]}</a></td>
+             		<tr>
+             		<c:set var="cognome" value="${requestScope[item.codiceFiscaleMittente]}" />
+                    <c:if test="${not item.visualizzato}"><tr class = "clickable-row riga-messaggio" style="font-weight: bolder" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${cognome}&idMessaggio=${item.idMessaggio}'></c:if>
+                    <c:if test="${item.visualizzato}"><tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${cognome}&idMessaggio=${item.idMessaggio}'></c:if>
+                      <c:if test="${isPaziente}">
+                      	<td width = "300px">Dott. ${cognome}</td>
+                      </c:if>
+						<c:if test="${isMedico}">
+                      	<td width = "300px">${cognome}</td>
+                      </c:if>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
                       <td>${item.oraFormattata}</td>

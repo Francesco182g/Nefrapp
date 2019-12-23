@@ -122,23 +122,23 @@ public class GestioneAnnunci extends HttpServlet {
 		Annuncio annuncio = new Annuncio();
 		
 		if(medico != null) {
-			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-			
 			ArrayList<String> CFDestinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
 			ArrayList<Paziente> pazienti = new ArrayList<Paziente>();
-			
 			for(String d: CFDestinatari) {
 				pazienti.add(PazienteModel.getPazienteByCF(d));
 			}
-			
 			String titolo = request.getParameter("titolo");
 			String testo = request.getParameter("testo");
 			String allegato = new String();
+			
+			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
 			InputStream fileContent = filePart.getInputStream();
 			if (isMultipart) {
 				try {
 					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
+				} catch (IOException e) {
+					System.out.println("InvioMessaggio: errore nella codifica dell'allegato");
 				} finally {
 					if (fileContent != null) {
 						fileContent.close();

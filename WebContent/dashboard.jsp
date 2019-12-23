@@ -74,6 +74,7 @@
 							    </div>
 						
 						  </div>
+						  
 	
 	                </div>
 	                <!-- /.container-fluid -->
@@ -83,7 +84,7 @@
 				<%@include file="../includes/footer.jsp" %>	
 	        </div>
 	        <!-- End of Content Wrapper -->
-	
+			<div id="eliminazione"></div>
 	    </div>
 	    <!-- End of Page Wrapper -->
 	
