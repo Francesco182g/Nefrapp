@@ -1,11 +1,16 @@
 package model;
 import static com.mongodb.client.model.Filters.eq;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
@@ -50,5 +55,19 @@ public class PianoTerapeuticoModel {
 		nuovoPianoTerapeutico.append("$set", new Document().append("FineTerapia", daAggiornare.getDataFineTerapia()));
 		BasicDBObject searchQuery = new BasicDBObject().append("PazienteCodiceFiscale", daAggiornare.getCodiceFiscalePaziente());
 		pianoTerapeuticoDB.updateOne(searchQuery, nuovoPianoTerapeutico);
+	}
+	
+	public static boolean isPianoTerapeuticoVisualizzato(String codiceFiscalePaziente) {
+		MongoCollection<Document> annunciDB = DriverConnection.getConnection().getCollection("Annuncio");
+		BasicDBObject andQuery = new BasicDBObject();
+		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
+		obj.add(new BasicDBObject("Visualizzato", true));
+		andQuery.put("$and", obj);
+		MongoCursor<Document> documenti=annunciDB.find(andQuery).iterator();
+		if(documenti!=null) {
+			return true;
+		}
+		return false;
 	}
 }
