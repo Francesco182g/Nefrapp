@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
 import model.MedicoModel;
 import utility.InvioEmailUtility;
 
@@ -36,12 +37,9 @@ public class GestioneResetPasswordMedico extends HttpServlet {
 			}
 			
 			HttpSession session = request.getSession();
-			Medico medico = (Medico) session.getAttribute("medico");
-			Paziente paziente = (Paziente) session.getAttribute("paziente");
-			Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
-			
+			Utente utente = (Utente) session.getAttribute("utente");
 			//Controllo per verifica se c'� un utente in sessione, se � presente allora si reindirizza alla home
-			if(medico != null || paziente != null || amministratore != null) {
+			if(utente != null) {
 				request.setAttribute("notifica", "Non � possibile effettuare questa operazione se si � loggati");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);

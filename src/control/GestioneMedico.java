@@ -42,21 +42,21 @@ public class GestioneMedico extends HttpServlet {
 			if (operazione.equals("modifica")) {
 				request.setAttribute("notifica", "Modifica effettuata con successo"); // Se ci� non avviene la stringa
 																						// viene cambiata dal metodo
-				modifica(request, response);
+				modificaAccount(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); // TODO reindirizzamento pagina
 																						// di modifica
 				requestDispatcher.forward(request, response);
 				return;
 
 			} else if (operazione.equals("VisualizzaPazientiSeguiti")) {
-				Medico medico = (Medico) request.getSession().getAttribute("medico");
+				Medico medico = (Medico) request.getSession().getAttribute("utente");
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 				request.setAttribute("pazientiSeguiti", pazientiSeguiti);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
 				dispatcher.forward(request, response);
 
 			} else if (operazione.equals("elimina")) {
-				Medico medico = (Medico) request.getSession().getAttribute("medico");
+				Medico medico = (Medico) request.getSession().getAttribute("utente");
 				MedicoModel.removeMedico(medico.getCodiceFiscale());
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
@@ -80,7 +80,7 @@ public class GestioneMedico extends HttpServlet {
 		return;
 	}
 
-	private void modifica(HttpServletRequest request, HttpServletResponse response)
+	private void modificaAccount(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// TODO verificare i nomi dei parametri con la jsp
