@@ -13,7 +13,7 @@ public class UtenteModel {
 	public static Utente getUtenteByCF(String codiceFiscale) {
 		
 		MongoCollection<Document> utenti = DriverConnection.getConnection().getCollection("Medico");
-		Utente utente = null;
+		Utente utente = new Utente();
 		Document datiUtente = utenti.find(eq("CodiceFiscale", codiceFiscale)).first();
 		
 		if(datiUtente != null) {
@@ -21,7 +21,9 @@ public class UtenteModel {
 		} else {
 			utenti = DriverConnection.getConnection().getCollection("Paziente");
 			datiUtente = utenti.find(eq("CodiceFiscale", codiceFiscale)).first();
-			utente = CreaBeanUtility.daDocumentAPaziente(datiUtente);
+			if (datiUtente!=null && !datiUtente.isEmpty()) {
+				utente = CreaBeanUtility.daDocumentAPaziente(datiUtente);
+			}
 		}
 		
 		return utente;

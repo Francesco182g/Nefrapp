@@ -170,7 +170,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		if ((boolean) session.getAttribute("accessDone") == true) {
 			ArrayList<String> cache = new ArrayList<>();
 			ArrayList<Utente> utentiCache = new ArrayList<>();
-			Utente utenteSelezionato = null;
+			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
 			messaggi = MessaggioModel.getMessaggioByCFDestinatario(utente.getCodiceFiscale());
 			request.setAttribute("messaggio", messaggi);
@@ -187,19 +187,20 @@ public class GestioneMessaggi extends GestioneComunicazione {
 					cache.add(m.getCodiceFiscaleMittente());
 					utenteSelezionato = UtenteModel.getUtenteByCF(m.getCodiceFiscaleMittente());
 					utentiCache.add(utenteSelezionato);
+					System.out.println(m.getCodiceFiscaleMittente());
+					request.setAttribute(m.getCodiceFiscaleMittente(),
+							utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 				}
-				if (cache.contains(m.getCodiceFiscaleMittente())) {
+				else if (cache.contains(m.getCodiceFiscaleMittente())) {
 					for (Utente ut : utentiCache) {
 						if (ut.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
 							utenteSelezionato = ut;
-							break;
+							System.out.println(m.getCodiceFiscaleMittente());
+							request.setAttribute(m.getCodiceFiscaleMittente(),
+									utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 						}
 					}
-				}
 
-				if (utenteSelezionato != null) {
-					request.setAttribute(m.getCodiceFiscaleMittente(),
-							utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 				}
 			}
 		} else {
