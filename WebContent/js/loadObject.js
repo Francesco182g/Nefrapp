@@ -8,7 +8,6 @@
 	
 	caricaDati();
 	
-	
   });
   
   /**
@@ -22,19 +21,26 @@
 		  loadTabellaPazienti(data[1])
 		  
 		  $(".eliminaButtonMedico").click(function(){
-			  	
+			  $("#eliminazione").children().remove()
 				var id = $(this).attr("id")
 				var cf = $(this).parents().find(".cfMed")[id].firstChild.data
 				console.log("medico eliminato")
-				//eliminaMedico(cf)
+				addConfermaEliminazione("medico")
+				$("#confermaEliminazione").click(function(){
+					eliminaMedico(cf)
+				})
+				
 			});
 		  $(".eliminaButtonPaziente").click(function(){
-			  	
+			  $("#eliminazione").children().remove()
 				var id = $(this).attr("id")
 				var cf = $(this).parents().find(".cfPaz")[id].firstChild.data
 				console.log("paziente eliminato")
-
-				//eliminaPaziente(cf)
+				addConfermaEliminazione("paziente")
+				$("#confermaEliminazione").click(function(){
+					eliminaPaziente(cf)
+				})
+				
 			});
 		  $(".modificaMedicoButton").click(function(){
 			  	
@@ -93,12 +99,33 @@
 			riga +="<td><p class='cfMed'>"+medici[i].codiceFiscale+"</p></td></tr>"
 			riga +="<tr><td><p>Email: </p></td>"
 			riga +="<td><p>"+medici[i].email+"</p></td></tr>"
-			riga+="</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"+i+"' class='btn btn-primary btn-user mr-sm-5 modificaMedicoButton'>Modifica</button><button type='button' id = '"+i+"' class='btn btn-danger btn-user eliminaButtonMedico'>Elimina</button></div>"
+			riga+="</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"+i+"' class='btn btn-primary btn-user mr-sm-5 modificaMedicoButton'>Modifica</button><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"+i+"' class='btn btn-danger btn-user eliminaButtonMedico'>Elimina</button></div>"
 	  }
 
 	  tabellaMedici.append(riga)
 	  
   }
+
+  
+  /**
+   * funzione che permette di aggiungere una finestra di conferma quando si preme il tasto elimina
+   */
+  function addConfermaEliminazione(utente){
+		  var moduloDiConferma = "<div class='modal fade' id='eliminaModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>" +
+	 			"<div class='modal-dialog' role='document'>" +
+	 				"<div class='modal-content'>" +
+	 					"<div class='modal-header'>" +
+	 						"<h5 class='modal-title' id='exampleModalLabel'>Sicuro di voler eliminare il "+utente+"?</h5>" +
+	 							"<button class='close' type='button' data-dismiss='modal'aria-label='Close'>" +
+	 								"<span aria-hidden='true'>×</span></button>" +
+	 									"</div><div class='modal-body'>Seleziona 'Elimina' qui sotto se sei pronto ad eliminare il "+utente+".</div>" +
+	 									"<div class='modal-footer'><button class='btn btn-secondary' type='button' data-dismiss='modal'>Esci</button>" +
+	 									"<button class='btn btn-primary' data-dismiss='modal' id = 'confermaEliminazione'>Elimina</button></form></div></div></div></div>"
+	 $("#eliminazione").append(moduloDiConferma)
+	
+  }
+  
+ 
   /**
    * funzione che carica i dati del paziente nella tabella
    */
@@ -116,7 +143,7 @@
 			riga +="<td><p class='cfPaz'>"+pazienti[i].codiceFiscale+"</p></td></tr>"
 			riga +="<tr><td><p>Email: </p></td>"
 			riga +="<td><p>"+pazienti[i].email+"</p></td></tr>"
-			riga+="</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"+i+"' class='btn btn-primary btn-user mr-sm-5 modificaPazienteButton'>Modifica</button><button type='button' id = '"+i+"' class='btn btn-danger btn-user eliminaButtonPaziente'>Elimina</button></div>"
+			riga+="</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"+i+"' class='btn btn-primary btn-user mr-sm-5 modificaPazienteButton'>Modifica</button><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"+i+"' class='btn btn-danger btn-user eliminaButtonPaziente'>Elimina</button></div>"
 	  }
 
 	  tabellaPazienti.append(riga)
