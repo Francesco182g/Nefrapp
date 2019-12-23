@@ -37,7 +37,7 @@ public class CreaBeanUtility {
 		paziente.setNome(datiPaziente.getString("Nome"));
 		paziente.setCognome(datiPaziente.getString("Cognome"));
 		paziente.setSesso(datiPaziente.getString("Sesso"));
-		paziente.setEmail("Email");
+		paziente.setEmail(datiPaziente.getString("Email"));
 		paziente.setResidenza(datiPaziente.getString("Residenza"));
 		paziente.setLuogoDiNascita(datiPaziente.getString("LuogoDiNascita"));
 		paziente.setAttivo(datiPaziente.getBoolean("Attivo"));
@@ -68,7 +68,7 @@ public class CreaBeanUtility {
 			LocalDate data=temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			medico.setDataDiNascita(data);
 		}
-		medico.setEmail("Email");
+		medico.setEmail(datiMedico.getString("Email"));
 		medico.setResidenza(datiMedico.getString("Residenza"));
 		medico.setLuogoDiNascita(datiMedico.getString("LuogoDiNascita"));
 		
