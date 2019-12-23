@@ -130,6 +130,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			if (isMultipart) {
 				try {
 					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
+				} catch (IOException e) {
+					System.out.println("InvioMessaggio: errore nella codifica dell'allegato");
 				} finally {
 					if (fileContent != null) {
 						fileContent.close();
