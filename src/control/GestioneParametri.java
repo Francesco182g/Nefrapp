@@ -90,10 +90,10 @@ public class GestioneParametri extends HttpServlet {
 		
 		utente = (Utente) session.getAttribute("utente");
 		
-		if ((boolean)session.getAttribute("ispaziente") == true){
+		if ((boolean)session.getAttribute("isPaziente") == true){
 			scheda = SchedaParametriModel.getSchedaParametriByCF(utente.getCodiceFiscale());
 		}	
-		else if ((boolean)session.getAttribute("ismedico") == true) {
+		else if ((boolean)session.getAttribute("isMedico") == true) {
 			scheda = SchedaParametriModel.getSchedaParametriByCF(request.getParameter("CFPaziente"));
 		}
 		else {
