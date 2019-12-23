@@ -9,11 +9,14 @@ import java.util.Date;
 import org.bson.Document;
 
 import bean.Amministratore;
+import bean.Annuncio;
 import bean.Medico;
 import bean.Messaggio;
 import bean.Paziente;
 import bean.PianoTerapeutico;
 import bean.SchedaParametri;
+import model.MedicoModel;
+import model.PazienteModel;
 
 /**
  * 
@@ -150,4 +153,22 @@ public class CreaBeanUtility {
 		return messaggio;
 	}
 	
+	public static Annuncio daDocumentAAnnuncio(Document datiAnnuncio) {
+		Annuncio annuncio = new Annuncio();
+		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
+		annuncio.setMedico(MedicoModel.getMedicoByCF(datiAnnuncio.getString("MedicoCodiceFiscale")));
+		annuncio.setAllegato(datiAnnuncio.getString("Allegato"));
+		annuncio.setTitolo(datiAnnuncio.getString("titolo"));
+		annuncio.setTesto(datiAnnuncio.getString("Testo"));
+		Date temp = datiAnnuncio.getDate("Data");
+		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
+		annuncio.setData(data);
+		ArrayList<Paziente> pazienti = new ArrayList<Paziente>();
+		ArrayList<String> codiciFiscaliPazienti = (ArrayList<String>) datiAnnuncio.get("PazientiCodiceFiscale");
+		for(String codiceFiscalePaziente: codiciFiscaliPazienti) {
+			pazienti.add(PazienteModel.getPazienteByCF(codiceFiscalePaziente));
+		}
+		
+		return annuncio;
+	}
 }
