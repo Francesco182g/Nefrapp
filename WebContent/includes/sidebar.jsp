@@ -85,7 +85,7 @@
 
 			<c:when test='${isMedico==true && accessDone==true}'>
 
-				<li class="nav-item"><a class="nav-link" href="#"> <i
+				<li class="nav-item"><a class="nav-link" href="/ModificaAccountMedicoView.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
 

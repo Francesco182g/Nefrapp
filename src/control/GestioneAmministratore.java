@@ -1,12 +1,12 @@
 package control;
 
 import java.io.IOException;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,16 +47,8 @@ public class GestioneAmministratore extends HttpServlet {
 						String tipo = request.getParameter("tipo");
 						rimuoviAccount(codiceFiscale,tipo);
 					}
-					else if(operazione.equals("modificaDatiPersonali")) {
+					else if(operazione.equals("modifica")) {
 						modificaDatiPersonali(request, response, session);
-					}
-					else if(operazione.equals("modificaDatiPaziente"))
-					{
-						modificaDatiPaziente(request, response);
-					}
-					else if(operazione.equals("modificaDatiMedico"))
-					{
-						modificaDatiMedico(request, response);
 					}
 					else if(operazione.equals("caricaMedPaz")) {
 						scaricaDatiPazienteMedico(request,response);
@@ -70,48 +62,6 @@ public class GestioneAmministratore extends HttpServlet {
 					e.printStackTrace();		
 				}
 				
-	}
-
-	private void modificaDatiMedico(HttpServletRequest request, HttpServletResponse response) {
-		String codiceFiscale = request.getParameter("codiceFiscale");
-		String nome = request.getParameter("nome");
-		String cognome = request.getParameter("cognome");
-		String sesso = request.getParameter("sesso");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String residenza = request.getParameter("residenza");
-		String luogoDiNascita=request.getParameter("luogoDiNascita");
-		String dataDiNascita = request.getParameter("dataDiNascita");
-		
-		Medico medico = null;
-		
-		if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
-			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
-			medico = new Medico(sesso, residenza,  LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd-MM-yyyy")), codiceFiscale, nome, cognome, email, luogoDiNascita);  
-			MedicoModel.updateMedico(medico);
-		}
-		
-	}
-
-	private void modificaDatiPaziente(HttpServletRequest request, HttpServletResponse response) {
-		String codiceFiscale = request.getParameter("codiceFiscale");
-		String nome = request.getParameter("nome");
-		String cognome = request.getParameter("cognome");
-		String sesso = request.getParameter("sesso");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String residenza = request.getParameter("residenza");
-		String luogoDiNascita=request.getParameter("luogoDiNascita");
-		String dataDiNascita = request.getParameter("dataDiNascita");
-		
-		Paziente paziente = null;
-		
-		if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
-			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
-			paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd-MM-yyyy")), true, null);
-			PazienteModel.updatePaziente(paziente);
-		}
-		
 	}
 
 	/**
@@ -156,10 +106,8 @@ public class GestioneAmministratore extends HttpServlet {
 	
 	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		String codiceFiscale = request.getParameter("codiceFiscale");
-		
-		Amministratore amministratore=AmministratoreModel.getAmministratoreByCF(codiceFiscale);
-		
-		if(amministratore!=null) {
+				
+		if(request.getParameter("tipoUtente").equals("amministratore")) {
 			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("amministratore");
 			if(amministratoreLoggato!=null) {
 				String vecchiaPassword=request.getParameter("vecchiaPassword");
@@ -175,7 +123,7 @@ public class GestioneAmministratore extends HttpServlet {
 				}
 			}
 		}
-		else {
+		else{
 			String nome = request.getParameter("nome");
 			String cognome = request.getParameter("cognome");
 			String sesso = request.getParameter("sesso");
@@ -186,8 +134,9 @@ public class GestioneAmministratore extends HttpServlet {
 			String password = request.getParameter("password");
 			String confermaPassword=request.getParameter("confermaPassword");
 		
-			Paziente paziente=PazienteModel.getPazienteByCF(codiceFiscale);
-			if(paziente!=null) {
+			
+			if(request.getParameter("tipoUtente").equals("paziente")) {
+				Paziente paziente=PazienteModel.getPazienteByCF(codiceFiscale);
 				if(validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita)) {
 					paziente.setCognome(cognome);
 					paziente.setNome(nome);
@@ -203,9 +152,8 @@ public class GestioneAmministratore extends HttpServlet {
 					PazienteModel.updatePaziente(paziente);
 				}
 			}
-			else {
+			else if(request.getParameter("tipoUtente").equals("medico")){
 				Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
-				if(medico!=null) {
 					if(validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita)) {
 						medico.setCognome(cognome);
 						medico.setNome(nome);
@@ -215,14 +163,13 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setEmail(email);
 						medico.setResidenza(residenza);
 						medico.setLuogoDiNascita(luogoDiNascita);
-						medico.setSesso(sesso);
+						medico.setSesso(sesso);/*
 						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
 							password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 							MedicoModel.changePassword(codiceFiscale, password);
-						}
+						}*/
 						MedicoModel.updateMedico(medico);
 					}
-				}
 			}
 		}
 	}
@@ -243,42 +190,6 @@ public class GestioneAmministratore extends HttpServlet {
 		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30)
 			valido = false;
 		if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
-			valido = false;
-		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
-			valido = false;
-		if(!email.equals(""))
-			if (!Pattern.matches(expEmail, email))
-				valido = false;
-		if(!residenza.equals(""))
-			if(!Pattern.matches(expResidenza, residenza))
-				valido=false;
-		if(!luogoDiNascita.equals(""))
-			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
-				valido=false;
-		if(!dataDiNascita.equals(""))
-			if(!Pattern.matches(expDataDiNascita, dataDiNascita))
-				valido=false;
-		return valido;
-	}
-	private boolean validazione(String codiceFiscale, String nome, String cognome,String sesso, String email,String password,String residenza,String luogoDiNascita,String dataDiNascita) {
-		boolean valido = true;
-		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String expNome = "^[A-Z][a-zA-Z ']*$";
-		String expCognome = "^[A-Z][a-zA-Z ']*$";
-		String expSesso = "^[MF]$";
-		String expEmail = "^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
-		String expPassword = "^[a-zA-Z0-9]*$";
-		String expResidenza= "^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$";
-		String expLuogoDiNascita= "^[A-Z][a-zA-Z ']*$";
-		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
-		
-		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
-			valido = false;
-		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30)
-			valido = false;
-		if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
-			valido = false;
-		if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20)
 			valido = false;
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
 			valido = false;

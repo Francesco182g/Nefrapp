@@ -112,8 +112,8 @@ public class GestioneMedico extends HttpServlet {
 				if (!dataDiNascita.equals("")) {
 					medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
 				}
-
-				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
+				MedicoModel.updateMedico(medico);
+				//password = AlgoritmoCriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
 																				// prima di registrarla nel db ps.non
 																				// cancellare il commento quando
 																				// spostate la classe

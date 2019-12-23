@@ -25,10 +25,22 @@
    	 	<script src="./js/dataPicker.js"></script>
    	 	<script src="./js/autoCompleteInput.js"></script>	
    	 	
+
    	 	<c:if test='${isAmministratore == false || isAmministratore == null}'>
 			<c:redirect url = "/loginAmministratore.jsp"/>
 		</c:if>
-		
+
+   	 	<%String intestazione=""; %>
+   	 	<%String azione=""; %>
+   	 	<c:set var="amministratore" value='${sessionScope["amministratore"]}'/>
+        <c:set var="paziente" value='${sessionScope["paziente"]}'/>
+   	 	<c:if test='${amministratore != null}'>
+   	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Paziente";%>
+   	 	</c:if>
+   	 	<c:if test='${paziente != null && amministratore==null}'>
+   	 		<%azione="./GestionePaziente"; intestazione="Modifica il tuo account";%>
+   	 	</c:if>
+   	 	
 	</head>
 
 	<body id="page-top">
@@ -55,11 +67,12 @@
 							          <div class="col-sm-12">
 							            <div class="card o-hidden border-0 shadow-sm p-5">
 							              <div class="text-center">
-							                <h1 class="h4 text-gray-900 mb-4">Modifica Paziente</h1>
+							                <h1 class="h4 text-gray-900 mb-4"><%=intestazione %></h1>
 							              </div>
-							              <form class="user" method="post"  action="./GestioneAmministratore?operazione=modificaDatiPersonali">
+							              <form class="user" method="post"  action=<%=azione %>>
 											
-											
+											<input type="hidden" id="operazione" value="modifica">
+											<input type="hidden" name="tipoUtente" value="paziente">
 											<input type="hidden" id="notifica" value="${requestScope.notifica}">
 											<div class="form-group row col-lg-12">
 							                Codice Fiscale:
@@ -101,19 +114,19 @@
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
-							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50" maxlength="50">
+							                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email" min="6" max="50" maxlength="50">
 							                </div>
 							                <div class="form-group row col-lg-12">
 							                Password:
-							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20" maxlength="20"> 
+							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" min="6" max="20" maxlength="20"> 
 							                </div>
 							                <div class="form-group row col-lg-12">
-							                	Conferma Password:
-							                   <input type="password" class="form-control form-control-user" name="confermaPassword" id="confermaPassword" placeholder="Password" required="required" min="6" max="20" maxlength="20"> 
+							                Conferma Password:
+							                   <input type="password" class="form-control form-control-user" name="confermaPsw" id="confermaPsw" placeholder="Conferma Password" min="6" max="20" maxlength="20"> 
 							                </div>
 							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
-							                <button class="btn btn-primary btn-user btn-block" id="modificaPazienteButton">
-							                  Modifica Paziente
+							                <button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">
+							                  Modifica
 							                </button>
 							               </div>
 							              </form>
