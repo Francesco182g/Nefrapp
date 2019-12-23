@@ -119,7 +119,7 @@
 				<c:otherwise>
 
 					<li class="button">
-							<a href="./login.jsp"> Login </a>
+							<a href="./login.jsp" class = "btn btn-primary btn-user btn-block"> <i class="fas fa-sign-in-alt"></i> Login </a>
 					</li>
 
 				</c:otherwise>

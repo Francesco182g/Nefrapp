@@ -97,12 +97,12 @@
 							paziente</span></a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href="./GestioneMessaggi?operazione=inserimentoMessaggioView">
+					href="./messaggio?operazione=caricaDestinatariMessaggio">
 						<i class="fas fa-fw fa-tachometer-alt"></i> <span>Invia
 							Messaggio</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="./messaggio?operazione=visualizzaMessaggio"> <i
+					href="./messaggio?operazione=visualizzaElencoMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Leggi
 							Messaggio</span></a></li>
 
