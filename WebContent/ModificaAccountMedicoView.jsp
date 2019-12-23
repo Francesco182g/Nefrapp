@@ -27,12 +27,10 @@
    	 	
    	 	<%String intestazione=""; %>
    	 	<%String azione=""; %>
-   	 	<c:set var="amministratore" value='${sessionScope["amministratore"]}'/>
-        <c:set var="medico" value='${sessionScope["medico"]}'/>
-   	 	<c:if test='${amministratore != null}'>
+   	 	<c:if test='${isAmministratore}'>
    	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Medico";%>
    	 	</c:if>
-   	 	<c:if test='${medico != null && amministratore==null}'>
+   	 	<c:if test='${isMedico}'>
    	 		<%azione="./GestioneMedico"; intestazione="Modifica il tuo account";%>
    	 	</c:if>
    	 			
