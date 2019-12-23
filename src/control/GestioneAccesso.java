@@ -141,7 +141,8 @@ public class GestioneAccesso extends HttpServlet {
 				session.setAttribute("accessDone", true);
 			}
 
-			if (utente != null) {
+			if (utente != null) 
+			{
 				session.setAttribute("utente", utente);
 
 				if (ricordaUtente != null) {
@@ -165,9 +166,9 @@ public class GestioneAccesso extends HttpServlet {
 				return;
 
 			}
-			else {
-				response.sendRedirect("login.jsp");
-			}
+//			else {
+//				response.sendRedirect("login.jsp");
+//			}
 		}
 		
 		else {
