@@ -82,8 +82,12 @@ public class GestioneComunicazione extends HttpServlet {
 
 		if ((boolean)session.getAttribute("isPaziente")==true) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
+			Medico selezionato;
 			for (String cf : ((Paziente) utente).getMedici()) {
-				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
+				selezionato = MedicoModel.getMedicoByCF(cf);
+				
+				if (selezionato!=null)
+					mediciCuranti.add(selezionato);
 			}
 			request.setAttribute("mediciCuranti", mediciCuranti);
 		}

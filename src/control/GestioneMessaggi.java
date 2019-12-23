@@ -114,8 +114,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		Utente utente = null;
 		HttpSession session = request.getSession();
 		Messaggio messaggio = null;
-
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		utente = (Utente) session.getAttribute("utente");
 
 		if ((boolean) session.getAttribute("accessDone") == true) {
@@ -125,26 +123,16 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
 			String allegato = new String();
-
+			
+			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
 			InputStream fileContent = filePart.getInputStream();
-			File f = new File(getServletContext() + "temp");
-			OutputStream outputStream = null;
-
 			if (isMultipart) {
 				try {
-					outputStream = new FileOutputStream(f);
-
-					int read = 0;
-					byte[] bytes = new byte[1024];
-					while ((read = fileContent.read(bytes)) != -1) {
-						outputStream.write(bytes, 0, read);
-					}
-					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
+					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
 				} finally {
-					if (outputStream != null) {
-						outputStream.close();
-						f.delete();
+					if (fileContent != null) {
+						fileContent.close();
 					}
 				}
 			}

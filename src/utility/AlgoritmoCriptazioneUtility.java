@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -36,13 +37,12 @@ public class AlgoritmoCriptazioneUtility {
 		        return null;
 		   }
 	
-	public static String codificaInBase64(File file){
+	public static String codificaInBase64(InputStream file){
         String encodedfile = null;
         try {
-            FileInputStream fileInputStreamReader = new FileInputStream(file);
-            byte[] bytes = new byte[(int)file.length()];
-            fileInputStreamReader.read(bytes);
-            encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
+        	byte[] targetArray = new byte[file.available()];
+            file.read(targetArray);
+            encodedfile = new String(Base64.encodeBase64(targetArray), "UTF-8");
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

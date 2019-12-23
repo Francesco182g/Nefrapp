@@ -135,31 +135,16 @@ public class GestioneAnnunci extends HttpServlet {
 			String testo = request.getParameter("testo");
 			String allegato = new String();
 			Part filePart = request.getPart("file");
-		    InputStream fileContent = filePart.getInputStream();
-		    File f = new File(getServletContext() + "temp");
-		    OutputStream outputStream = null;
-		   
-		    if (isMultipart) {
-			    try
-			    {
-			        outputStream = new FileOutputStream(f);
-			        
-			        int read = 0;
-			        byte[] bytes = new byte[1024];
-			        while ((read = fileContent.read(bytes)) != -1) {
-			            outputStream.write(bytes, 0, read);
-			        }
-			        allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
-			    }
-			    finally
-			    {
-			        if(outputStream != null)
-			        {
-			            outputStream.close();
-			            f.delete();
-			        }
-			    }
-		    }
+			InputStream fileContent = filePart.getInputStream();
+			if (isMultipart) {
+				try {
+					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
+				} finally {
+					if (fileContent != null) {
+						fileContent.close();
+					}
+				}
+			}
 			
 		    annuncio = new Annuncio(medico, pazienti, titolo, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 			//TODO aggiunta dell'annuncio nel db
