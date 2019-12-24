@@ -31,7 +31,7 @@ import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * @author Davide Benedetto Strianese
- * Questa classe è una servlet che si occupa della gestione degli annunci
+ * Questa classe ï¿½ una servlet che si occupa della gestione degli annunci
  */
 @WebServlet("/GestioneAnnunci")
 public class GestioneAnnunci extends HttpServlet {
@@ -138,7 +138,7 @@ public class GestioneAnnunci extends HttpServlet {
 			String testo = request.getParameter("testo");
 			String allegato = new String();
 			
-			//TODO probabilmente sarà da modificare, vedi la gestione messaggio
+			//TODO probabilmente sarï¿½ da modificare, vedi la gestione messaggio
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
 			InputStream fileContent = filePart.getInputStream();
@@ -169,7 +169,7 @@ public class GestioneAnnunci extends HttpServlet {
 	}
 	
 	/**
-	 * Metodo che prende l'annunccio e lo salva nella richiesta così da poter essere visualizzato
+	 * Metodo che prende l'annuncio e lo salva nella richiesta cosï¿½ da poter essere visualizzato
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
 	private void visualizzaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
@@ -179,9 +179,14 @@ public class GestioneAnnunci extends HttpServlet {
 		if(utente != null) {
 			Annuncio annuncio = new Annuncio();
 			String idAnnuncio = request.getParameter("idAnnuncio");
-			
 			annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
-			
+			//solo se l'utente Ã¨ un paziente, la visualizzazione viene settata a false
+			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
+				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
+			}
+			else {
+				System.out.println("L'utente deve essere loggato");
+			}
 			request.setAttribute("annuncio", annuncio);
 			dispatcher = getServletContext().getRequestDispatcher("/annuncioView.jsp");
 			return;

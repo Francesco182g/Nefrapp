@@ -89,6 +89,19 @@ public class AnnuncioModel {
 		return n;
 	}
 	
+	/**
+	 * Cambia lo stato della lettura dell'annuncio.
+	 * 
+	 * @param idAnnuncio  id dell'annuncio che è stato appena aperto
+	 * @param visualizzato settaggio del campo "visualizzato" dell'annuncio
+	 *                     appena aperto
+	 */
+	public static void setVisualizzatoAnnuncio(String idAnnuncio, Boolean visualizzato) {
+		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
+		annunciDB.updateOne( new BasicDBObject("_id", new ObjectId(idAnnuncio)),
+			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+	}
+	
 	/*
 	 * public static String getIdAnnuncio(Annuncio daOttenere) {
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");

@@ -9,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Medico;
 import bean.PianoTerapeutico;
 import bean.Utente;
+import model.AnnuncioModel;
 import model.PianoTerapeuticoModel;
 
 /**
@@ -71,6 +73,8 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	 * @author Domenico Musone
 	 */
 	private void visualizzaPiano(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Utente utente = (Utente) session.getAttribute("utente");
 		PianoTerapeutico pianoTerapeutico = null;
 		String codiceFiscalePaziente = request.getParameter("CFPaziente");
 		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
@@ -80,6 +84,16 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			request.setAttribute("pianoTerapeutico", pianoTerapeutico);
 		} else {
 			System.out.println("visualizzaPiano: errore nel CF passato");
+		}
+		
+		if(utente != null) {
+			//solo se l'utente è un paziente, la visualizzazione viene settata a false
+			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
+				PianoTerapeuticoModel.setVisualizzatoPianoTerapeutico(codiceFiscalePaziente, true);
+			}
+			else {
+				System.out.println("L'utente deve essere loggato");
+			}
 		}
 	}
 	

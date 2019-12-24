@@ -18,7 +18,7 @@ public class Annuncio {
 	private String testo;
 	private String allegato; //pu� essere una presentazione pp o un video, tenere traccia tramite path
 	private ZonedDateTime data;
-	
+	private Boolean visualizzato;
 	public Annuncio() {}
 	
 	public Annuncio(Medico medico, ArrayList<Paziente> pazienti, String titolo, String testo, String allegato, ZonedDateTime data) {
@@ -28,6 +28,7 @@ public class Annuncio {
 		this.testo = testo;
 		this.allegato = allegato;
 		this.data = data;
+		this.visualizzato=false;
 	}
 
 	public Medico getMedico() {
@@ -88,6 +89,12 @@ public class Annuncio {
 	}
 	public String getIdMessaggio() {
 		return this.idAnnuncio;
+	}
+	public void setVisualizzato(Boolean visualizzato) {
+		this.visualizzato = visualizzato;
+	}
+	public Boolean getVisualizzato() {
+		return this.visualizzato;
 	}
 	
 	@Override

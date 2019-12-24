@@ -213,7 +213,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	private void visualizzaMessaggio(HttpServletRequest request) {
 		String idMessaggio = request.getParameter("idMessaggio");
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
-		MessaggioModel.updateMessaggio(idMessaggio, true);
+		MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
 		request.setAttribute("messaggio", messaggio);
 	}
 

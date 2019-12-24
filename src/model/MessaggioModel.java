@@ -93,13 +93,13 @@ public class MessaggioModel {
 	}
 
 	/**
-	 * Cambia lo stato della lettura del messaggio da false a true.
+	 * Cambia lo stato della lettura del messaggio.
 	 * 
 	 * @param idMessaggio  id del messaggio che è stato appena aperto
 	 * @param visualizzato settaggio a true del campo "visualizzato" del messaggio
 	 *                     appena aperto
 	 */
-	public static void updateMessaggio(String idMessaggio, Boolean visualizzato) {
+	public static void setVisualizzatoMessaggio(String idMessaggio, Boolean visualizzato) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		messaggi.updateOne( new BasicDBObject("_id", new ObjectId(idMessaggio)),
 			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));

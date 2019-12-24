@@ -13,6 +13,7 @@ public class PianoTerapeutico {
 	private String diagnosi;
 	private String farmaco;
 	private LocalDate dataFineTerapia;
+	private Boolean visualizzato;
 
 	public PianoTerapeutico() {}
 
@@ -21,6 +22,7 @@ public class PianoTerapeutico {
 		this.diagnosi = diagnosi;
 		this.farmaco = farmaco;
 		this.dataFineTerapia = dataFineTerapia;
+		this.visualizzato=false;
 	}
 
 	public String getCodiceFiscalePaziente() {
@@ -59,7 +61,12 @@ public class PianoTerapeutico {
 	public void setDataFineTerapia(LocalDate dataFineTerapia) {
 		this.dataFineTerapia = dataFineTerapia;
 	}
-	
+	public void setVisualizzato(Boolean visualizzato) {
+		this.visualizzato = visualizzato;
+	}
+	public Boolean getVisualizzato() {
+		return this.visualizzato;
+	}
 	@Override
 	public String toString() {
 		return "PianoTerapeutico [codiceFiscalePaziente=" + codiceFiscalePaziente + ", diagnosi=" + diagnosi + ", farmaco=" + farmaco + ", dataFineTerapia=" + dataFineTerapia + "]";
