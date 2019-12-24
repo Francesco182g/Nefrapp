@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,13 +29,14 @@ import model.SchedaParametriModel;
 @WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
 	
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notification", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home
+				request.setAttribute("notifica", "Errore generato dalla richiesta!");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp"); 
 				dispatcher.forward(request, response);
 				return;
 			} 
@@ -43,27 +46,31 @@ public class GestioneParametri extends HttpServlet {
 			if(operazione.equals("inserisciScheda")) {
 				inserisciParametri(request);
 				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
+				return;
 			}
 			//Download report
 			else if(operazione.equals("download")) {
 				creaExcel(request, response);
+				return;
 			} 
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
-				requestDispatcher.forward(request, response);
+				dispatcher.forward(request, response);
+				return;
 			}
 			
 		}catch (Exception e) {
-			System.out.println("Errore in gestione parametri:");
-			e.printStackTrace();
+			request.setAttribute("notifica", "Errore in Gestione parametri. " + e.getMessage());
+			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			dispatcher.forward(request,response);
+			return;
 		}
 		return;
 	}
 	
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		return;
 	}
@@ -102,6 +109,7 @@ public class GestioneParametri extends HttpServlet {
 		}
 		
 		request.setAttribute("schedaParametri", scheda);
+		dispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
 	}
 	
 	/**Questo metodo inserisce nel database una SchedaParametri formata dai dati inseriti dall'utente.

@@ -76,7 +76,7 @@ public class GestioneMedico extends HttpServlet {
 				return;
 			}
 		}catch (Exception e) {
-			request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
+			request.setAttribute("notifica", "Errore in Gestione medico. " + e.getMessage());
 			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
 			dispatcher.forward(request,response);
 			return;
