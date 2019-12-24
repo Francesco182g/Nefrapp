@@ -62,7 +62,11 @@ public class PianoTerapeuticoModel {
 				daAggiornare.getCodiceFiscalePaziente());
 		pianoTerapeuticoDB.updateOne(searchQuery, nuovoPianoTerapeutico);
 	}
-
+/**
+ * Controlla se il piano terapeutico è stato già visualizzato dal paziente
+ * @param codiceFiscalePaziente
+ * @return boolean true se è stato visualizzato, false altrimenti
+ */
 	public static boolean isPianoTerapeuticoVisualizzato(String codiceFiscalePaziente) {
 		MongoCollection<Document> annunciDB = DriverConnection.getConnection().getCollection("Annuncio");
 		BasicDBObject andQuery = new BasicDBObject();

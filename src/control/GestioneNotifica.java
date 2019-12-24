@@ -12,7 +12,10 @@ import bean.Utente;
 import model.AnnuncioModel;
 import model.MessaggioModel;
 import model.PianoTerapeuticoModel;
-
+/**
+ * 
+ * @author Sara
+ */
 /**
  * Servlet implementation class GestioneNotifica
  */
@@ -34,11 +37,13 @@ public class GestioneNotifica extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		Utente utente = null;
 		HttpSession session = request.getSession();
 		utente = (Utente) session.getAttribute("utente");
+		
 		if ((boolean) session.getAttribute("accessDone") == true) {
+			
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				// Fai i controlli per il paziente (messaggio, annuncio, piano terapeutico)
 				int nm = MessaggioModel.countMessaggiNonLetti(utente.getCodiceFiscale());

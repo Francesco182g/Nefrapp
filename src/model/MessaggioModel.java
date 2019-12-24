@@ -105,6 +105,12 @@ public class MessaggioModel {
 			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
 	}
 	
+	
+	/**
+	 * Conta quanti messaggi non sono stati letti da un determinato destinatario
+	 * @param CFDestinatario
+	 * @return
+	 */
 	public static int countMessaggiNonLetti(String CFDestinatario) {
 		
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");

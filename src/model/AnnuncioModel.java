@@ -22,6 +22,11 @@ import bean.Paziente;
 import utility.CreaBeanUtility;
 
 public class AnnuncioModel {
+	/**
+	 * Cerca un annuncio nel Database
+	 * @param idAnnuncio
+	 * @return
+	 */
 	
 	public static Annuncio getAnnuncioById(String idAnnuncio) {
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
@@ -32,6 +37,10 @@ public class AnnuncioModel {
 		}
 		return null;
 	}
+	/**
+	 * Aggiunge un annuncio nel Database
+	 * @param daAggiungere
+	 */
 	
 	public static void addAnnuncio(Annuncio daAggiungere) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
@@ -49,7 +58,11 @@ public class AnnuncioModel {
 				.append("Data", daAggiungere.getData().toInstant());
 		annuncioDB.insertOne(doc);
 	}
-	
+	/**
+	 * Cerca e restituisce l'elenco degli annunci scritti da un medico
+	 * @param codiceFiscaleMedico
+	 * @return
+	 */
 	public static ArrayList<Annuncio> getAnnunciByCFMedico(String codiceFiscaleMedico) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Annuncio> annunci = new ArrayList<>();
@@ -61,6 +74,11 @@ public class AnnuncioModel {
 		
 		return annunci;
 	}
+	/**
+	 * Cerca e restituisce l'elenco degli annunci destinati ad un paziente
+	 * @param codiceFiscalePaziente
+	 * @return annunci
+	 */
 	
 	public static ArrayList<Annuncio> getAnnuncioByCFPaziente(String codiceFiscalePaziente) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
@@ -73,6 +91,11 @@ public class AnnuncioModel {
 		
 		return annunci;
 	}
+	/**
+	 * Conta il numero di annunci che non sono stati ancora letti da un determinato paziente
+	 * @param codiceFiscalePaziente
+	 * @return n numero di annunci non letto
+	 */
 	
 	public static int countAnnunciNonLetti(String codiceFiscalePaziente) {
 		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
