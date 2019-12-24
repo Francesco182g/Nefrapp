@@ -19,69 +19,76 @@ import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 
 /**
- * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco Servlet
- *         implementation class GestioneMedico
+ * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
+ * Questa clase è una servlet che si occupa della gestione del medico
+ *
  */
 @WebServlet("/GestioneMedico")
 public class GestioneMedico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
-		// ok)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
 			String operazione = request.getParameter("operazione");
+			Medico medico = (Medico) request.getSession().getAttribute("utente");
+			
+			if(medico == null) {
+				request.setAttribute("notifica", "Bisogna essere loggati da medico");
+				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
 
 			if (operazione.equals("modifica")) {
-				request.setAttribute("notifica", "Modifica effettuata con successo"); // Se ciï¿½ non avviene la stringa
-																						// viene cambiata dal metodo
+				request.setAttribute("notifica", "Modifica effettuata con successo"); //Nel caso in cui la modifica non avviene con successo allora la stringa verrà cambiata
 				modificaAccount(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); // TODO reindirizzamento pagina
-																						// di modifica
-				requestDispatcher.forward(request, response);
+				dispatcher.forward(request, response);
 				return;
 
-			} else if (operazione.equals("VisualizzaPazientiSeguiti")) {
-				Medico medico = (Medico) request.getSession().getAttribute("utente");
+			} 
+			else if (operazione.equals("VisualizzaPazientiSeguiti")) {
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 				request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
+				dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
 				dispatcher.forward(request, response);
+				return;
 
-			} else if (operazione.equals("elimina")) {
-				Medico medico = (Medico) request.getSession().getAttribute("utente");
+			} 
+			else if (operazione.equals("elimina")) {
 				MedicoModel.removeMedico(medico.getCodiceFiscale());
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
-			} else {
+				return;
+			} 
+			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
-		} catch (Exception e) {
-			System.out.println("Errore in gestione medico:");
-			e.printStackTrace();
+		}catch (Exception e) {
+			request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
+			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			dispatcher.forward(request,response);
+			return;
 		}
-
-		return;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		return;
 	}
 
-	private void modificaAccount(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	private void modificaAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// TODO verificare i nomi dei parametri con la jsp
 		String codiceFiscale = request.getParameter("codiceFiscale");
@@ -119,6 +126,7 @@ public class GestioneMedico extends HttpServlet {
 																				// spostate la classe
 
 				// TODO aggiorna dati del medico, anche la password
+				dispatcher = request.getRequestDispatcher(""); //TODO reindirizzamento pagina modifica (chiedere admin) 
 			} else {
 				request.setAttribute("notifica", "Non ï¿½ stato trovato il medico da aggiornare");
 			}
