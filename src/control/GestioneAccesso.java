@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
-
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -110,7 +110,7 @@ public class GestioneAccesso extends HttpServlet {
 	}
 
 	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session)
-			throws IOException {
+			throws IOException, ServletException {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		String ricordaUtente = request.getParameter("ricordaUtente");
@@ -163,6 +163,8 @@ public class GestioneAccesso extends HttpServlet {
 
 				}
 				response.sendRedirect("dashboard.jsp");
+				GestioneNotifica gn=new GestioneNotifica();
+				gn.doGet(request, response);
 				return;
 
 			}

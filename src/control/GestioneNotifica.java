@@ -47,15 +47,20 @@ public class GestioneNotifica extends HttpServlet {
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				// Fai i controlli per il paziente (messaggio, annuncio, piano terapeutico)
 				int nm = MessaggioModel.countMessaggiNonLetti(utente.getCodiceFiscale());
+				System.out.println("Messaggi non letti:"+nm);
 				int na = AnnuncioModel.countAnnunciNonLetti(utente.getCodiceFiscale());
+				System.out.println("Annunci non letti:"+na);
 				boolean pt = PianoTerapeuticoModel.isPianoTerapeuticoVisualizzato(utente.getCodiceFiscale());
+				System.out.println("PianoTerapeuticoVisualizzato:"+pt);
+
 				if (pt) {
 					session.setAttribute("notificheAnnunci", na);
 					session.setAttribute("notificheMessaggi", nm);
-					session.setAttribute("notifichePianoTerapeutico", 1);
+					session.setAttribute("notifichePianoTerapeutico", 0);
 				} else {
 					session.setAttribute("notificheAnnunci", na);
 					session.setAttribute("notificheMessaggi", nm);
+					session.setAttribute("notifichePianoTerapeutico", 1);
 				}
 			} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
 				// Fai i controlli per il medico (messaggio)

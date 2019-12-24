@@ -75,7 +75,7 @@ public class PianoTerapeuticoModel {
 		obj.add(new BasicDBObject("Visualizzato", true));
 		andQuery.put("$and", obj);
 		MongoCursor<Document> documenti = annunciDB.find(andQuery).iterator();
-		if (documenti != null) {
+		if (documenti.hasNext()) {
 			return true;
 		}
 		return false;
@@ -90,9 +90,8 @@ public class PianoTerapeuticoModel {
 	 */
 	public static void setVisualizzatoPianoTerapeutico(String codiceFiscalePaziente, Boolean visualizzato) {
 		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection().getCollection("PianoTerapeutico");
-		BasicDBObject newDocument = new BasicDBObject();
-		newDocument.put("Visualizzato", true);
-		BasicDBObject searchQuery = new BasicDBObject().append("PazienteCodiceFiscale", codiceFiscalePaziente);
-		pianoTerapeuticoDB.updateOne(searchQuery, newDocument);
+		pianoTerapeuticoDB.updateOne( new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente),
+			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+		
 	}
 }

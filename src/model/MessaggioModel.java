@@ -115,12 +115,12 @@ public class MessaggioModel {
 		
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		//query nuova, da testare
-		BasicDBObject andQuery = new BasicDBObject();
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
-		obj.add(new BasicDBObject("PazienteCodiceFiscale", CFDestinatario));
-		obj.add(new BasicDBObject("Visualizzato", true));
-		andQuery.put("$and", obj);
+		obj.add(new BasicDBObject("DestinatarioCodiceFiscale", CFDestinatario));
+		obj.add(new BasicDBObject("Visualizzato", false));
+		BasicDBObject andQuery = new BasicDBObject("$and", obj);
 		int n= (int) messaggioDB.count(andQuery);
+		
 		//query vecchia, ma non mi fido
 		//Document query= messaggioDB.find(eq("_id", new ObjectId(CFDestinatario))).first().append("Visualizzato", true);
 		//int n = (int) messaggioDB.count(query);
