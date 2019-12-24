@@ -322,20 +322,29 @@
 			var selettore = $('.selectpicker').val()
 			var oggetto = $("#oggetto").val()
 			var testo = $("#testo").val()
-			var testoExp = new RegExp("^[A-Za-z0-9 èòù']+$")
 			var fileExt = getFileExtension($('#file').val());
 			console.log(fileExt)
 			
+			//studiare l'inserimento di escape di sicurezza e sanitizzazione.
+			//
+			//direi che non puoi pickare singolarmente tutte le cose che possono stare in un messaggio, lol
+			//e soprattutto non c'è da bloccare, c'è da sanitizzare
+			//se scrivi <script> in un form di un sito fatto bene non ti fa esplodere la casa
+			//semplicemente sotto il cofano sostituisce < con &lt e > con &gt
+			//in modo che non sia valutato eseguibile dal js engine del browser 
+			// ma sia comunque mostrato a schermo in quanto html valido.
+			
 			if (selettore.length<=0)
 				valido=[false,"selezionare un destinatario"];
-			else if (!testoExp.test(testo)||testo.length<1||testo.length>1000)
+			else if (testo.length<1||testo.length>1000)
 				valido=[false,"formato testo non valido"];
-			else if (!testoExp.test(oggetto)||oggetto.length<1||oggetto.length>75)
+			else if (oggetto.length<1||oggetto.length>75)
 				valido=[false,"formato oggetto non valido"];
-			else if (fileExt!="jpg" && fileExt!="jpeg" && fileExt!="png" && fileExt!="pjpeg" && fileExt!="pjp" && fileExt!="jfif" && fileExt!="bmp")  {
-				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"]
-			}
-			
+			else if (fileExt!="jpg" && fileExt!="jpeg" && fileExt!="png" && fileExt!="pjpeg" && fileExt!="pjp" && fileExt!="jfif" && fileExt!="bmp" && fileExt!="") 
+				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"];
+			else if(!$('#file').val().includes(".") && $('#file').val().length>0) {
+				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"] }
+				
 			return valido;
 			
 		}

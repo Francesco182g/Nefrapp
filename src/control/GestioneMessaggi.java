@@ -1,10 +1,7 @@
 package control;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -21,16 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import bean.Medico;
 import bean.Messaggio;
-import bean.Paziente;
 import bean.Utente;
-import model.MedicoModel;
 import model.MessaggioModel;
-import model.PazienteModel;
 import model.UtenteModel;
 import utility.AlgoritmoCriptazioneUtility;
 
@@ -73,7 +65,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			}
 			if (operazione.equals("inviaMessaggio")) {
 				inviaMessaggio(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
 				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
 			}
@@ -133,26 +125,23 @@ public class GestioneMessaggi extends GestioneComunicazione {
 
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
-			if (controllaParametri(CFMittente,oggetto,testo,filePart.getSubmittedFileName(),filePart.getSize())) 
-			{
+			if (controllaParametri(CFMittente, oggetto, testo, filePart.getSubmittedFileName(), filePart.getSize())) {
 				InputStream fileContent = filePart.getInputStream();
-				if (isMultipart) 
-				{
-					try 
-					{
+				if (isMultipart) {
+					try {
 						allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
-					} finally 
-					{
+						System.out.println("allegato: " + allegato);
+					} finally {
 						if (fileContent != null) {
 							fileContent.close();
 						}
-						
-			}
+
+					}
 				}
-			}
-			else {
-				
-				//inserire il request dispatcher con la variabile notifica ricordare di mettere anche il campo hidden nella jsp
+			} else {
+
+				// inserire il request dispatcher con la variabile notifica ricordare di mettere
+				// anche il campo hidden nella jsp
 			}
 
 			// inserire qui controlli backend
@@ -193,8 +182,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			// prima di fare la query sul destinatario controlla se ce l'ha già in cache
 			// attraverso il suo CF.
 			// Se ce l'ha lo usa per ottenere le informazioni che servono alla pagina jsp
-			// se non ce l'ha effettua la query.
-			// In questo modo se ci sono 200 messaggi da 5 medici fa 5 query e non 200.
+			// se non ce l'ha effettua la query e immette il risultato in cache.
+			// In questo modo se ci sono 200 messaggi da 5 destinatari fa 5 query e non 200.
 			for (Messaggio m : messaggi) {
 				if (!cache.contains(m.getCodiceFiscaleMittente())) {
 					cache.add(m.getCodiceFiscaleMittente());
@@ -204,8 +193,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 						request.setAttribute(m.getCodiceFiscaleMittente(),
 								utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
 					}
-				}
-				else if (cache.contains(m.getCodiceFiscaleMittente())) {
+				} else if (cache.contains(m.getCodiceFiscaleMittente())) {
 					for (Utente ut : utentiCache) {
 						if (ut.getCodiceFiscale() == m.getCodiceFiscaleMittente()) {
 							utenteSelezionato = ut;
@@ -229,31 +217,38 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		request.setAttribute("messaggio", messaggio);
 	}
 
-	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo, String nomeFile, long dimensioneFile) {
-		boolean valido = false;
+	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo, String nomeFile,
+			long dimensioneFile) {
+		boolean valido = true;
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String expTesto = "^[A-Za-z0-9 èòù']+$";
-		int indice = nomeFile.indexOf(".");
-		String estensione = nomeFile.substring(indice);
-		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
-			valido = false;
-		else if(!Pattern.matches(expTesto, oggetto) || oggetto.length() <1|| oggetto.length() > 75)
-		{
+		String estensione = "";
+
+		// file senza estensione (esistono, basta usare un sistema operativo vero)
+		if (dimensioneFile > 0 && !nomeFile.contains(".")) {
 			valido = false;
 		}
-		else if(!Pattern.matches(expTesto, testo) || testo.length() <1|| testo.length() > 1000)
-		{
-			valido = false;
-		}
-		else if(!estensione.equals("jpg") && !estensione.equals("jpeg") && !estensione.equals("png") && !estensione.equals("pjpeg") && !estensione.equals("pjp") && !estensione.equals("jfif") && !estensione.equals("bmp"))
-		{
-			valido = false;
-		}
-		else if(dimensioneFile>15728640l)
-		{
-			valido = false;
+		// senza questo controllo substring crasha in caso di nessun file e file senza
+		// estensione
+		if (dimensioneFile > 0 && nomeFile.contains(".")) {
+			int indice = nomeFile.indexOf(".");
+			estensione = nomeFile.substring(indice);
 		}
 
+		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16) {
+			valido = false;
+		} else if (oggetto.length() < 1 || oggetto.length() > 75) {
+			valido = false;
+		} else if (testo.length() < 1 || testo.length() > 1000) {
+			valido = false;
+		} else if (!estensione.equals("") && !estensione.equals(".jpg") && !estensione.equals(".jpeg")
+				&& !estensione.equals(".png") && !estensione.equals(".pjpeg") && !estensione.equals(".pjp")
+				&& !estensione.equals(".jfif") && !estensione.equals(".bmp")) {
+			valido = false;
+		} else if (dimensioneFile > 15728640l) {
+			valido = false;
+		}
+		
+		System.out.println(valido);
 		return valido;
 	}
 
