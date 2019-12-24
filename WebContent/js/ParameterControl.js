@@ -344,9 +344,17 @@
 				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"];
 			else if(!$('#file').val().includes(".") && $('#file').val().length>0) {
 				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"] }
-				
+			
+			//aggiungere conversione del testo qui 
 			return valido;
 			
+		}
+		
+		/**
+		 * converte i caratteri speciali <> & in caratteri unicode
+		 */
+		function escapehtml(s) {
+		    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 		}
 	
 })(jQuery); // End of use strict
