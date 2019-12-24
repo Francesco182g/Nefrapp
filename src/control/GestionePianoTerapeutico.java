@@ -1,10 +1,12 @@
 package control;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +27,13 @@ import model.PianoTerapeuticoModel;
 @WebServlet("/GestionePianoTerapeutico")
 public class GestionePianoTerapeutico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response){
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp"); 
+				dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp"); 
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -39,8 +42,8 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			
 			if(operazione.equals("visualizza")) {
 				visualizzaPiano(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
-				requestDispatcher.forward(request, response);
+				dispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
+				dispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("modifica")) {
@@ -50,18 +53,20 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			
 			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+				dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
 				dispatcher.forward(request, response);
 			}
 			
 		}catch (Exception e) {
-			System.out.println("Errore in gestione piano terapeutico:");
-			e.printStackTrace();		
+			request.setAttribute("notifica", "Errore in Gestione piano terapeutico. " + e.getMessage());
+			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			dispatcher.forward(request,response);
+			return;		
 		}
 		return;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response){
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		doGet(request, response);
 		return;
 	}
