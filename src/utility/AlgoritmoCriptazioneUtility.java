@@ -4,26 +4,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-
-import com.sun.org.apache.bcel.internal.Constants;
 
 public class AlgoritmoCriptazioneUtility {
 	private static MessageDigest md;
@@ -50,26 +42,6 @@ public class AlgoritmoCriptazioneUtility {
 			ex.printStackTrace();
 		}
 		return null;
-	}
-
-	public static String codificaInBase64(InputStream file) throws IOException {
-		String encodedfile = null;
-		try {
-			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-			int nRead;
-			byte[] targetArray = new byte[file.available()];
-
-			while ((nRead = file.read(targetArray, 0, targetArray.length)) != -1) {
-				buffer.write(targetArray, 0, nRead);
-			}
-			// encodedfile = new String (targetArray, "UTF-8");
-			encodedfile = new String(Base64.encodeBase64(targetArray), "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return encodedfile;
 	}
 
 	public static String codificaFile(InputStream file) throws UnsupportedEncodingException {
@@ -105,8 +77,6 @@ public class AlgoritmoCriptazioneUtility {
 		String result = null;
 		try {
 			byte[] inputBytes = Base64.decodeBase64(file);
-			System.out.println("In decoding method after base64 decoding: " + new String (inputBytes, "UTF-8"));
-
 			SecretKeySpec sks = new SecretKeySpec("deveesseresedici".getBytes(), "AES");
 			SecretKey key = sks;
 

@@ -144,7 +144,7 @@ public class GestioneAnnunci extends HttpServlet {
 			InputStream fileContent = filePart.getInputStream();
 			if (isMultipart) {
 				try {
-					allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
+					allegato = AlgoritmoCriptazioneUtility.codificaFile(fileContent);
 				} catch (IOException e) {
 					System.out.println("InvioMessaggio: errore nella codifica dell'allegato");
 				} finally {
@@ -183,6 +183,10 @@ public class GestioneAnnunci extends HttpServlet {
 			//solo se l'utente è un paziente, la visualizzazione viene settata a false
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
+				
+				if (annuncio != null) {
+					annuncio.setAllegato(AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getAllegato()));
+				}
 			}
 			else {
 				System.out.println("L'utente deve essere loggato");
