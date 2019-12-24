@@ -31,6 +31,7 @@ import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * @author Davide Benedetto Strianese
+ * Questa classe è una servlet che si occupa della gestione degli annunci
  */
 @WebServlet("/GestioneAnnunci")
 public class GestioneAnnunci extends HttpServlet {
@@ -41,7 +42,7 @@ public class GestioneAnnunci extends HttpServlet {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home
+				dispatcher = getServletContext().getRequestDispatcher("paginaErrore");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -93,6 +94,11 @@ public class GestioneAnnunci extends HttpServlet {
 		return;
 	}
 	
+	/*
+	 * Metodo che prepara la creazione e l'invio dell'annuncio. Caricamento dei dati dei pazienti seguiti dal medico
+	 * @param request richiesta utilizzata per ottenere il medico loggato e settare la lista dei pazienti seguiti
+	 * @param response
+	 */
 	private void creaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		Medico medico = (Medico) session.getAttribute("utente");
@@ -132,6 +138,7 @@ public class GestioneAnnunci extends HttpServlet {
 			String testo = request.getParameter("testo");
 			String allegato = new String();
 			
+			//TODO probabilmente sarà da modificare, vedi la gestione messaggio
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			Part filePart = request.getPart("file");
 			InputStream fileContent = filePart.getInputStream();
@@ -151,7 +158,7 @@ public class GestioneAnnunci extends HttpServlet {
 		    AnnuncioModel.addAnnuncio(annuncio);
 			
 			request.setAttribute("notifica", "Annuncio inviato con successo");
-			dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento homeMedico
+			dispatcher = getServletContext().getRequestDispatcher("/index.jsp"); //TODO reindirizzamento homeMedico
 			return;
 		}
 		else {
@@ -162,7 +169,7 @@ public class GestioneAnnunci extends HttpServlet {
 	}
 	
 	/**
-	 * Metodo che prende l'annunccio e lo salva nella richiesta
+	 * Metodo che prende l'annunccio e lo salva nella richiesta così da poter essere visualizzato
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
 	private void visualizzaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
@@ -186,6 +193,10 @@ public class GestioneAnnunci extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * Metodo che prende gli annunci personali di un medico o di un paziente e li mostra in una lista
+	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 */
 	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		boolean isMedico = (boolean) session.getAttribute("isMedico");
