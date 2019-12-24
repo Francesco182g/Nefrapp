@@ -1,19 +1,29 @@
 package utility;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+
+import com.sun.org.apache.bcel.internal.Constants;
 
 public class AlgoritmoCriptazioneUtility {
 	private static MessageDigest md;
@@ -45,8 +55,14 @@ public class AlgoritmoCriptazioneUtility {
 	public static String codificaInBase64(InputStream file) throws IOException {
 		String encodedfile = null;
 		try {
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			int nRead;
 			byte[] targetArray = new byte[file.available()];
-			file.read(targetArray);
+
+			while ((nRead = file.read(targetArray, 0, targetArray.length)) != -1) {
+				buffer.write(targetArray, 0, nRead);
+			}
+			// encodedfile = new String (targetArray, "UTF-8");
 			encodedfile = new String(Base64.encodeBase64(targetArray), "UTF-8");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,48 +72,55 @@ public class AlgoritmoCriptazioneUtility {
 		return encodedfile;
 	}
 
-	public static String codificaFile(String chiave, InputStream file) {
-		String base64Result = null;
+	public static String codificaFile(InputStream file) throws UnsupportedEncodingException {
+		String result = null;
+		byte[] outputBytes = null;
 		try {
-			Key secretKey = new SecretKeySpec(chiave.getBytes(), "AES");
-			Cipher cipher = Cipher.getInstance("AES");
-			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-			byte[] inputBytes;
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			int nRead;
+			byte[] targetArray = new byte[file.available()];
 
-			inputBytes = new byte[(int) file.available()];
-			file.read(inputBytes);
-			System.out.println("file decodificato :" + inputBytes.toString());
-			byte[] outputBytes = cipher.doFinal(inputBytes);
-			System.out.println("file codificato :" + outputBytes.toString());
-			base64Result = new String(Base64.encodeBase64(outputBytes), "UTF-8");
+			while ((nRead = file.read(targetArray, 0, targetArray.length)) != -1) {
+				buffer.write(targetArray, 0, nRead);
+			}
+
+			SecretKeySpec sks = new SecretKeySpec("deveesseresedici".getBytes(), "AES");
+			SecretKey key = sks;
+
+			Cipher cipher = Cipher.getInstance("AES");
+			cipher.init(Cipher.ENCRYPT_MODE, key);
+			outputBytes = cipher.doFinal(targetArray);
+			
+			result = new String(Base64.encodeBase64(outputBytes), "UTF-8");
+
 		} catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
 				| IllegalBlockSizeException | IOException e) {
 			e.printStackTrace();
 		}
-		return base64Result;
-
+		return result;
 	}
 
-	public static String decodificaFile(String chiave, String file) {
+	public static String decodificaFile(String file) {
 		byte[] outputBytes = null;
+		String result = null;
 		try {
-			outputBytes = Base64.decodeBase64(file);
-			Key secretKey = new SecretKeySpec(chiave.getBytes(), "AES");
-			Cipher cipher = Cipher.getInstance("AES");
-			cipher.init(Cipher.DECRYPT_MODE, secretKey);
+			byte[] inputBytes = Base64.decodeBase64(file);
+			System.out.println("In decoding method after base64 decoding: " + new String (inputBytes, "UTF-8"));
 
-			System.out.println("file codificato :" + file.toString());
-			outputBytes = file.getBytes();
-			outputBytes = cipher.doFinal(outputBytes);
-			System.out.println("file decodificato :" + outputBytes.toString());
+			SecretKeySpec sks = new SecretKeySpec("deveesseresedici".getBytes(), "AES");
+			SecretKey key = sks;
+
+			Cipher cipher = Cipher.getInstance("AES");
+			cipher.init(Cipher.DECRYPT_MODE, key);
+			outputBytes = cipher.doFinal(inputBytes);
+
+			result = new String(Base64.encodeBase64(outputBytes), "UTF-8");
 
 		} catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
-				| IllegalBlockSizeException e) {
+				| IllegalBlockSizeException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
-		return outputBytes.toString();
-
+		return result;
 	}
 
 }

@@ -129,8 +129,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				InputStream fileContent = filePart.getInputStream();
 				if (isMultipart) {
 					try {
-						allegato = AlgoritmoCriptazioneUtility.codificaInBase64(fileContent);
-						System.out.println("allegato: " + allegato);
+						allegato = AlgoritmoCriptazioneUtility.codificaFile(fileContent);
 					} finally {
 						if (fileContent != null) {
 							fileContent.close();
@@ -213,8 +212,12 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	private void visualizzaMessaggio(HttpServletRequest request) {
 		String idMessaggio = request.getParameter("idMessaggio");
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
-		MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
-		request.setAttribute("messaggio", messaggio);
+		if (messaggio!=null) {
+			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
+			messaggio.setAllegato(AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getAllegato()));
+
+			request.setAttribute("messaggio", messaggio);
+		}
 	}
 
 	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo, String nomeFile,
