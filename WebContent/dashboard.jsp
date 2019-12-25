@@ -125,9 +125,7 @@
 											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
 										</div>
 										<div class="card-body">
-											<ul class="list-group pull-down pre-scrollable"
-												id="tabellaPazienti">
-											</ul>
+											
 										</div>
 									</div>
 								</div>
@@ -136,7 +134,41 @@
 						</c:when>
 						<c:when test="${isMedico==true && accessDone==true}">
 							<div id="medico"></div>
-							<p>Sono il medico</p>
+							<div class="row">
+								<div class="col-sm-8 mt-3 ">
+									<div class="card ">
+										<div class="card-header py-3">
+											<h6 class="m-0 font-weight-bold text-primary">Pazienti seguiti</h6>
+										</div>
+										<div class="card-body">
+											<ul class="list-group pull-down pre-scrollable"
+												id="tabellaPazienti">
+											</ul>
+
+										</div>
+
+									</div>
+
+								</div>
+								<div class="col-sm-4 mt-3">
+									<div class="card">
+										<div class="card-header py-3">
+											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
+										</div>
+										<div class="card-body">
+											
+											</ul>
+											
+										</div>
+										<div class="col-sm-12 mb-3 d-flex justify-content-center">
+											<a href="./inserimentoAnnuncioView.jsp"
+												class="btn btn-primary btn-user btn-circle btn-xl"><i class="fas fa-file-medical"></i></a>
+										</div>
+										
+									</div>
+									
+								</div>
+							</div>
 
 						</c:when>
 					</c:choose>

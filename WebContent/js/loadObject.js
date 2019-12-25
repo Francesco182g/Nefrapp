@@ -36,6 +36,13 @@
 	
 	function caricaDatiMedico(){
 		console.log("Ciao sto caricando i dati del medico")
+		$.post("GestioneMedico",{operazione : "VisualizzaPazientiSeguiti",tipo :"asincrona"},function(data){
+			console.log("OPERAZIONE ESEGUITA CON SUCCESSO")
+			console.log(data)
+			loadTabellaPazienti(data,false)
+		}).fail(function(){
+			alert("si è verificato un errore")
+		})
 	}
 	
 	/**
@@ -47,7 +54,7 @@
 			operazione : "caricaMedPaz"
 		}, function(data) {
 			loadTabellaMedici(data[0])
-			loadTabellaPazienti(data[1])
+			loadTabellaPazienti(data[1],true)
 
 			$(".eliminaButtonMedico").click(function() {
 				$("#eliminazione").children().remove()
@@ -174,7 +181,7 @@
 	/**
 	 * funzione che carica i dati del paziente nella tabella
 	 */
-	function loadTabellaPazienti(pazienti) {
+	function loadTabellaPazienti(pazienti,bottoni) {
 		var tabellaPazienti = $("#tabellaPazienti")
 		var riga = ""
 		for (var i = 0; i < pazienti.length; i++) {
@@ -188,11 +195,22 @@
 					+ "</p></td></tr>"
 			riga += "<tr><td><p>Email: </p></td>"
 			riga += "<td><p>" + pazienti[i].email + "</p></td></tr>"
-			riga += "</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"
+			riga += "</table></div>"
+			if(bottoni)
+				{
+				riga +="<div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"
 					+ i
 					+ "' class='btn btn-primary btn-user mr-sm-5 modificaPazienteButton'>Modifica</button><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
 					+ i
 					+ "' class='btn btn-danger btn-user eliminaButtonPaziente'>Elimina</button></div>"
+				}
+			else
+				{
+					riga+="<div class='col-12 mt-3 d-flex justify-content-center'><a href='GestionePianoTerapeutico?operazione=visualizza&CFPaziente="+pazienti[i].codiceFiscale+"' class='btn mr-sm-5 btn-info btn-icon-split'>" +
+							"<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Piano terapeutico</span></a>" +
+							"<a href='GestioneParametri?operazione=visualizzaScheda&CFPaziente="+pazienti[i].codiceFiscale+"'class='btn btn-info btn-icon-split'>" +
+									"<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Scheda parametri</span></a></div>"
+				}
 		}
 
 		tabellaPazienti.append(riga)
