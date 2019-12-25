@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -13,10 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import bean.Medico;
 import bean.PianoTerapeutico;
 import bean.Utente;
 import model.AnnuncioModel;
+import model.MedicoModel;
+import model.PazienteModel;
 import model.PianoTerapeuticoModel;
 
 /**
@@ -31,19 +36,19 @@ public class GestionePianoTerapeutico extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp"); 
-				dispatcher.forward(request, response);
-				return;
-			}
+			
 			
 			String operazione = request.getParameter("operazione");
-			
+			String tipo = request.getParameter("tipo");
+			System.out.println(operazione);
 			if(operazione.equals("visualizza")) {
-				visualizzaPiano(request);
-				dispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
-				dispatcher.forward(request, response);
+				visualizzaPiano(request,response,tipo);
+				if(!(tipo != null && tipo.equals("asincrona"))) {
+					System.out.println("sto redirectando ");
+					dispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
+					dispatcher.forward(request, response);
+				}
+				
 			}
 			
 			else if(operazione.equals("modifica")) {
@@ -58,6 +63,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			}
 			
 		}catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("notifica", "Errore in Gestione piano terapeutico. " + e.getMessage());
 			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
 			dispatcher.forward(request,response);
@@ -76,17 +82,41 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	 * @param response
 	 * 
 	 * @author Domenico Musone
+	 * @throws IOException 
 	 */
-	private void visualizzaPiano(HttpServletRequest request) {
+	private void visualizzaPiano(HttpServletRequest request,HttpServletResponse response,String tipo) throws IOException {
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
+		
 		PianoTerapeutico pianoTerapeutico = null;
-		String codiceFiscalePaziente = request.getParameter("CFPaziente");
+		String codiceFiscalePaziente = "";
+		// non dovrebbe essere controllato se il paziente è loggato prima ? 
+		//perchè gli viene passato il CF se tecnicamente lo puoi prendere dall'utente ? 
+		if(tipo != null && utente != null && tipo.equals("asincrona"))
+		{
+			codiceFiscalePaziente = utente.getCodiceFiscale();
+		}
+		else
+		{
+			codiceFiscalePaziente = request.getParameter("CFPaziente");
+		}
 		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 		
 		if (Pattern.matches(REGEX_CF, codiceFiscalePaziente)) {
 			pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente); 
-			request.setAttribute("pianoTerapeutico", pianoTerapeutico);
+			if(tipo != null && tipo.equals("asincrona"))
+			{
+				
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson(pianoTerapeutico));
+				
+			}
+			else {
+				request.setAttribute("pianoTerapeutico", pianoTerapeutico);
+			}
+			
 		} else {
 			System.out.println("visualizzaPiano: errore nel CF passato");
 		}
