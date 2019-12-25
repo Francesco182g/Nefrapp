@@ -27,6 +27,7 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="./js/messaggi.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./css/bootstrap-datepicker.css">
 
@@ -36,7 +37,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="creaDownload('${messaggio.allegato}')">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<%@include file="../includes/sidebar.jsp"%>
@@ -111,7 +112,9 @@
 										<tr>
 											<td>
 											<c:if test="${messaggio.allegato!=null}">
+											<a id="download" download="" href="">Download</a>
 												<img class="img-fluid" src="data:image/jpeg;base64, ${messaggio.allegato}">
+												
 											</c:if>
 											<c:if test="${messaggio.allegato==null}">
 												Nessun allegato
@@ -122,7 +125,7 @@
 								</table>
 							</div>
 							<a class="btn btn-primary float-right" 
-							href="./comunicazione?operazione=caricaDestinatariMessaggio&destinatario=${messaggio.codiceFiscaleMittente}" 
+							href="./messaggio?operazione=caricaDestinatariMessaggio&destinatario=${messaggio.codiceFiscaleMittente}" 
 							role="button">Rispondi</a>
 						</div>
 					</div>
@@ -143,6 +146,8 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	<script type="text/javascript">
 
+	</script>
 </body>
 </html>

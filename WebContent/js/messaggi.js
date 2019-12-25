@@ -4,7 +4,25 @@ jQuery(document).ready(function($) {
         window.location = $(this).data("href");
     });
 });
-	    
+
+function creaDownload(allegato) {
+	const byteCharacters = atob(allegato);
+	
+	const byteNumbers = new Array(byteCharacters.length);
+	for (let i = 0; i < byteCharacters.length; i++) {
+	    byteNumbers[i] = byteCharacters.charCodeAt(i);
+	}
+	
+	const byteArray = new Uint8Array(byteNumbers);	
+	const blob = new Blob([byteArray], {type: "*"});
+	
+	blob.lastModifiedDate = new Date();
+    blob.name = "immagine.jpeg";
+
+	var url = window.URL.createObjectURL(blob);
+	document.getElementById("download").href = url;
+	document.getElementById("download").download = "immagine.jpeg";
+}
 	    
 //seleziona il destinatario del messaggio in caso si arrivi alla pagina di invio messaggi dal tasto Rispondi 	
 function selezionaDestinatario (valore) {
