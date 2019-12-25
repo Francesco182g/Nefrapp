@@ -92,7 +92,7 @@
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Residenza:
-							                  <input type="text" class="form-control form-control-user" name="residenza" placeholder="Residenza" min="5" max="50" maxlength="50" >
+							                  <input type="text" class="form-control form-control-user" id="residenza" name="residenza" placeholder="Residenza" min="5" max="50" maxlength="50" >
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:

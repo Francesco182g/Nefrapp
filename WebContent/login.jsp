@@ -35,6 +35,9 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="../includes/header.jsp" %>
+					<c:if test="${accessDone == true}">
+						<c:redirect url="./dashboard.jsp"></c:redirect>
+					</c:if>
 	
 	
 	                <!-- Begin Page Content -->

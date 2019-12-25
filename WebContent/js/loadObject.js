@@ -16,7 +16,7 @@
    */
   function caricaDati(){
 	  $.post("GestioneAmministratore",{operazione:"caricaMedPaz"},function(data){
-			
+		  console.log(data)
 		  loadTabellaMedici(data[0])
 		  loadTabellaPazienti(data[1])
 		  
@@ -24,7 +24,6 @@
 			  $("#eliminazione").children().remove()
 				var id = $(this).attr("id")
 				var cf = $(this).parents().find(".cfMed")[id].firstChild.data
-				console.log("medico eliminato")
 				addConfermaEliminazione("medico")
 				$("#confermaEliminazione").click(function(){
 					eliminaMedico(cf)
@@ -35,7 +34,6 @@
 			  $("#eliminazione").children().remove()
 				var id = $(this).attr("id")
 				var cf = $(this).parents().find(".cfPaz")[id].firstChild.data
-				console.log("paziente eliminato")
 				addConfermaEliminazione("paziente")
 				$("#confermaEliminazione").click(function(){
 					eliminaPaziente(cf)
@@ -45,7 +43,6 @@
 		  $(".modificaMedicoButton").click(function(){
 			  	
 				var id = $(this).attr("id")
-				console.log("medico modificato")
 				var medico = JSON.stringify(data[0][id])
 				sessionStorage.setItem("modMedico",medico)
 				window.location.href="ModificaAccountMedicoView.jsp"
@@ -54,8 +51,6 @@
 		  $(".modificaPazienteButton").click(function(){
 			  	
 				var id = $(this).attr("id")
-				console.log("paziente modificato")
-				console.log(data[1][id])
 				var paziente = JSON.stringify(data[1][id])
 				sessionStorage.setItem("modPaziente",paziente)
 				window.location.href="ModificaAccountPazienteView.jsp"
@@ -69,7 +64,6 @@
    */
   function eliminaMedico(cf){
 	  $.post("GestioneAmministratore",{operazione:"rimuoviAccount",codiceFiscale:cf,tipo:"medico"},function(data){
-		  console.log("eliminazione avvenuta con successo")
 		  location.reload();
 	  }).fail(function(){alert("si è verificato un errore")});
   }
@@ -78,7 +72,6 @@
    */
   function eliminaPaziente(cf){
 	  $.post("GestioneAmministratore",{operazione:"rimuoviAccount",codiceFiscale:cf,tipo:"paziente"},function(data){
-		  console.log("eliminazione avvenuta con successo")
 		  location.reload();
 	  }).fail(function(){alert("si è verificato un errore")});
   }
