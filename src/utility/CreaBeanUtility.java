@@ -15,8 +15,6 @@ import bean.Messaggio;
 import bean.Paziente;
 import bean.PianoTerapeutico;
 import bean.SchedaParametri;
-import model.MedicoModel;
-import model.PazienteModel;
 
 /**
  * 

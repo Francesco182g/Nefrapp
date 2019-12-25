@@ -38,7 +38,7 @@
 					<div class="card shadow mb-4">
 						<div class="card-body">
 							<form class="user" action="./GestioneAnnunci" method="POST" enctype="multipart/form-data">
-								<input type="hidden" name="operazione" value="invia" >
+								<input type="hidden" name="operazione" value="inviaAnnuncio" >
 								<div class="form-group row">
 									<div class="col-lg-6 col-sm-6 mb-6 mb-sm-12 row">
 										<div class="dropdown">

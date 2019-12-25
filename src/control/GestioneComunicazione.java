@@ -79,13 +79,10 @@ public class GestioneComunicazione extends HttpServlet {
 	 */
 	protected void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// questa non si può generalizzare perchè il medico non ha la lista di pazienti
-		// associati
-		// e vanno trattati diversamente
-
+		
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
-		System.out.println(utente);
+
 		if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
 			Medico selezionato;

@@ -1,8 +1,6 @@
 package bean;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,6 +9,14 @@ import java.time.format.DateTimeFormatter;
  * Questa classe rappresenta l'annuncio
  */
 public class Annuncio {
+	//i campi medico e paziente erano interi bean ma sarebbe un livello di ridondanza davvero estremo
+	//considerando che di quei bean ti servono pochi dati, e per quei dati devi praticamente fare una tabella completa
+	//dei bean di tutti i medici e pazienti coinvolti in tutti gli annunci quando li carichi una lista
+	//temo che sarebbe molto lento, e infatti nel model ho visto che sono stati trattati come codici fiscali e ho adattato.
+	//Logica specifica nel progetto che faccia conto della presenza di quei bean ancora non ce n'è
+	//quindi ovviamente possiamo ancora decidere in un modo o nell'altro in base alle esigenze
+	//comunque la logica del messaggio è fatta e finita coi cf e quella degli annunci sarebbe praticamente identica
+	
 	private String idAnnuncio;
 	private String medico; //CF del medico che ha pubblicato l'annuncio
 	private ArrayList<String> pazienti; //CF dei pazienti a cui è rivolto

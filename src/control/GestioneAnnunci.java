@@ -44,7 +44,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				return;
 			}
 			
-			else if(operazione.equals("invia")) {
+			else if(operazione.equals("inviaAnnuncio")) {
 				inviaComunicazione(request, operazione);
 				dispatcher.forward(request, response);
 				return;
@@ -83,6 +83,11 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		return;
 	}
 	
+	//questo metodo è puro codice duplicato, basta chiamare caricaDestinatari 
+	//also, attenti a 'sti nomi, onegai
+	//questo metodo non "crea un annuncio" in nessun modo immaginabile. Non crea nulla,
+	//e non ha a che fare con gli annunci in nessun punto. Non c'è nemmeno un annuncio dentro.
+	//creaAnnuncio() è un nome tanto azzeccato quanto lo sarebbe sgretolaPandoro() o abbracciaMilf()
 	/*
 	 * Metodo che prepara la creazione e l'invio dell'annuncio. Caricamento dei dati dei pazienti seguiti dal medico
 	 * @param request richiesta utilizzata per ottenere il medico loggato e settare la lista dei pazienti seguiti

@@ -1,13 +1,6 @@
 package control;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import bean.Messaggio;
 import bean.Utente;
@@ -114,8 +104,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
 			messaggi = MessaggioModel.getMessaggioByCFDestinatario(utente.getCodiceFiscale());
-			
-			if (messaggi!=null)
+
+			if (messaggi != null)
 				request.setAttribute("messaggio", messaggi);
 			else
 				return;
@@ -156,47 +146,12 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	private void visualizzaMessaggio(HttpServletRequest request) {
 		String idMessaggio = request.getParameter("idMessaggio");
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
-		if (messaggio!=null) {
+		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
 			messaggio.setAllegato(AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getAllegato()));
 
 			request.setAttribute("messaggio", messaggio);
 		}
-	}
-
-	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo, String nomeFile,
-			long dimensioneFile) {
-		boolean valido = true;
-		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		String estensione = "";
-
-		// file senza estensione (esistono, basta usare un sistema operativo vero)
-		if (dimensioneFile > 0 && !nomeFile.contains(".")) {
-			valido = false;
-		}
-		// senza questo controllo substring crasha in caso di nessun file e file senza
-		// estensione
-		if (dimensioneFile > 0 && nomeFile.contains(".")) {
-			int indice = nomeFile.indexOf(".");
-			estensione = nomeFile.substring(indice);
-		}
-
-		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16) {
-			valido = false;
-		} else if (oggetto.length() < 1 || oggetto.length() > 75) {
-			valido = false;
-		} else if (testo.length() < 1 || testo.length() > 1000) {
-			valido = false;
-		} else if (!estensione.equals("") && !estensione.equals(".jpg") && !estensione.equals(".jpeg")
-				&& !estensione.equals(".png") && !estensione.equals(".pjpeg") && !estensione.equals(".pjp")
-				&& !estensione.equals(".jfif") && !estensione.equals(".bmp")) {
-			valido = false;
-		} else if (dimensioneFile > 15728640l) {
-			valido = false;
-		}
-		
-		System.out.println(valido);
-		return valido;
 	}
 
 }
