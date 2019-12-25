@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
@@ -51,7 +52,11 @@ public class GestioneAmministratore extends HttpServlet {
 						modificaDatiPersonali(request, response, session);
 					}
 					else if(operazione.equals("caricaMedPaz")) {
-						scaricaDatiPazienteMedico(request,response);
+						Utente utente = (Utente) session.getAttribute("utente");
+						if (utente!=null && utente instanceof Amministratore)
+						{
+							scaricaDatiPazienteMedico(request,response);
+						}
 					}
 					
 					else {

@@ -116,7 +116,7 @@ public class GestioneResetPasswordMedico extends HttpServlet {
 			Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
 			
 			if(medico.getEmail().equals(email)) {
-				//TODO modificare password nel db
+				MedicoModel.updatePasswordMedico(codiceFiscale, password);
 				request.setAttribute("notifica", "Reset password avvenuto con successo");
 				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				return;
