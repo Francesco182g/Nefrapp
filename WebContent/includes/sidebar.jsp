@@ -50,6 +50,11 @@
 		<c:choose>
 			<c:when test='${isPaziente==true && accessDone==true}'>
 
+				<li class="nav-item"><form action="./GestioneAccesso" method="post">
+					<input type="hidden" name="operazione" value="logout">
+					<button class="btn btn-primary">Logout immediato (temp. per testing)</button>
+				</form></li>
+
 				<li class="nav-item"><a class="nav-link" href="./profilo.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
@@ -82,6 +87,12 @@
 
 			<c:when test='${isMedico==true && accessDone==true}'>
 
+				<li class="nav-item"><form action="./GestioneAccesso" method="post">
+					<input type="hidden" name="operazione" value="logout">
+					<button class="btn btn-primary">Logout immediato
+						(temp. per testing)</button>
+				</form></li>
+
 				<li class="nav-item"><a class="nav-link" href="/ModificaAccountMedicoView.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
@@ -113,6 +124,12 @@
 
 			</c:when>
 			<c:when test='${isAmministratore==true && accessDone==true}'>
+				<li class="nav-item"><form action="./GestioneAccesso" method="post">
+					<input type="hidden" name="operazione" value="logout">
+					<button class="btn btn-primary">Logout immediato (temp.
+						per testing)</button>
+				</form></li>
+
 				<li class="nav-item"><a class="nav-link"
 					href="./registraMedico.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Registra

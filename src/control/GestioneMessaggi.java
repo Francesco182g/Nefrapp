@@ -64,7 +64,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				requestDispatcher.forward(request, response);
 			}
 			if (operazione.equals("inviaMessaggio")) {
-				inviaMessaggio(request, response);
+				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
 				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
@@ -96,66 +96,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	}
 
 	/**
-	 * Metodo che prende mittente, destinatari, oggetto, testo e allegato del
-	 * messaggio e lo salva nel database
-	 * 
-	 * @param request richiesta utilizzata per ottenere parametri e settare
-	 *                attributi
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	private void inviaMessaggio(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-
-		Utente utente = null;
-		HttpSession session = request.getSession();
-		Messaggio messaggio = null;
-		utente = (Utente) session.getAttribute("utente");
-		ArrayList<String> destinatari = null;
-		if ((boolean) session.getAttribute("accessDone") == true) {
-			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
-				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
-			} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
-				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
-			}
-			String CFMittente = utente.getCodiceFiscale();
-			String oggetto = request.getParameter("oggetto");
-			String testo = request.getParameter("testo");
-			String allegato = new String();
-
-			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-			Part filePart = request.getPart("file");
-			if (controllaParametri(CFMittente, oggetto, testo, filePart.getSubmittedFileName(), filePart.getSize())) {
-				InputStream fileContent = filePart.getInputStream();
-				if (isMultipart) {
-					try {
-						allegato = AlgoritmoCriptazioneUtility.codificaFile(fileContent);
-					} finally {
-						if (fileContent != null) {
-							fileContent.close();
-						}
-
-					}
-				}
-			} else {
-
-				// inserire il request dispatcher con la variabile notifica ricordare di mettere
-				// anche il campo hidden nella jsp
-			}
-
-			// inserire qui controlli backend
-			messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato,
-					ZonedDateTime.now(ZoneId.of("Europe/Rome")));
-			MessaggioModel.addMessaggio(messaggio);
-
-			// qua verrebbe un notify() ai medici se avessimo un observer
-
-		} else {
-			System.out.println("L'utente deve essere loggato");
-		}
-	}
-
-	/**
 	 * Metodo che prende la lista dei messaggi ricevuti dall'utente e lo salva nella
 	 * richiesta
 	 * 
@@ -174,7 +114,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
 			messaggi = MessaggioModel.getMessaggioByCFDestinatario(utente.getCodiceFiscale());
-			request.setAttribute("messaggio", messaggi);
+			
+			if (messaggi!=null)
+				request.setAttribute("messaggio", messaggi);
+			else
+				return;
 
 			// piccolo sistema di caching per minimizzare le query sui destinatari che hanno
 			// mandato messaggi

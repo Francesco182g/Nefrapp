@@ -46,11 +46,11 @@ public class AnnuncioModel {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		
 		ArrayList<String> codiciFiscaliPazienti = new ArrayList<String>();
-		for (Paziente paziente: daAggiungere.getPazienti()) {
-			codiciFiscaliPazienti.add(paziente.getCodiceFiscale());
+		for (String paziente: daAggiungere.getPazienti()) {
+			codiciFiscaliPazienti.add(paziente);
 		}
 		
-		Document doc = new Document("MedicoCodiceFiscale", daAggiungere.getMedico().getCodiceFiscale())
+		Document doc = new Document("MedicoCodiceFiscale", daAggiungere.getMedico())
 				.append("PazientiCodiceFiscale", codiciFiscaliPazienti)
 				.append("Titolo", daAggiungere.getTitolo())
 				.append("Testo", daAggiungere.getTesto())

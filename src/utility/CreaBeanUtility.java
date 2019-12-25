@@ -155,19 +155,16 @@ public class CreaBeanUtility {
 	
 	public static Annuncio daDocumentAAnnuncio(Document datiAnnuncio) {
 		Annuncio annuncio = new Annuncio();
-		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
-		annuncio.setMedico(MedicoModel.getMedicoByCF(datiAnnuncio.getString("MedicoCodiceFiscale")));
+		annuncio.setMedico(datiAnnuncio.getString("MedicoCodiceFiscale"));
+		annuncio.setPazienti((ArrayList<String>) datiAnnuncio.get("PazientiCodiceFiscale"));
 		annuncio.setAllegato(datiAnnuncio.getString("Allegato"));
-		annuncio.setTitolo(datiAnnuncio.getString("titolo"));
+		annuncio.setTitolo(datiAnnuncio.getString("Titolo"));
 		annuncio.setTesto(datiAnnuncio.getString("Testo"));
 		Date temp = datiAnnuncio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		annuncio.setData(data);
-		ArrayList<Paziente> pazienti = new ArrayList<Paziente>();
-		ArrayList<String> codiciFiscaliPazienti = (ArrayList<String>) datiAnnuncio.get("PazientiCodiceFiscale");
-		for(String codiceFiscalePaziente: codiciFiscaliPazienti) {
-			pazienti.add(PazienteModel.getPazienteByCF(codiceFiscalePaziente));
-		}
+		annuncio.setVisualizzato(datiAnnuncio.getBoolean("Visualizzato"));
+		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
 		
 		return annuncio;
 	}

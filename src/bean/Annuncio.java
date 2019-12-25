@@ -12,16 +12,16 @@ import java.time.format.DateTimeFormatter;
  */
 public class Annuncio {
 	private String idAnnuncio;
-	private Medico medico; //Riferimento al medico che ha pubblicato l'annuncio
-	private ArrayList<Paziente> pazienti; //Riferimento ai pazienti a cui � rivolto
+	private String medico; //CF del medico che ha pubblicato l'annuncio
+	private ArrayList<String> pazienti; //CF dei pazienti a cui è rivolto
 	private String titolo;
 	private String testo;
-	private String allegato; //pu� essere una presentazione pp o un video, tenere traccia tramite path
+	private String allegato; //può essere una presentazione pp o un video, tenere traccia tramite path
 	private ZonedDateTime data;
 	private Boolean visualizzato;
 	public Annuncio() {}
 	
-	public Annuncio(Medico medico, ArrayList<Paziente> pazienti, String titolo, String testo, String allegato, ZonedDateTime data) {
+	public Annuncio(String medico, ArrayList<String> pazienti, String titolo, String testo, String allegato, ZonedDateTime data) {
 		this.medico = medico;
 		this.pazienti = pazienti;
 		this.titolo = titolo;
@@ -31,19 +31,19 @@ public class Annuncio {
 		this.visualizzato=false;
 	}
 
-	public Medico getMedico() {
+	public String getMedico() {
 		return medico;
 	}
 
-	public void setMedico(Medico medico) {
+	public void setMedico(String medico) {
 		this.medico = medico;
 	}
 
-	public ArrayList<Paziente> getPazienti() {
+	public ArrayList<String> getPazienti() {
 		return pazienti;
 	}
 
-	public void setPazienti(ArrayList<Paziente> pazienti) {
+	public void setPazienti(ArrayList<String> pazienti) {
 		this.pazienti = pazienti;
 	}
 
@@ -96,14 +96,12 @@ public class Annuncio {
 	public Boolean getVisualizzato() {
 		return this.visualizzato;
 	}
-	
+
 	@Override
 	public String toString() {
-		String infoPazienti = "";
-		for(Paziente p: pazienti)
-			infoPazienti = infoPazienti + p.getNome() + p.getCognome() + "\n";
-		
-		return "Annuncio [Medico=" + medico.getNome() + medico.getCognome() + ", pazienti=" + infoPazienti + ", titolo=" + titolo
-				+ ", testo=" + testo + ", data=" + data + "]";
+		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + pazienti + ", titolo="
+				+ titolo + ", testo=" + testo + ", allegato=" + allegato + ", data=" + data + ", visualizzato="
+				+ visualizzato + "]";
 	}
+	
 }
