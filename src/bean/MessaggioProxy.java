@@ -13,6 +13,7 @@ import model.MessaggioModel;
  *
  */
 public class MessaggioProxy implements Messaggio {
+	private Messaggio buffer = null;
 	private String idMessaggio;
 	private String codiceFiscaleMittente;
 	private String oggetto;
@@ -40,13 +41,19 @@ public class MessaggioProxy implements Messaggio {
 	}
 
 	public ArrayList<String> getCodiceFiscaleDestinatario() {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		return m.getCodiceFiscaleDestinatario();
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		return buffer.getCodiceFiscaleDestinatario();
 	}
 
 	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario) {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		m.setCodiceFiscaleDestinatario(codiceFiscaleDestinatario);
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		buffer.setCodiceFiscaleDestinatario(codiceFiscaleDestinatario);
 	}
 
 	public String getOggetto() {
@@ -58,33 +65,51 @@ public class MessaggioProxy implements Messaggio {
 	}
 
 	public String getTesto() {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		return m.getTesto();		
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		return buffer.getTesto();	
 	}
 
 	public void setTesto(String testo) {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		m.setTesto(testo);		
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		buffer.setTesto(testo);
 	}
 
 	public String getCorpoAllegato() {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		return m.getCorpoAllegato();	
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		return buffer.getCorpoAllegato();
 	}
 
 	public void setCorpoAllegato(String corpoAllegato) {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		m.setCorpoAllegato(corpoAllegato);	
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		buffer.setCorpoAllegato(corpoAllegato);
 	}
 
 	public String getNomeAllegato() {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		return m.getNomeAllegato();		
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		return buffer.getNomeAllegato();	
 	}
 
 	public void setNomeAllegato(String nomeAllegato) {
-		Messaggio m = MessaggioModel.getMessaggioById(idMessaggio);
-		m.setNomeAllegato(nomeAllegato);	
+		if (buffer == null) {
+			buffer = MessaggioModel.getMessaggioById(idMessaggio);
+		}
+		
+		buffer.setNomeAllegato(nomeAllegato);	
 	}
 
 	public String getOraFormattata() {
