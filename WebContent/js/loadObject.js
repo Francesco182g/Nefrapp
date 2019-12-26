@@ -32,6 +32,12 @@
 		}).fail(function(){
 			alert("si è verificato un errore")
 		})
+		$.post("GestioneAnnunci",{operazione : "visualizzaPersonali",tipo :"asincrona",utente:"paziente"},function(data){
+			console.log(data)
+			
+		}).fail(function(){
+			alert("si è verificato un errore")
+		})
 	}
 	
 	function caricaDatiMedico(){
