@@ -138,19 +138,14 @@ public class GestioneComunicazione extends HttpServlet {
 			String nomeFile = null;
 			InputStream fileStream = null;
 			InputStream nomeFileStream = null;
-
 			Part filePart = request.getPart("file");
-			if (filePart!=null) {
-				fileStream = filePart.getInputStream();
-				nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
-			}
-			
+
 			//check campi obbligatori
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				//check presenza e correttezza allegato
-				if (ServletFileUpload.isMultipartContent(request) && controllaFile(nomeFile, filePart.getSize())) {
-					//TODO correggere bug per cui la request risulta sempre multipart
-					//(nessuna conseguenza funzionale per via del controllo sulla size)
+				if (filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
+					fileStream = filePart.getInputStream();
+					nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
 					try {
 						allegato = AlgoritmoCriptazioneUtility.codificaFile(fileStream);
 						nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));

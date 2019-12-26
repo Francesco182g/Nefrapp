@@ -144,15 +144,28 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		}
 
 	}
-
+	
+	/**
+	 * Metodo che prende l'id di un messaggio dalla request e lo usa
+	 * per prendere il messaggio corrispondente dal database, decriptarne l'allegato
+	 * e mettere nella request le informazioni da mostrare
+	 * 
+	 * @param request richiesta utilizzata per ottenere parametri e settare
+	 *                attributi
+	 */
 	private void visualizzaMessaggio(HttpServletRequest request) {
 		String idMessaggio = request.getParameter("idMessaggio");
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
+		String nomeAllegato = messaggio.getNomeAllegato();
+		String corpoAllegato = messaggio.getCorpoAllegato();
+		
 		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
-			messaggio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getCorpoAllegato()));
-			String nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getNomeAllegato());
-			messaggio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
+			if (nomeAllegato!=null && corpoAllegato!=null) {
+				messaggio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(corpoAllegato));
+				nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(nomeAllegato);
+				messaggio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
+			}
 
 			request.setAttribute("messaggio", messaggio);
 		}
