@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
@@ -20,7 +22,7 @@ import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
- * Questa clase è una servlet che si occupa della gestione del medico
+ * Questa clase ï¿½ una servlet che si occupa della gestione del medico
  *
  */
 @WebServlet("/GestioneMedico")
@@ -31,14 +33,11 @@ public class GestioneMedico extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
-			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
+			
 			String operazione = request.getParameter("operazione");
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
+			
+
 			
 			if(medico == null) {
 				request.setAttribute("notifica", "Bisogna essere loggati da medico");
@@ -48,18 +47,29 @@ public class GestioneMedico extends HttpServlet {
 			}
 
 			if (operazione.equals("modifica")) {
-				request.setAttribute("notifica", "Modifica effettuata con successo"); //Nel caso in cui la modifica non avviene con successo allora la stringa verrà cambiata
+				request.setAttribute("notifica", "Modifica effettuata con successo"); //Nel caso in cui la modifica non avviene con successo allora la stringa verrï¿½ cambiata
 				modificaAccount(request, response);
 				dispatcher.forward(request, response);
 				return;
 
 			} 
 			else if (operazione.equals("VisualizzaPazientiSeguiti")) {
+				String tipo = request.getParameter("tipo");
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
-				request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-				dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
-				dispatcher.forward(request, response);
-				return;
+				if(tipo != null  && tipo.equals("asincrona"))
+				{
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					Gson gg = new Gson();
+					response.getWriter().write(gg.toJson(pazientiSeguiti));
+				}
+				else {
+					request.setAttribute("pazientiSeguiti", pazientiSeguiti);
+					dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
+					dispatcher.forward(request, response);
+					return;
+				}
+				
 
 			} 
 			else if (operazione.equals("elimina")) {

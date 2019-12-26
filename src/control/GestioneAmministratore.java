@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,8 +64,10 @@ public class GestioneAmministratore extends HttpServlet {
 						throw new Exception("Operazione invalida");
 					}	
 				} catch (Exception e) {
-					System.out.println("Errore in gestione parametri:");
-					e.printStackTrace();		
+					e.printStackTrace();
+					request.setAttribute("notifica","Errore in gestione Amministratore. "+e.getMessage());
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+					requestDispatcher.forward(request,response);	
 				}
 				
 	}

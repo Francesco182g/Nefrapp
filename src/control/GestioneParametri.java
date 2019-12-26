@@ -61,6 +61,7 @@ public class GestioneParametri extends HttpServlet {
 			}
 			
 		}catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("notifica", "Errore in Gestione parametri. " + e.getMessage());
 			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
 			dispatcher.forward(request,response);
@@ -97,10 +98,11 @@ public class GestioneParametri extends HttpServlet {
 		
 		utente = (Utente) session.getAttribute("utente");
 		
-		if ((boolean)session.getAttribute("isPaziente") == true){
+		if (session.getAttribute("isPaziente")!= null && (boolean)session.getAttribute("isPaziente") == true){
 			scheda = SchedaParametriModel.getSchedaParametriByCF(utente.getCodiceFiscale());
 		}	
-		else if ((boolean)session.getAttribute("isMedico") == true) {
+		else if (session.getAttribute("isMedico") != null && (boolean)session.getAttribute("isMedico") == true) {
+			System.out.println(request.getParameter("CFPaziente"));
 			scheda = SchedaParametriModel.getSchedaParametriByCF(request.getParameter("CFPaziente"));
 		}
 		else {
