@@ -38,5 +38,15 @@
     <servlet-name>GestioneMessaggi</servlet-name>
     <url-pattern>/messaggio</url-pattern>
   </servlet-mapping>
+      <servlet>
+      
+    <servlet-name>GestioneAnnunci</servlet-name>
+    <servlet-class>control.GestioneAnnunci</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>GestioneAnnunci</servlet-name>
+    <url-pattern>/annuncio</url-pattern>
+  </servlet-mapping>
 
 </web-app>

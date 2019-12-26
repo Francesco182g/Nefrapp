@@ -118,7 +118,7 @@
 							Messaggio</span></a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href="../parametri?operazione=visualizzaScheda"> <i
+					href="./annuncio?operazione=caricaDestinatariAnnuncio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Pubblica
 							Annuncio</span></a></li>
 

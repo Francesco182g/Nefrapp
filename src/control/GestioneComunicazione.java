@@ -83,7 +83,7 @@ public class GestioneComunicazione extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
-
+		
 		if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
 			Medico selezionato;

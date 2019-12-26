@@ -38,9 +38,21 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				dispatcher.forward(request, response);
 				return;
 			}
-			
+			/*Da Sara: mi sono permessa di conformare l'inserimento dell'annuncio a quello dei messaggi.
+			 * si richiama il metodo "caricaDestinatari" della superclasse GestioneComunicazioni il quale preleva i possibili
+			 * destinatari per un determinato medico e li salva nella sessione.
+			 * Questo lo fa solo dalla side bar...
+			 */
 			String operazione = request.getParameter("operazione");
 			
+			if(operazione.equals("caricaDestinatariAnnuncio")) {
+				caricaDestinatari(request, response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoAnnuncioView.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			/**
+			 * ..questo credo lo faccia dalla dashboard.
+			 */
 			if(operazione.equals("crea")) {
 				creaAnnuncio(request, response);
 				dispatcher.forward(request, response);
@@ -74,7 +86,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		} catch(Exception e) {
 			request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
 			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request,response);
+			//dispatcher.forward(request,response);
 			return;
 		}
 		

@@ -65,7 +65,18 @@ public class PianoTerapeuticoModel {
  */
 	public static boolean isPianoTerapeuticoVisualizzato(String codiceFiscalePaziente) {
 		MongoCollection<Document> annunciDB = DriverConnection.getConnection().getCollection("Annuncio");
-		BasicDBObject andQuery = new BasicDBObject();
+		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
+		obj.add(new BasicDBObject("Visualizzato", false));
+		BasicDBObject andQuery = new BasicDBObject("$and", obj);
+		int n= (int) annunciDB.count(andQuery);
+		if(n==1) {
+			return false;
+		}
+		else {
+			return true;
+		}
+		/*BasicDBObject andQuery = new BasicDBObject();
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
 		obj.add(new BasicDBObject("Visualizzato", true));
@@ -75,7 +86,7 @@ public class PianoTerapeuticoModel {
 			return true;
 		}
 		documenti.close();
-		return false;
+		return false;*/
 	}
 
 	/**

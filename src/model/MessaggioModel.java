@@ -111,21 +111,16 @@ public class MessaggioModel {
 	/**
 	 * Conta quanti messaggi non sono stati letti da un determinato destinatario
 	 * @param CFDestinatario
-	 * @return
+	 * @return n il numero di messaggi che non sono stati letti
 	 */
 	public static int countMessaggiNonLetti(String CFDestinatario) {
 		
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
-		//query nuova, da testare
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("DestinatarioCodiceFiscale", CFDestinatario));
 		obj.add(new BasicDBObject("Visualizzato", false));
 		BasicDBObject andQuery = new BasicDBObject("$and", obj);
 		int n= (int) messaggioDB.count(andQuery);
-		
-		//query vecchia, ma non mi fido
-		//Document query= messaggioDB.find(eq("_id", new ObjectId(CFDestinatario))).first().append("Visualizzato", true);
-		//int n = (int) messaggioDB.count(query);
 		return n;
 	}
 
