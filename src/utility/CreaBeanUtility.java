@@ -12,6 +12,8 @@ import bean.Amministratore;
 import bean.Annuncio;
 import bean.Medico;
 import bean.Messaggio;
+import bean.MessaggioCompleto;
+import bean.MessaggioProxy;
 import bean.Paziente;
 import bean.PianoTerapeutico;
 import bean.SchedaParametri;
@@ -137,7 +139,7 @@ public class CreaBeanUtility {
 	 * @return schedaParametri convertito dal documento
 	 */
 	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
-		Messaggio messaggio = new Messaggio();
+		Messaggio messaggio = new MessaggioCompleto();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setCodiceFiscaleDestinatario((ArrayList<String>) datiMessaggio.get("DestinatarioCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
@@ -169,5 +171,18 @@ public class CreaBeanUtility {
 		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
 		
 		return annuncio;
+	}
+
+	public static Messaggio daDocumentAMessaggioProxy(Document datiMessaggio) {
+		Messaggio messaggio = new MessaggioProxy();
+		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
+		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
+	
+		Date temp = datiMessaggio.getDate("Data");
+		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
+		messaggio.setData(data);
+		messaggio.setVisualizzato(datiMessaggio.getBoolean("Visualizzato"));
+		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
+		return messaggio;
 	}
 }

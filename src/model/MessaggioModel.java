@@ -12,8 +12,10 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Projections;
 
 import bean.Messaggio;
 import utility.CreaBeanUtility;
@@ -75,6 +77,19 @@ public class MessaggioModel {
 		documenti.close();
 		return messaggi;
 	}
+	
+	public static ArrayList<Messaggio> getMessaggiProxyByMittente(String codiceFiscaleMittente) {
+		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
+		ArrayList<Messaggio> messaggi = new ArrayList<>();
+		FindIterable<Document> it = messaggioDB.find(eq("MittenteCodiceFiscale", codiceFiscaleMittente)).
+				 projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
+		
+		for (Document doc : it) {
+			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
+		}
+		
+		return messaggi;
+	}
 
 	/**
 	 * Metodo che ricerca i messaggi per codice fiscale dei destinatari
@@ -92,6 +107,19 @@ public class MessaggioModel {
 		}
 
 		documenti.close();
+		return messaggi;
+	}
+	
+	public static ArrayList<Messaggio> getMessaggioProxyByCFDestinatario(String CFDestinatario) {
+		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
+		ArrayList<Messaggio> messaggi = new ArrayList<>();
+		FindIterable<Document> it = messaggioDB.find(eq("DestinatarioCodiceFiscale", CFDestinatario)).
+				 projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
+		
+		for (Document doc : it) {
+			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
+		}
+		
 		return messaggi;
 	}
 

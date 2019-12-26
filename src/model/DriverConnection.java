@@ -11,7 +11,7 @@ import com.mongodb.client.MongoDatabase;
  */
 
 public class DriverConnection {
-	private static MongoClientURI uri = new MongoClientURI("mongodb+srv://teamNefrapp:nefrapp01@cluster0-gkgb4.azure.mongodb.net/test");
+	private static MongoClientURI uri = new MongoClientURI("mongodb://filippo5~:pippo123@35.153.63.212/NefrApp");
 	private static MongoClient mongoClient = new MongoClient(uri);
 	private static MongoDatabase database = mongoClient.getDatabase("NefrApp");
 	
