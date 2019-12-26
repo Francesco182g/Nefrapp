@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.xml.internal.messaging.saaj.util.Base64;
+
 import bean.Messaggio;
 import bean.Utente;
 import model.MessaggioModel;
@@ -148,7 +150,9 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
 		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
-			messaggio.setAllegato(AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getAllegato()));
+			messaggio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getCorpoAllegato()));
+			String nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(messaggio.getNomeAllegato());
+			messaggio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
 
 			request.setAttribute("messaggio", messaggio);
 		}

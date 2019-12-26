@@ -11,11 +11,8 @@ import org.bson.types.ObjectId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Filters;
 
 import bean.Messaggio;
-import bean.Paziente;
-import utility.AlgoritmoCriptazioneUtility;
 import utility.CreaBeanUtility;
 
 /**
@@ -34,11 +31,14 @@ public class MessaggioModel {
 	public static void addMessaggio(Messaggio daAggiungere) {
 		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
 
+		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).
+				append("CorpoAllegato", daAggiungere.getCorpoAllegato());
+		
 		Document doc = new Document("MittenteCodiceFiscale", daAggiungere.getCodiceFiscaleMittente())
 				.append("DestinatarioCodiceFiscale", daAggiungere.getCodiceFiscaleDestinatario())
 				.append("Oggetto", daAggiungere.getOggetto())
 				.append("Testo", daAggiungere.getTesto())
-				.append("Allegato", daAggiungere.getAllegato())
+				.append("Allegato", allegato)
 				.append("Data", daAggiungere.getData().toInstant())
 				.append("Visualizzato", daAggiungere.getVisualizzato());
 		messaggio.insertOne(doc);
@@ -61,6 +61,7 @@ public class MessaggioModel {
 		while (documenti.hasNext())
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggio(documenti.next()));
 
+		documenti.close();
 		return messaggi;
 	}
 
@@ -79,6 +80,7 @@ public class MessaggioModel {
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggio(documenti.next()));
 		}
 
+		documenti.close();
 		return messaggi;
 	}
 

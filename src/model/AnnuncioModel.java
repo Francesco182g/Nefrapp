@@ -45,16 +45,14 @@ public class AnnuncioModel {
 	public static void addAnnuncio(Annuncio daAggiungere) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		
-		ArrayList<String> codiciFiscaliPazienti = new ArrayList<String>();
-		for (String paziente: daAggiungere.getPazienti()) {
-			codiciFiscaliPazienti.add(paziente);
-		}
+		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).
+				append("CorpoAllegato", daAggiungere.getCorpoAllegato());
 		
 		Document doc = new Document("MedicoCodiceFiscale", daAggiungere.getMedico())
-				.append("PazientiCodiceFiscale", codiciFiscaliPazienti)
+				.append("PazientiCodiceFiscale", daAggiungere.getPazienti())
 				.append("Titolo", daAggiungere.getTitolo())
 				.append("Testo", daAggiungere.getTesto())
-				.append("Allegato", daAggiungere.getAllegato())
+				.append("Allegato", allegato)
 				.append("Data", daAggiungere.getData().toInstant());
 		annuncioDB.insertOne(doc);
 	}
@@ -72,6 +70,7 @@ public class AnnuncioModel {
 			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
 		}
 		
+		documenti.close();
 		return annunci;
 	}
 	/**
@@ -89,6 +88,7 @@ public class AnnuncioModel {
 			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
 		}
 		
+		documenti.close();
 		return annunci;
 	}
 	/**

@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
     });
 });
 
-function creaDownload(allegato) {
+function creaDownload(allegato, nomeAllegato) {
 	const byteCharacters = atob(allegato);
 	
 	const byteNumbers = new Array(byteCharacters.length);
@@ -17,17 +17,23 @@ function creaDownload(allegato) {
 	const blob = new Blob([byteArray], {type: "*"});
 	
 	blob.lastModifiedDate = new Date();
-    blob.name = "immagine.jpeg";
+    blob.name = nomeAllegato;
 
 	var url = window.URL.createObjectURL(blob);
 	document.getElementById("download").href = url;
-	document.getElementById("download").download = "immagine.jpeg";
+	document.getElementById("download").download = nomeAllegato;
 }
 	    
 //seleziona il destinatario del messaggio in caso si arrivi alla pagina di invio messaggi dal tasto Rispondi 	
 function selezionaDestinatario (valore) {
  		if (valore != null && valore!= "") {
- 	    	var element = document.getElementById("selectMedico");
- 	    	element.value = valore;
+ 	    	var selMed = document.getElementById("selectMedico");
+ 	    	if (selMed != null && selMed != undefined)
+ 	    		selMed.value = valore;
+ 	    	
+ 	    	var selPaz = document.getElementById("selectPaziente");
+ 	    	if (selPaz != null && selPaz != undefined)
+ 	    		selPaz.value = valore;
+
 		}
 	}

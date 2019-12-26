@@ -22,17 +22,19 @@ public class Annuncio {
 	private ArrayList<String> pazienti; //CF dei pazienti a cui è rivolto
 	private String titolo;
 	private String testo;
-	private String allegato; //può essere una presentazione pp o un video, tenere traccia tramite path
+	private String corpoAllegato; //può essere una presentazione pp o un video, tenere traccia tramite path
+	private String nomeAllegato;
 	private ZonedDateTime data;
 	private Boolean visualizzato;
 	public Annuncio() {}
 	
-	public Annuncio(String medico, ArrayList<String> pazienti, String titolo, String testo, String allegato, ZonedDateTime data) {
+	public Annuncio(String medico, ArrayList<String> pazienti, String titolo, String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data) {
 		this.medico = medico;
 		this.pazienti = pazienti;
 		this.titolo = titolo;
 		this.testo = testo;
-		this.allegato = allegato;
+		this.setCorpoAllegato(corpoAllegato);
+		this.setNomeAllegato(nomeAllegato);
 		this.data = data;
 		this.visualizzato=false;
 	}
@@ -69,12 +71,20 @@ public class Annuncio {
 		this.testo = testo;
 	}
 
-	public String getAllegato() {
-		return allegato;
+	public String getCorpoAllegato() {
+		return corpoAllegato;
 	}
 
-	public void setAllegato(String allegato) {
-		this.allegato = allegato;
+	public void setCorpoAllegato(String corpoAllegato) {
+		this.corpoAllegato = corpoAllegato;
+	}
+
+	public String getNomeAllegato() {
+		return nomeAllegato;
+	}
+
+	public void setNomeAllegato(String nomeAllegato) {
+		this.nomeAllegato = nomeAllegato;
 	}
 
 	public ZonedDateTime getData() {
@@ -106,7 +116,7 @@ public class Annuncio {
 	@Override
 	public String toString() {
 		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + pazienti + ", titolo="
-				+ titolo + ", testo=" + testo + ", allegato=" + allegato + ", data=" + data + ", visualizzato="
+				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato="
 				+ visualizzato + "]";
 	}
 	

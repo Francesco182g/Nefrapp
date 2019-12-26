@@ -18,7 +18,7 @@
 <script type="text/javascript" src="./js/messaggi.js"></script>
 <script src="js/ParameterControl.js"></script>
 </head>
-<body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')"> 
+<body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<%@include file="./includes/sidebar.jsp"%>

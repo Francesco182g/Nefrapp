@@ -10,11 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.xml.internal.messaging.saaj.util.Base64;
+
 import bean.Annuncio;
 import bean.Medico;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
+import model.MessaggioModel;
 import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 
@@ -128,7 +131,10 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
 				
 				if (annuncio != null) {
-					annuncio.setAllegato(AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getAllegato()));
+					MessaggioModel.setVisualizzatoMessaggio(idAnnuncio, true);
+					annuncio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getCorpoAllegato()));
+					String nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getNomeAllegato());
+					annuncio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
 				}
 			}
 			else {

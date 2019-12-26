@@ -60,6 +60,7 @@ public class PazienteModel {
 			pazientiMedico.add(CreaBeanUtility.daDocumentAPaziente(documenti.next()));
 		}
 		
+		documenti.close();
 		return pazientiMedico;	
 	}
 	

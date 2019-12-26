@@ -18,18 +18,20 @@ public class Messaggio {
 	private ArrayList<String> codiceFiscaleDestinatario;
 	private String oggetto;
 	private String testo;
-	private String allegato;
+	private String corpoAllegato;
+	private String nomeAllegato;
 	private ZonedDateTime data;
 	private Boolean visualizzato;
 	
 	public Messaggio() {}
 
-	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String allegato, ZonedDateTime data) {
+	public Messaggio(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto, String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 		this.codiceFiscaleDestinatario = new ArrayList<String> (codiceFiscaleDestinatario);
 		this.oggetto = oggetto;
 		this.testo = testo;
-		this.allegato = allegato;
+		this.corpoAllegato = corpoAllegato;
+		this.nomeAllegato = nomeAllegato;
 		this.data = data;
 		this.visualizzato=false;
 	}
@@ -65,13 +67,21 @@ public class Messaggio {
 	public void setTesto(String testo) {
 		this.testo = testo;
 	}
-
-	public String getAllegato() {
-		return allegato;
+	
+	public String getCorpoAllegato() {
+		return corpoAllegato;
 	}
 
-	public void setAllegato(String allegato) {
-		this.allegato = allegato;
+	public void setCorpoAllegato(String corpoAllegato) {
+		this.corpoAllegato = corpoAllegato;
+	}
+
+	public String getNomeAllegato() {
+		return nomeAllegato;
+	}
+
+	public void setNomeAllegato(String nomeAllegato) {
+		this.nomeAllegato = nomeAllegato;
 	}
 	
 	public String getOraFormattata() {

@@ -1,5 +1,6 @@
 package control;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
@@ -134,36 +135,42 @@ public class GestioneComunicazione extends HttpServlet {
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
 			String allegato = null;
-			InputStream fileContent = null;
+			String nomeFile = null;
+			InputStream fileStream = null;
+			InputStream nomeFileStream = null;
 
 			Part filePart = request.getPart("file");
-			if (filePart!=null && controllaFile(filePart.getSubmittedFileName(), filePart.getSize())) {
-				fileContent = filePart.getInputStream();
+			if (filePart!=null) {
+				fileStream = filePart.getInputStream();
+				nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
 			}
 			
 			//check campi obbligatori
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				//check presenza e correttezza allegato
-				if (ServletFileUpload.isMultipartContent(request) && controllaFile(filePart.getSubmittedFileName(), filePart.getSize())) {
+				if (ServletFileUpload.isMultipartContent(request) && controllaFile(nomeFile, filePart.getSize())) {
 					//TODO correggere bug per cui la request risulta sempre multipart
 					//(nessuna conseguenza funzionale per via del controllo sulla size)
 					try {
-						allegato = AlgoritmoCriptazioneUtility.codificaFile(fileContent);
+						allegato = AlgoritmoCriptazioneUtility.codificaFile(fileStream);
+						nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));
+						nomeFile = AlgoritmoCriptazioneUtility.codificaFile(nomeFileStream);
 					} catch (Exception e) {
 						System.out.println("inviaMessaggio: errore nella criptazione del file");
 					} finally {
-						if (fileContent != null) {
-							fileContent.close();
+						if (fileStream != null && nomeFileStream != null) {
+							fileStream.close();
+							nomeFileStream.close();
 						}
 					}
 				}
 
 				if (operazione.equals("inviaMessaggio")) {
-					messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato,
+					messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {
-					annuncio = new Annuncio(CFMittente, destinatari, oggetto, testo, allegato,
+					annuncio = new Annuncio(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 					AnnuncioModel.addAnnuncio(annuncio);
 				}

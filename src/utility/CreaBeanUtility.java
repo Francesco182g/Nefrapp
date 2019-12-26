@@ -142,7 +142,9 @@ public class CreaBeanUtility {
 		messaggio.setCodiceFiscaleDestinatario((ArrayList<String>) datiMessaggio.get("DestinatarioCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
 		messaggio.setTesto(datiMessaggio.getString("Testo"));
-		messaggio.setAllegato(datiMessaggio.getString("Allegato"));	
+		Document allegato = (Document)datiMessaggio.get("Allegato");
+		messaggio.setNomeAllegato(allegato.getString("NomeAllegato"));
+		messaggio.setCorpoAllegato(allegato.getString("CorpoAllegato"));	
 		Date temp = datiMessaggio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
@@ -155,7 +157,9 @@ public class CreaBeanUtility {
 		Annuncio annuncio = new Annuncio();
 		annuncio.setMedico(datiAnnuncio.getString("MedicoCodiceFiscale"));
 		annuncio.setPazienti((ArrayList<String>) datiAnnuncio.get("PazientiCodiceFiscale"));
-		annuncio.setAllegato(datiAnnuncio.getString("Allegato"));
+		Document allegato = (Document)datiAnnuncio.get("Allegato");
+		annuncio.setNomeAllegato(allegato.getString("NomeAllegato"));
+		annuncio.setCorpoAllegato(allegato.getString("CorpoAllegato"));
 		annuncio.setTitolo(datiAnnuncio.getString("Titolo"));
 		annuncio.setTesto(datiAnnuncio.getString("Testo"));
 		Date temp = datiAnnuncio.getDate("Data");
