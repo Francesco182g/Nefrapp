@@ -104,7 +104,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			ArrayList<Utente> utentiCache = new ArrayList<>();
 			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
-			messaggi = MessaggioModel.getMessaggioProxyByCFDestinatario(utente.getCodiceFiscale());
+			messaggi = MessaggioModel.getMessaggiByDestinatario(utente.getCodiceFiscale());
 
 			if (messaggi != null)
 				request.setAttribute("messaggio", messaggi);

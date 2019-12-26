@@ -3,7 +3,6 @@ package model;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.bson.types.ObjectId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 
 import bean.Messaggio;
@@ -57,60 +55,14 @@ public class MessaggioModel {
 		messaggio.insertOne(doc);
 	}
 
-	/**
-	 * 
-	 * Metodo che prende dal database una lista di messaggi inviati da un
-	 * determinato utente
-	 * 
-	 * @param codiceFiscaleMittente codice fiscale del mittente
-	 * @author nico
-	 */
-	public static ArrayList<Messaggio> getMessaggiByMittente(String codiceFiscaleMittente) {
-		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
-		ArrayList<Messaggio> messaggi = new ArrayList<>();
-		MongoCursor<Document> documenti = messaggioDB.find(eq("MittenteCodiceFiscale", codiceFiscaleMittente))
-				.iterator();
-
-		while (documenti.hasNext())
-			messaggi.add(CreaBeanUtility.daDocumentAMessaggio(documenti.next()));
-
-		documenti.close();
-		return messaggi;
-	}
-	
-	public static ArrayList<Messaggio> getMessaggiProxyByMittente(String codiceFiscaleMittente) {
-		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
-		ArrayList<Messaggio> messaggi = new ArrayList<>();
-		FindIterable<Document> it = messaggioDB.find(eq("MittenteCodiceFiscale", codiceFiscaleMittente)).
-				 projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
-		
-		for (Document doc : it) {
-			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
-		}
-		
-		return messaggi;
-	}
 
 	/**
 	 * Metodo che ricerca i messaggi per codice fiscale dei destinatari
 	 * 
 	 * @param CFDestinatario Codice Fiscale del destinatario
-	 * @return messaggio se trovato almeno un messaggio, altrimenti null
+	 * @return messaggi: ArrayList contenente i messaggi trovati
 	 */
-	public static ArrayList<Messaggio> getMessaggioByCFDestinatario(String CFDestinatario) {
-		MongoCollection<Document> messaggiDB = DriverConnection.getConnection().getCollection("Messaggio");
-		ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
-		MongoCursor<Document> documenti = messaggiDB.find(eq("DestinatarioCodiceFiscale", CFDestinatario)).iterator();
-
-		while (documenti.hasNext()) {
-			messaggi.add(CreaBeanUtility.daDocumentAMessaggio(documenti.next()));
-		}
-
-		documenti.close();
-		return messaggi;
-	}
-	
-	public static ArrayList<Messaggio> getMessaggioProxyByCFDestinatario(String CFDestinatario) {
+	public static ArrayList<Messaggio> getMessaggiByDestinatario(String CFDestinatario) {
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Messaggio> messaggi = new ArrayList<>();
 		FindIterable<Document> it = messaggioDB.find(eq("DestinatarioCodiceFiscale", CFDestinatario)).
@@ -123,6 +75,12 @@ public class MessaggioModel {
 		return messaggi;
 	}
 
+	/**
+	 * Metodo che ricerca un messaggio nel database per id
+	 * 
+	 * @param idMessaggio: id del messaggio
+	 * @return messaggio: risultato della ricerca, vale null se non si trovano corrispondenze
+	 */
 	public static Messaggio getMessaggioById(String idMessaggio) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio))).first();

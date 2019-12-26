@@ -4,6 +4,12 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
+/**Interfaccia che determina le operazioni che possono essere compiute da un'implementazione concreta di Messaggio
+ * @author nico
+ *
+ */
 public interface Messaggio {
 	
 	public String getCodiceFiscaleMittente();

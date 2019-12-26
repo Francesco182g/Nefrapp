@@ -7,6 +7,11 @@ import java.util.HashMap;
 
 import model.MessaggioModel;
 
+
+/**Implementazione concreta lightweight di un Messaggio (proxy design pattern)
+ * @author nico
+ *
+ */
 public class MessaggioProxy implements Messaggio {
 	private String idMessaggio;
 	private String codiceFiscaleMittente;

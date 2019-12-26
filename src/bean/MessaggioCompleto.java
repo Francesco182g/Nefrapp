@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author Luca Esposito Questa classe rappresenta il messaggio
+ * Implementazione concreta completa di un Messaggio
  */
 public class MessaggioCompleto implements Messaggio {
 
