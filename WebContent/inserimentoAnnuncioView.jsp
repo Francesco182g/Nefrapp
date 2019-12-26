@@ -67,7 +67,7 @@
 							</div>
 							<div class="col-lg-10 col-sm-12 mb-12 mb-sm-12 row">
 								<input type="text" class="form-control form-control-user"
-									id="titolo" name="titolo" required="required">
+									id="oggetto" name="oggetto" required="required">
 							</div>
 
 						</div>

@@ -43,8 +43,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); // TODO reindirizzamento
-																								// home
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); // TODO reindirizzamento																						// home
 				dispatcher.forward(request, response);
 				return;
 			}

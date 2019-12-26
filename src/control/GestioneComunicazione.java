@@ -130,7 +130,6 @@ public class GestioneComunicazione extends HttpServlet {
 				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
 			} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
 				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
-				System.out.println(destinatari);
 			}
 			String CFMittente = utente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");

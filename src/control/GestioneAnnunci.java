@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,15 +27,18 @@ import utility.AlgoritmoCriptazioneUtility;
  * Questa classe � una servlet che si occupa della gestione degli annunci
  */
 @WebServlet("/GestioneAnnunci")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
+maxFileSize = 15728640, // 15MB
+maxRequestSize = 15728640) // 15MB
 public class GestioneAnnunci extends GestioneComunicazione {
 	private static final long serialVersionUID = 1L;
-	private RequestDispatcher dispatcher;
+	//private RequestDispatcher dispatcher;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				dispatcher = getServletContext().getRequestDispatcher("paginaErrore");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -57,40 +61,42 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			 */
 			if(operazione.equals("crea")) {
 				creaAnnuncio(request, response);
-				dispatcher.forward(request, response);
-				return;
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoAnnuncioView.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("inviaAnnuncio")) {
 				System.out.println("voglio inviare un annuncio");
 				inviaComunicazione(request, operazione);
-				dispatcher.forward(request, response);
-				return;
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	
+				requestDispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("visualizza")) {
 				visualizzaAnnuncio(request, response);
-				dispatcher.forward(request, response);
-				return;
+				RequestDispatcher requestDispatcher =request.getRequestDispatcher("./annuncioView.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("visualizzaPersonali")) {
 				visualizzaAnnunciPersonali(request, response);
-				dispatcher.forward(request, response);
-				return;
+				RequestDispatcher requestDispatcher =request.getRequestDispatcher("./listaAnnunciView.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
-				dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
-				dispatcher.forward(request, response);
+				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 		} catch(Exception e) {
-			request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
-			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			//dispatcher.forward(request,response);
-			return;
+			System.out.println("Errore durante il caricamento della pagina:");
+			e.printStackTrace();
+			/*request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
+			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+			//requestDispatcher.forward(request, response);
+			return;*/
 		}
 		
 		return;
@@ -119,14 +125,14 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
 			pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-			dispatcher = getServletContext().getRequestDispatcher("/inserimentoAnnuncio.jsp");
-			return;
 		}
-		else {
+		
+		/*else {
 			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
-			return;
-		}
+			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
+			requestDispatcher.forward(request, response);
+			
+		}*/
 	}
 	
 	/**
@@ -156,14 +162,13 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				System.out.println("L'utente deve essere loggato");
 			}
 			request.setAttribute("annuncio", annuncio);
-			dispatcher = getServletContext().getRequestDispatcher("/annuncioView.jsp");
-			return;
+			
 		}
-		else {
+		/*else {
 			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
+			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
 			return;
-		}
+		}*/
 	}
 	
 	/**
@@ -181,7 +186,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
 			
 			request.setAttribute("annunci", annunci);
-			dispatcher = getServletContext().getRequestDispatcher("/listaAnnunciView.jsp");
 			return;
 		}
 		
@@ -189,15 +193,12 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
-			
 			request.setAttribute("annunci", annunci);
-			dispatcher = getServletContext().getRequestDispatcher("/listaAnnunciView.jsp");
 			return;
 		}
 		
 		else {
 			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
 			return;
 		}
 	}
