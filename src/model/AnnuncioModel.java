@@ -4,7 +4,10 @@ package model;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.and;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.taglibs.standard.lang.jstl.AndOperator;
 import org.bson.Document;
@@ -44,6 +47,17 @@ public class AnnuncioModel {
 	
 	public static void addAnnuncio(Annuncio daAggiungere) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
+		ArrayList<Document> pazientiView=new ArrayList<Document>();
+		HashMap<String, Boolean> mp = new HashMap<String, Boolean>();
+		Iterator it = daAggiungere.getPazientiView().entrySet().iterator();
+
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			Document coppia=new Document();
+			coppia.append("CFDestinatario", pair.getKey())
+					.append("Visualizzazione", false);
+			pazientiView.add(coppia);
+		}
 		
 		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).
 				append("CorpoAllegato", daAggiungere.getCorpoAllegato());
@@ -53,7 +67,8 @@ public class AnnuncioModel {
 				.append("Titolo", daAggiungere.getTitolo())
 				.append("Testo", daAggiungere.getTesto())
 				.append("Allegato", allegato)
-				.append("Data", daAggiungere.getData().toInstant());
+				.append("Data", daAggiungere.getData().toInstant())
+				.append("Visualizzato", false).append("PazientiView", pazientiView);
 		annuncioDB.insertOne(doc);
 	}
 	/**

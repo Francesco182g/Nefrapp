@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -136,6 +137,11 @@ public class GestioneComunicazione extends HttpServlet {
 			String testo = request.getParameter("testo");
 			String allegato = null;
 			String nomeFile = null;
+			HashMap<String, Boolean> destinatariView = new HashMap<String,Boolean>();
+			for(String temp: destinatari) {
+				destinatariView.put(temp, false);
+			}			
+			
 			InputStream fileStream = null;
 			InputStream nomeFileStream = null;
 			Part filePart = request.getPart("file");
@@ -162,11 +168,11 @@ public class GestioneComunicazione extends HttpServlet {
 
 				if (operazione.equals("inviaMessaggio")) {
 					messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
-							ZonedDateTime.now(ZoneId.of("Europe/Rome")));
+							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {
 					annuncio = new Annuncio(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
-							ZonedDateTime.now(ZoneId.of("Europe/Rome")));
+							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					AnnuncioModel.addAnnuncio(annuncio);
 				}
 

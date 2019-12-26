@@ -3,7 +3,10 @@ package model;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -30,17 +33,25 @@ public class MessaggioModel {
 	 */
 	public static void addMessaggio(Messaggio daAggiungere) {
 		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
-
-		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).
-				append("CorpoAllegato", daAggiungere.getCorpoAllegato());
+		ArrayList<Document> destinatariView=new ArrayList<Document>();
+		Iterator it = daAggiungere.getDestinatariView().entrySet().iterator();
 		
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			Document coppia=new Document();
+			coppia.append("CFDestinatario", pair.getKey())
+					.append("Visualizzazione", false);
+			destinatariView.add(coppia);
+		}
+
+		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).append("CorpoAllegato",
+				daAggiungere.getCorpoAllegato());
+
 		Document doc = new Document("MittenteCodiceFiscale", daAggiungere.getCodiceFiscaleMittente())
 				.append("DestinatarioCodiceFiscale", daAggiungere.getCodiceFiscaleDestinatario())
-				.append("Oggetto", daAggiungere.getOggetto())
-				.append("Testo", daAggiungere.getTesto())
-				.append("Allegato", allegato)
-				.append("Data", daAggiungere.getData().toInstant())
-				.append("Visualizzato", daAggiungere.getVisualizzato());
+				.append("Oggetto", daAggiungere.getOggetto()).append("Testo", daAggiungere.getTesto())
+				.append("Allegato", allegato).append("Data", daAggiungere.getData().toInstant())
+				.append("Visualizzato", daAggiungere.getVisualizzato()).append("DestinatariView", destinatariView);
 		messaggio.insertOne(doc);
 	}
 
@@ -103,24 +114,24 @@ public class MessaggioModel {
 	 */
 	public static void setVisualizzatoMessaggio(String idMessaggio, Boolean visualizzato) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
-		messaggi.updateOne( new BasicDBObject("_id", new ObjectId(idMessaggio)),
-			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+		messaggi.updateOne(new BasicDBObject("_id", new ObjectId(idMessaggio)),
+				new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
 	}
-	
-	
+
 	/**
 	 * Conta quanti messaggi non sono stati letti da un determinato destinatario
+	 * 
 	 * @param CFDestinatario
 	 * @return n il numero di messaggi che non sono stati letti
 	 */
 	public static int countMessaggiNonLetti(String CFDestinatario) {
-		
+
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("DestinatarioCodiceFiscale", CFDestinatario));
 		obj.add(new BasicDBObject("Visualizzato", false));
 		BasicDBObject andQuery = new BasicDBObject("$and", obj);
-		int n= (int) messaggioDB.count(andQuery);
+		int n = (int) messaggioDB.count(andQuery);
 		return n;
 	}
 
