@@ -2,26 +2,20 @@ package model;
 
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.and;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.taglibs.standard.lang.jstl.AndOperator;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
 import bean.Annuncio;
-import bean.Messaggio;
-import bean.Paziente;
 import utility.CreaBeanUtility;
 
 public class AnnuncioModel {

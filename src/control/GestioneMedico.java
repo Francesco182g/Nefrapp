@@ -18,7 +18,6 @@ import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
 
 /**
  * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
