@@ -181,7 +181,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		boolean isMedico = (boolean) session.getAttribute("isMedico");
 		boolean isPaziente = (boolean) session.getAttribute("isPaziente");
 		
-		if(isMedico != false && isPaziente == false) {
+		if(isMedico) {
 			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
@@ -198,7 +198,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			
 		}
 		
-		else if(isMedico == false && isPaziente != false) {
+		else if(isPaziente) {
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());

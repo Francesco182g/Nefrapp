@@ -15,7 +15,6 @@ public class MessaggioCompleto implements Messaggio {
 
 	private String idMessaggio;
 	private String codiceFiscaleMittente;
-	private ArrayList<String> codiceFiscaleDestinatario;
 	private String oggetto;
 	private String testo;
 	private String corpoAllegato;
@@ -28,11 +27,10 @@ public class MessaggioCompleto implements Messaggio {
 	public MessaggioCompleto() {
 	}
 
-	public MessaggioCompleto(String codiceFiscaleMittente, ArrayList<String> codiceFiscaleDestinatario, String oggetto,
+	public MessaggioCompleto(String codiceFiscaleMittente, String oggetto,
 			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
 			HashMap<String, Boolean> destinatariView) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
-		this.codiceFiscaleDestinatario = new ArrayList<String>(codiceFiscaleDestinatario);
 		this.oggetto = oggetto;
 		this.testo = testo;
 		this.corpoAllegato = corpoAllegato;
@@ -49,14 +47,6 @@ public class MessaggioCompleto implements Messaggio {
 
 	public void setCodiceFiscaleMittente(String codiceFiscaleMittente) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
-	}
-
-	public ArrayList<String> getCodiceFiscaleDestinatario() {
-		return codiceFiscaleDestinatario;
-	}
-
-	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario) {
-		this.codiceFiscaleDestinatario = new ArrayList<String>(codiceFiscaleDestinatario);
 	}
 
 	public String getOggetto() {
@@ -133,8 +123,7 @@ public class MessaggioCompleto implements Messaggio {
 	}
 	@Override
 	public String toString() {
-		return "Messaggio [mittente=" + codiceFiscaleMittente + ", destinatario=" + codiceFiscaleDestinatario
-				+ ", oggetto=" + oggetto + ", testo=" + testo + ", data=" + data + ", visualizzato=" + visualizzato
-				+ "]";
+		return "Messaggio [mittente=" + codiceFiscaleMittente +  ", oggetto=" + oggetto + 
+				", testo=" + testo + ", data=" + data + ", visualizzato=" + visualizzato + "]";
 	}
 }

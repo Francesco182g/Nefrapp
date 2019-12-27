@@ -136,43 +136,26 @@ public class GestioneComunicazione extends HttpServlet {
 			String CFMittente = utente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
-			String allegato = null;
-			String nomeFile = null;
 			HashMap<String, Boolean> destinatariView = new HashMap<String,Boolean>();
 			for(String temp: destinatari) {
 				destinatariView.put(temp, false);
 			}			
 			
-			InputStream fileStream = null;
-			InputStream nomeFileStream = null;
-			Part filePart = request.getPart("file");
+			//ho spezzato invio e caricamento perché in futuro (grazie a Eugenio)
+			//le due cose saranno indipendenti e il caricamento sarà triggerato in maniera asincrona
+			//questa chiamata andrà rimossa una volta realizzate le modifiche opportune alla view
+			//e le due operazioni andranno distinte nel doGet di GestioneMessaggi
+			caricaAllegato(request, operazione);
 
-			//check campi obbligatori
 			if (controllaParametri(CFMittente, oggetto, testo)) {
-				//check presenza e correttezza allegato
-				if (filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
-					fileStream = filePart.getInputStream();
-					nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
-					try {
-						allegato = AlgoritmoCriptazioneUtility.codificaFile(fileStream);
-						nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));
-						nomeFile = AlgoritmoCriptazioneUtility.codificaFile(nomeFileStream);
-					} catch (Exception e) {
-						System.out.println("inviaMessaggio: errore nella criptazione del file");
-					} finally {
-						if (fileStream != null && nomeFileStream != null) {
-							fileStream.close();
-							nomeFileStream.close();
-						}
-					}
-				}
-
 				if (operazione.equals("inviaMessaggio")) {
-					messaggio = new MessaggioCompleto(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
+					messaggio = new MessaggioCompleto(CFMittente, oggetto, testo, 
+							(String)request.getAttribute("allegato"), (String)request.getAttribute("nomeFile"),
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {
-					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
+					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo,
+							(String)request.getAttribute("allegato"), (String)request.getAttribute("nomeFile"),
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					AnnuncioModel.addAnnuncio(annuncio);
 				}
@@ -180,6 +163,48 @@ public class GestioneComunicazione extends HttpServlet {
 			} else {
 				System.out.println("L'utente deve essere loggato");
 			}
+		}
+	}
+	
+	protected void caricaAllegato(HttpServletRequest request, String operazione)
+	{
+		System.out.println("entra");
+		String allegato = null;
+		String nomeFile = null;
+		
+		InputStream fileStream = null;
+		InputStream nomeFileStream = null;
+		
+		try {
+			Part filePart = request.getPart("file");
+			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
+			if (filePart!=null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
+				fileStream = filePart.getInputStream();
+				nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
+				try {
+					allegato = AlgoritmoCriptazioneUtility.codificaFile(fileStream);
+					nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));
+					nomeFile = AlgoritmoCriptazioneUtility.codificaFile(nomeFileStream);
+				} catch (Exception e) {
+					System.out.println("inviaMessaggio: errore nella criptazione del file");
+					e.printStackTrace();
+				} finally {
+					if (fileStream != null && nomeFileStream != null) {
+						fileStream.close();
+						nomeFileStream.close();
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("caricaAllegato: errore nel caricamento dell'allegato");
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println(allegato);
+			System.out.println(nomeFile);
+			
+			request.setAttribute("allegato", allegato);
+			request.setAttribute("nomeFile", nomeFile);
 		}
 	}
 
