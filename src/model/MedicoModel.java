@@ -7,7 +7,6 @@ import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
-import bean.Paziente;
 import utility.CreaBeanUtility;
 
 /**

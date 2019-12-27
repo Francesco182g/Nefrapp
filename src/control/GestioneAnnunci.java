@@ -19,7 +19,6 @@ import bean.Medico;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
-import model.MessaggioModel;
 import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 

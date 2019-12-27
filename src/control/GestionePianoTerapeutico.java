@@ -3,7 +3,6 @@ package control;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -19,9 +18,6 @@ import com.google.gson.Gson;
 import bean.Medico;
 import bean.PianoTerapeutico;
 import bean.Utente;
-import model.AnnuncioModel;
-import model.MedicoModel;
-import model.PazienteModel;
 import model.PianoTerapeuticoModel;
 
 /**
