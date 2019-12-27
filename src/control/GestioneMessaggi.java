@@ -110,7 +110,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 
 		utente = (Utente) session.getAttribute("utente");
 
-		if ((boolean) session.getAttribute("accessDone") == true) {
+		if (session.getAttribute("accessDone") != null && (boolean) session.getAttribute("accessDone") == true) {
 			ArrayList<String> cache = new ArrayList<>();
 			ArrayList<Utente> utentiCache = new ArrayList<>();
 			Utente utenteSelezionato = new Utente();

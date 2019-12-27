@@ -64,10 +64,10 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Messaggio> messaggi = new ArrayList<>();
 		FindIterable<Document> it = messaggioDB.find(eq("DestinatariView.CFDestinatario", CFDestinatario)).projection(
-				Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
+				Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "DestinatariView"));
 
 		for (Document doc : it) {
-			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
+			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc, CFDestinatario));
 
 		}
 
@@ -85,7 +85,8 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio))).first();
 		if (messaggioDoc != null) {
-			Messaggio messaggio = CreaBeanUtility.daDocumentAMessaggio(messaggioDoc);
+			Messaggio messaggio = CreaBeanUtility.daDocumentAMessaggio(messaggioDoc, null);
+			//valuta se mettere metodo overloaded per evitare il parametro null
 			return messaggio;
 		}
 		return null;

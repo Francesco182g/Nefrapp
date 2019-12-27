@@ -9,17 +9,14 @@ import model.AnnuncioModel;
 import model.MessaggioModel;
 
 
-/**Implementazione concreta lightweight di un Messaggio (proxy design pattern)
- * @author nico
+/**Implementazione concreta lightweight di un Annuncio (proxy design pattern)
  *
  */
 public class AnnuncioProxy implements Annuncio {
 	private Annuncio buffer = null;
 	private String idAnnuncio;
 	private String medico; // CF del medico che ha pubblicato l'annuncio
-	private ArrayList<String> pazienti; // CF dei pazienti a cui è rivolto
 	private String titolo;
-	private String testo;
 	private ZonedDateTime data;
 	private Boolean visualizzato;
 	private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>();

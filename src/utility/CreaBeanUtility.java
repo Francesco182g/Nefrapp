@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.bson.Document;
 
@@ -139,7 +140,7 @@ public class CreaBeanUtility {
 	 * @param datiSchedaParametri documento che continee i dati della scheda
 	 * @return schedaParametri convertito dal documento
 	 */
-	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
+	public static Messaggio daDocumentAMessaggio(Document datiMessaggio, String destinatario) {
 		Messaggio messaggio = new MessaggioCompleto();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
@@ -151,6 +152,22 @@ public class CreaBeanUtility {
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
 		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
+		
+		//caricamento dell'hashmap dall'array di documenti nel database
+		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
+		if (campo != null) {
+			for (Document d : campo) {
+				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
+			}
+		}
+		messaggio.setDestinatariView(destinatariView);
+		
+		//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
+		if (destinatario!=null) { 
+			messaggio.setVisualizzato(destinatariView.get(destinatario));
+		}
+		
 		return messaggio;
 	}
 	
@@ -170,7 +187,7 @@ public class CreaBeanUtility {
 		return annuncio;
 	}
 
-	public static Messaggio daDocumentAMessaggioProxy(Document datiMessaggio) {
+	public static Messaggio daDocumentAMessaggioProxy(Document datiMessaggio, String destinatario) {
 		Messaggio messaggio = new MessaggioProxy();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
@@ -179,6 +196,20 @@ public class CreaBeanUtility {
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
 		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
+		
+		//caricamento dell'hashmap dall'array di documenti nel database
+		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
+		if (campo != null) {
+			for (Document d : campo) {
+				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
+			}
+		}
+		messaggio.setDestinatariView(destinatariView);
+		
+		//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
+		messaggio.setVisualizzato(destinatariView.get(destinatario));
+		
 		return messaggio;
 	}
 }

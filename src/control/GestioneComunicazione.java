@@ -144,7 +144,7 @@ public class GestioneComunicazione extends HttpServlet {
 			//ho spezzato invio e caricamento perché in futuro (grazie a Eugenio)
 			//le due cose saranno indipendenti e il caricamento sarà triggerato in maniera asincrona
 			//questa chiamata andrà rimossa una volta realizzate le modifiche opportune alla view
-			//e le due operazioni andranno distinte nel doGet di GestioneMessaggi
+			//e le due operazioni andranno distinte nel doGet di GestioneMessaggi e GestioneAnnunci
 			caricaAllegato(request, operazione);
 
 			if (controllaParametri(CFMittente, oggetto, testo)) {

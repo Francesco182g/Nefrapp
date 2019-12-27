@@ -41,6 +41,10 @@ public interface Messaggio {
 		
 	public void setIdMessaggio(String idMessaggio);
 	
+	public void setVisualizzato(Boolean visualizzato);
+	
+	public Boolean getVisualizzato();
+	
 	public String getIdMessaggio();
 	
 	public void setDestinatariView(HashMap<String , Boolean> destinatariView );
