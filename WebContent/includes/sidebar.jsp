@@ -93,7 +93,7 @@
 						(temp. per testing)</button>
 				</form></li>
 				<div class="sidebar-heading">Area Personale</div>
-				<li class="nav-item"><a class="nav-link" href="/ModificaAccountMedicoView.jsp"> <i
+				<li class="nav-item"><a class="nav-link" href="./GestioneMedico?operazione=visualizzaProfilo"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
 				<div class="sidebar-heading">Area Medica</div>
