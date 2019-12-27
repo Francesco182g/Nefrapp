@@ -27,7 +27,7 @@ import model.PazienteModel;
 import utility.AlgoritmoCriptazioneUtility;
 
 /**
- * @author Luca Esposito
+ * @author Luca Esposito e Eugenio Corbisiero
  * Questa classe � una servlet che si occupa della gestione delle funzionalit� dell'amministratore
  */
 @WebServlet("/GestioneAmministratore")
