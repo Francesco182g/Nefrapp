@@ -145,9 +145,8 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		Utente utente = (Utente) session.getAttribute("utente");
 		
 		if(utente != null) {
-			Annuncio annuncio = new Annuncio();
-			String idAnnuncio = request.getParameter("idAnnuncio");
-			annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
+			String idAnnuncio= request.getParameter("idAnnuncio");
+			Annuncio annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
 			//solo se l'utente è un paziente, la visualizzazione viene settata a false
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);

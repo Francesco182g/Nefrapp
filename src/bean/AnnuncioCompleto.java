@@ -1,6 +1,5 @@
 package bean;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author Davide Benedetto Strianese Questa classe rappresenta l'annuncio
  */
-public class AnnuncioCompleto {
+public class AnnuncioCompleto implements Annuncio{
 	// i campi medico e paziente erano interi bean ma sarebbe un livello di
 	// ridondanza davvero estremo
 	// considerando che di quei bean ti servono pochi dati, e per quei dati devi
@@ -26,29 +25,25 @@ public class AnnuncioCompleto {
 
 	private String idAnnuncio;
 	private String medico; // CF del medico che ha pubblicato l'annuncio
-	private ArrayList<String> pazienti; // CF dei pazienti a cui è rivolto
 	private String titolo;
 	private String testo;
 	private String corpoAllegato; // può essere una presentazione pp o un video, tenere traccia tramite path
 	private String nomeAllegato;
 	private ZonedDateTime data;
-	private Boolean visualizzato;
 	private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>(); // coppia di CF dei destinatari e il
 																					// campo visualizzato.
 
 	public AnnuncioCompleto() {
 	}
 
-	public AnnuncioCompleto(String medico, ArrayList<String> pazienti, String titolo, String testo, String corpoAllegato,
+	public AnnuncioCompleto(String medico, String titolo, String testo, String corpoAllegato,
 			String nomeAllegato, ZonedDateTime data, HashMap<String, Boolean> pazientiView) {
 		this.medico = medico;
-		this.pazienti = pazienti;
 		this.titolo = titolo;
 		this.testo = testo;
 		this.setCorpoAllegato(corpoAllegato);
 		this.setNomeAllegato(nomeAllegato);
 		this.data = data;
-		this.visualizzato = false;
 		this.pazientiView.putAll(pazientiView);
 	}
 
@@ -58,14 +53,6 @@ public class AnnuncioCompleto {
 
 	public void setMedico(String medico) {
 		this.medico = medico;
-	}
-
-	public ArrayList<String> getPazienti() {
-		return pazienti;
-	}
-
-	public void setPazienti(ArrayList<String> pazienti) {
-		this.pazienti = pazienti;
 	}
 
 	public String getTitolo() {
@@ -112,25 +99,17 @@ public class AnnuncioCompleto {
 	public void setData(ZonedDateTime data) {
 		this.data = data;
 	}
-
+	
 	public void setIdAnnuncio(String idAnnuncio) {
 		this.idAnnuncio = idAnnuncio;
 	}
 
-	public String getIdMessaggio() {
+	public String getIdAnnuncio() {
 		return this.idAnnuncio;
 	}
 
-	public void setVisualizzato(Boolean visualizzato) {
-		this.visualizzato = visualizzato;
-	}
-
-	public Boolean getVisualizzato() {
-		return this.visualizzato;
-	}
-
-	public void setPazientiView(String CFPaziente, Boolean visualizzato) {
-		pazientiView.put(CFPaziente, false);
+	public void setPazientiView(HashMap<String, Boolean> pazientiView) {
+		pazientiView.putAll(pazientiView);
 	}
 
 	public HashMap<String, Boolean> getPazientiView() {
@@ -139,9 +118,13 @@ public class AnnuncioCompleto {
 
 	@Override
 	public String toString() {
-		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + pazienti + ", titolo="
+		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + ", titolo="
 				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato="
-				+ visualizzato + "]";
+				+  "]";
 	}
+
+	
+
+	
 
 }

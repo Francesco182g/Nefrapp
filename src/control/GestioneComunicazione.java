@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import bean.Annuncio;
+import bean.AnnuncioCompleto;
 import bean.Medico;
 import bean.Messaggio;
 import bean.MessaggioCompleto;
@@ -172,7 +172,7 @@ public class GestioneComunicazione extends HttpServlet {
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {
-					annuncio = new Annuncio(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
+					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					AnnuncioModel.addAnnuncio(annuncio);
 				}

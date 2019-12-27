@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import bean.Amministratore;
 import bean.Annuncio;
+import bean.AnnuncioCompleto;
 import bean.Medico;
 import bean.Messaggio;
 import bean.MessaggioCompleto;
@@ -141,7 +142,6 @@ public class CreaBeanUtility {
 	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
 		Messaggio messaggio = new MessaggioCompleto();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
-		messaggio.setCodiceFiscaleDestinatario((ArrayList<String>) datiMessaggio.get("DestinatarioCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
 		messaggio.setTesto(datiMessaggio.getString("Testo"));
 		Document allegato = (Document)datiMessaggio.get("Allegato");
@@ -150,15 +150,13 @@ public class CreaBeanUtility {
 		Date temp = datiMessaggio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
-		messaggio.setVisualizzato(datiMessaggio.getBoolean("Visualizzato"));
 		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
 		return messaggio;
 	}
 	
 	public static Annuncio daDocumentAAnnuncio(Document datiAnnuncio) {
-		Annuncio annuncio = new Annuncio();
+		Annuncio annuncio = new AnnuncioCompleto();
 		annuncio.setMedico(datiAnnuncio.getString("MedicoCodiceFiscale"));
-		annuncio.setPazienti((ArrayList<String>) datiAnnuncio.get("PazientiCodiceFiscale"));
 		Document allegato = (Document)datiAnnuncio.get("Allegato");
 		annuncio.setNomeAllegato(allegato.getString("NomeAllegato"));
 		annuncio.setCorpoAllegato(allegato.getString("CorpoAllegato"));
@@ -167,7 +165,6 @@ public class CreaBeanUtility {
 		Date temp = datiAnnuncio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		annuncio.setData(data);
-		annuncio.setVisualizzato(datiAnnuncio.getBoolean("Visualizzato"));
 		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
 		
 		return annuncio;
@@ -181,7 +178,6 @@ public class CreaBeanUtility {
 		Date temp = datiMessaggio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
-		messaggio.setVisualizzato(datiMessaggio.getBoolean("Visualizzato"));
 		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
 		return messaggio;
 	}

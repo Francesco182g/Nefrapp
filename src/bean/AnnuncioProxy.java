@@ -43,20 +43,20 @@ public class AnnuncioProxy implements Annuncio {
 		this.medico= medico;
 	}
 
-	public ArrayList<String> getCodiceFiscaleDestinatario() {
+	public HashMap<String, Boolean> getPazientiView() {
 		if (buffer == null) {
 			buffer = AnnuncioModel.getAnnunioById(idAnnuncio);
 		}
 		
-		return buffer.getCodiceFiscaleDestinatario();
+		return buffer.getPazientiView();
 	}
 
-	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario) {
+	public void setPazientiView( HashMap<String, Boolean> pazientiView) {
 		if (buffer == null) {
 			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
 		}
 		
-		buffer.setCodiceFiscaleDestinatario(codiceFiscaleDestinatario);
+		buffer.setPazientiView(pazientiView);
 	}
 
 	public String getTitolo() {
@@ -141,21 +141,14 @@ public class AnnuncioProxy implements Annuncio {
 		return this.visualizzato;
 	}
 
-	public void setIdMessaggio(String idMessaggio) {
-		this.idAnnuncio = idMessaggio;
+	public void setIdAnnuncio(String idAnnuncio) {
+		this.idAnnuncio = idAnnuncio;
 	}
 
-	public String getIdMessaggio() {
+	public String getIdAnnuncio() {
 		return this.idAnnuncio;
 	}
 
-	public void setPazientiView(String CFPaziente, Boolean visualizzato) {
-		pazientiView.put(CFPaziente, false);
-	}
-
-	public HashMap<String, Boolean> getPazientiView() {
-		return this.pazientiView;
-	}
 
 	@Override
 	public String toString() {
