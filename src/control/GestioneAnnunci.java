@@ -178,8 +178,19 @@ public class GestioneAnnunci extends GestioneComunicazione {
 	 */
 	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response, String tipo) throws IOException {
 		HttpSession session = request.getSession();
-		boolean isMedico = (boolean) session.getAttribute("isMedico");
-		boolean isPaziente = (boolean) session.getAttribute("isPaziente");
+		boolean isMedico = false;
+
+		boolean isPaziente = false;
+		
+		if(session.getAttribute("isMedico") != null)
+		{
+			isMedico = (boolean) session.getAttribute("isMedico");
+		}
+		if(session.getAttribute("isPaziente") != null)
+		{
+			isPaziente = (boolean) session.getAttribute("isPaziente");
+		}
+		
 		
 		if(isMedico) {
 			Medico medico = (Medico) session.getAttribute("utente");
@@ -202,6 +213,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
+			System.out.println("stampa annunci :"+annunci);
 			if(tipo != null  && tipo.equals("asincrona"))
 			{
 				response.setContentType("application/json");
