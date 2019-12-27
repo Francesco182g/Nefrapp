@@ -54,6 +54,17 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
 				requestDispatcher.forward(request, response);
 			}
+			
+			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
+			if (operazione.equals("caricaAllegato")) {
+				caricaAllegato(request, operazione);
+				//qualunque cosa tu voglia fare dopo una chiamata asincrona
+				
+				//per Eugenio: ricordati di togliere la chiamata a caricaAllegato() da inviaComunicazione
+				//quando avrai pronto il bottone che carica soltanto l'allegato
+				//altrimenti caricherà di nuovo l'allegato anche quando premi invio
+			}
+			
 			if (operazione.equals("inviaMessaggio")) {
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");

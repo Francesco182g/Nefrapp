@@ -168,7 +168,6 @@ public class GestioneComunicazione extends HttpServlet {
 	
 	protected void caricaAllegato(HttpServletRequest request, String operazione)
 	{
-		System.out.println("entra");
 		String allegato = null;
 		String nomeFile = null;
 		
@@ -180,7 +179,6 @@ public class GestioneComunicazione extends HttpServlet {
 			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
 			if (filePart!=null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
 				fileStream = filePart.getInputStream();
-				nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
 				try {
 					allegato = AlgoritmoCriptazioneUtility.codificaFile(fileStream);
 					nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));
@@ -200,9 +198,6 @@ public class GestioneComunicazione extends HttpServlet {
 			e.printStackTrace();
 		}
 		finally {
-			System.out.println(allegato);
-			System.out.println(nomeFile);
-			
 			request.setAttribute("allegato", allegato);
 			request.setAttribute("nomeFile", nomeFile);
 		}
