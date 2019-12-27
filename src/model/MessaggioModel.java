@@ -62,14 +62,16 @@ public class MessaggioModel {
 	 * @param CFDestinatario Codice Fiscale del destinatario
 	 * @return messaggi: ArrayList contenente i messaggi trovati
 	 */
+
 	public static ArrayList<Messaggio> getMessaggiByDestinatario(String CFDestinatario) {
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Messaggio> messaggi = new ArrayList<>();
-		FindIterable<Document> it = messaggioDB.find(eq("DestinatarioCodiceFiscale", CFDestinatario)).
+		FindIterable<Document> it = messaggioDB.find(eq("DestinatariView.CFDestinatario", CFDestinatario)).
 				 projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
 		
 		for (Document doc : it) {
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
+
 		}
 		
 		return messaggi;
@@ -97,11 +99,12 @@ public class MessaggioModel {
 	 * @param idMessaggio  id del messaggio che è stato appena aperto
 	 * @param visualizzato settaggio a true del campo "visualizzato" del messaggio
 	 *                     appena aperto
+	 * @param CFDestinatario codiceFiscale dell'utente che ha visualizzato il messaggio
 	 */
-	public static void setVisualizzatoMessaggio(String idMessaggio, Boolean visualizzato) {
+	public static void setVisualizzatoMessaggio(String idMessaggio, String CFDestinatario,Boolean visualizzato) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
-		messaggi.updateOne(new BasicDBObject("_id", new ObjectId(idMessaggio)),
-				new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+		messaggi.updateOne(new BasicDBObject("_id", new ObjectId(idMessaggio)).append("DestinatariView.CFDestinatario", CFDestinatario),
+				new BasicDBObject("$set", new BasicDBObject("_id.DestinatariView.Visualizzazione", visualizzato)));
 	}
 
 	/**

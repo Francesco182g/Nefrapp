@@ -157,9 +157,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
 		String nomeAllegato = messaggio.getNomeAllegato();
 		String corpoAllegato = messaggio.getCorpoAllegato();
+		Utente utente=new Utente();
+		utente=(Utente) request.getSession().getAttribute("utente");
 		
 		if (messaggio != null) {
-			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, true);
+			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, utente.getCodiceFiscale(),true);
 			if (nomeAllegato!=null && corpoAllegato!=null) {
 				messaggio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(corpoAllegato));
 				nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(nomeAllegato);
