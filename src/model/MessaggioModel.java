@@ -33,14 +33,13 @@ public class MessaggioModel {
 	 */
 	public static void addMessaggio(Messaggio daAggiungere) {
 		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
-		ArrayList<Document> destinatariView=new ArrayList<Document>();
+		ArrayList<Document> destinatariView = new ArrayList<Document>();
 		Iterator it = daAggiungere.getDestinatariView().entrySet().iterator();
-		
+
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			Document coppia=new Document();
-			coppia.append("CFDestinatario", pair.getKey())
-					.append("Visualizzazione", false);
+			Document coppia = new Document();
+			coppia.append("CFDestinatario", pair.getKey()).append("Visualizzazione", false);
 			destinatariView.add(coppia);
 		}
 
@@ -48,13 +47,11 @@ public class MessaggioModel {
 				daAggiungere.getCorpoAllegato());
 
 		Document doc = new Document("MittenteCodiceFiscale", daAggiungere.getCodiceFiscaleMittente())
-				.append("DestinatarioCodiceFiscale", daAggiungere.getCodiceFiscaleDestinatario())
 				.append("Oggetto", daAggiungere.getOggetto()).append("Testo", daAggiungere.getTesto())
 				.append("Allegato", allegato).append("Data", daAggiungere.getData().toInstant())
-				.append("Visualizzato", daAggiungere.getVisualizzato()).append("DestinatariView", destinatariView);
+				.append("DestinatariView", destinatariView);
 		messaggio.insertOne(doc);
 	}
-
 
 	/**
 	 * Metodo che ricerca i messaggi per codice fiscale dei destinatari
@@ -66,14 +63,14 @@ public class MessaggioModel {
 	public static ArrayList<Messaggio> getMessaggiByDestinatario(String CFDestinatario) {
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Messaggio> messaggi = new ArrayList<>();
-		FindIterable<Document> it = messaggioDB.find(eq("DestinatariView.CFDestinatario", CFDestinatario)).
-				 projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
-		
+		FindIterable<Document> it = messaggioDB.find(eq("DestinatariView.CFDestinatario", CFDestinatario)).projection(
+				Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "Visualizzato", "DestinatariView"));
+
 		for (Document doc : it) {
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
 
 		}
-		
+
 		return messaggi;
 	}
 
@@ -81,7 +78,8 @@ public class MessaggioModel {
 	 * Metodo che ricerca un messaggio nel database per id
 	 * 
 	 * @param idMessaggio: id del messaggio
-	 * @return messaggio: risultato della ricerca, vale null se non si trovano corrispondenze
+	 * @return messaggio: risultato della ricerca, vale null se non si trovano
+	 *         corrispondenze
 	 */
 	public static Messaggio getMessaggioById(String idMessaggio) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
@@ -96,15 +94,26 @@ public class MessaggioModel {
 	/**
 	 * Cambia lo stato della lettura del messaggio.
 	 * 
-	 * @param idMessaggio  id del messaggio che è stato appena aperto
-	 * @param visualizzato settaggio a true del campo "visualizzato" del messaggio
-	 *                     appena aperto
-	 * @param CFDestinatario codiceFiscale dell'utente che ha visualizzato il messaggio
+	 * @param idMessaggio    id del messaggio che è stato appena aperto
+	 * @param visualizzato   settaggio a true del campo "visualizzato" del messaggio
+	 *                       appena aperto
+	 * @param CFDestinatario codiceFiscale dell'utente che ha visualizzato il
+	 *                       messaggio
 	 */
-	public static void setVisualizzatoMessaggio(String idMessaggio, String CFDestinatario,Boolean visualizzato) {
+	public static void setVisualizzatoMessaggio(String idMessaggio, String CFDestinatario, Boolean visualizzato) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
-		messaggi.updateOne(new BasicDBObject("_id", new ObjectId(idMessaggio)).append("DestinatariView.CFDestinatario", CFDestinatario),
-				new BasicDBObject("$set", new BasicDBObject("_id.DestinatariView.Visualizzazione", visualizzato)));
+		Document updateQuery = new Document();
+		Document query = new Document(new BasicDBObject("_id", new ObjectId(idMessaggio)))
+				.append("DestinatariView.CFDestinatario", CFDestinatario);
+		updateQuery.put("DestinatariView.$.Visualizzazione", visualizzato);
+		messaggi.updateOne(query, new Document("$set", updateQuery));
+
+		/*
+		 * messaggi.updateOne(new BasicDBObject("_id", new
+		 * ObjectId(idMessaggio)).append("DestinatariView.CFDestinatario",
+		 * CFDestinatario), new BasicDBObject("$set", new
+		 * BasicDBObject("DestinatariView.Visualizzazione", visualizzato)));
+		 */
 	}
 
 	/**
@@ -117,7 +126,7 @@ public class MessaggioModel {
 
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
-		obj.add(new BasicDBObject("DestinatarioCodiceFiscale", CFDestinatario));
+		obj.add(new BasicDBObject("DestinatariView.CFDestinatario", CFDestinatario));
 		obj.add(new BasicDBObject("Visualizzato", false));
 		BasicDBObject andQuery = new BasicDBObject("$and", obj);
 		int n = (int) messaggioDB.count(andQuery);

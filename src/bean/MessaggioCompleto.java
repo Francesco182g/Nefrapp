@@ -124,8 +124,8 @@ public class MessaggioCompleto implements Messaggio {
 	public String getIdMessaggio() {
 		return this.idMessaggio;
 	}
-	public void setDestinatariView(String CFPaziente, Boolean visualizzato) {
-		destinatariView.put(CFPaziente, false);
+	public void setDestinatariView(HashMap<String , Boolean > destinatariView) {
+		destinatariView.putAll(destinatariView);
 	}
 	
 	public HashMap<String,Boolean> getDestinatariView() {

@@ -16,10 +16,6 @@ public interface Messaggio {
 	
 	public void setCodiceFiscaleMittente(String codiceFiscaleMittente);
 	
-	public ArrayList<String> getCodiceFiscaleDestinatario();
-	
-	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario);
-	
 	public String getOggetto();
 	
 	public void setOggetto(String oggetto);
@@ -43,16 +39,12 @@ public interface Messaggio {
 	public String getDataFormattata();
 	
 	public void setData(ZonedDateTime data);
-	
-	public void setVisualizzato(Boolean visualizzato);
-	
-	public Boolean getVisualizzato();
-	
+		
 	public void setIdMessaggio(String idMessaggio);
 	
 	public String getIdMessaggio();
 	
-	public void setDestinatariView(String CFPaziente, Boolean visualizzato);
+	public void setDestinatariView(HashMap<String , Boolean> destinatariView );
 	
 	public HashMap<String,Boolean> getDestinatariView();
 	

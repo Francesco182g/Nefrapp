@@ -2,7 +2,6 @@ package bean;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.MessaggioModel;
@@ -40,20 +39,20 @@ public class MessaggioProxy implements Messaggio {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 	}
 
-	public ArrayList<String> getCodiceFiscaleDestinatario() {
+	public HashMap<String, Boolean> getDestinatariView() {
 		if (buffer == null) {
 			buffer = MessaggioModel.getMessaggioById(idMessaggio);
 		}
 		
-		return buffer.getCodiceFiscaleDestinatario();
+		return buffer.getDestinatariView();
 	}
 
-	public void setCodiceFiscaleDestinatario(ArrayList<String> codiceFiscaleDestinatario) {
+	public void setDestinatariView(HashMap<String, Boolean> destinatariView) {
 		if (buffer == null) {
 			buffer = MessaggioModel.getMessaggioById(idMessaggio);
 		}
 		
-		buffer.setCodiceFiscaleDestinatario(codiceFiscaleDestinatario);
+		buffer.setDestinatariView(destinatariView);
 	}
 
 	public String getOggetto() {
@@ -146,13 +145,9 @@ public class MessaggioProxy implements Messaggio {
 		return this.idMessaggio;
 	}
 
-	public void setDestinatariView(String CFPaziente, Boolean visualizzato) {
-		destinatariView.put(CFPaziente, false);
-	}
 
-	public HashMap<String, Boolean> getDestinatariView() {
-		return this.destinatariView;
-	}
+
+
 
 	@Override
 	public String toString() {
