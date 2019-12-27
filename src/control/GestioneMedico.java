@@ -36,13 +36,21 @@ public class GestioneMedico extends HttpServlet {
 			
 			String operazione = request.getParameter("operazione");
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
-			
-
+		
 			
 			if(medico == null) {
 				request.setAttribute("notifica", "Bisogna essere loggati da medico");
 				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
+				return;
+			}
+			
+			if(operazione.equals("visualizzaProfilo"))
+			{
+				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
+				request.setAttribute("pazientiSeguiti", pazientiSeguiti);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
+				requestDispatcher.forward(request, response);
 				return;
 			}
 

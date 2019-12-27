@@ -112,11 +112,21 @@
 						<div
 							class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 							aria-labelledby="userDropdown">
+							<c:if test="${isPaziente}">
 							<a class="dropdown-item"
 								href="./GestionePaziente?operazione=visualizzaProfilo"> <i
 								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profilo
 								Utente
 							</a>
+							</c:if>
+							
+							<c:if test="${isMedico}">
+							<a class="dropdown-item"
+								href="./GestioneMedico?operazione=visualizzaProfilo"> <i
+								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profilo
+								Utente
+							</a>
+							</c:if>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#" data-toggle="modal"
 								data-target="#logoutModal"> <i
