@@ -24,6 +24,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import bean.Annuncio;
 import bean.Medico;
 import bean.Messaggio;
+import bean.MessaggioCompleto;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
@@ -167,7 +168,7 @@ public class GestioneComunicazione extends HttpServlet {
 				}
 
 				if (operazione.equals("inviaMessaggio")) {
-					messaggio = new Messaggio(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
+					messaggio = new MessaggioCompleto(CFMittente, destinatari, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {

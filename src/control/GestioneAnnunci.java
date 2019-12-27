@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 import bean.Annuncio;
@@ -36,12 +37,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("");
-				dispatcher.forward(request, response);
-				return;
-			}
+			
 			
 			String operazione = request.getParameter("operazione");
 			System.out.println(operazione);
@@ -79,9 +75,14 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 			
 			else if(operazione.equals("visualizzaPersonali")) {
-				visualizzaAnnunciPersonali(request, response);
-				RequestDispatcher requestDispatcher =request.getRequestDispatcher("./listaAnnunciView.jsp");
-				requestDispatcher.forward(request, response);
+				String tipo = request.getParameter("tipo");
+				visualizzaAnnunciPersonali(request, response,tipo);
+				if(!(tipo != null  && tipo.equals("asincrona")))
+				{
+					RequestDispatcher requestDispatcher =request.getRequestDispatcher("./listaAnnunciView.jsp");
+					requestDispatcher.forward(request, response);
+				}
+				
 			}
 			
 			else {
@@ -152,7 +153,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
 				
 				if (annuncio != null) {
-					MessaggioModel.setVisualizzatoMessaggio(idAnnuncio, true);
+					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
 					annuncio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getCorpoAllegato()));
 					String nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getNomeAllegato());
 					annuncio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
@@ -174,8 +175,10 @@ public class GestioneAnnunci extends GestioneComunicazione {
 	/**
 	 * Metodo che prende gli annunci personali di un medico o di un paziente e li mostra in una lista
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 * @param tipo  indica il tipo della chiamata che puo essere asincrona se il tipo != null
+	 * @throws IOException 
 	 */
-	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response) {
+	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response, String tipo) throws IOException {
 		HttpSession session = request.getSession();
 		boolean isMedico = (boolean) session.getAttribute("isMedico");
 		boolean isPaziente = (boolean) session.getAttribute("isPaziente");
@@ -184,17 +187,33 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
+			if(tipo != null  && tipo.equals("asincrona"))
+			{
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson(annunci));
+			}else
+			{
+				request.setAttribute("annunci", annunci);
+			}
 			
-			request.setAttribute("annunci", annunci);
-			return;
 		}
 		
 		else if(isMedico == false && isPaziente != false) {
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
-			request.setAttribute("annunci", annunci);
-			return;
+			if(tipo != null  && tipo.equals("asincrona"))
+			{
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson(annunci));
+			}else
+			{
+				request.setAttribute("annunci", annunci);
+			}
 		}
 		
 		else {
