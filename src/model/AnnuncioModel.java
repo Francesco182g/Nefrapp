@@ -63,7 +63,7 @@ public class AnnuncioModel {
 				append("CorpoAllegato", daAggiungere.getCorpoAllegato());
 		
 		Document doc = new Document("MedicoCodiceFiscale", daAggiungere.getMedico())
-				.append("PazientiCodiceFiscale", daAggiungere.getPazienti())
+				//.append("PazientiCodiceFiscale", daAggiungere.getPazientiView())
 				.append("Titolo", daAggiungere.getTitolo())
 				.append("Testo", daAggiungere.getTesto())
 				.append("Allegato", allegato)
@@ -138,6 +138,10 @@ public class AnnuncioModel {
 		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
 		annunciDB.updateOne( new BasicDBObject("_id", new ObjectId(idAnnuncio)),
 			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+	}
+	public static Annuncio getAnnunioById(String idAnnuncio) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	/*
