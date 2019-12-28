@@ -110,6 +110,8 @@ public class GestionePaziente extends HttpServlet {
 			}
 		
 		session.removeAttribute("utente");
+		session.setAttribute("accessDone", false);
+
 		
 	}
 	

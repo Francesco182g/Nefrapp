@@ -1,9 +1,12 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
 import org.bson.Document;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -165,19 +168,47 @@ public class PazienteModel {
 	 * Query che aggiorna il paziente
 	 * @param daAggiornare paziente
 	 */
+//	public static void updatePaziente(Paziente daAggiornare) {
+//		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+//		BasicDBObject nuovoPaziente = new BasicDBObject();
+//		nuovoPaziente.append("$set", new Document().append("Nome", daAggiornare.getNome()));
+//		nuovoPaziente.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
+//		nuovoPaziente.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
+//		nuovoPaziente.append("$set", new Document().append("Email", daAggiornare.getEmail()));
+//		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
+//		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
+//		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
+//		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
+//		nuovoPaziente.append("$set", new Document().append("Attivo", daAggiornare.getAttivo()));
+//		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+//		pazienti.updateOne(searchQuery, nuovoPaziente);
+//	} 
+	
+	/**
+	 * Query che aggiorna il paziente
+	 * @param daAggiornare paziente
+	 */
 	public static void updatePaziente(Paziente daAggiornare) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
-		BasicDBObject nuovoPaziente = new BasicDBObject();
-		nuovoPaziente.append("$set", new Document().append("Nome", daAggiornare.getNome()));
-		nuovoPaziente.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
-		nuovoPaziente.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
-		nuovoPaziente.append("$set", new Document().append("Email", daAggiornare.getEmail()));
-		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
-		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
-		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
-		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
-		nuovoPaziente.append("$set", new Document().append("Attivo", daAggiornare.getAttivo()));
-		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
-		pazienti.updateOne(searchQuery, nuovoPaziente);
-	}
+
+		
+		 Document query = new Document();
+	     query.append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+	     Document nuovoPaziente = new Document();
+	     nuovoPaziente.append("Nome", daAggiornare.getNome())
+        		.append("Cognome", daAggiornare.getCognome())
+    			.append("DataDiNascita", daAggiornare.getDataDiNascita())
+    			.append("Email", daAggiornare.getEmail())
+    			.append("Residenza", daAggiornare.getResidenza())
+    			.append("LuogoDiNascita", daAggiornare.getLuogoDiNascita())
+    			.append("Sesso", daAggiornare.getSesso())
+    			.append("Medici", daAggiornare.getMedici())
+    			.append("Attivo", daAggiornare.getAttivo());
+
+	 
+        Document update = new Document();
+        update.append("$set", nuovoPaziente);
+        pazienti.updateOne(query, update);
+		
+		}
 }

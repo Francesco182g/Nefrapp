@@ -34,6 +34,7 @@
    	 	<%String azione=""; %>
    	 	<c:if test="${isAmministratore}">
    	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Paziente";%>
+   	 		<c:set var = "utente" value="${paziente }"></c:set>
    	 	</c:if>
    	 	<c:if test="${isPaziente}">
    	 		<%azione="./GestionePaziente?operazione=modificaAccount"; intestazione="Modifica il tuo account";%>
