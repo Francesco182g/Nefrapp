@@ -67,8 +67,9 @@ public class GestioneMedico extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
-			System.out.println("Errore in gestione medico:");
-			e.printStackTrace();
+			request.setAttribute("notifica",e.getMessage());
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			requestDispatcher.forward(request,response);
 		}
 
 		return;
@@ -123,7 +124,9 @@ public class GestioneMedico extends HttpServlet {
 				request.setAttribute("notifica", "Non ï¿½ stato trovato il medico da aggiornare");
 			}
 		} else {
-			request.setAttribute("notifica", "Formato parametri non valido");
+			request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
+			requestDispatcher.forward(request,response);
 		}
 	}
 

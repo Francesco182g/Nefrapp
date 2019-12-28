@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class GestioneParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta!");
@@ -40,7 +42,7 @@ public class GestioneParametri extends HttpServlet {
 			String operazione = request.getParameter("operazione");
 			
 			if(operazione.equals("inserisciScheda")) {
-				inserisciParametri(request);
+				inserisciParametri(request,response);
 				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
 			}
 			//Download report
@@ -55,14 +57,15 @@ public class GestioneParametri extends HttpServlet {
 			}
 			
 		}catch (Exception e) {
-			System.out.println("Errore in gestione parametri:");
-			e.printStackTrace();
+			request.setAttribute("notifica",e.getMessage());
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			requestDispatcher.forward(request,response);
 		}
 		return;
 	}
 	
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		return;
 	}
@@ -122,8 +125,10 @@ public class GestioneParametri extends HttpServlet {
 	 * @param data
 	 * 
 	 * @author nico
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	private void inserisciParametri(HttpServletRequest request)
+	private void inserisciParametri(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session=request.getSession();
 		Paziente pazienteLoggato= (Paziente) session.getAttribute("paziente");
@@ -162,10 +167,11 @@ public class GestioneParametri extends HttpServlet {
 			daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, LocalDate.now());
 			SchedaParametriModel.addSchedaParametri(daAggiungere);
-		}
-		else {
-			System.out.println("InserisciParametri: i dati passati sono malformati");
-		}
+		} else {
+			request.setAttribute("notifica","Uno o più parametri non sono validi.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/inserimentoParametriView.jsp");
+			requestDispatcher.forward(request,response);
+	}
 	}
 
 	private boolean sonoValidi(BigDecimal newPeso, int newPaMin, int newPaMax, int newScaricoIniziale, int newUf,

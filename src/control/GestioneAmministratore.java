@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,8 +59,9 @@ public class GestioneAmministratore extends HttpServlet {
 						throw new Exception("Operazione invalida");
 					}	
 				} catch (Exception e) {
-					System.out.println("Errore in gestione parametri:");
-					e.printStackTrace();		
+					request.setAttribute("notifica",e.getMessage());
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+					requestDispatcher.forward(request,response);		
 				}
 				
 	}
@@ -104,7 +106,7 @@ public class GestioneAmministratore extends HttpServlet {
 		}
 	}
 	
-	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 				
 		if(request.getParameter("tipoUtente").equals("amministratore")) {
@@ -119,7 +121,15 @@ public class GestioneAmministratore extends HttpServlet {
 					if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
 						nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
 						AmministratoreModel.updateAmministratore(amministratoreLoggato.getCodiceFiscale(),nuovaPassword);
+					} else {
+						request.setAttribute("notifica","Le password non corrispondono.");
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
+						requestDispatcher.forward(request,response);
 					}
+				} else {
+					request.setAttribute("notifica","Password non valida.");
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
+					requestDispatcher.forward(request,response);
 				}
 			}
 		}
@@ -148,8 +158,16 @@ public class GestioneAmministratore extends HttpServlet {
 					if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
 						password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 						PazienteModel.changePassword(codiceFiscale, password);
+					}else {
+						request.setAttribute("notifica","Password non valide o non corrispondenti.");
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountPazienteView.jsp");
+						requestDispatcher.forward(request,response);
 					}
 					PazienteModel.updatePaziente(paziente);
+				} else {
+					request.setAttribute("notifica","Uno o più parametri del paziente non sono validi.");
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountPazienteView.jsp");
+					requestDispatcher.forward(request,response);
 				}
 			}
 			else if(request.getParameter("tipoUtente").equals("medico")){
@@ -163,12 +181,20 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setEmail(email);
 						medico.setResidenza(residenza);
 						medico.setLuogoDiNascita(luogoDiNascita);
-						medico.setSesso(sesso);/*
+						medico.setSesso(sesso);
 						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
 							password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
 							MedicoModel.changePassword(codiceFiscale, password);
-						}*/
+						} else {
+							request.setAttribute("notifica","Password non valide o non corrispondenti.");
+							RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
+							requestDispatcher.forward(request,response);
+						}
 						MedicoModel.updateMedico(medico);
+					} else {
+						request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
+						requestDispatcher.forward(request,response);
 					}
 			}
 		}

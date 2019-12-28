@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
-
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -30,13 +30,13 @@ public class GestioneAccesso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response){
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		doPost(request, response);
 		return;
 	}
 		
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response){
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
@@ -68,8 +68,9 @@ public class GestioneAccesso extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Errore in gestione parametri:");
-			e.printStackTrace();		
+			request.setAttribute("notifica",e.getMessage());
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			requestDispatcher.forward(request,response);		
 		}
 		return;	
 	}
@@ -79,8 +80,9 @@ public class GestioneAccesso extends HttpServlet {
 	 * @param response la risposta del server
 	 * @param session la sessione in cui deve essere salvato l'amministratore se avviene con successo la login
 	 * @throws IOException lancia un eccezione se si verifica un errore di input / output
+	 * @throws ServletException 
 	 */
-	private void loginAmministratore(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+	private void loginAmministratore(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException, ServletException{
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		Amministratore amministratore = null;
@@ -94,14 +96,14 @@ public class GestioneAccesso extends HttpServlet {
 				response.sendRedirect("dashboard.jsp");
 			
 			}
-			else{
-				session.setAttribute("notifica","login fallito");
-				response.sendRedirect("loginAmministratore.jsp");
-			}
+		} else {
+			request.setAttribute("notifica","Codice fiscale o password non validi.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/loginAmministratore.jsp");
+			requestDispatcher.forward(request,response);
 		}
 	}
 		
-	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException, ServletException{
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		String ricordaUtente = request.getParameter("ricordaUtente");
@@ -147,10 +149,10 @@ public class GestioneAccesso extends HttpServlet {
 				else {
 					response.sendRedirect("login.jsp");
 				}
-			}
-			
-			else {
-				response.sendRedirect("login.jsp");
+			} else {
+				request.setAttribute("notifica","Codice fiscale o password non validi.");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
+				requestDispatcher.forward(request,response);
 			}
 		}
 			
@@ -173,9 +175,10 @@ public class GestioneAccesso extends HttpServlet {
 				else {
 					response.sendRedirect("login.jsp");
 				}
-			}
-			else {
-				response.sendRedirect("login.jsp");
+			} else {
+				request.setAttribute("notifica","Codice fiscale o password non validi.");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
+				requestDispatcher.forward(request,response);
 			}
 		}
 	}
