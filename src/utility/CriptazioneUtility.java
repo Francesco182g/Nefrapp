@@ -26,8 +26,14 @@ import org.apache.tomcat.util.codec.binary.Base64;
  */
 public class CriptazioneUtility {
 	private static MessageDigest md;
+	
 	private static final String KEY = "deveesseresedici";
 	private static final String VEC = "encryptionIntVec";
+	//key temporanee hardcodate solo a scopo di testing in fase di sviluppo
+	//il problema di mantenere in maniera sicura e ruotare periodicamente le chiavi crittografiche
+	//può essere affrontato soltanto in deployment con infrastrutture dedicate (HSM) e separate sia dalla webapp che dal database.
+	//il codice non dovrebbe mai trattare con le vere chiavi di decriptazione, nemmeno in forma indiretta e/o derivata
+	
 	private static final String ALG = "AES/CBC/PKCS5PADDING";
 
 	/**
@@ -112,7 +118,10 @@ public class CriptazioneUtility {
 	/**
 	 * Metodo che prende una stringa contenente il file da decriptare, 
 	 * lo converte in un array di byte, lo decripta e lo restituisce come stringa.
-	 * @param stringa: String contenente il file da decodificare
+	 * Se il boolean passato come parametro è true, sarà restituita una stringa codificata in base64,
+	 * se il boolean passato come parametro è false, sarà restituita una stringa non codificata.
+	 * 
+	 * @param stringa: String contenente il contenuto da decodificare
 	 * @param base64: booleano da settare a true se si vuole ricevere una stringa in base64 e false altrimenti
 	 * @return String contentente il file decriptato in codifica base64
 	 */

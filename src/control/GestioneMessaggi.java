@@ -121,13 +121,12 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			else
 				return;
 
-			// piccolo sistema di caching per minimizzare le query sui destinatari che hanno
-			// mandato messaggi
-			// prima di fare la query sul destinatario controlla se ce l'ha già in cache
+			// piccolo sistema di caching per minimizzare le query sui mittenti dei messaggi
+			// prima di fare la query sul mittente controlla se ce l'ha già in cache
 			// attraverso il suo CF.
 			// Se ce l'ha lo usa per ottenere le informazioni che servono alla pagina jsp
 			// se non ce l'ha effettua la query e immette il risultato in cache.
-			// In questo modo se ci sono 200 messaggi da 5 destinatari fa 5 query e non 200.
+			// In questo modo se un paziente ha 200 messaggi da 5 medici si fanno 5 query e non 200.
 			for (Messaggio m : messaggi) {
 				if (!cache.contains(m.getCodiceFiscaleMittente())) {
 					cache.add(m.getCodiceFiscaleMittente());
