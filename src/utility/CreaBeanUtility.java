@@ -200,12 +200,15 @@ public class CreaBeanUtility {
 		//caricamento dell'hashmap dall'array di documenti nel database
 		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
 		ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
+		
 		if (campo != null) {
 			for (Document d : campo) {
 				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
 		}
+		
 		messaggio.setDestinatariView(destinatariView);
+		
 		
 		//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
 		messaggio.setVisualizzato(destinatariView.get(destinatario));

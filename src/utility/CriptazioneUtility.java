@@ -110,16 +110,18 @@ public class CriptazioneUtility {
 	}
 
 	/**
-	 * Metodo che prende una stringa in base64 contenente il file da decriptare, 
-	 * lo converte in un array di byte, lo decripta e lo restituisce come stringa in base64.
-	 * @param file: String contenente il file da decodificare
+	 * Metodo che prende una stringa contenente il file da decriptare, 
+	 * lo converte in un array di byte, lo decripta e lo restituisce come stringa.
+	 * @param stringa: String contenente il file da decodificare
+	 * @param base64: booleano da settare a true se si vuole ricevere una stringa in base64 e false altrimenti
 	 * @return String contentente il file decriptato in codifica base64
 	 */
-	public static String decodificaStringa(String file) {
+	public static String decodificaStringa(String stringa, boolean base64) {
 		byte[] outputBytes = null;
+		byte[] inputBytes = null;
 		String result = null;
 		try {
-			byte[] inputBytes = Base64.decodeBase64(file);
+			inputBytes = Base64.decodeBase64(stringa);
 			
 			IvParameterSpec iv = new IvParameterSpec(VEC.getBytes("UTF-8"));
 			SecretKeySpec sks = new SecretKeySpec(KEY.getBytes(), "AES");
@@ -128,8 +130,12 @@ public class CriptazioneUtility {
 			Cipher cipher = Cipher.getInstance(ALG);
 			cipher.init(Cipher.DECRYPT_MODE, key, iv);
 			outputBytes = cipher.doFinal(inputBytes);
-
-			result = new String(Base64.encodeBase64(outputBytes), "UTF-8");
+			
+			if (base64) {
+				result = new String(Base64.encodeBase64(outputBytes), "UTF-8");
+			} else if (!base64) {
+				result = new String (outputBytes, "UTF-8");
+			}
 
 		} catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
 				| IllegalBlockSizeException | UnsupportedEncodingException | InvalidAlgorithmParameterException e) {

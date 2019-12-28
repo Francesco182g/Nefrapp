@@ -195,6 +195,9 @@ public class GestioneComunicazione extends HttpServlet {
 			e.printStackTrace();
 		}
 		finally {
+			if (nomeFile.equals("form-data; name=\"file\"; filename=\"\"")) {
+				nomeFile = null;
+			}
 			request.setAttribute("allegato", allegato);
 			request.setAttribute("nomeFile", nomeFile);
 		}

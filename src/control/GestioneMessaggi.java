@@ -116,7 +116,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
 			messaggi = MessaggioModel.getMessaggiByDestinatario(utente.getCodiceFiscale());
-
 			if (messaggi != null)
 				request.setAttribute("messaggio", messaggi);
 			else
@@ -152,7 +151,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		} else {
 			System.out.println("L'utente deve essere loggato");
 		}
-
 	}
 	
 	/**
@@ -174,9 +172,9 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, utente.getCodiceFiscale(),true);
 			if (nomeAllegato!=null && corpoAllegato!=null) {
-				messaggio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(corpoAllegato));
-				nomeAllegato = CriptazioneUtility.decodificaStringa(nomeAllegato);
-				messaggio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
+				messaggio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(corpoAllegato, true));
+				nomeAllegato = CriptazioneUtility.decodificaStringa(nomeAllegato, false);
+				messaggio.setNomeAllegato(nomeAllegato);
 			}
 
 			request.setAttribute("messaggio", messaggio);

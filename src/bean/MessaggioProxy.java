@@ -40,19 +40,11 @@ public class MessaggioProxy implements Messaggio {
 	}
 
 	public HashMap<String, Boolean> getDestinatariView() {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		return buffer.getDestinatariView();
+		return destinatariView;
 	}
 
 	public void setDestinatariView(HashMap<String, Boolean> destinatariView) {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		buffer.setDestinatariView(destinatariView);
+		this.destinatariView.putAll(destinatariView);
 	}
 
 	public String getOggetto() {
