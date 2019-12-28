@@ -1,5 +1,6 @@
 package utility;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +61,7 @@ public class CriptazioneUtility {
 	 * @param file: InputStream contenente il file da codificare
 	 * @return String contentente il file criptato in codifica base64
 	 */
-	public static String codificaFile(InputStream file) {
+	public static String codificaStream(InputStream file) {
 		String result = null;
 		byte[] outputBytes = null;
 		try {
@@ -89,6 +90,24 @@ public class CriptazioneUtility {
 		}
 		return result;
 	}
+	
+	/**
+	 * Metodo che prende una stringa da codificare, gli applica
+	 * crittografia AES (CBC mode) e la restituisce come stringa in base64
+	 * @param file: String da codificare
+	 * @return String contentente la stringa criptato in codifica base64, null in caso di errori
+	 */
+	public static String codificaStringa(String stringa) {
+		String result = null;
+		try {
+			InputStream stringaStream = new ByteArrayInputStream(stringa.getBytes("UTF-8"));
+			result = codificaStream(stringaStream);
+		} catch (Exception e) {
+			System.out.println("codificaStringa: errore di codifica");
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	/**
 	 * Metodo che prende una stringa in base64 contenente il file da decriptare, 
@@ -96,7 +115,7 @@ public class CriptazioneUtility {
 	 * @param file: String contenente il file da decodificare
 	 * @return String contentente il file decriptato in codifica base64
 	 */
-	public static String decodificaFile(String file) {
+	public static String decodificaStringa(String file) {
 		byte[] outputBytes = null;
 		String result = null;
 		try {

@@ -172,7 +172,6 @@ public class GestioneComunicazione extends HttpServlet {
 		String nomeFile = null;
 		
 		InputStream fileStream = null;
-		InputStream nomeFileStream = null;
 		
 		try {
 			Part filePart = request.getPart("file");
@@ -180,16 +179,14 @@ public class GestioneComunicazione extends HttpServlet {
 			if (filePart!=null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
 				fileStream = filePart.getInputStream();
 				try {
-					allegato = CriptazioneUtility.codificaFile(fileStream);
-					nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));
-					nomeFile = CriptazioneUtility.codificaFile(nomeFileStream);
+					allegato = CriptazioneUtility.codificaStream(fileStream);
+					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
 				} catch (Exception e) {
 					System.out.println("inviaMessaggio: errore nella criptazione del file");
 					e.printStackTrace();
 				} finally {
-					if (fileStream != null && nomeFileStream != null) {
+					if (fileStream != null) {
 						fileStream.close();
-						nomeFileStream.close();
 					}
 				}
 			}

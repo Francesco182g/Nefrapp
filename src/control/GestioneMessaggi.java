@@ -174,8 +174,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, utente.getCodiceFiscale(),true);
 			if (nomeAllegato!=null && corpoAllegato!=null) {
-				messaggio.setCorpoAllegato(CriptazioneUtility.decodificaFile(corpoAllegato));
-				nomeAllegato = CriptazioneUtility.decodificaFile(nomeAllegato);
+				messaggio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(corpoAllegato));
+				nomeAllegato = CriptazioneUtility.decodificaStringa(nomeAllegato);
 				messaggio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
 			}
 

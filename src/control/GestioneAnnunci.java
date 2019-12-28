@@ -162,8 +162,8 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				
 				if (annuncio != null) {
 					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
-					annuncio.setCorpoAllegato(CriptazioneUtility.decodificaFile(annuncio.getCorpoAllegato()));
-					String nomeAllegato = CriptazioneUtility.decodificaFile(annuncio.getNomeAllegato());
+					annuncio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato()));
+					String nomeAllegato = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato());
 					annuncio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
 				}
 			}
