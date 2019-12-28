@@ -149,6 +149,7 @@ public class GestioneComunicazione extends HttpServlet {
 
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
+					System.out.println("allegato in messaggi : "+(String)request.getAttribute("allegato"));
 					messaggio = new MessaggioCompleto(CFMittente, oggetto, testo, 
 							(String)request.getAttribute("allegato"), (String)request.getAttribute("nomeFile"),
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
@@ -176,12 +177,16 @@ public class GestioneComunicazione extends HttpServlet {
 		
 		try {
 			Part filePart = request.getPart("file");
+			System.out.println("stampo il file part : "+filePart);
 			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
+			System.out.println("nome del file "+nomeFile);
 			if (filePart!=null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
 				fileStream = filePart.getInputStream();
 				try {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
+					System.out.println("nome del file 2 "+nomeFile);
+					System.out.println("allegato 2 "+allegato);
 				} catch (Exception e) {
 					System.out.println("inviaMessaggio: errore nella criptazione del file");
 					e.printStackTrace();
@@ -199,6 +204,8 @@ public class GestioneComunicazione extends HttpServlet {
 			if (nomeFile.equals("form-data; name=\"file\"; filename=\"\"")) {
 				nomeFile = null;
 			}
+			System.out.println("nome del file 3 "+nomeFile);
+			System.out.println("allegato "+allegato);
 			request.setAttribute("allegato", allegato);
 			request.setAttribute("nomeFile", nomeFile);
 		}
