@@ -16,7 +16,7 @@ import bean.Messaggio;
 import bean.Utente;
 import model.MessaggioModel;
 import model.UtenteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * @author Sara, Nico
@@ -174,8 +174,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, utente.getCodiceFiscale(),true);
 			if (nomeAllegato!=null && corpoAllegato!=null) {
-				messaggio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(corpoAllegato));
-				nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(nomeAllegato);
+				messaggio.setCorpoAllegato(CriptazioneUtility.decodificaFile(corpoAllegato));
+				nomeAllegato = CriptazioneUtility.decodificaFile(nomeAllegato);
 				messaggio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
 			}
 

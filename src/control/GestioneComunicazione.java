@@ -31,7 +31,7 @@ import model.AnnuncioModel;
 import model.MedicoModel;
 import model.MessaggioModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * Questa classe è una servlet che modella le operazioni comuni delle
@@ -180,9 +180,9 @@ public class GestioneComunicazione extends HttpServlet {
 			if (filePart!=null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
 				fileStream = filePart.getInputStream();
 				try {
-					allegato = AlgoritmoCriptazioneUtility.codificaFile(fileStream);
+					allegato = CriptazioneUtility.codificaFile(fileStream);
 					nomeFileStream = new ByteArrayInputStream(nomeFile.getBytes("UTF-8"));
-					nomeFile = AlgoritmoCriptazioneUtility.codificaFile(nomeFileStream);
+					nomeFile = CriptazioneUtility.codificaFile(nomeFileStream);
 				} catch (Exception e) {
 					System.out.println("inviaMessaggio: errore nella criptazione del file");
 					e.printStackTrace();

@@ -23,7 +23,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
  * @author nico, eugenio
  *
  */
-public class AlgoritmoCriptazioneUtility {
+public class CriptazioneUtility {
 	private static MessageDigest md;
 	private static final String KEY = "deveesseresedici";
 	private static final String VEC = "encryptionIntVec";

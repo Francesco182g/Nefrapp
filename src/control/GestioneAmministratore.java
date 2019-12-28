@@ -24,7 +24,7 @@ import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * @author Luca Esposito e Eugenio Corbisiero
@@ -123,9 +123,9 @@ public class GestioneAmministratore extends HttpServlet {
 				String confermaPassword=request.getParameter("confermaPassword");
 				if(validaPassword(vecchiaPassword,nuovaPassword,confermaPassword)) {
 					String password= AmministratoreModel.getPassword(amministratoreLoggato.getCodiceFiscale());
-					vecchiaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(vecchiaPassword);
+					vecchiaPassword = CriptazioneUtility.criptaConMD5(vecchiaPassword);
 					if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
-						nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
+						nuovaPassword = CriptazioneUtility.criptaConMD5(nuovaPassword);
 						AmministratoreModel.updateAmministratore(amministratoreLoggato.getCodiceFiscale(),nuovaPassword);
 					}
 				}
@@ -154,7 +154,7 @@ public class GestioneAmministratore extends HttpServlet {
 					paziente.setLuogoDiNascita(luogoDiNascita);
 					paziente.setSesso(sesso);
 					if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
-						password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+						password = CriptazioneUtility.criptaConMD5(password);
 						PazienteModel.changePassword(codiceFiscale, password);
 					}
 					PazienteModel.updatePaziente(paziente);

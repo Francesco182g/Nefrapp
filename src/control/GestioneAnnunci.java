@@ -20,7 +20,7 @@ import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * @author Davide Benedetto Strianese
@@ -162,8 +162,8 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				
 				if (annuncio != null) {
 					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
-					annuncio.setCorpoAllegato(AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getCorpoAllegato()));
-					String nomeAllegato = AlgoritmoCriptazioneUtility.decodificaFile(annuncio.getNomeAllegato());
+					annuncio.setCorpoAllegato(CriptazioneUtility.decodificaFile(annuncio.getCorpoAllegato()));
+					String nomeAllegato = CriptazioneUtility.decodificaFile(annuncio.getNomeAllegato());
 					annuncio.setNomeAllegato(Base64.base64Decode(nomeAllegato));
 				}
 			}

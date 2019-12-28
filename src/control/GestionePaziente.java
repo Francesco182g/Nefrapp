@@ -18,7 +18,7 @@ import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * Servlet implementation class GestionePaziente

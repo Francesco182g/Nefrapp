@@ -18,7 +18,7 @@ import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * 
@@ -92,7 +92,7 @@ public class GestioneAccesso extends HttpServlet {
 		String password = request.getParameter("password");
 		Amministratore amministratore = null;
 		if (controllaParametri(codiceFiscale, password)) {
-			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+			password = CriptazioneUtility.criptaConMD5(password);
 			amministratore = AmministratoreModel.getAmministratoreByCFPassword(codiceFiscale, password);
 			if (amministratore != null) {
 				session.removeAttribute("notifica");
@@ -118,7 +118,7 @@ public class GestioneAccesso extends HttpServlet {
 		Utente utente = null;
 
 		if (controllaParametri(codiceFiscale, password)) {
-			password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+			password = CriptazioneUtility.criptaConMD5(password);
 			utente = MedicoModel.getMedicoByCFPassword(codiceFiscale, password);
 			if (utente == null)
 			{

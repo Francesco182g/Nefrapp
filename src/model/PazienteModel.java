@@ -8,7 +8,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import bean.Paziente;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 import utility.CreaBeanUtility;
 
 import static com.mongodb.client.model.Filters.*;
@@ -114,7 +114,7 @@ public class PazienteModel {
 		
 		
 		if(datiPaziente != null) {
-			String pazienteID=AlgoritmoCriptazioneUtility.criptaConMD5(datiPaziente.getObjectId("_id").toString());
+			String pazienteID=CriptazioneUtility.criptaConMD5(datiPaziente.getObjectId("_id").toString());
 			return pazienteID;
 		}
 		
