@@ -30,10 +30,14 @@
 	<c:set var="isAmministratore"
 		value='${sessionScope["isAmministratore"]}' />
 	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
-	<c:set var="notificheMessaggi" value='${sessionScope["notificheMessaggi"] }'/>
-	<c:set var="notificheAnnunci" value='${sessionScope["notificheAnnunci"] }'/>
-	<c:set var="notifichePianoTerapeutico" value='${sessionScope["notifichePianoTerapeutico"] }'/>
-	<c:set var="totaleNotifiche" value='${notificheMessaggi+notificheAnnunci+notifichePianoTerapeutico}'/>
+	<c:set var="notificheMessaggi"
+		value='${sessionScope["notificheMessaggi"] }' />
+	<c:set var="notificheAnnunci"
+		value='${sessionScope["notificheAnnunci"] }' />
+	<c:set var="notifichePianoTerapeutico"
+		value='${sessionScope["notifichePianoTerapeutico"] }' />
+	<c:set var="totaleNotifiche"
+		value='${notificheMessaggi+notificheAnnunci+notifichePianoTerapeutico}' />
 	<!-- Topbar -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -59,7 +63,8 @@
 							class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
 							aria-labelledby="alertsDropdown">
 							<h6 class="dropdown-header">Notifiche</h6>
-							<a class="dropdown-item d-flex align-items-center" href="./messaggio?operazione=visualizzaElencoMessaggio">
+							<a class="dropdown-item d-flex align-items-center"
+								href="./messaggio?operazione=visualizzaElencoMessaggio">
 								<div class="mr-3">
 									<div class="icon-circle bg-primary">
 										<i class="fas fa-file-alt text-white"></i>
@@ -67,38 +72,49 @@
 								</div>
 								<div>
 									<div class="small text-gray-500">Messaggi</div>
-									<span class="font-weight-bold">Hai ${notificheMessaggi} messaggi non letti</span>
+									<span class="font-weight-bold">Hai ${notificheMessaggi}
+										messaggi non letti</span>
 								</div>
-							</a> <a class="dropdown-item d-flex align-items-center" href="#">
-								<div class="mr-3">
-									<div class="icon-circle bg-success">
-										<i class="fas fa-donate text-white"></i>
-									</div>
-								</div>
-								<div>
-									<div class="small text-gray-500">Annunci</div>
-									<span class="font-weight-bold">Hai ${notificheAnnunci} annunci non letti</span>
-								</div>
-							</a> <a class="dropdown-item d-flex align-items-center" href='./piano?operazione=visualizza&CFPaziente=${sessionScope["utente"].codiceFiscale}'>
-								<div class="mr-3">
-									<div class="icon-circle bg-warning">
-										<i class="fas fa-exclamation-triangle text-white"></i>
-									</div>
-								</div>
-								<div>
-									<div class="small text-gray-500">PianoTerapeutico</div>
-									<c:choose>
-									<c:when test="${notifichePianoTerapeutico==0}">
-									<span class="font-weight-bold">Il tuo piano terapeutico non è stato aggiornato recentemente.</span>
-									</c:when>
-									<c:otherwise>
-									<span class="font-weight-bold">Il tuo piano terapeutico è stato aggiornato.</span>
-									</c:otherwise>
-									</c:choose>
-									
-								</div>
-							</a> <a class="dropdown-item text-center small text-gray-500"
-								href="#">Show All Alerts</a>
+							</a>
+							<c:choose>
+								<c:when test="${isPaziente}">
+									<a class="dropdown-item d-flex align-items-center" href="./annuncio?operazione=">
+										<div class="mr-3">
+											<div class="icon-circle bg-success">
+												<i class="fas fa-donate text-white"></i>
+											</div>
+										</div>
+										<div>
+											<div class="small text-gray-500">Annunci</div>
+											<span class="font-weight-bold">Hai ${notificheAnnunci}
+												annunci non letti</span>
+										</div>
+									</a>
+									<a class="dropdown-item d-flex align-items-center"
+										href='./piano?operazione=visualizza&CFPaziente=${sessionScope["utente"].codiceFiscale}'>
+										<div class="mr-3">
+											<div class="icon-circle bg-warning">
+												<i class="fas fa-exclamation-triangle text-white"></i>
+											</div>
+										</div>
+										<div>
+											<div class="small text-gray-500">PianoTerapeutico</div>
+											<c:choose>
+												<c:when test="${notifichePianoTerapeutico==0}">
+													<span class="font-weight-bold">Il tuo piano
+														terapeutico non è stato aggiornato recentemente.</span>
+												</c:when>
+												<c:otherwise>
+													<span class="font-weight-bold">Il tuo piano
+														terapeutico è stato aggiornato.</span>
+												</c:otherwise>
+											</c:choose>
+										</div>
+									</a>
+								</c:when>
+							</c:choose>
+							<a class="dropdown-item text-center small text-gray-500" href="#">Show
+								All Alerts</a>
 						</div></li>
 
 					<li class="nav-item dropdown no-arrow"><a
@@ -113,19 +129,19 @@
 							class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 							aria-labelledby="userDropdown">
 							<c:if test="${isPaziente}">
-							<a class="dropdown-item"
-								href="./GestionePaziente?operazione=visualizzaProfilo"> <i
-								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profilo
-								Utente
-							</a>
+								<a class="dropdown-item"
+									href="./GestionePaziente?operazione=visualizzaProfilo"> <i
+									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profilo
+									Utente
+								</a>
 							</c:if>
-							
+
 							<c:if test="${isMedico}">
-							<a class="dropdown-item"
-								href="./GestioneMedico?operazione=visualizzaProfilo"> <i
-								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profilo
-								Utente
-							</a>
+								<a class="dropdown-item"
+									href="./GestioneMedico?operazione=visualizzaProfilo"> <i
+									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profilo
+									Utente
+								</a>
 							</c:if>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#" data-toggle="modal"
@@ -137,9 +153,10 @@
 				</c:when>
 				<c:otherwise>
 
-					<li class="button">
-							<a href="./login.jsp" class = "btn btn-primary btn-user btn-block"> <i class="fas fa-sign-in-alt"></i> Login </a>
-					</li>
+					<li class="button"><a href="./login.jsp"
+						class="btn btn-primary btn-user btn-block"> <i
+							class="fas fa-sign-in-alt"></i> Login
+					</a></li>
 
 				</c:otherwise>
 			</c:choose>

@@ -91,7 +91,7 @@ public class AnnuncioModel {
 	public static ArrayList<Annuncio> getAnnuncioByCFPaziente(String codiceFiscalePaziente) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		MongoCursor<Document> documenti = annuncioDB.find(eq("PazientiCodiceFiscale", codiceFiscalePaziente)).iterator();
+		MongoCursor<Document> documenti = annuncioDB.find(eq("PazientiView.CFDestinatario", codiceFiscalePaziente)).iterator();
 
 		while (documenti.hasNext()) {
 			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
@@ -107,17 +107,13 @@ public class AnnuncioModel {
 	 */
 	
 	public static int countAnnunciNonLetti(String codiceFiscalePaziente) {
-		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
-		//nuova query, da testare
-		BasicDBObject andQuery = new BasicDBObject();
+		
+		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
-		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
-		obj.add(new BasicDBObject("Visualizzato", true));
-		andQuery.put("$and", obj);
-		int n= (int) annunciDB.count(andQuery);
-		//Query vecchia, ma non mi fido
-		//Document annuncio = annunciDB.find(eq("_id", new ObjectId(codiceFiscalePaziente))).first().append("Visualizzato", true);
-		//int n=(int) annunciDB.count(annuncio);
+		obj.add(new BasicDBObject("PazientiView.CFDestinatario", codiceFiscalePaziente));
+		obj.add(new BasicDBObject("PazientiView.Visualizzazione", false));
+		BasicDBObject andQuery = new BasicDBObject("$and", obj);
+		int n = (int) annuncioDB.count(andQuery);
 		return n;
 	}
 	
