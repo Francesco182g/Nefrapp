@@ -128,7 +128,7 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("DestinatariView.CFDestinatario", CFDestinatario));
-		obj.add(new BasicDBObject("Visualizzato", false));
+		obj.add(new BasicDBObject("DestinatariView.Visualizzazione", false));
 		BasicDBObject andQuery = new BasicDBObject("$and", obj);
 		int n = (int) messaggioDB.count(andQuery);
 		return n;
