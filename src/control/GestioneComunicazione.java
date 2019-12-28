@@ -126,8 +126,8 @@ public class GestioneComunicazione extends HttpServlet {
 		Annuncio annuncio = null;
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
-
-		if ((boolean) session.getAttribute("accessDone") == true) {
+		//va effettuato il controllo se il booleano è nullo se no manda in eccezione fate cosi i controlli by Eugenio
+		if (session.getAttribute("accessDone") != null && (boolean) session.getAttribute("accessDone") == true) {
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
 			} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
@@ -145,7 +145,7 @@ public class GestioneComunicazione extends HttpServlet {
 			//le due cose saranno indipendenti e il caricamento sarà triggerato in maniera asincrona
 			//questa chiamata andrà rimossa una volta realizzate le modifiche opportune alla view
 			//e le due operazioni andranno distinte nel doGet di GestioneMessaggi e GestioneAnnunci
-			caricaAllegato(request, operazione);
+			//caricaAllegato(request, operazione);
 
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
@@ -157,6 +157,7 @@ public class GestioneComunicazione extends HttpServlet {
 					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo,
 							(String)request.getAttribute("allegato"), (String)request.getAttribute("nomeFile"),
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
+					System.out.println("sto aggiungendo l'annuncio");
 					AnnuncioModel.addAnnuncio(annuncio);
 				}
 

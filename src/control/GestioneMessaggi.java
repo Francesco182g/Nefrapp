@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import bean.Messaggio;
 import bean.Utente;
 import model.MessaggioModel;
@@ -40,12 +42,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notification", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); // TODO reindirizzamento																						// home
-				dispatcher.forward(request, response);
-				return;
-			}
+			
 
 			String operazione = request.getParameter("operazione");
 			if (operazione.equals("caricaDestinatariMessaggio")) {
@@ -54,14 +51,14 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				requestDispatcher.forward(request, response);
 			}
 			
-			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
+			
 			if (operazione.equals("caricaAllegato")) {
 				caricaAllegato(request, operazione);
-				//qualunque cosa tu voglia fare dopo una chiamata asincrona
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));
 				
-				//per Eugenio: ricordati di togliere la chiamata a caricaAllegato() da inviaComunicazione
-				//quando avrai pronto il bottone che carica soltanto l'allegato
-				//altrimenti caricherà di nuovo l'allegato anche quando premi invio
 			}
 			
 			if (operazione.equals("inviaMessaggio")) {
