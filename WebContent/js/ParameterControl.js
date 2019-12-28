@@ -39,7 +39,7 @@
 		  }
 	  else if(button7.length>0)
 	  {
-	  	inviaMessaggioValidator()
+	  	inviaAnnuncioValidator()
 	  }
 	 
 	  
@@ -76,11 +76,11 @@
    * funzione che permette di validare l'invio di un annuncio
    */
 
-  function inviaMessaggioValidator(){
+  function inviaAnnuncioValidator(){
 	  $("#inviaAnnuncio").click(function(){
 			
 			
-		var valid = inviaAnnuncioCheck()
+		var valid = inviaMessaggioCheck()
 		console.log(valid)
 			if (!valid [0])
 				{
@@ -371,44 +371,13 @@
 				valido=[false,"formato testo non valido"];
 			else if (oggetto.length<1||oggetto.length>75)
 				valido=[false,"formato oggetto non valido"];
-			else if (fileExt!="jpg" && fileExt!="jpeg" && fileExt!="png" && fileExt!="pjpeg" && fileExt!="pjp" && fileExt!="jfif" && fileExt!="bmp" && fileExt!="") 
-				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"];
-			else if(!$('#file').val().includes(".") && $('#file').val().length>0) {
-				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"] }
 			
 			$(testo).html(escapehtml(testo))
 			$(oggetto).html(escapehtml(oggetto))
 			return valido;
 			
 		}
-		 /*
-		   * Funzione che controlla se tutti i campi dell'invio del messaggio sono validi
-		   * */
-			function inviaMessaggioCheck(){
-				var valido=[true];
-				var selettore = $('.selectpicker').val()
-				var oggetto = $("#oggetto").val()
-				var testo = $("#testo").val()
-				var fileExt = getFileExtension($('#file').val());
-				console.log(fileExt)
-				
-				if (selettore.length<=0)
-					valido=[false,"selezionare un destinatario"];
-				else if (testo.length<1||testo.length>1000)
-					valido=[false,"formato testo non valido"];
-				else if (oggetto.length<1||oggetto.length>75)
-					valido=[false,"formato oggetto non valido"];
-				else if (fileExt!="jpg" && fileExt!="jpg" && fileExt!="jpeg" && fileExt!="png" && fileExt!="pjpeg" && fileExt!="pjp" && fileExt!="jfif" && fileExt!="bmp" && fileExt!="") 
-					valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, PJP o PDF"];
-				else if(!$('#file').val().includes(".") && $('#file').val().length>0) {
-					valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, PJP o PDF"] }
-				
-				$(testo).html(escapehtml(testo))
-				$(oggetto).html(escapehtml(oggetto))
-				return valido;
-				
-			}
-		
+		 
 		/**
 		 * converte i caratteri speciali <> & in caratteri unicode
 		 */

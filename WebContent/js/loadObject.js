@@ -10,6 +10,7 @@
 		var paziente = $("#paziente")
 		var medico = $("#medico")
 		var caricaAnnuncio = $("#caricaAnnuncio")
+		var caricaMessaggio = $("#caricaMessaggio")
 		console.log(caricaAnnuncio)
 		if (admin.length != 0) {
 			caricaDatiAdmin();
@@ -22,9 +23,39 @@
 			{
 				loadAnnuncio()
 			}
+		else if (caricaMessaggio.length != 0)
+		{
+			loadMessaggio()
+		}
 		
 
 	});
+	
+	function loadMessaggio()
+	{
+		var $messaggio =$("#messaggio");
+	    $messaggio.fileinput({
+	        theme: "fas",
+	        dropZoneEnabled: false,
+	        language:"it",
+	        allowedFileExtensions: ["bmp","jpeg","jfif","pjpeg","pjp", "jpg", "gif", "png"],
+	        uploadUrl: "GestioneMessaggi",
+	        showUpload: false, // hide upload button
+	        showRemove: false, // hide remove button
+	        overwriteInitial: false, // append files to initial preview
+	        minFileCount: 1,
+	        maxFileCount: 5,
+	        initialPreviewAsData: true,
+	        uploadExtraData: function(previewId, index) {
+	            return {operazione: "caricaAllegato"};
+	        }
+	    }).on("filebatchselected", function(event, files) {
+	        $messaggio.fileinput("upload");
+	    }).on('fileuploaded', function(event, previewId, index, fileId) {
+	        console.log('File uploaded', previewId, index, fileId);
+	    });
+	}
+	
 	function loadAnnuncio()
 	{
 		var $annuncio =$("#annuncio");

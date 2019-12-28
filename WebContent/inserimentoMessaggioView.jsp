@@ -14,7 +14,14 @@
 <!-- Custom fonts for this template-->
 
 <!-- Custom styles for this template-->
+<link href="./css/fileinput.css" rel="stylesheet">
 <script src="./vendor/jquery/jquery.min.js"></script>
+<script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/plugins/piexif.js"></script>
+<script src="./js/fileinput.js"></script>
+<script src="./themes/fas/theme.js"></script>
+<script src="./js/locales/it.js"></script>
+<script src="./js/loadObject.js"></script>
 <script type="text/javascript" src="./js/messaggi.js"></script>
 <script src="js/ParameterControl.js"></script>
 </head>
@@ -101,17 +108,10 @@
 									style="resize: none; height: 180px"></textarea>
 							</div>
 						</div>
-						<div class="form-group row">
-							<div class="file-field">
-								<div class="d-flex justify-content-center">
-									<div class="btn btn-mdb-color btn-rounded float-left">
-										<span>Allegato</span> <input type="file" accept=".bmp,.png,.jpg, .jpeg, .jfif, .pjpeg, .pjp" name="file"
-											id="file">
-									</div>
-								</div>
-							</div>
+							<div class="file-loading" id="caricaMessaggio" >
+    					<input id="messaggio" name="file" type="file" multiple>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row mt-3">
 							<button class="btn btn-primary btn-user" type="submit"
 								id="inviaMessaggio" style="float: right">Invia
 								Messaggio</button>

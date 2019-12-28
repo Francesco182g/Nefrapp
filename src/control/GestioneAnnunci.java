@@ -66,11 +66,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
 				response.getWriter().write(gg.toJson("success"));
-				//qualunque cosa tu voglia fare dopo una chiamata asincrona
 				
-				//per Eugenio: ricordati di togliere la chiamata a caricaAllegato() da inviaComunicazione
-				//quando avrai pronto il bottone che carica soltanto l'allegato
-				//altrimenti caricherà di nuovo l'allegato anche quando premi invio
 			}
 			
 			else if(operazione.equals("inviaAnnuncio")) {
