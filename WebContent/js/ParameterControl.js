@@ -12,6 +12,7 @@
 	  var button4 = $("#resetPswButton")
 	  var button5 = $("#richiestaReset")
 	  var button6 = $("#inviaMessaggio")
+	  var button7 = $("#inviaAnnuncio")
 	  
 	  $(document).submit(function(){
 				  return sub; 
@@ -36,6 +37,10 @@
 		  {
 		  	inviaMessaggioValidator()
 		  }
+	  else if(button7.length>0)
+	  {
+	  	inviaMessaggioValidator()
+	  }
 	 
 	  
 	  
@@ -66,7 +71,33 @@
 		}); 
 	
   }
+  
+  /**
+   * funzione che permette di validare l'invio di un annuncio
+   */
 
+  function inviaMessaggioValidator(){
+	  $("#inviaAnnuncio").click(function(){
+			
+			
+		var valid = inviaAnnuncioCheck()
+		console.log(valid)
+			if (!valid [0])
+				{
+					sub = false;
+					
+					alert(valid[1])
+				}
+			else
+				{
+					sub = true;
+					$(document).submit();
+				}
+			
+		}); 
+	
+  }
+  
 	
   /**
    * Funzione che permette di eseguire la richiesta di registrazione del medico alla servlet però fa prima dei controlli 
@@ -345,10 +376,38 @@
 			else if(!$('#file').val().includes(".") && $('#file').val().length>0) {
 				valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, o PJP"] }
 			
-			//aggiungere conversione del testo qui 
+			$(testo).html(escapehtml(testo))
+			$(oggetto).html(escapehtml(oggetto))
 			return valido;
 			
 		}
+		 /*
+		   * Funzione che controlla se tutti i campi dell'invio del messaggio sono validi
+		   * */
+			function inviaMessaggioCheck(){
+				var valido=[true];
+				var selettore = $('.selectpicker').val()
+				var oggetto = $("#oggetto").val()
+				var testo = $("#testo").val()
+				var fileExt = getFileExtension($('#file').val());
+				console.log(fileExt)
+				
+				if (selettore.length<=0)
+					valido=[false,"selezionare un destinatario"];
+				else if (testo.length<1||testo.length>1000)
+					valido=[false,"formato testo non valido"];
+				else if (oggetto.length<1||oggetto.length>75)
+					valido=[false,"formato oggetto non valido"];
+				else if (fileExt!="jpg" && fileExt!="jpg" && fileExt!="jpeg" && fileExt!="png" && fileExt!="pjpeg" && fileExt!="pjp" && fileExt!="jfif" && fileExt!="bmp" && fileExt!="") 
+					valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, PJP o PDF"];
+				else if(!$('#file').val().includes(".") && $('#file').val().length>0) {
+					valido = [false,"Il file deve essere di tipo BMP, PNG, JPG, JPEG, JFIF, PJPEG, PJP o PDF"] }
+				
+				$(testo).html(escapehtml(testo))
+				$(oggetto).html(escapehtml(oggetto))
+				return valido;
+				
+			}
 		
 		/**
 		 * converte i caratteri speciali <> & in caratteri unicode

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 import bean.Annuncio;
 import bean.Medico;
@@ -63,6 +62,10 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
 			if (operazione.equals("caricaAllegato")) {
 				caricaAllegato(request, operazione);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));
 				//qualunque cosa tu voglia fare dopo una chiamata asincrona
 				
 				//per Eugenio: ricordati di togliere la chiamata a caricaAllegato() da inviaComunicazione

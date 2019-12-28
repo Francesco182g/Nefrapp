@@ -5,21 +5,55 @@
 	"use strict"; // Start of use strict
 	var sub = false
 	$(document).ready(function() {
+		
 		var admin = $("#admin")
 		var paziente = $("#paziente")
 		var medico = $("#medico")
+		var caricaAnnuncio = $("#caricaAnnuncio")
+		console.log(caricaAnnuncio)
 		if (admin.length != 0) {
 			caricaDatiAdmin();
 		} else if (paziente.length != 0) {
 			caricaDatiPaziente()
-		} else if (medico.length) {
+		} else if (medico.length != 0) {
 
 			caricaDatiMedico()
-		}
+		}else if (caricaAnnuncio.length != 0)
+			{
+				loadAnnuncio()
+			}
 		
 
 	});
-	
+	function loadAnnuncio()
+	{
+		var $annuncio =$("#annuncio");
+	    $annuncio.fileinput({
+	        theme: "fas",
+	        dropZoneEnabled: false,
+	        language:"it",
+	        allowedFileExtensions: ["bmp","jpeg","jfif","pjpeg","pjp", "jpg", "gif", "png", "pdf"],
+	        uploadUrl: "GestioneAnnunci",
+	        showUpload: false, // hide upload button
+	        showRemove: false, // hide remove button
+	        overwriteInitial: false, // append files to initial preview
+	        minFileCount: 1,
+	        maxFileCount: 5,
+	        initialPreviewAsData: true,
+	        
+	        uploadExtraData: function(previewId, index) {
+	            return {operazione: "caricaAllegato"};
+	        }
+	    }).on("filebatchselected", function(event, files) {
+	        $annuncio.fileinput("upload");
+	    }).on('fileuploaded', function(event, previewId, index, fileId) {
+	        console.log('File uploaded', previewId, index, fileId);
+	    });
+	}
+	/**
+	 * funzione che esegue una chimata asincrona per poter prendere i dati del
+	 * paziente dalla servlet e caricarli nella dashboard del paziente
+	 */
 	function caricaDatiPaziente(){
 		$.post("GestionePianoTerapeutico",{operazione : "visualizza",tipo :"asincrona"},function(data){
 			var diagnosi= $("#diagnosi")
@@ -39,7 +73,10 @@
 			alert("si è verificato un errore")
 		})
 	}
-	
+	/**
+	 * funzione che esegue una chimata asincrona per poter prendere i dati del
+	 * medico dalla servlet e caricarli nella dashboard del medico
+	 */
 	function caricaDatiMedico(){
 		console.log("Ciao sto caricando i dati del medico")
 		$.post("GestioneMedico",{operazione : "VisualizzaPazientiSeguiti",tipo :"asincrona"},function(data){
