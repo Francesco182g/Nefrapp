@@ -4,6 +4,7 @@
 (function($) {
 	"use strict"; // Start of use strict
 	var sub = false
+	
 	$(document).ready(function() {
 		
 		var admin = $("#admin")
@@ -11,6 +12,7 @@
 		var medico = $("#medico")
 		var caricaAnnuncio = $("#caricaAnnuncio")
 		var caricaMessaggio = $("#caricaMessaggio")
+		
 		console.log(caricaAnnuncio)
 		if (admin.length != 0) {
 			caricaDatiAdmin();
@@ -52,7 +54,7 @@
 	    }).on("filebatchselected", function(event, files) {
 	        $messaggio.fileinput("upload");
 	    }).on('fileuploaded', function(event, previewId, index, fileId) {
-	        console.log('File uploaded', previewId, index, fileId);
+	       console.log("caricato")
 	    });
 	}
 	
@@ -79,6 +81,10 @@
 	        $annuncio.fileinput("upload");
 	    }).on('fileuploaded', function(event, previewId, index, fileId) {
 	        console.log('File uploaded', previewId, index, fileId);
+	        console.log("pre",previewId)
+	        console.log("ind",index)
+	        console.log("fileId",fileId)
+	        
 	    });
 	}
 	/**
@@ -97,8 +103,9 @@
 		}).fail(function(){
 			alert("si è verificato un errore")
 		})
-		$.post("GestioneAnnunci",{operazione : "visualizzaPersonali",tipo :"asincrona",utente:"paziente"},function(data){
+		$.post("GestioneAnnunci",{operazione : "visualizzaPersonali",tipo :"asincrona"},function(data){
 			console.log(data)
+				loadTabellaAnnunci(data)
 			
 		}).fail(function(){
 			alert("si è verificato un errore")
@@ -114,6 +121,13 @@
 			console.log("OPERAZIONE ESEGUITA CON SUCCESSO")
 			console.log(data)
 			loadTabellaPazienti(data,false)
+		}).fail(function(){
+			alert("si è verificato un errore")
+		})
+		$.post("GestioneAnnunci",{operazione : "visualizzaPersonali",tipo :"asincrona"},function(data){
+			console.log(data)
+			loadTabellaAnnunci(data)
+			
 		}).fail(function(){
 			alert("si è verificato un errore")
 		})
@@ -223,6 +237,27 @@
 					+ "' class='btn btn-primary btn-user mr-sm-5 modificaMedicoButton'>Modifica</button><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
 					+ i
 					+ "' class='btn btn-danger btn-user eliminaButtonMedico'>Elimina</button></div>"
+		}
+
+		tabellaMedici.append(riga)
+
+	}
+	/**
+	 * funzione che carica gli annunci nella tabella
+	 */
+	function loadTabellaAnnunci(medici) {
+		var tabellaMedici = $("#tabellaAnnunci")
+		var riga = ""
+		for (var i = 0; i < medici.length; i++) {
+			riga += "<li class='list-group-item mt-3'><div class='row table-responsive'><div class='col-12 col-sm-6 col-md-9 text-center text-sm-left'><table>"
+			riga += "<tr ><td><p>Titolo: </p></td>"
+			riga += "<td><p>" + medici[i].titolo + "</p></td></tr>"
+			riga += "<tr ><td><p>Testo: </p></td>"
+			riga += "<td><p>" + medici[i].testo + "</p></td></tr>"
+			
+			riga += "</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"
+					+ i
+					+ "' class='btn btn-primary btn-user mr-sm-5 modificaMedicoButton'>Vedi annuncio (WP)</button>"
 		}
 
 		tabellaMedici.append(riga)

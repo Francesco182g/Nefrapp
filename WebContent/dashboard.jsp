@@ -125,7 +125,9 @@
 											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
 										</div>
 										<div class="card-body">
-											
+												<ul class="list-group pull-down pre-scrollable"
+												id="tabellaAnnunci">
+											</ul>
 										</div>
 									</div>
 								</div>
@@ -156,8 +158,10 @@
 											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
 										</div>
 										<div class="card-body">
-											
+											<ul class="list-group pull-down pre-scrollable"
+												id="tabellaAnnunci">
 											</ul>
+											
 											
 										</div>
 										<div class="col-sm-12 mb-3 d-flex justify-content-center">

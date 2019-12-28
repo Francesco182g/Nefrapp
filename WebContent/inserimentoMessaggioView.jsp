@@ -47,7 +47,7 @@
 					<div class="card shadow mb-4">
 						<div class="card-body">
 							<form class="user" action="./messaggio" method="POST"
-								enctype="multipart/form-data">
+								enctype="multipart/form-data" id="formMessaggi">
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
 									<div class="col-lg-6 col-sm-6 mb-6 mb-sm-12 row">

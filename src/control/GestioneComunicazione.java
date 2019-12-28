@@ -146,17 +146,18 @@ public class GestioneComunicazione extends HttpServlet {
 			//questa chiamata andrà rimossa una volta realizzate le modifiche opportune alla view
 			//e le due operazioni andranno distinte nel doGet di GestioneMessaggi e GestioneAnnunci
 			//caricaAllegato(request, operazione);
-
+			String allegato = (String)session.getAttribute("allegato");
+			String nomeFile =(String) session.getAttribute("nomeFile");
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
-					System.out.println("allegato in messaggi : "+(String)request.getAttribute("allegato"));
+					System.out.println("allegato in messaggi : "+request.getParameter("allegato"));
 					messaggio = new MessaggioCompleto(CFMittente, oggetto, testo, 
-							(String)request.getAttribute("allegato"), (String)request.getAttribute("nomeFile"),
+							allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {
 					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo,
-							(String)request.getAttribute("allegato"), (String)request.getAttribute("nomeFile"),
+							allegato,nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					System.out.println("sto aggiungendo l'annuncio");
 					AnnuncioModel.addAnnuncio(annuncio);
@@ -168,11 +169,10 @@ public class GestioneComunicazione extends HttpServlet {
 		}
 	}
 	
-	protected void caricaAllegato(HttpServletRequest request, String operazione)
+	protected void caricaAllegato(HttpServletRequest request, String operazione,HttpSession session)
 	{
 		String allegato = null;
 		String nomeFile = null;
-		
 		InputStream fileStream = null;
 		
 		try {
@@ -206,8 +206,8 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 			System.out.println("nome del file 3 "+nomeFile);
 			System.out.println("allegato "+allegato);
-			request.setAttribute("allegato", allegato);
-			request.setAttribute("nomeFile", nomeFile);
+			session.setAttribute("nomeFile", nomeFile);
+			session.setAttribute("allegato", allegato);
 		}
 	}
 
