@@ -1,6 +1,5 @@
 package control;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
@@ -41,6 +40,7 @@ import utility.CriptazioneUtility;
 @WebServlet("/comunicazione")
 public class GestioneComunicazione extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
 
 	public GestioneComunicazione() {
 		super();
@@ -59,7 +59,9 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Errore durante il caricamento della pagina:");
+			request.setAttribute("notifica", "Errore in Gestione Comunicazione. " + e.getMessage());
+			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			dispatcher.forward(request, response);
 			e.printStackTrace();
 		}
 
@@ -120,8 +122,6 @@ public class GestioneComunicazione extends HttpServlet {
 	protected void inviaComunicazione(HttpServletRequest request, String operazione)
 			throws IOException, ServletException {
 		
-		long start, finish;
-		start = System.currentTimeMillis();
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
@@ -141,15 +141,12 @@ public class GestioneComunicazione extends HttpServlet {
 
 			String id = (String) session.getAttribute("id");
 			
-			System.out.println(System.currentTimeMillis() - start + " prima dell'if");
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
 					MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
 				} else if (operazione.equals("inviaAnnuncio")) {
 					AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
-				}
-				System.out.println(System.currentTimeMillis() - start + " dopo l'if");
-				
+				}				
 			} else {
 				System.out.println("L'utente deve essere loggato");
 			}
@@ -179,10 +176,10 @@ public class GestioneComunicazione extends HttpServlet {
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
 					
 					if (tipo!= null && tipo.equals("messaggio")) {
-						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(), new HashMap<String, Boolean>());
+						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
 						id = MessaggioModel.addMessaggio(messaggio);
 					} else if (tipo!= null && tipo.equals("annuncio")) {
-						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(), new HashMap<String, Boolean>());
+						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
 						id = AnnuncioModel.addAnnuncio(annuncio);
 					}
 					
