@@ -140,13 +140,24 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 
 			String id = (String) session.getAttribute("id");
-			
+
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
-					MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
+					if (id != null) {
+						MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null,
+								destinatariView);
+					} else {
+						MessaggioModel.addMessaggio(new MessaggioCompleto(CFMittente, oggetto, testo, null, null,
+								ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
+					}
 				} else if (operazione.equals("inviaAnnuncio")) {
-					AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
-				}				
+					if (id != null) {
+						AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
+					} else {
+						AnnuncioModel.addAnnuncio(new AnnuncioCompleto(CFMittente, oggetto, testo, null, null,
+								ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
+					}
+				}
 			} else {
 				System.out.println("L'utente deve essere loggato");
 			}
