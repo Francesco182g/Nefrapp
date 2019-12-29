@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-
 import bean.Annuncio;
 import bean.AnnuncioCompleto;
 import bean.Medico;
@@ -82,10 +81,10 @@ public class GestioneComunicazione extends HttpServlet {
 	 */
 	protected void caricaDestinatari(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
-		
+
 		if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 			ArrayList<Medico> mediciCuranti = new ArrayList<>();
 			Medico selezionato;
@@ -126,7 +125,8 @@ public class GestioneComunicazione extends HttpServlet {
 		Annuncio annuncio = null;
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
-		//va effettuato il controllo se il booleano è nullo se no manda in eccezione fate cosi i controlli by Eugenio
+		// va effettuato il controllo se il booleano è nullo se no manda in eccezione
+		// fate cosi i controlli by Eugenio
 		if (session.getAttribute("accessDone") != null && (boolean) session.getAttribute("accessDone") == true) {
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
@@ -136,30 +136,22 @@ public class GestioneComunicazione extends HttpServlet {
 			String CFMittente = utente.getCodiceFiscale();
 			String oggetto = request.getParameter("oggetto");
 			String testo = request.getParameter("testo");
-			HashMap<String, Boolean> destinatariView = new HashMap<String,Boolean>();
-			for(String temp: destinatari) {
+			HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
+			for (String temp : destinatari) {
 				destinatariView.put(temp, false);
-			}			
-			
-			//ho spezzato invio e caricamento perché in futuro (grazie a Eugenio)
-			//le due cose saranno indipendenti e il caricamento sarà triggerato in maniera asincrona
-			//questa chiamata andrà rimossa una volta realizzate le modifiche opportune alla view
-			//e le due operazioni andranno distinte nel doGet di GestioneMessaggi e GestioneAnnunci
-			//caricaAllegato(request, operazione);
-			String allegato = (String)session.getAttribute("allegato");
-			String nomeFile =(String) session.getAttribute("nomeFile");
+			}
+
+			String allegato = (String) session.getAttribute("allegato");
+			String nomeFile = (String) session.getAttribute("nomeFile");
+
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
-					System.out.println("allegato in messaggi : "+request.getParameter("allegato"));
-					messaggio = new MessaggioCompleto(CFMittente, oggetto, testo, 
-							allegato, nomeFile,
+					messaggio = new MessaggioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
 					MessaggioModel.addMessaggio(messaggio);
 				} else if (operazione.equals("inviaAnnuncio")) {
-					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo,
-							allegato,nomeFile,
+					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
-					System.out.println("sto aggiungendo l'annuncio");
 					AnnuncioModel.addAnnuncio(annuncio);
 				}
 
@@ -167,26 +159,27 @@ public class GestioneComunicazione extends HttpServlet {
 				System.out.println("L'utente deve essere loggato");
 			}
 		}
+
+		session.setAttribute("allegato", null);
+		session.setAttribute("nomeFile", null);
 	}
-	
-	protected void caricaAllegato(HttpServletRequest request, String operazione,HttpSession session)
-	{
+
+	protected void caricaAllegato(HttpServletRequest request, String operazione, HttpSession session) {
 		String allegato = null;
 		String nomeFile = null;
 		InputStream fileStream = null;
-		
+
 		try {
 			Part filePart = request.getPart("file");
-			System.out.println("stampo il file part : "+filePart);
-			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
-			System.out.println("nome del file "+nomeFile);
-			if (filePart!=null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
+			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$",
+					"$1");
+			if (filePart != null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
 				fileStream = filePart.getInputStream();
 				try {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
-					System.out.println("nome del file 2 "+nomeFile);
-					System.out.println("allegato 2 "+allegato);
+					System.out.println("nome del file 2 " + nomeFile);
+					System.out.println("allegato 2 " + allegato);
 				} catch (Exception e) {
 					System.out.println("inviaMessaggio: errore nella criptazione del file");
 					e.printStackTrace();
@@ -199,13 +192,10 @@ public class GestioneComunicazione extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println("caricaAllegato: errore nel caricamento dell'allegato");
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			if (nomeFile.equals("form-data; name=\"file\"; filename=\"\"")) {
 				nomeFile = null;
 			}
-			System.out.println("nome del file 3 "+nomeFile);
-			System.out.println("allegato "+allegato);
 			session.setAttribute("nomeFile", nomeFile);
 			session.setAttribute("allegato", allegato);
 		}
@@ -213,7 +203,7 @@ public class GestioneComunicazione extends HttpServlet {
 
 	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo) {
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-		
+
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16) {
 			return false;
 		} else if (oggetto.length() < 1 || oggetto.length() > 75) {
@@ -224,10 +214,10 @@ public class GestioneComunicazione extends HttpServlet {
 
 		return true;
 	}
-	
+
 	private boolean controllaFile(String nomeFile, long dimensioneFile) {
 		String estensione = "";
-		
+
 		if (dimensioneFile == 0) {
 			return false;
 		}
@@ -242,7 +232,7 @@ public class GestioneComunicazione extends HttpServlet {
 			int indice = nomeFile.indexOf(".");
 			estensione = nomeFile.substring(indice);
 		}
-		
+
 		if (!estensione.equals("") && !estensione.equals(".jpg") && !estensione.equals(".jpeg")
 				&& !estensione.equals(".png") && !estensione.equals(".pjpeg") && !estensione.equals(".pjp")
 				&& !estensione.equals(".jfif") && !estensione.equals(".bmp")) {
@@ -250,7 +240,7 @@ public class GestioneComunicazione extends HttpServlet {
 		} else if (dimensioneFile > 15728640l) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
