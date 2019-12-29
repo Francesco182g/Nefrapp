@@ -33,7 +33,6 @@ public class GestioneMedico extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
 			String operazione = request.getParameter("operazione");
 			Amministratore amministratore = null;
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
@@ -42,7 +41,7 @@ public class GestioneMedico extends HttpServlet {
 			}
 		
 			
-			if(medico == null || amministratore == null) {
+			if(medico == null && amministratore == null) {
 				request.setAttribute("notifica", "Non si hanno i permessi necessari");
 				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
@@ -154,7 +153,7 @@ public class GestioneMedico extends HttpServlet {
 				request.setAttribute("notifica", "Non ï¿½ stato trovato il medico da aggiornare");
 			}
 		} else {
-			request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+			request.setAttribute("notifica","Uno o piï¿½ parametri del medico non sono validi.");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
 			requestDispatcher.forward(request,response);
 		}
