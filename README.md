@@ -1,5 +1,8 @@
 # Nefrapp
 
+Note:
+- ci sono due problemi nella pagina di invio messaggi: bisogna disporre che quando la si lascia senza inviare l'allegato il messaggio temporaneo caricato deve essere cancellato; al dropdown manca una libreria e dopo averlo usato una volta si disattiva.
+
 Glossario delle nuove variabili di sessione:
 - ${isPaziente}, ${isMedico}, ${isAmministratore} sono boolean settati a true quando un utente della corrispondente categoria ha effettuato l'accesso al sito.
 - ${accessDone} è un boolean settato a true quando un utente qualsiasi ha effettuato l'accesso al sito.
