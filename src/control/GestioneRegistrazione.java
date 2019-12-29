@@ -18,7 +18,7 @@ import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * @author Luca Esposito, Antonio Donnarumma, Davide Benedetto Strianese,
@@ -52,18 +52,19 @@ public class GestioneRegistrazione extends HttpServlet {
 			HttpSession session = request.getSession();
 			String operazione = request.getParameter("operazione");
 			if(operazione.equals("registraMedico")) {
-				Amministratore amministratore = (Amministratore) session.getAttribute("amministratore");
+				Amministratore amministratore = (Amministratore) session.getAttribute("utente");
 				if(amministratore != null) {
 					registraMedico(request,response);
 				}
 			}else if(operazione.equals("registraPazienteMedico")) { //registrazione paziente per il medico
-					Medico medicoLoggato = (Medico) session.getAttribute("medico");
+					Medico medicoLoggato = (Medico) session.getAttribute("utente");
 					if(medicoLoggato != null) {
 						String registrato = request.getParameter("registrato");
 							if(registrato.equals("No")) { //paziente non registrato
 								ArrayList<String> medici = new ArrayList<String>();
 								medici.add(medicoLoggato.getCodiceFiscale());
 								registraPaziente(request, response, medici);
+								System.out.println("lo facciamo sto redirect");
 								response.sendRedirect("/dashboard.jsp");
 								
 							}else { // solo aggiunta del cf del medico tra i seguiti (paziente già registrato)
@@ -85,6 +86,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			
 			
 		} catch(Exception e) {
+			e.printStackTrace();
 			request.setAttribute("notifica",e.getMessage());
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
 			requestDispatcher.forward(request,response);
@@ -114,10 +116,11 @@ public class GestioneRegistrazione extends HttpServlet {
 				if(MedicoModel.getMedicoByCF(codiceFiscale)==null) {
 					Medico medico = new Medico(sesso, residenza, null, codiceFiscale, nome, cognome, email,luogoDiNascita);
 					if(!dataDiNascita.equals("")) {
-						medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
+						medico.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 					}
-					password = AlgoritmoCriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
+					password = CriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
 					MedicoModel.addMedico(medico, password);
+					System.out.println("medico registrato");
 				}else {
 					request.setAttribute("notifica","Medico già presente.");
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
@@ -146,7 +149,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			Paziente paziente = null;
 			
 			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
-				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+				password = CriptazioneUtility.criptaConMD5(password);
 				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd-MM-yyyy")), true, medici);
 				PazienteModel.addPaziente(paziente,password);
 			}else {

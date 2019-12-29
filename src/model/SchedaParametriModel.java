@@ -24,6 +24,7 @@ public class SchedaParametriModel {
 		while(documenti.hasNext()) {
 			schedeParametri.add(CreaBeanUtility.daDocumentASchedaParametri(documenti.next()));
 		}
+		documenti.close();
 		return schedeParametri;
 	}
 

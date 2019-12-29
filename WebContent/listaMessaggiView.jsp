@@ -19,16 +19,11 @@
    	 	<link href="./css/sb-admin-2.min.css" rel="stylesheet">	
    	 	
    	 	<!-- DatePicker -->
+
+   	 	
    	 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
 		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
-		
-		<!-- Messaggio per Nico da parte di Sara: ho dovuto riaggiungere le librerie che hai tolto perchè altrimenti non funziona
-		il click dei messaggi. Per sicurezza le ho rimesse tutte e tre. Ovviamente potremmo trovare ciò che ci serve per far funzionare 
-		la cosa e cancellare il resto -->
-<!-- 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-<!-- 		<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" > -->
 	
 		<script type="text/javascript" src="./js/messaggi.js"></script>
 		
@@ -54,8 +49,6 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <c:set var="paziente" value='${sessionScope["paziente"]}'/>
-          <c:set var="medico" value='${sessionScope["medico"]}'/>
           <c:set var="messaggio" value='${requestScope["messaggio"]}'/>
           <h1 class="h3 mb-2 text-gray-800">Messaggi ricevuti: </h1>
           
@@ -81,13 +74,18 @@
                   	
                   	
                   	<!-- Inizio iterazione dei risultati ottenuti dalla servlet) -->
+
              		<c:forEach items="${messaggio}" var="item">
-             		
-             		<c:set var="cognome" value="${item.codiceFiscaleMittente}" />
-                    <c:if test="${not item.visualizzato}"><tr class = "clickable-row riga-messaggio" style="font-weight: bolder" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'></c:if>
-                    <c:if test="${item.visualizzato}"><tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${requestScope[cognome]}&idMessaggio=${item.idMessaggio}'></c:if>
-                      
-                      <td width = "300px">Dott. ${requestScope[cognome]}</a></td>
+             		<tr>
+             		<c:set var="cognome" value="${requestScope[item.codiceFiscaleMittente]}" />
+                    <c:if test="${not item.visualizzato}"><tr class = "clickable-row riga-messaggio" style="font-weight: bolder" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${cognome}&idMessaggio=${item.idMessaggio}'></c:if>
+                    <c:if test="${item.visualizzato}"><tr class = "clickable-row riga-messaggio" data-href='./messaggio?operazione=visualizzaMessaggio&cognome=${cognome}&idMessaggio=${item.idMessaggio}'></c:if>
+                      <c:if test="${isPaziente}">
+                      	<td width = "300px">Dott. ${cognome}</td>
+                      </c:if>
+						<c:if test="${isMedico}">
+                      	<td width = "300px">${cognome}</td>
+                      </c:if>
                       <td>${item.oggetto}</td>
                       <td>${item.dataFormattata}</td>
                       <td>${item.oraFormattata}</td>

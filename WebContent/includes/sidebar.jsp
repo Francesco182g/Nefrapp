@@ -46,16 +46,19 @@
 
 		<!-- Nav Item - Dashboard -->
 
-		<c:set var="paziente" value='${sessionScope["paziente"]}' />
-		<c:set var="medico" value='${sessionScope["medico"]}' />
-		<c:set var="amministratore" value='${sessionScope["amministratore"]}' />
+		
 		<c:choose>
-			<c:when test='${paziente!=null}'>
-
-				<li class="nav-item"><a class="nav-link" href="./profilo.jsp"> <i
+			<c:when test='${isPaziente==true && accessDone==true}'>
+				
+				<li class="nav-item"><form action="./GestioneAccesso" method="post">
+					<input type="hidden" name="operazione" value="logout">
+					<button class="btn btn-primary">Logout immediato (temp. per testing)</button>
+				</form></li>
+				<div class="sidebar-heading">Area Personale</div>
+				<li class="nav-item"><a class="nav-link" href="./GestionePaziente?operazione=visualizzaProfilo"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
-
+				<div class="sidebar-heading">Area Medica</div>
 				<li class="nav-item"><a class="nav-link"
 					href="./inserimentoParametriView.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Inserimento
@@ -67,11 +70,11 @@
 							Schede Parametri</span></a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href='./piano?operazione=visualizza&CFPaziente=${sessionScope["paziente"].codiceFiscale}'>
+					href='./piano?operazione=visualizza&CFPaziente=${sessionScope["utente"].codiceFiscale}'>
 						<i class="fas fa-fw fa-tachometer-alt"></i> <span>Visualizza
 							Piano Terapeutico</span>
 				</a></li>
-
+				<div class="sidebar-heading">Area Comunicazioni</div>
 				<li class="nav-item"><a class="nav-link"
 					href="./messaggio?operazione=caricaDestinatariMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Invia
@@ -82,12 +85,18 @@
 							Messaggi</span></a></li>
 			</c:when>
 
-			<c:when test='${medico!=null}'>
+			<c:when test='${isMedico==true && accessDone==true}'>
 
-				<li class="nav-item"><a class="nav-link" href="/ModificaAccountMedicoView.jsp"> <i
+				<li class="nav-item"><form action="./GestioneAccesso" method="post">
+					<input type="hidden" name="operazione" value="logout">
+					<button class="btn btn-primary">Logout immediato
+						(temp. per testing)</button>
+				</form></li>
+				<div class="sidebar-heading">Area Personale</div>
+				<li class="nav-item"><a class="nav-link" href="./GestioneMedico?operazione=visualizzaProfilo"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Dati
 							Anagrafici</span></a></li>
-
+				<div class="sidebar-heading">Area Medica</div>
 				<li class="nav-item"><a class="nav-link"
 					href="./GestioneMedico?operazione=VisualizzaPazientiSeguiti"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Visualizza
@@ -97,24 +106,30 @@
 					href="./registraPazienteMedico.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Registra
 							paziente</span></a></li>
-
+				<div class="sidebar-heading">Area Comunicazioni</div>
 				<li class="nav-item"><a class="nav-link"
-					href="./GestioneMessaggi?operazione=inserimentoMessaggioView">
+					href="./messaggio?operazione=caricaDestinatariMessaggio">
 						<i class="fas fa-fw fa-tachometer-alt"></i> <span>Invia
 							Messaggio</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="./messaggio?operazione=visualizzaMessaggio"> <i
+					href="./messaggio?operazione=visualizzaElencoMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Leggi
 							Messaggio</span></a></li>
 
 				<li class="nav-item"><a class="nav-link"
-					href="../parametri?operazione=visualizzaScheda"> <i
+					href="./annuncio?operazione=caricaDestinatariAnnuncio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Pubblica
 							Annuncio</span></a></li>
 
 			</c:when>
-			<c:when test='${amministratore!=null}'>
+			<c:when test='${isAmministratore==true && accessDone==true}'>
+				<li class="nav-item"><form action="./GestioneAccesso" method="post">
+					<input type="hidden" name="operazione" value="logout">
+					<button class="btn btn-primary">Logout immediato (temp.
+						per testing)</button>
+				</form></li>
+
 				<li class="nav-item"><a class="nav-link"
 					href="./registraMedico.jsp"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Registra
@@ -141,91 +156,62 @@
 							account Paziente</span></a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="nav-item"><a class="nav-link" href="#"> <i
+			<li class="nav-item"><a class="nav-link"
+					href="login.jsp"> <i
+						class="fas fa-fw fa-tachometer-alt"></i> <span>Login</span></a></li>
+			</c:otherwise>
+		</c:choose>
+		<div class="sidebar-heading">Extra</div>
+		<li class="nav-item"><a class="nav-link" href="#"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Conosci il
 							prodotto</span></a></li>
 				<li class="nav-item"><a class="nav-link" href="./team.jsp">
 						<i class="fas fa-fw fa-tachometer-alt"></i> <span>Conosci
 							il team!</span>
 				</a></li>
-			</c:otherwise>
-		</c:choose>
 
 		<!-- Divider -->
-		<hr class="sidebar-divider">
+
 
 		<!-- Heading -->
-		<div class="sidebar-heading">Interface</div>
+		
 
 		<!-- Nav Item - Pages Collapse Menu -->
-		<li class="nav-item"><a class="nav-link collapsed" href="#"
-			data-toggle="collapse" data-target="#collapseTwo"
-			aria-expanded="true" aria-controls="collapseTwo"> <i
-				class="fas fa-fw fa-cog"></i> <span>Components</span>
-		</a>
-			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-				data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Custom Components:</h6>
-					<a class="collapse-item" href="buttons.html">Buttons</a> <a
-						class="collapse-item" href="cards.html">Cards</a>
-				</div>
-			</div></li>
 
 		<!-- Nav Item - Utilities Collapse Menu -->
-		<li class="nav-item"><a class="nav-link collapsed" href="#"
-			data-toggle="collapse" data-target="#collapseUtilities"
-			aria-expanded="true" aria-controls="collapseUtilities"> <i
-				class="fas fa-fw fa-wrench"></i> <span>Utilities</span>
-		</a>
-			<div id="collapseUtilities" class="collapse"
-				aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Custom Utilities:</h6>
-					<a class="collapse-item" href="utilities-color.html">Colors</a> <a
-						class="collapse-item" href="utilities-border.html">Borders</a> <a
-						class="collapse-item" href="utilities-animation.html">Animations</a>
-					<a class="collapse-item" href="utilities-other.html">Other</a>
-				</div>
-			</div></li>
+
 
 		<!-- Divider -->
-		<hr class="sidebar-divider">
 
 		<!-- Heading -->
-		<div class="sidebar-heading">Addons</div>
-
+		
 		<!-- Nav Item - Pages Collapse Menu -->
-		<li class="nav-item active"><a class="nav-link" href="#"
-			data-toggle="collapse" data-target="#collapsePages"
-			aria-expanded="true" aria-controls="collapsePages"> <i
-				class="fas fa-fw fa-folder"></i> <span>Pages</span>
-		</a>
-			<div id="collapsePages" class="collapse show"
-				aria-labelledby="headingPages" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Login Screens:</h6>
-					<a class="collapse-item" href="login.jsp">Login</a>
-					<!--dovrebbe essere visualizzabile solo al medico e all'admin 
-                    <a class="collapse-item" href="register.html">Register</a>-->
-					<a class="collapse-item" href="forgot-password.html">Forgot
-						Password</a>
-					<div class="collapse-divider"></div>
-					<h6 class="collapse-header">Other Pages:</h6>
-					<a class="collapse-item" href="404.html">404 Page</a> <a
-						class="collapse-item active" href="blank.html">Blank Page</a>
-				</div>
-			</div></li>
+<!-- 		<li class="nav-item active"><a class="nav-link" href="#" -->
+<!-- 			data-toggle="collapse" data-target="#collapsePages" -->
+<!-- 			aria-expanded="true" aria-controls="collapsePages"> <i -->
+<!-- 				class="fas fa-fw fa-folder"></i> <span>Pages</span> -->
+<!-- 		</a> -->
+<!-- 			<div id="collapsePages" class="collapse show" -->
+<!-- 				aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
+<!-- 				<div class="bg-white py-2 collapse-inner rounded"> -->
+<!-- 					<h6 class="collapse-header">Login Screens:</h6> -->
+<!-- 					<a class="collapse-item" href="login.jsp">Login</a> -->
+<!-- 					dovrebbe essere visualizzabile solo al medico e all'admin 
+<!--                     <a class="collapse-item" href="register.html">Register</a>--> 
+<!-- 					<a class="collapse-item" href="forgot-password.html">Forgot -->
+<!-- 						Password</a> -->
+<!-- 					<div class="collapse-divider"></div> -->
+<!-- 					<h6 class="collapse-header">Other Pages:</h6> -->
+<!-- 					<a class="collapse-item" href="404.html">404 Page</a> <a -->
+<!-- 						class="collapse-item active" href="blank.html">Blank Page</a> -->
+<!-- 				</div> -->
+<!-- 			</div></li> -->
 
 		<!-- Nav Item - Charts -->
-		<li class="nav-item"><a class="nav-link" href="charts.html">
-				<i class="fas fa-fw fa-chart-area"></i> <span>Charts</span>
-		</a></li>
+		
 
 		<!-- Nav Item - Tables -->
-		<li class="nav-item"><a class="nav-link" href="tables.html">
-				<i class="fas fa-fw fa-table"></i> <span>Tables</span>
-		</a></li>
+		
 
 		<!-- Divider -->
 		<hr class="sidebar-divider d-none d-md-block">

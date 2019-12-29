@@ -1,14 +1,17 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
 import org.bson.Document;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import bean.Paziente;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 import utility.CreaBeanUtility;
 
 import static com.mongodb.client.model.Filters.*;
@@ -27,7 +30,7 @@ public class PazienteModel {
 	 * @param password password del paziente
 	 * @return dati del paziente se le credenziali sono corrette, null altrimenti
 	 */
-	public static Paziente checkLogin(String codiceFiscale, String password) {
+	public static Paziente getPazienteByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
 		Paziente paziente = null;
 		BasicDBObject andQuery = new BasicDBObject();
@@ -60,6 +63,7 @@ public class PazienteModel {
 			pazientiMedico.add(CreaBeanUtility.daDocumentAPaziente(documenti.next()));
 		}
 		
+		documenti.close();
 		return pazientiMedico;	
 	}
 	
@@ -100,7 +104,6 @@ public class PazienteModel {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * 
 	 * Query che ricerca l'id di un paziente per codice fiscale
 	 * @param codiceFiscale del paziente da ricercare
@@ -114,7 +117,7 @@ public class PazienteModel {
 		
 		
 		if(datiPaziente != null) {
-			String pazienteID=AlgoritmoCriptazioneUtility.criptaConMD5(datiPaziente.getObjectId("_id").toString());
+			String pazienteID=CriptazioneUtility.criptaConMD5(datiPaziente.getObjectId("_id").toString());
 			return pazienteID;
 		}
 		
@@ -165,18 +168,47 @@ public class PazienteModel {
 	 * Query che aggiorna il paziente
 	 * @param daAggiornare paziente
 	 */
+//	public static void updatePaziente(Paziente daAggiornare) {
+//		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+//		BasicDBObject nuovoPaziente = new BasicDBObject();
+//		nuovoPaziente.append("$set", new Document().append("Nome", daAggiornare.getNome()));
+//		nuovoPaziente.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
+//		nuovoPaziente.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
+//		nuovoPaziente.append("$set", new Document().append("Email", daAggiornare.getEmail()));
+//		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
+//		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
+//		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
+//		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
+//		nuovoPaziente.append("$set", new Document().append("Attivo", daAggiornare.getAttivo()));
+//		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+//		pazienti.updateOne(searchQuery, nuovoPaziente);
+//	} 
+	
+	/**
+	 * Query che aggiorna il paziente
+	 * @param daAggiornare paziente
+	 */
 	public static void updatePaziente(Paziente daAggiornare) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
-		BasicDBObject nuovoPaziente = new BasicDBObject();
-		nuovoPaziente.append("$set", new Document().append("Nome", daAggiornare.getNome()));
-		nuovoPaziente.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
-		nuovoPaziente.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
-		nuovoPaziente.append("$set", new Document().append("Email", daAggiornare.getEmail()));
-		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
-		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
-		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
-		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
-		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
-		pazienti.updateOne(searchQuery, nuovoPaziente);
-	}
+
+		
+		 Document query = new Document();
+	     query.append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+	     Document nuovoPaziente = new Document();
+	     nuovoPaziente.append("Nome", daAggiornare.getNome())
+        		.append("Cognome", daAggiornare.getCognome())
+    			.append("DataDiNascita", daAggiornare.getDataDiNascita())
+    			.append("Email", daAggiornare.getEmail())
+    			.append("Residenza", daAggiornare.getResidenza())
+    			.append("LuogoDiNascita", daAggiornare.getLuogoDiNascita())
+    			.append("Sesso", daAggiornare.getSesso())
+    			.append("Medici", daAggiornare.getMedici())
+    			.append("Attivo", daAggiornare.getAttivo());
+
+	 
+        Document update = new Document();
+        update.append("$set", nuovoPaziente);
+        pazienti.updateOne(query, update);
+		
+		}
 }

@@ -1,4 +1,5 @@
-	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,6 +28,7 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="./js/messaggi.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./css/bootstrap-datepicker.css">
 
@@ -36,7 +38,8 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top"
+	onload="creaDownload('${messaggio.corpoAllegato}', '${messaggio.nomeAllegato}')">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<%@include file="../includes/sidebar.jsp"%>
@@ -53,8 +56,6 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<c:set var="paziente" value='${sessionScope["paziente"]}' />
-					<c:set var="medico" value='${sessionScope["medico"]}' />
 					<c:set var="messaggio" value='${requestScope["messaggio"]}' />
 					<h1 class="h3 mb-2 text-gray-800">Messaggio ricevuto:</h1>
 
@@ -78,7 +79,12 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>Dott. ${param['cognome']}</td>
+											<c:if test="${isPaziente}">
+												<td>Dott. ${param['cognome']}</td>
+											</c:if>
+											<c:if test="${isMedico}">
+												<td>${param['cognome']}</td>
+											</c:if>
 											<td>${messaggio.oggetto}</td>
 											<td>${messaggio.dataFormattata}</td>
 											<td>${messaggio.oraFormattata}</td>
@@ -100,31 +106,37 @@
 										</tr>
 									</tbody>
 								</table>
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+								
+								<a class="btn btn-primary float-right"
+								href="./messaggio?operazione=caricaDestinatariMessaggio&destinatario=${messaggio.codiceFiscaleMittente}"
+								role="button">Rispondi</a>
+								<br><br><br><br>
+								
+								<table class="table" id="dataTable"	>
 									<thead>
 										<tr>
-											<th>Allegato</th>
+											<th colspan="2">Allegato</th>
 										</tr>
 									</thead>
-
-									<tbody>
-										<tr>
-											<td>
-											<c:if test="${messaggio.allegato!=null}">
-												<img src="data:image/jpeg;base64, ${messaggio.allegato}">
-											</c:if>
-											<c:if test="${messaggio.allegato==null}">
-												Nessun allegato
-											</c:if>
-											</td>
-										</tr>
-									</tbody>
+									<c:if test="${messaggio.corpoAllegato!=null}">
+										<tbody>
+											<tr>
+												<td style="border-style:hidden"><i class="fas fa-download"></i> &emsp; <a
+													id="download" download="" href="">${messaggio.nomeAllegato}</a>
+												</td>
+												<td style="border-style:hidden"><a data-toggle="collapse" href="#imgcollapse"
+													role="button" aria-expanded="false"
+													aria-controls="multiCollapseExample1">Anteprima <i
+														class="fas fa-arrow-down"></i></a>
+													<div class="collapse" id="imgcollapse">
+														<img class="img-fluid"
+															src="data:image/jpeg;base64, ${messaggio.corpoAllegato}">
+													</div></td>
+											</tr>
+										</tbody>
+									</c:if>
 								</table>
 							</div>
-							<a class="btn btn-primary float-right" 
-							href="./comunicazione?operazione=caricaDestinatariMessaggio&destinatario=${messaggio.codiceFiscaleMittente}" 
-							role="button">Rispondi</a>
 						</div>
 					</div>
 
@@ -144,6 +156,8 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
+	<script type="text/javascript">
+		
+	</script>
 </body>
 </html>

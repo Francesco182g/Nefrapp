@@ -7,7 +7,6 @@ import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
-import bean.Paziente;
 import utility.CreaBeanUtility;
 
 /**
@@ -24,7 +23,7 @@ public class MedicoModel {
 	 * @param password password del medico
 	 * @return dati del medico se le credenziali sono corrette, null altrimenti
 	 */
-	public static Medico checkLogin(String codiceFiscale, String password) {
+	public static Medico getMedicoByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		Medico medico = null;
 		BasicDBObject andQuery = new BasicDBObject();

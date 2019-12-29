@@ -14,9 +14,19 @@
 <!-- Custom fonts for this template-->
 
 <!-- Custom styles for this template-->
+<link href="./css/fileinput.css" rel="stylesheet">
+<script src="./vendor/jquery/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="./js/plugins/piexif.js"></script>
+<script src="./js/fileinput.js"></script>
+<script src="./themes/fas/theme.js"></script>
+<script src="./js/locales/it.js"></script>
+<script src="./js/loadObject.js"></script>
 <script type="text/javascript" src="./js/messaggi.js"></script>
+<script src="js/ParameterControl.js"></script>
 </head>
-<body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')"> 
+<body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<%@include file="./includes/sidebar.jsp"%>
@@ -38,14 +48,14 @@
 					<div class="card shadow mb-4">
 						<div class="card-body">
 							<form class="user" action="./messaggio" method="POST"
-								enctype="multipart/form-data">
+								enctype="multipart/form-data" id="formMessaggi">
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
 									<div class="col-lg-6 col-sm-6 mb-6 mb-sm-12 row">
 										<div class="dropdown">
 											<!-- Se utente==paziente, il pulsante mostra l'elenco dei medico, viceversa altrimenti -->
 											<c:choose>
-												<c:when test='${paziente!=null}'>
+												<c:when test='${isPaziente==true}'>
 													<select 
 														name="selectMedico" id="selectMedico"
 														title="Scegli destinatari:" multiple
@@ -59,12 +69,14 @@
 														</c:forEach>
 													</select>
 												</c:when>
-												<c:when test='${medico!=null}'>
-													<select name="selectPaziente" id="selectPaziente" multiple>
+												<c:when test='${isMedico==true}'>
+													<select name="selectPaziente" id="selectPaziente" title="Scegli destinatari:" multiple
+														data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
+														class="selectpicker bootstrap-select w-100">
 														<option value="" disabled>Scegli destinatari:</option>
 														<c:set var="pazienti"
-															value='${requestScope[pazientiSeguiti]}' />
-														<c:forEach items="${dottori}" var="item">
+															value='${requestScope["pazientiSeguiti"]}' />
+														<c:forEach items="${pazienti}" var="item">
 															<option value="${item.codiceFiscale}">${item.nome}
 																${item.cognome}</option>
 														</c:forEach>
@@ -82,7 +94,7 @@
 							</div>
 							<div class="col-lg-10 col-sm-12 mb-12 mb-sm-12 row">
 								<input type="text" class="form-control form-control-user"
-									id="oggeto" name="oggetto" required="required">
+									id="oggetto" name="oggetto" required="required">
 							</div>
 
 						</div>
@@ -97,17 +109,10 @@
 									style="resize: none; height: 180px"></textarea>
 							</div>
 						</div>
-						<div class="form-group row">
-							<div class="file-field">
-								<div class="d-flex justify-content-center">
-									<div class="btn btn-mdb-color btn-rounded float-left">
-										<span>Allegato</span> <input type="file" name="file"
-											id="file">
-									</div>
-								</div>
-							</div>
+							<div class="file-loading" id="caricaMessaggio" >
+    					<input id="messaggio" name="file" type="file" multiple>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row mt-3">
 							<button class="btn btn-primary btn-user" type="submit"
 								id="inviaMessaggio" style="float: right">Invia
 								Messaggio</button>

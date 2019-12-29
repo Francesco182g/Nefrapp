@@ -20,13 +20,14 @@ import com.google.gson.Gson;
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
- * @author Luca Esposito
+ * @author Luca Esposito e Eugenio Corbisiero
  * Questa classe � una servlet che si occupa della gestione delle funzionalit� dell'amministratore
  */
 @WebServlet("/GestioneAmministratore")
@@ -52,16 +53,21 @@ public class GestioneAmministratore extends HttpServlet {
 						modificaDatiPersonali(request, response, session);
 					}
 					else if(operazione.equals("caricaMedPaz")) {
-						scaricaDatiPazienteMedico(request,response);
+						Utente utente = (Utente) session.getAttribute("utente");
+						if (utente!=null && utente instanceof Amministratore)
+						{
+							scaricaDatiPazienteMedico(request,response);
+						}
 					}
 					
 					else {
 						throw new Exception("Operazione invalida");
 					}	
 				} catch (Exception e) {
-					request.setAttribute("notifica",e.getMessage());
+					e.printStackTrace();
+					request.setAttribute("notifica","Errore in gestione Amministratore. "+e.getMessage());
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-					requestDispatcher.forward(request,response);		
+					requestDispatcher.forward(request,response);	
 				}
 				
 	}
@@ -110,16 +116,16 @@ public class GestioneAmministratore extends HttpServlet {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 				
 		if(request.getParameter("tipoUtente").equals("amministratore")) {
-			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("amministratore");
+			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("utente");
 			if(amministratoreLoggato!=null) {
 				String vecchiaPassword=request.getParameter("vecchiaPassword");
 				String nuovaPassword=request.getParameter("nuovaPassword");
 				String confermaPassword=request.getParameter("confermaPassword");
 				if(validaPassword(vecchiaPassword,nuovaPassword,confermaPassword)) {
 					String password= AmministratoreModel.getPassword(amministratoreLoggato.getCodiceFiscale());
-					vecchiaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(vecchiaPassword);
+					vecchiaPassword = CriptazioneUtility.criptaConMD5(vecchiaPassword);
 					if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
-						nuovaPassword = AlgoritmoCriptazioneUtility.criptaConMD5(nuovaPassword);
+						nuovaPassword = CriptazioneUtility.criptaConMD5(nuovaPassword);
 						AmministratoreModel.updateAmministratore(amministratoreLoggato.getCodiceFiscale(),nuovaPassword);
 					} else {
 						request.setAttribute("notifica","Le password non corrispondono.");
@@ -156,9 +162,9 @@ public class GestioneAmministratore extends HttpServlet {
 					paziente.setLuogoDiNascita(luogoDiNascita);
 					paziente.setSesso(sesso);
 					if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
-						password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+						password = CriptazioneUtility.criptaConMD5(password);
 						PazienteModel.changePassword(codiceFiscale, password);
-					}else {
+					} else {
 						request.setAttribute("notifica","Password non valide o non corrispondenti.");
 						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountPazienteView.jsp");
 						requestDispatcher.forward(request,response);
@@ -183,7 +189,7 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setLuogoDiNascita(luogoDiNascita);
 						medico.setSesso(sesso);
 						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
-							password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
+							password = CriptazioneUtility.criptaConMD5(password);
 							MedicoModel.changePassword(codiceFiscale, password);
 						} else {
 							request.setAttribute("notifica","Password non valide o non corrispondenti.");

@@ -10,7 +10,7 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     	<meta name="description" content="">
     	<meta name="author" content="">
-		<title>Scheda Parametri - Nefrapp</title>
+		<title>Profilo - Nefrapp</title>
     	
     	<!-- Custom fonts for this template-->
     	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,31 +32,32 @@
 	</head>
 	
 	<body id="page-top">
-	<!-- session attribute -->
-	<c:set var="accessDone" value='${sessionScope["accessDone"]}' />
-	<c:choose>     
-         <c:when test = "${not empty sessionScope.paziente}">
-            <c:set var = "nome" value="${sessionScope.paziente.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.paziente.cognome}"></c:set>
-			<c:set var= "sesso" value="${sessionScope.paziente.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${sessionScope.paziente.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${sessionScope.paziente.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${sessionScope.paziente.dataDiNascita}"></c:set>
-            <c:set var= "luogoDiNascita" value="${sessionScope.paziente.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${sessionScope.paziente.residenza}"></c:set>
-			<c:set var="dottori" value='${requestScope["mediciCuranti"]}' />
+	 <c:choose>     
+         <c:when test = "${isPaziente == true}">
+         	<c:set var = "azione" value="./ModificaAccountPazienteView.jsp"></c:set>
+            <c:set var = "nome" value="${utente.nome}"></c:set>
+            <c:set var = "cognome" value="${utente.cognome}"></c:set>
+			<c:set var = "sesso" value="${utente.sesso}"></c:set>
+			<c:set var = "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var = "email" value="${utente.email}"></c:set>
+            <c:set var = "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var = "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var = "residenza" value="${utente.residenza}"></c:set>
+			<c:set var ="dottori" value='${requestScope["mediciCuranti"]}' />
          </c:when>
          
-         <c:when test = "${not empty sessionScope.medico}">
-            <c:set var = "nome" value="${sessionScope.medico.nome}"></c:set>
-            <c:set var = "cognome" value="${sessionScope.medico.cognome}"></c:set>
-    		<c:set var= "sesso" value="${sessionScope.medico.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${sessionScope.medico.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${sessionScope.medico.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${sessionScope.medico.dataDiNascita}"></c:set>
-            <c:set var= "luogoDiNascita" value="${sessionScope.medico.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${sessionScope.medico.residenza}"></c:set>
-         </c:when>
+         <c:when test = "${isMedico == true}">
+            <c:set var = "azione" value="./ModificaAccountMedicoView.jsp"></c:set>
+            <c:set var = "nome" value="${utente.nome}"></c:set>
+            <c:set var = "cognome" value="${utente.cognome}"></c:set>
+    		<c:set var = "sesso" value="${utente.sesso}"></c:set>
+			<c:set var = "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var = "email" value="${utente.email}"></c:set>
+            <c:set var = "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var = "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var = "residenza" value="${utente.residenza}"></c:set>
+            <c:set var ="pazienti" value='${requestScope["pazientiSeguiti"]}' />
+         </c:when> 
          
       </c:choose>
 	
@@ -80,6 +81,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
+              	<form action="${azione }" >
                        	  <h2 class="h4 mb-4 text-gray-500" style="display:inline; margin-right: 150px;">Nome: <span class="h3 mb-4 text-gray-800" >${nome}</span></h2>
 
                       	  <h2 class="h4 mb-4 text-gray-500" style="display:inline">Cognome: <span class="h3 mb-4 text-gray-800" >${cognome}</span></h2><br><br>
@@ -97,19 +99,39 @@
          				  <h2 class="h4 mb-4 text-gray-500">Residenza: <span class="h3 mb-4 text-gray-800">${residenza}</span></h2>
          				  
          				  <!-- se è loggato il paziente, mostra l'elenco dei medici che lo seguono -->
-         				  <c:if test="${not empty paziente}">
+         				  <c:if test="${isPaziente}">
          				   <h2 class="h4 mb-4 text-gray-500">Seguito da:
          				     <c:forEach items="${dottori}" var="item" varStatus="loop">
+         				     		<c:if test="${loop.index eq 0 }">
+												<span class="h3 mb-4 text-gray-800">${item.nome} ${item.cognome} </span>
+									</c:if>
+									<c:if test="${loop.index gt 0}">		
+												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 10.6%; line-height: 1px;">${item.nome} ${item.cognome} </h3>
+									</c:if>		
+							</c:forEach>
+							</h2>
+         				  </c:if>
+         				  
+         				  <!-- se è loggato il medico, mostra l'elenco dei paziente che segue -->
+         				  <c:if test="${isMedico}">
+         				   <h2 class="h4 mb-4 text-gray-500">Segue:
+         				     <c:forEach items="${pazienti}" var="item" varStatus="loop">
          				     		<c:if test="${loop.index eq 0}">
 												<span class="h3 mb-4 text-gray-800">${item.nome} ${item.cognome} </span>
 									</c:if>
-									<c:if test="${loop.index gt 0 }">		
-												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 127px; line-height: 1px;">${item.nome} ${item.cognome} </h3>
+										
+									<c:if test="${loop.index gt 0}">		
+												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 78px; line-height: 1px;">${item.nome} ${item.cognome} </h3>
 									</c:if>			
 							</c:forEach>
 							</h2>	
          				  </c:if>
-         				
+         				  
+         				  <c:if test="${isPaziente}">
+ 				  				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disattivaModal" style="margin-left:70%;">Disattiva account</button> 
+         				  </c:if>
+         		  		 <button type="submit" class="btn btn-primary" style="float:right;">Modifica account</button>
+         		   </form> 		 
                    </div>
                    </div>
                    </div>
@@ -123,3 +145,31 @@
 	
 	    </div>
 	    <!-- End of Page Wrapper -->
+	    </div>
+	    <!-- disattiva Modal-->
+	<div class="modal fade" id="disattivaModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Sei sicuro?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Seleziona "Disattiva" qui sotto se sei
+					sicuro di voler disattivare il tuo account.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Annulla</button>
+					<form action="./GestionePaziente" method="get">
+						<input type="hidden" name="operazione" value="disattivaAccount">
+						<button class="btn btn-warning">Disattiva</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	    </body>
+	    </html>

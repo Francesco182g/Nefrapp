@@ -22,9 +22,7 @@
 		
 		<!-- Script per la registrazione -->
    	 	<script src="./js/ParameterControl.js"></script>
-   	 	<c:if test='${not empty sessionScope.amministratore}'>
-			<c:redirect url = "/dashboard.jsp"/>
-		</c:if>
+   	 	
 		
 	</head>
 	
@@ -37,7 +35,9 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="./includes/header.jsp" %>
-	
+					<c:if test="${accessDone == true}">
+						<c:redirect url="./dashboard.jsp"></c:redirect>
+					</c:if>
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
@@ -58,7 +58,7 @@
 							              <form class="user" method="post" action="./GestioneAccesso">
 							                <div class="form-group">
 							                <input type="hidden" name="operazione" value="loginAdmin">
-							                <input type="hidden" id="notifica" n value="${sessionScope.notifica}"> 
+							                <input type="hidden" id="notifica" value="${sessionScope.notifica}"> 
 							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
 							                </div>
 							                <div class="form-group">

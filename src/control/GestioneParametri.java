@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Medico;
 import bean.Paziente;
 import bean.SchedaParametri;
+import bean.Utente;
 import model.SchedaParametriModel;
 
 /**
@@ -28,13 +28,14 @@ import model.SchedaParametriModel;
 @WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notification", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home
+				request.setAttribute("notifica", "Errore generato dalla richiesta!");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp"); 
 				dispatcher.forward(request, response);
 				return;
 			} 
@@ -44,22 +45,26 @@ public class GestioneParametri extends HttpServlet {
 			if(operazione.equals("inserisciScheda")) {
 				inserisciParametri(request,response);
 				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
+				return;
 			}
 			//Download report
 			else if(operazione.equals("download")) {
 				creaExcel(request, response);
+				return;
 			} 
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
-				requestDispatcher.forward(request, response);
+				dispatcher.forward(request, response);
+				return;
 			}
 			
 		}catch (Exception e) {
-			request.setAttribute("notifica",e.getMessage());
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			requestDispatcher.forward(request,response);
+			e.printStackTrace();
+			request.setAttribute("notifica", "Errore in Gestione parametri. " + e.getMessage());
+			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			dispatcher.forward(request,response);
+			return;
 		}
 		return;
 	}
@@ -87,25 +92,25 @@ public class GestioneParametri extends HttpServlet {
 		 */
 		
 		HttpSession session = request.getSession();
-		Medico medico = null;
-		Paziente paziente = null;
+		Utente utente = null;
 		ArrayList<SchedaParametri> scheda = null;
 		
-		medico = (Medico) session.getAttribute("medico");
-		paziente = (Paziente) session.getAttribute("paziente");
+		utente = (Utente) session.getAttribute("utente");
 		
-		if (paziente != null && medico == null){
-			scheda = SchedaParametriModel.getSchedaParametriByCF(paziente.getCodiceFiscale());
+		if (session.getAttribute("isPaziente")!= null && (boolean)session.getAttribute("isPaziente") == true){
+			scheda = SchedaParametriModel.getSchedaParametriByCF(utente.getCodiceFiscale());
 		}	
-		else if(paziente == null && medico != null) {
+		else if (session.getAttribute("isMedico") != null && (boolean)session.getAttribute("isMedico") == true) {
+			System.out.println(request.getParameter("CFPaziente"));
 			scheda = SchedaParametriModel.getSchedaParametriByCF(request.getParameter("CFPaziente"));
 		}
 		else {
-			//TODO messaggio di errore
+
 			System.out.println("Utente deve esssere loggato");
 		}
 		
 		request.setAttribute("schedaParametri", scheda);
+		dispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
 	}
 	
 	/**Questo metodo inserisce nel database una SchedaParametri formata dai dati inseriti dall'utente.
@@ -131,7 +136,7 @@ public class GestioneParametri extends HttpServlet {
 	private void inserisciParametri(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session=request.getSession();
-		Paziente pazienteLoggato= (Paziente) session.getAttribute("paziente");
+		Paziente pazienteLoggato = (Paziente) session.getAttribute("utente");
 		
 		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 		String cf = pazienteLoggato.getCodiceFiscale(); 
@@ -167,11 +172,11 @@ public class GestioneParametri extends HttpServlet {
 			daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, LocalDate.now());
 			SchedaParametriModel.addSchedaParametri(daAggiungere);
-		} else {
+		}else {
 			request.setAttribute("notifica","Uno o più parametri non sono validi.");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/inserimentoParametriView.jsp");
 			requestDispatcher.forward(request,response);
-	}
+		}
 	}
 
 	private boolean sonoValidi(BigDecimal newPeso, int newPaMin, int newPaMax, int newScaricoIniziale, int newUf,

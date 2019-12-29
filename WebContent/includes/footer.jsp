@@ -31,7 +31,6 @@
         <script src="./vendor/jquery/jquery.min.js"></script>
         <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="./js/sb-admin-2.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 
         <!-- Core plugin JavaScript-->

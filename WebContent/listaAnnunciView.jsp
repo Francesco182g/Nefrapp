@@ -38,8 +38,6 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <c:set var="paziente" value='${sessionScope["paziente"]}'/>
-          <c:set var="medico" value='${sessionScope["medico"]}'/>
           <c:set var="messaggio" value='${requestScope["annunci"]}'/>
           <h1 class="h3 mb-2 text-gray-800">Annunci personali: </h1>
           

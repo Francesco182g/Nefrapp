@@ -29,10 +29,6 @@
   		</head>
 	
 	<body id="page-top">
-<%-- 	<jsp:include page="/parametri">
-   <jsp:param name="codiceFiscale" value="NTNNTN80A01B963Y"/>
-   <jsp:param name="flag" value="1"/>
-  </jsp:include> --%>
 	
 		<!-- Page Wrapper -->
 	    <div id="wrapper">
@@ -50,8 +46,6 @@
         	<div class="container-fluid">
 
           <!-- Page Heading -->
-          <c:set var="paziente" value='${sessionScope["paziente"]}'/>
-          <c:set var="medico" value='${sessionScope["medico"]}'/>
           <c:set var="scheda" value='${requestScope["schedaParametri"]}'/>
           
           <h1 class="h3 mb-2 text-gray-800">Scheda parametri</h1>
@@ -117,7 +111,7 @@
                   </tbody>
                  </table>
                  <c:choose>
-                 <c:when test='${medico!=null}'>
+                 <c:when test='${isMedico==true}'>
                  <form action="./GestioneParametri" method="post" id="rangeForm">
                  <div class="dates" style="margin-top:100px;color:#2471a3;">
 					<label>Data inizio</label>

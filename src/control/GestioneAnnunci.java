@@ -1,87 +1,107 @@
 package control;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import com.google.gson.Gson;
 
 import bean.Annuncio;
 import bean.Medico;
 import bean.Paziente;
+import bean.Utente;
+import model.AnnuncioModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
  * @author Davide Benedetto Strianese
+ * Questa classe � una servlet che si occupa della gestione degli annunci
  */
 @WebServlet("/GestioneAnnunci")
-public class GestioneAnnunci extends HttpServlet {
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
+maxFileSize = 15728640, // 15MB
+maxRequestSize = 15728640) // 15MB
+public class GestioneAnnunci extends GestioneComunicazione {
 	private static final long serialVersionUID = 1L;
-	private RequestDispatcher dispatcher;
+	//private RequestDispatcher dispatcher;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento home
-				dispatcher.forward(request, response);
-				return;
-			}
-			
 			String operazione = request.getParameter("operazione");
-			
+			HttpSession session = request.getSession();
+			/*Da Sara: mi sono permessa di conformare l'inserimento dell'annuncio a quello dei messaggi.
+			 * si richiama il metodo "caricaDestinatari" della superclasse GestioneComunicazioni il quale preleva i possibili
+			 * destinatari per un determinato medico e li salva nella sessione.
+			 * Questo lo fa solo dalla side bar...
+			 */
+			if(operazione.equals("caricaDestinatariAnnuncio")) {
+				caricaDestinatari(request, response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoAnnuncioView.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			/**
+			 * ..questo credo lo faccia dalla dashboard.
+			 */
 			if(operazione.equals("crea")) {
 				creaAnnuncio(request, response);
-				dispatcher.forward(request, response);
-				return;
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoAnnuncioView.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
-			else if(operazione.equals("invia")) {
-				inviaAnnuncio(request, response);
-				dispatcher.forward(request, response);
-				return;
+			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
+			if (operazione.equals("caricaAllegato")) {
+				caricaAllegato(request, request.getParameter("tipo"), session);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));
+				
+			}
+			
+			else if(operazione.equals("inviaAnnuncio")) {
+				inviaComunicazione(request, operazione);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	
+				requestDispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("visualizza")) {
 				visualizzaAnnuncio(request, response);
-				dispatcher.forward(request, response);
-				return;
+				RequestDispatcher requestDispatcher =request.getRequestDispatcher("./annuncioView.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 			else if(operazione.equals("visualizzaPersonali")) {
-				//TODO visulizzazione annunci personali (scritti o ricevuti)
-				visualizzaAnnunciPersonali(request, response);
-				dispatcher.forward(request, response);
-				return;
+				String tipo = request.getParameter("tipo");
+				visualizzaAnnunciPersonali(request, response,tipo);
+				if(!(tipo != null  && tipo.equals("asincrona")))
+				{
+					RequestDispatcher requestDispatcher =request.getRequestDispatcher("./listaAnnunciView.jsp");
+					requestDispatcher.forward(request, response);
+				}
+				
 			}
 			
 			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
-				dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
-				dispatcher.forward(request, response);
+				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			
 		} catch(Exception e) {
-			request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
-			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request,response);
-			return;
+			System.out.println("Errore durante il caricamento della pagina:");
+			e.printStackTrace();
+			/*request.setAttribute("notifica", "Errore in Gestione annunci. " + e.getMessage());
+			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+			//requestDispatcher.forward(request, response);
+			return;*/
 		}
 		
 		return;
@@ -92,139 +112,126 @@ public class GestioneAnnunci extends HttpServlet {
 		return;
 	}
 	
+	//questo metodo è puro codice duplicato, basta chiamare caricaDestinatari 
+	//also, attenti a 'sti nomi, onegai
+	//questo metodo non "crea un annuncio" in nessun modo immaginabile. Non crea nulla,
+	//e non ha a che fare con gli annunci in nessun punto. Non c'è nemmeno un annuncio dentro.
+	//creaAnnuncio() è un nome tanto azzeccato quanto lo sarebbe sgretolaPandoro() o abbracciaMilf()
+	/*
+	 * Metodo che prepara la creazione e l'invio dell'annuncio. Caricamento dei dati dei pazienti seguiti dal medico
+	 * @param request richiesta utilizzata per ottenere il medico loggato e settare la lista dei pazienti seguiti
+	 * @param response
+	 */
 	private void creaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
+		Medico medico = (Medico) session.getAttribute("utente");
 		
 		if(medico != null) {
 			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
 			pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-			dispatcher = getServletContext().getRequestDispatcher("/inserimentoAnnuncio.jsp");
-			return;
 		}
-		else {
-			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
-			return;
-		}
-	}
-	
-	/**
-	 * Metodo che prende i pazienti a cui il medico desidera inviare un annunccio e salva l'annuncio sul Database
-	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
-	 * @throws ServletException 
-	 * @throws IOException 
-	 */
-	private void inviaAnnuncio(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
-		Annuncio annuncio = new Annuncio();
 		
-		if(medico != null) {
-			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-			
-			ArrayList<String> CFDestinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
-			ArrayList<Paziente> pazienti = new ArrayList<Paziente>();
-			
-			for(String d: CFDestinatari) {
-				pazienti.add(PazienteModel.getPazienteByCF(d));
-			}
-			
-			String titolo = request.getParameter("titolo");
-			String testo = request.getParameter("testo");
-			String allegato = new String();
-			Part filePart = request.getPart("file");
-		    InputStream fileContent = filePart.getInputStream();
-		    File f = new File(getServletContext() + "temp");
-		    OutputStream outputStream = null;
-		   
-		    if (isMultipart) {
-			    try
-			    {
-			        outputStream = new FileOutputStream(f);
-			        
-			        int read = 0;
-			        byte[] bytes = new byte[1024];
-			        while ((read = fileContent.read(bytes)) != -1) {
-			            outputStream.write(bytes, 0, read);
-			        }
-			        allegato = AlgoritmoCriptazioneUtility.codificaInBase64(f);
-			    }
-			    finally
-			    {
-			        if(outputStream != null)
-			        {
-			            outputStream.close();
-			            f.delete();
-			        }
-			    }
-		    }
-			
-		    annuncio = new Annuncio(medico, pazienti, titolo, testo, allegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")));
-			//TODO aggiunta dell'annuncio nel db
-		    
-			request.setAttribute("notifica", "Annuncio inviato con successo");
-			dispatcher = getServletContext().getRequestDispatcher(""); //TODO reindirizzamento homeMedico
-			return;
-		}
-		else {
+		/*else {
 			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
-			return;
-		}
+			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
+			requestDispatcher.forward(request, response);
+			
+		}*/
 	}
 	
 	/**
-	 * Metodo che prende l'annunccio e lo salva nella richiesta
+	 * Metodo che prende l'annuncio e lo salva nella richiesta cos� da poter essere visualizzato
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 */
 	private void visualizzaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
-		Paziente paziente = (Paziente) session.getAttribute("paziente");
+		Utente utente = (Utente) session.getAttribute("utente");
 		
-		if(medico != null || paziente != null) {
-			Annuncio annuncio = new Annuncio();
-			String idAnnuncio = request.getParameter("idAnnuncio");
-			
-			//TODO fare query per prendere l'annuncio tramite id
-			
+		if(utente != null) {
+			String idAnnuncio= request.getParameter("idAnnuncio");
+			Annuncio annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
+			//solo se l'utente è un paziente, la visualizzazione viene settata a false
+			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
+				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
+				
+				if (annuncio != null) {
+					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
+					annuncio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), true));
+					String nomeAllegato = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato(), false);
+					annuncio.setNomeAllegato(nomeAllegato);
+				}
+			}
+			else {
+				System.out.println("L'utente deve essere loggato");
+			}
 			request.setAttribute("annuncio", annuncio);
-			dispatcher = getServletContext().getRequestDispatcher("/annuncioView.jsp");
-			return;
+			
 		}
-		else {
+		/*else {
 			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
+			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
 			return;
-		}
+		}*/
 	}
 	
-	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response) {
+	/**
+	 * Metodo che prende gli annunci personali di un medico o di un paziente e li mostra in una lista
+	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 * @param tipo  indica il tipo della chiamata che puo essere asincrona se il tipo != null
+	 * @throws IOException 
+	 */
+	private void visualizzaAnnunciPersonali(HttpServletRequest request, HttpServletResponse response, String tipo) throws IOException {
 		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("medico");
-		Paziente paziente = (Paziente) session.getAttribute("paziente");
+		boolean isMedico = false;
+
+		boolean isPaziente = false;
 		
-		if(medico != null && paziente == null) {
-			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
-			//annunci = AnnuncioModel.getAnnuncioByCFMedico(medico.getCodiceFiscale());
-			request.setAttribute("annunci", annunci);
-			dispatcher = getServletContext().getRequestDispatcher("/listaAnnunciView.jsp");
-			return;
+		if(session.getAttribute("isMedico") != null)
+		{
+			isMedico = (boolean) session.getAttribute("isMedico");
+		}
+		if(session.getAttribute("isPaziente") != null)
+		{
+			isPaziente = (boolean) session.getAttribute("isPaziente");
 		}
 		
-		else if(medico == null && paziente != null) {
+		
+		if(isMedico) {
+			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
-			//annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
-			request.setAttribute("annunci", annunci);
-			dispatcher = getServletContext().getRequestDispatcher("/annunciPersonaliView.jsp");
-			return;
+			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
+			if(tipo != null  && tipo.equals("asincrona"))
+			{
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson(annunci));
+			}else
+			{
+				request.setAttribute("annunci", annunci);
+			}
+			
+		}
+		
+		else if(isPaziente) {
+			Paziente paziente = (Paziente) session.getAttribute("utente");
+			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
+			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
+			if(tipo != null  && tipo.equals("asincrona"))
+			{
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson(annunci));
+			}else
+			{
+				request.setAttribute("annunci", annunci);
+			}
 		}
 		
 		else {
 			request.setAttribute("notifica", "Operazione non consentita");
-			dispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
 			return;
 		}
 	}

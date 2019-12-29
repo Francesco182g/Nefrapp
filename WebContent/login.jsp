@@ -35,6 +35,9 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="../includes/header.jsp" %>
+					<c:if test="${accessDone == true}">
+						<c:redirect url="./dashboard.jsp"></c:redirect>
+					</c:if>
 	
 	
 	                <!-- Begin Page Content -->
@@ -61,15 +64,14 @@
 							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20"> 
 							                </div>
 							                <div class="p-6">
-								                  <a href="#">
+								                  <a href="./richiestaResetView.jsp">
 								                  Password dimenticata?
 								                  </a>
 								            </div>
-								            <div class="mt-6 p-6">
-								                  <button class="btn btn-primary btn-user" type="submit" id="loginUtente" style="float:right">
-								                  Accedi
-								                  </button>
-							                </div>
+								         <button  class="btn btn-primary btn-user btn-block mt-3" id="accediAdminButton">
+							                  Accedi
+							                </button>
+							                
 							              </form>
 							              
 							            </div>

@@ -12,77 +12,104 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
-import utility.AlgoritmoCriptazioneUtility;
+import utility.CriptazioneUtility;
 
 /**
- * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco Servlet
- *         implementation class GestioneMedico
+ * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
+ * Questa clase ï¿½ una servlet che si occupa della gestione del medico
+ *
  */
 @WebServlet("/GestioneMedico")
 public class GestioneMedico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
-		// ok)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+			String operazione = request.getParameter("operazione");
+			Amministratore amministratore = null;
+			Medico medico = (Medico) request.getSession().getAttribute("utente");
+			if(medico == null) {
+				amministratore = (Amministratore) request.getSession().getAttribute("utente");
+			}
+		
+			
+			if(medico == null && amministratore == null) {
+				request.setAttribute("notifica", "Non si hanno i permessi necessari");
+				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
-			String operazione = request.getParameter("operazione");
-
-			if (operazione.equals("modifica")) {
-				request.setAttribute("notifica", "Modifica effettuata con successo"); // Se ciï¿½ non avviene la stringa
-																						// viene cambiata dal metodo
-				modifica(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); // TODO reindirizzamento pagina
-																						// di modifica
-				requestDispatcher.forward(request, response);
-				return;
-
-			} else if (operazione.equals("VisualizzaPazientiSeguiti")) {
-				Medico medico = (Medico) request.getSession().getAttribute("medico");
+			
+			if(operazione.equals("visualizzaProfilo"))
+			{
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 				request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
-				dispatcher.forward(request, response);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
+				requestDispatcher.forward(request, response);
+				return;
+			}
 
-			} else if (operazione.equals("elimina")) {
-				Medico medico = (Medico) request.getSession().getAttribute("medico");
+			if (operazione.equals("modifica")) {
+				request.setAttribute("notifica", "Modifica effettuata con successo"); //Nel caso in cui la modifica non avviene con successo allora la stringa verrï¿½ cambiata
+				modificaAccount(request, response);
+				dispatcher.forward(request, response);
+				return;
+
+			} 
+			else if (operazione.equals("VisualizzaPazientiSeguiti")) {
+				String tipo = request.getParameter("tipo");
+				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
+				if(tipo != null  && tipo.equals("asincrona"))
+				{
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					Gson gg = new Gson();
+					response.getWriter().write(gg.toJson(pazientiSeguiti));
+				}
+				else {
+					request.setAttribute("pazientiSeguiti", pazientiSeguiti);
+					dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
+					dispatcher.forward(request, response);
+					return;
+				}
+				
+
+			} 
+			else if (operazione.equals("elimina")) {
 				MedicoModel.removeMedico(medico.getCodiceFiscale());
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
-			} else {
+				return;
+			} 
+			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
-		} catch (Exception e) {
-			request.setAttribute("notifica",e.getMessage());
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			requestDispatcher.forward(request,response);
+		}catch (Exception e) {
+			request.setAttribute("notifica", "Errore in Gestione medico. " + e.getMessage());
+			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			dispatcher.forward(request,response);
+			return;
 		}
-
-		return;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		return;
 	}
 
-	private void modifica(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	private void modificaAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// TODO verificare i nomi dei parametri con la jsp
 		String codiceFiscale = request.getParameter("codiceFiscale");
@@ -114,17 +141,19 @@ public class GestioneMedico extends HttpServlet {
 					medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
 				}
 				MedicoModel.updateMedico(medico);
-				//password = AlgoritmoCriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
+				password = CriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
 																				// prima di registrarla nel db ps.non
 																				// cancellare il commento quando
 																				// spostate la classe
 
 				// TODO aggiorna dati del medico, anche la password
+				MedicoModel.changePassword(medico.getCodiceFiscale(), password);
+				dispatcher = request.getRequestDispatcher("/dashboard.jsp"); //TODO reindirizzamento pagina modifica (chiedere admin) 
 			} else {
 				request.setAttribute("notifica", "Non ï¿½ stato trovato il medico da aggiornare");
 			}
 		} else {
-			request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+			request.setAttribute("notifica","Uno o piï¿½ parametri del medico non sono validi.");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
 			requestDispatcher.forward(request,response);
 		}

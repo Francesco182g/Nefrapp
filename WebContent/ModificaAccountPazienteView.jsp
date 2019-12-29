@@ -25,17 +25,29 @@
    	 	<script src="./js/dataPicker.js"></script>
    	 	<script src="./js/autoCompleteInput.js"></script>	
    	 	
+
+   	 	<c:if test="${isAmministratore == false || isAmministratore == null && isPaziente == false}">
+			<c:redirect url = "/loginAmministratore.jsp"/>
+		</c:if>
+
    	 	<%String intestazione=""; %>
    	 	<%String azione=""; %>
-   	 	<c:set var="amministratore" value='${sessionScope["amministratore"]}'/>
-        <c:set var="paziente" value='${sessionScope["paziente"]}'/>
-   	 	<c:if test='${amministratore != null}'>
+   	 	<c:if test="${isAmministratore}">
    	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Paziente";%>
+   	 		<c:set var = "utente" value="${paziente }"></c:set>
    	 	</c:if>
-   	 	<c:if test='${paziente != null && amministratore==null}'>
-   	 		<%azione="./GestionePaziente"; intestazione="Modifica il tuo account";%>
+   	 	<c:if test="${isPaziente}">
+   	 		<c:set var ="azione" value="./GestionePaziente?operazione=modificaAccount"></c:set>
+   	 		<c:set var = "nome" value="${utente.nome}"></c:set>
+            <c:set var = "cognome" value="${utente.cognome}"></c:set>
+			<c:set var= "sesso" value="${utente.sesso}"></c:set>
+			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var= "email" value="${utente.email}"></c:set>
+            <c:set var= "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var= "residenza" value="${utente.residenza}"></c:set>
    	 	</c:if>
-		
+   	 	
 	</head>
 
 	<body id="page-top">
@@ -64,25 +76,26 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4"><%=intestazione %></h1>
 							              </div>
-							              <form class="user" method="post"  action=<%=azione %>>
+							              <form class="user" method="post"  action="${azione}">
 											
 											<input type="hidden" id="operazione" value="modifica">
 											<input type="hidden" name="tipoUtente" value="paziente">
 											<input type="hidden" id="notifica" value="${requestScope.notifica}">
 											<div class="form-group row col-lg-12">
 							                Codice Fiscale:
-							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
+							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" value="${utente.codiceFiscale}" readonly>
 							                </div>
 							                <div class="form-group row">
 							                  <div class="col-sm-6 mb-3 mb-sm-0">
 							                  Nome:
-							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Nome" required="required" min="2" max="30" maxlength="30">
+							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" value="${utente.nome}" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                  <div class="col-sm-6">
 							                  Cognome:
-							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" placeholder="Cognome" required="required" min="2" max="30" maxlength="30">
+							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" value="${utente.cognome}" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                </div>
+        							        <c:if test="${utente.sesso eq 'M' }">
 											<div class="form-group row">
 													<div class="col-lg-4 col-mb-12 col-sm-4">
 							                    	Sesso:
@@ -95,21 +108,38 @@
                     								</div>
                     								<br>	
                   							</div>
+                  							</c:if>
+                  							
+                  							 <c:if test="${utente.sesso eq 'F' }">
+											<div class="form-group row">
+													<div class="col-lg-4 col-mb-12 col-sm-4">
+							                    	Sesso:
+							                    	</div>
+							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
+							                    	<input type="radio"  name="sesso" value="M"> Maschio
+							                    	</div>
+							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
+                    								<input type="radio" name="sesso" value="F" checked="checked"> Femmina
+                    								</div>
+                    								<br>	
+                  							</div>
+                  							</c:if>
+                  							
                   							<div class="form-group row col-lg-12">
                   							Data di nascita:
-							                  <input type="text" class="form-control form-control-user" id="dataDiNascita" name="dataDiNascita" placeholder="DD-MM-YYYY" autocomplete="off">
+							                  <input type="text" class="form-control form-control-user" id="dataDiNascita" name="dataDiNascita"  value="${utente.dataDiNascita}"  autocomplete="off">
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Luogo di Nascita:
-							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita" placeholder="Luogo di nascita" min="5" max="50" maxlength="50">
+							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita"  value="${utente.luogoDiNascita}" >
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Residenza:
-							                  <input type="text" class="form-control form-control-user" name="residenza" id="residenza" placeholder="Residenza" min="5" max="50" maxlength="50" >
+							                  <input type="text" class="form-control form-control-user" name="residenza" id="residenza"  value="${utente.residenza}" min="5" max="50" maxlength="50" >
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
-							                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email" min="6" max="50" maxlength="50">
+							                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email"  value="${utente.email}"  min="6" max="50" maxlength="50">
 							                </div>
 							                <div class="form-group row col-lg-12">
 							                Password:
