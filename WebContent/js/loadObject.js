@@ -245,20 +245,17 @@
 	/**
 	 * funzione che carica gli annunci nella tabella
 	 */
-	function loadTabellaAnnunci(medici) {
+	function loadTabellaAnnunci(annunci) {
 		var tabellaMedici = $("#tabellaAnnunci")
+	
+		 
 		var riga = ""
-		for (var i = 0; i < medici.length; i++) {
-			riga += "<li class='list-group-item mt-3'><div class='row table-responsive'><div class='col-12 col-sm-6 col-md-9 text-center text-sm-left'><table>"
-			riga += "<tr ><td><p>Titolo: </p></td>"
-			riga += "<td><p>" + medici[i].titolo + "</p></td></tr>"
-			riga += "<tr ><td><p>Testo: </p></td>"
-			riga += "<td><p>" + medici[i].testo + "</p></td></tr>"
-			
-			riga += "</table></div><div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"
-					+ i
-					+ "' class='btn btn-primary btn-user mr-sm-5 modificaMedicoButton'>Vedi annuncio (WP)</button>"
+		for (var i = 0; i < annunci.length; i++) {
+			riga += " <div class='card mt-3'><div class='card-header py-3'>" +
+			"<h6 class='m-0 font-weight-bold text-primary'>"+annunci[i].titolo+"</h6></div>" +
+			"<div class='card-body'><p>"+annunci[i].testo+"</p></div></div>"
 		}
+		
 
 		tabellaMedici.append(riga)
 
@@ -325,6 +322,7 @@
 		tabellaPazienti.append(riga)
 
 	}
+
 
 })(jQuery); // End of use strict
 

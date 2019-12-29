@@ -372,8 +372,7 @@
 			else if (oggetto.length<1||oggetto.length>75)
 				valido=[false,"formato oggetto non valido"];
 			
-			$(testo).html(escapehtml(testo))
-			$(oggetto).html(escapehtml(oggetto))
+			
 			return valido;
 			
 		}

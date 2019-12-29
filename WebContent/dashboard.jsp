@@ -88,7 +88,7 @@
 													<h6 class="m-0 font-weight-bold text-primary">Diagnosi</h6>
 												</div>
 												<div class="card-body">
-														<p class="mb-0" id="diagnosi"></p>		
+													<p class="mb-0" id="diagnosi"></p>
 												</div>
 											</div>
 
@@ -98,9 +98,9 @@
 														prescritti</h6>
 												</div>
 												<div class="card-body">
-													
-														<p class="mb-0" id="farmaco"></p>
-													
+
+													<p class="mb-0" id="farmaco"></p>
+
 												</div>
 											</div>
 
@@ -125,8 +125,10 @@
 											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
 										</div>
 										<div class="card-body">
-												<ul class="list-group pull-down pre-scrollable"
+
+											<ul class="list-group pull-down pre-scrollable"
 												id="tabellaAnnunci">
+												
 											</ul>
 										</div>
 									</div>
@@ -140,7 +142,8 @@
 								<div class="col-sm-8 mt-3 ">
 									<div class="card ">
 										<div class="card-header py-3">
-											<h6 class="m-0 font-weight-bold text-primary">Pazienti seguiti</h6>
+											<h6 class="m-0 font-weight-bold text-primary">Pazienti
+												seguiti</h6>
 										</div>
 										<div class="card-body">
 											<ul class="list-group pull-down pre-scrollable"
@@ -161,16 +164,17 @@
 											<ul class="list-group pull-down pre-scrollable"
 												id="tabellaAnnunci">
 											</ul>
-											
-											
+
+
 										</div>
 										<div class="col-sm-12 mb-3 d-flex justify-content-center">
 											<a href="./annuncio?operazione=caricaDestinatariAnnuncio"
-												class="btn btn-primary btn-user btn-circle btn-xl"><i class="fas fa-file-medical"></i></a>
+												class="btn btn-primary btn-user btn-circle btn-xl"><i
+												class="fas fa-file-medical"></i></a>
 										</div>
-										
+
 									</div>
-									
+
 								</div>
 							</div>
 
