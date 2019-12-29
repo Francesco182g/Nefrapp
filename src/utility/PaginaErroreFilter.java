@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -29,21 +30,21 @@ import javax.servlet.http.HttpSession;
 public class PaginaErroreFilter implements Filter {
 	
     public PaginaErroreFilter() {}
+	RequestDispatcher dispatcher;
 
 	public void destroy() {}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
+		HttpServletResponse res = (HttpServletResponse)response;
 		HttpSession session = req.getSession();
-		RequestDispatcher dispatcher;
 		
 		if (session.getAttribute("accessDone") == null ||
 			(session.getAttribute("isPaziente") == null && session.getAttribute("isMedico") == null && session.getAttribute("isAmministratore")==null) ||
 			session.getAttribute("utente") == null) {
 			
-			request.setAttribute("notifica", "Non hai il permesso di accedere a questa pagina! ");
-			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request, response);
+			req.setAttribute("notifica", "Non hai il permesso di accedere a questa pagina! ");
+			res.sendRedirect("./paginaErrore.jsp");
 		}
 		chain.doFilter(request, response);
 	}
