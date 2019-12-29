@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
@@ -34,11 +35,15 @@ public class GestioneMedico extends HttpServlet {
 		try {
 			
 			String operazione = request.getParameter("operazione");
+			Amministratore amministratore = null;
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
+			if(medico == null) {
+				amministratore = (Amministratore) request.getSession().getAttribute("utente");
+			}
 		
 			
-			if(medico == null) {
-				request.setAttribute("notifica", "Bisogna essere loggati da medico");
+			if(medico == null || amministratore == null) {
+				request.setAttribute("notifica", "Non si hanno i permessi necessari");
 				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
 				return;
