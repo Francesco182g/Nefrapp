@@ -106,20 +106,20 @@ public class GestioneResetPassword extends HttpServlet {
 		Utente utente = UtenteModel.getUtenteByCF(codiceFiscale);
 		if (utente != null) {
 			// messaggio da Sara: controlla se è medico o paziente,
-			if(MedicoModel.getMedicoByCF(utente.getCodiceFiscale())!=null) {
+			if (MedicoModel.getMedicoByCF(utente.getCodiceFiscale()) != null) {
 				System.out.println("è un medico");
-				// è un medico, lo rimanda alla pagina dove è presente il form per resettare la
-				// password
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./resetPasswordView.jsp");
+				// è un medico, manda la mail con il link per la modifica della password
+				String destinatario = utente.getEmail();
+				InvioEmailUtility.inviaEmail(destinatario);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
 
-			} else if(PazienteModel.getIdPazienteByCF(utente.getCodiceFiscale())!=null) {
+			} else if (PazienteModel.getIdPazienteByCF(utente.getCodiceFiscale()) != null) {
 				// è un paziente, viene mandata una mail, dove il destinatario è
 				// l'amministratore
-				System.out.println("è un paziente");
-				String destinatario = "cuccy15@hotmail.it"; //mail di prova
+				String destinatario = "cuccy15@hotmail.it"; // mail di prova
 				InvioEmailUtility.inviaEmail(destinatario);
-				//TODO: non fa il dispatch
+				// TODO: non fa il dispatch
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
 			}
@@ -129,6 +129,12 @@ public class GestioneResetPassword extends HttpServlet {
 		}
 	}
 
+	/*
+	 * Questo metodo non so se sia ancora utile. Potrebbe esserlo nel momento in cui
+	 * decidiamo di fare il check sull'identità del medico in due step. Si
+	 * tratterebbe di aggiungere una view (dopo che il medico ha inserito il suo CF)
+	 * dove si chiede al medico di inserire la sua mail. La lascio quì.
+	 */
 	private void richiediReset(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");
