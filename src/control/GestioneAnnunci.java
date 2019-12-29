@@ -39,7 +39,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			
 			String operazione = request.getParameter("operazione");
 			System.out.println(operazione);
-			
+			HttpSession session = request.getSession();
 			/*Da Sara: mi sono permessa di conformare l'inserimento dell'annuncio a quello dei messaggi.
 			 * si richiama il metodo "caricaDestinatari" della superclasse GestioneComunicazioni il quale preleva i possibili
 			 * destinatari per un determinato medico e li salva nella sessione.
@@ -61,7 +61,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			
 			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
 			if (operazione.equals("caricaAllegato")) {
-				caricaAllegato(request, operazione);
+				caricaAllegato(request, operazione,session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();

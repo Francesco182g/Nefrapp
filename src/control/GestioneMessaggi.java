@@ -43,7 +43,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			
-
+			HttpSession session = request.getSession();
 			String operazione = request.getParameter("operazione");
 			if (operazione.equals("caricaDestinatariMessaggio")) {
 				caricaDestinatari(request, response);
@@ -53,7 +53,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			
 			
 			if (operazione.equals("caricaAllegato")) {
-				caricaAllegato(request, operazione);
+				caricaAllegato(request, operazione,session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
