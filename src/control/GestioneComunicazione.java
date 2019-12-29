@@ -125,8 +125,6 @@ public class GestioneComunicazione extends HttpServlet {
 		Annuncio annuncio = null;
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
-		// va effettuato il controllo se il booleano è nullo se no manda in eccezione
-		// fate cosi i controlli by Eugenio
 		if (session.getAttribute("accessDone") != null && (boolean) session.getAttribute("accessDone") == true) {
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
@@ -143,12 +141,11 @@ public class GestioneComunicazione extends HttpServlet {
 
 			String allegato = (String) session.getAttribute("allegato");
 			String nomeFile = (String) session.getAttribute("nomeFile");
+			String id = (String) session.getAttribute("id");
 
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
-					messaggio = new MessaggioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
-							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
-					MessaggioModel.addMessaggio(messaggio);
+					MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
 				} else if (operazione.equals("inviaAnnuncio")) {
 					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
@@ -162,11 +159,15 @@ public class GestioneComunicazione extends HttpServlet {
 
 		session.setAttribute("allegato", null);
 		session.setAttribute("nomeFile", null);
+		session.setAttribute("id", null);
 	}
 
 	protected void caricaAllegato(HttpServletRequest request, String operazione, HttpSession session) {
 		String allegato = null;
 		String nomeFile = null;
+		String id = null;
+		Messaggio messaggio = null;
+		Annuncio annuncio = null;
 		InputStream fileStream = null;
 
 		try {
@@ -178,10 +179,20 @@ public class GestioneComunicazione extends HttpServlet {
 				try {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
-					System.out.println("nome del file 2 " + nomeFile);
-					System.out.println("allegato 2 " + allegato);
+					
+					messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(), new HashMap<>());
+					id = MessaggioModel.addMessaggio(messaggio);
+					if (operazione.equals("inviaMessaggio")) {
+						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, null, null);
+						id = MessaggioModel.addMessaggio(messaggio);
+						
+					} else if (operazione.equals("inviaAnnuncio")) {
+						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile, null, null);
+						AnnuncioModel.addAnnuncio(annuncio);
+					}
+					
 				} catch (Exception e) {
-					System.out.println("inviaMessaggio: errore nella criptazione del file");
+					System.out.println("caricaAllegato: errore nel caricamento del file");
 					e.printStackTrace();
 				} finally {
 					if (fileStream != null) {
@@ -193,11 +204,12 @@ public class GestioneComunicazione extends HttpServlet {
 			System.out.println("caricaAllegato: errore nel caricamento dell'allegato");
 			e.printStackTrace();
 		} finally {
+			session.setAttribute("id", id);
+			session.setAttribute("nomeFile", nomeFile);
+			session.setAttribute("allegato", allegato);
 			if (nomeFile.equals("form-data; name=\"file\"; filename=\"\"")) {
 				nomeFile = null;
 			}
-			session.setAttribute("nomeFile", nomeFile);
-			session.setAttribute("allegato", allegato);
 		}
 	}
 

@@ -2,12 +2,15 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
@@ -29,9 +32,10 @@ public class MessaggioModel {
 	 * Metodo che aggiunge un messaggio al database
 	 * 
 	 * @param daAggiungere messaggio da aggiungere
+	 * @return String con l'id del messaggio appena inserito
 	 * @author nico
 	 */
-	public static void addMessaggio(Messaggio daAggiungere) {
+	public static String addMessaggio(Messaggio daAggiungere) {
 		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Document> destinatariView = new ArrayList<Document>();
 		Iterator it = daAggiungere.getDestinatariView().entrySet().iterator();
@@ -51,6 +55,9 @@ public class MessaggioModel {
 				.append("Allegato", allegato).append("Data", daAggiungere.getData().toInstant())
 				.append("DestinatariView", destinatariView);
 		messaggio.insertOne(doc);
+		
+		ObjectId idObj = (ObjectId)doc.get("_id");
+		return idObj.toString();
 	}
 
 	/**
@@ -91,6 +98,40 @@ public class MessaggioModel {
 			return messaggio;
 		}
 		return null;
+	}
+	
+	public static void updateMessaggio (String id, String codiceFiscaleMittente, String oggetto,
+			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
+			HashMap<String, Boolean> destinatariView) {
+		
+		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
+		Document searchQuery = new Document();
+		Document updateQuery = new Document();		
+		searchQuery.append("_id", id);
+		
+		if (codiceFiscaleMittente!=null) {
+			updateQuery.append("MittenteCodiceFiscale", codiceFiscaleMittente);
+		}
+		if (oggetto!=null) {
+			updateQuery.append("Oggetto", oggetto);
+		}
+		if (testo!=null) {
+			updateQuery.append("Testo", testo);
+		}
+		if (corpoAllegato!=null) {
+			updateQuery.append("CorpoAllegato", corpoAllegato);
+		}
+		if (nomeAllegato!=null) {
+			updateQuery.append("NomeAllegato", nomeAllegato);
+		}
+		if (data!=null) {
+			updateQuery.append("Data", data.toLocalDate());
+		}
+		if (destinatariView!=null) {
+			updateQuery.append("DestinatariView", destinatariView);
+		}
+		
+		messaggi.updateOne(searchQuery, updateQuery);
 	}
 
 	/**
