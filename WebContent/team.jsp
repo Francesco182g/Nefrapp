@@ -60,7 +60,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/AntonioFasulo.jpg" alt="Card image">
 												<div class="card-body">
 													<p class="card-text">Aggiungere descrizione</p>
@@ -80,7 +80,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/FrancescoGarofalo.jpg"
 													alt="Card image">
 												<div class="card-body">
@@ -113,7 +113,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/EugenioCarbosiero.jpg"
 													alt="Card image">
 												<div class="card-body">
@@ -139,7 +139,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/SaraEnel.jpg" alt="Card image">
 												<div class="card-body">
 													<p class="card-text">Nulla da dire, una ragazza
@@ -163,7 +163,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/DonnarummaAntonio.jpg"
 													alt="Card image">
 												<div class="card-body">
@@ -190,7 +190,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top"
 													src="./img/NefrappTeam/SilvioDiMartino.jpg"
 													alt="Card image">
 												<div class="card-body">
@@ -218,7 +218,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/LucaEsposito.jpg" alt="Card image">
 												<div class="card-body">
 													<p class="card-text">Un'immigrato dalla Basilicata che
@@ -240,7 +240,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top"
 													src="./img/NefrappTeam/MatteoFalco.jpg" alt="Card image">
 												<div class="card-body">
 													<p class="card-text">Un ingegnere informatico che ha
@@ -267,7 +267,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/DomenicoMusone.jpg" alt="Card image">
 												<div class="card-body">
 													<p class="card-text">Responsabile della qualità (della
@@ -293,7 +293,7 @@
 										</div>
 										<div class="card-body">
 											<div class="card">
-												<img class="card-img-top" style="height: 400px"
+												<img class="card-img-top" 
 													src="./img/NefrappTeam/CapoFester.jpg" alt="Card image">
 												<div class="card-body">
 													<p class="card-text">Conosciuto anche come "Capo

@@ -48,7 +48,7 @@
 							            	<div class="text-center">
 							                	<h1 class="h4 text-gray-900 mb-4">Modulo reset password</h1>
 							              	</div>
-							              	<form class="user" method="post"  action="./GestioneResetPasswordMedico">
+							              	<form class="user" method="post"  action="./GestioneResetPassword">
 												<input type="hidden" id="operazione" value="reset">
 												
 												<div class="form-group row col-lg-12">

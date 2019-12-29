@@ -7,7 +7,7 @@
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     	<meta name="description" content="">
-    	<meta name="author" content="Davide Benedetto Strianese">
+    	<meta name="author" content="Davide Benedetto Strianese, Sara Corrente">
 		<title>Richiesta reset password - Nefrapp</title>
     	
     	<!-- Custom fonts for this template-->
@@ -18,7 +18,7 @@
    	 	<link href="css/sb-admin-2.min.css" rel="stylesheet">	
    	 	
  	 	<script src="vendor/jquery/jquery.min.js"></script>
- 	 	<script src="./js/ParameterControl.js"></script>
+<!--  	 	<script src="./js/ParameterControl.js"></script> -->
    	 	
    	 	
    	 	<!-- Script per controllo del form --> <!-- TODO da inserire -->
@@ -52,10 +52,9 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Richiedi il reset</h1>
 							              </div>
-							              <form class="user" method="post" action="./GestioneResetPasswordMedico" > <!-- TODO controllo in js per il formato dell'email -->
-							              		<input type="hidden" name="operazione" value="richiesta">
+							              <form class="user" method="post" action="./GestioneResetPassword?operazione=identificaRichiedente" > <!-- TODO controllo in js per il formato dell'email -->
 												<div class="form-group">
-							                  <input type="text" class="form-control form-control-user" name="email" id="email" placeholder="email" required="required" min="6" max="50" maxlength="50">
+							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice Fiscale" required="required" min="6" max="50" maxlength="50">
 							                </div>
 							                
 								            <div class="mt-6 p-6">

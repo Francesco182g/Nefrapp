@@ -100,17 +100,12 @@
          				  <form action="ModificaAccountPazienteView.jsp">
          				   <h2 class="h4 mb-4 text-gray-500">Seguito da:
          				     <c:forEach items="${dottori}" var="item" varStatus="loop">
-         				     		<c:if test="${loop.index eq 0}">
+         				     		<c:if test="${loop.index eq 0 }">
 												<span class="h3 mb-4 text-gray-800">${item.nome} ${item.cognome} </span>
 									</c:if>
-									<c:if test="${loop.index gt 0 and loop.index lt dottori.size()-1}">		
+									<c:if test="${loop.index gt 0}">		
 												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 10.6%; line-height: 1px;">${item.nome} ${item.cognome} </h3>
 									</c:if>		
-									<c:if test="${loop.index eq dottori.size()-1 }">		
-												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 10.6%; line-height: 1px;">${item.nome} ${item.cognome} <span>
-												<button type="submit" class="btn btn-primary" style="margin-left:45%;">Modifica account</button>
-												<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disattivaModal" style="float:right;">Disattiva account</button></span> </h3>
-									</c:if>			
 							</c:forEach>
 							</h2>
 							</form>
@@ -124,14 +119,17 @@
 												<span class="h3 mb-4 text-gray-800">${item.nome} ${item.cognome} </span>
 									</c:if>
 										
-									<c:if test="${loop.index eq pazienti.size()-1 }">		
-												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 78px; line-height: 1px;">${item.nome} ${item.cognome} <span>
-												<button type="button" class="btn btn-primary" style="float:right;">Modifica account</button></span> </h3>
+									<c:if test="${loop.index gt 0}">		
+												<h3 class="h3 mb-4 text-gray-800" style="margin-left: 78px; line-height: 1px;">${item.nome} ${item.cognome} </h3>
 									</c:if>			
 							</c:forEach>
 							</h2>	
          				  </c:if>
-         				
+         				  
+         				  <c:if test="${isPaziente}">
+ 				  				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disattivaModal" style="margin-left:70%;">Disattiva account</button> 
+         				  </c:if>
+         		  		 <button type="submit" class="btn btn-primary" style="float:right;">Modifica account</button>
                    </div>
                    </div>
                    </div>

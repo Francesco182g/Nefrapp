@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
+import utility.CriptazioneUtility;
 
 /**
  * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
@@ -30,15 +32,17 @@ public class GestioneMedico extends HttpServlet {
 	private RequestDispatcher dispatcher;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 		try {
-			
 			String operazione = request.getParameter("operazione");
+			Amministratore amministratore = null;
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
+			if(medico == null) {
+				amministratore = (Amministratore) request.getSession().getAttribute("utente");
+			}
 		
 			
-			if(medico == null) {
-				request.setAttribute("notifica", "Bisogna essere loggati da medico");
+			if(medico == null && amministratore == null) {
+				request.setAttribute("notifica", "Non si hanno i permessi necessari");
 				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
 				return;
@@ -137,18 +141,21 @@ public class GestioneMedico extends HttpServlet {
 					medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
 				}
 				MedicoModel.updateMedico(medico);
-				//password = AlgoritmoCriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
+				password = CriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
 																				// prima di registrarla nel db ps.non
 																				// cancellare il commento quando
 																				// spostate la classe
 
 				// TODO aggiorna dati del medico, anche la password
-				dispatcher = request.getRequestDispatcher(""); //TODO reindirizzamento pagina modifica (chiedere admin) 
+				MedicoModel.changePassword(medico.getCodiceFiscale(), password);
+				dispatcher = request.getRequestDispatcher("/dashboard.jsp"); //TODO reindirizzamento pagina modifica (chiedere admin) 
 			} else {
 				request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
 			}
 		} else {
-			request.setAttribute("notifica", "Formato parametri non valido");
+			request.setAttribute("notifica","Uno o pi� parametri del medico non sono validi.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
+			requestDispatcher.forward(request,response);
 		}
 	}
 
