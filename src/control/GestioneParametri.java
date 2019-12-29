@@ -43,7 +43,7 @@ public class GestioneParametri extends HttpServlet {
 			String operazione = request.getParameter("operazione");
 			
 			if(operazione.equals("inserisciScheda")) {
-				inserisciParametri(request);
+				inserisciParametri(request,response);
 				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
 				return;
 			}
@@ -130,8 +130,10 @@ public class GestioneParametri extends HttpServlet {
 	 * @param data
 	 * 
 	 * @author nico
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	private void inserisciParametri(HttpServletRequest request)
+	private void inserisciParametri(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session=request.getSession();
 		Paziente pazienteLoggato = (Paziente) session.getAttribute("utente");
@@ -170,9 +172,10 @@ public class GestioneParametri extends HttpServlet {
 			daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, LocalDate.now());
 			SchedaParametriModel.addSchedaParametri(daAggiungere);
-		}
-		else {
-			System.out.println("InserisciParametri: i dati passati sono malformati");
+		}else {
+			request.setAttribute("notifica","Uno o più parametri non sono validi.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/inserimentoParametriView.jsp");
+			requestDispatcher.forward(request,response);
 		}
 	}
 

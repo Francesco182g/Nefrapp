@@ -154,7 +154,9 @@ public class GestioneMedico extends HttpServlet {
 				request.setAttribute("notifica", "Non ï¿½ stato trovato il medico da aggiornare");
 			}
 		} else {
-			request.setAttribute("notifica", "Formato parametri non valido");
+			request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
+			requestDispatcher.forward(request,response);
 		}
 	}
 
