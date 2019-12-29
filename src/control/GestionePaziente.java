@@ -118,51 +118,50 @@ public class GestionePaziente extends HttpServlet {
 	/**
 	 * Metodo che aggiorna i dati personali di un paziente
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
-	 */
-	
-	//TODO ad ora modifica soltanto l'utente in sessione ma non aggiorna il DB.
-	//		updatePaziente da rivedere e aggiornare per modificare anche la psw		
+	 */	
 	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response) {
-//		HttpSession session = request.getSession();
-//		
-//		String codiceFiscale = request.getParameter("codiceFiscale");
-//		String nome = request.getParameter("nome");
-//		String cognome = request.getParameter("cognome");
-//		String sesso = request.getParameter("sesso");
-//		String email = request.getParameter("email");
-//		String residenza = request.getParameter("residenza");
-//		String luogoDiNascita = request.getParameter("luogoDiNascita");
-//		String dataDiNascita = request.getParameter("dataDiNascita");
-//		String password = request.getParameter("password");
-//		String confermaPsw = request.getParameter("confermaPsw");
-//
-//		if (validazione(codiceFiscale, nome, cognome, sesso, email, residenza, luogoDiNascita, dataDiNascita, password, confermaPsw)) {
-//
-//			Paziente paziente = (Paziente) session.getAttribute("utente");
-//			
-//			if (paziente != null) {
-//				paziente.setCodiceFiscale(codiceFiscale);
-//				paziente.setNome(nome);
-//				paziente.setCognome(cognome);
-//				paziente.setSesso(sesso);
-//				paziente.setEmail(email);
-//				paziente.setResidenza(residenza);
-//				paziente.setLuogoDiNascita(luogoDiNascita);
-//
-//				password = AlgoritmoCriptazioneUtility.criptaConMD5(password);
-//				PazienteModel.updatePaziente(paziente); //TODO deve modificare anche la password
-//				
-//				session.setAttribute("paziente", paziente);
-//				
-//				System.out.println(paziente.toString());
-//				
-//				
-//			} else {
-//				request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
-//			}
-//		} else {
-//			request.setAttribute("notifica", "Formato parametri non valido");
-//		}
+		HttpSession session = request.getSession();
+		
+		String codiceFiscale = request.getParameter("codiceFiscale");
+		String nome = request.getParameter("nome");
+		String cognome = request.getParameter("cognome");
+		String sesso = request.getParameter("sesso");
+		String email = request.getParameter("email");
+		String residenza = request.getParameter("residenza");
+		String luogoDiNascita = request.getParameter("luogoDiNascita");
+		String dataDiNascita = request.getParameter("dataDiNascita");
+		String password = request.getParameter("password");
+		String confermaPsw = request.getParameter("confermaPsw");
+
+		if (validazione(codiceFiscale, nome, cognome, sesso, email, residenza, luogoDiNascita, dataDiNascita, password, confermaPsw)) {
+
+			Paziente paziente = (Paziente) session.getAttribute("utente");
+			
+			if (paziente != null) {
+				paziente.setCodiceFiscale(codiceFiscale);
+				paziente.setNome(nome);
+				paziente.setCognome(cognome);
+				paziente.setSesso(sesso);
+				paziente.setEmail(email);
+				paziente.setResidenza(residenza);
+				paziente.setLuogoDiNascita(luogoDiNascita);
+				paziente.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				password = CriptazioneUtility.criptaConMD5(password);
+				
+				PazienteModel.changePassword(paziente.getCodiceFiscale(), password);
+				PazienteModel.updatePaziente(paziente);
+				
+				session.setAttribute("paziente", paziente);
+				
+				System.out.println(paziente.toString());
+				
+				
+			} else {
+				request.setAttribute("notifica", "Non � stato trovato il paziente da aggiornare");
+			}
+		} else {
+			request.setAttribute("notifica", "Formato parametri non valido");
+		}
 	}
 		
 	

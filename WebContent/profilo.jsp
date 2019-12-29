@@ -32,30 +32,32 @@
 	</head>
 	
 	<body id="page-top">
-	<c:choose>     
+	 <c:choose>     
          <c:when test = "${isPaziente == true}">
+         	<c:set var = "azione" value="./ModificaAccountPazienteView.jsp"></c:set>
             <c:set var = "nome" value="${utente.nome}"></c:set>
             <c:set var = "cognome" value="${utente.cognome}"></c:set>
-			<c:set var= "sesso" value="${utente.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${utente.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
-            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${utente.residenza}"></c:set>
-			<c:set var="dottori" value='${requestScope["mediciCuranti"]}' />
+			<c:set var = "sesso" value="${utente.sesso}"></c:set>
+			<c:set var = "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var = "email" value="${utente.email}"></c:set>
+            <c:set var = "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var = "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var = "residenza" value="${utente.residenza}"></c:set>
+			<c:set var ="dottori" value='${requestScope["mediciCuranti"]}' />
          </c:when>
          
          <c:when test = "${isMedico == true}">
+            <c:set var = "azione" value="./ModificaAccountMedicoView.jsp"></c:set>
             <c:set var = "nome" value="${utente.nome}"></c:set>
             <c:set var = "cognome" value="${utente.cognome}"></c:set>
-    		<c:set var= "sesso" value="${utente.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${utente.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
-            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${utente.residenza}"></c:set>
-            <c:set var="pazienti" value='${requestScope["pazientiSeguiti"]}' />
-         </c:when>
+    		<c:set var = "sesso" value="${utente.sesso}"></c:set>
+			<c:set var = "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var = "email" value="${utente.email}"></c:set>
+            <c:set var = "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var = "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var = "residenza" value="${utente.residenza}"></c:set>
+            <c:set var ="pazienti" value='${requestScope["pazientiSeguiti"]}' />
+         </c:when> 
          
       </c:choose>
 	
@@ -79,6 +81,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
+              	<form action="${azione }" >
                        	  <h2 class="h4 mb-4 text-gray-500" style="display:inline; margin-right: 150px;">Nome: <span class="h3 mb-4 text-gray-800" >${nome}</span></h2>
 
                       	  <h2 class="h4 mb-4 text-gray-500" style="display:inline">Cognome: <span class="h3 mb-4 text-gray-800" >${cognome}</span></h2><br><br>
@@ -97,7 +100,6 @@
          				  
          				  <!-- se è loggato il paziente, mostra l'elenco dei medici che lo seguono -->
          				  <c:if test="${isPaziente}">
-         				  <form action="ModificaAccountPazienteView.jsp">
          				   <h2 class="h4 mb-4 text-gray-500">Seguito da:
          				     <c:forEach items="${dottori}" var="item" varStatus="loop">
          				     		<c:if test="${loop.index eq 0 }">
@@ -108,7 +110,6 @@
 									</c:if>		
 							</c:forEach>
 							</h2>
-							</form>
          				  </c:if>
          				  
          				  <!-- se è loggato il medico, mostra l'elenco dei paziente che segue -->
@@ -130,6 +131,7 @@
  				  				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disattivaModal" style="margin-left:70%;">Disattiva account</button> 
          				  </c:if>
          		  		 <button type="submit" class="btn btn-primary" style="float:right;">Modifica account</button>
+         		   </form> 		 
                    </div>
                    </div>
                    </div>
