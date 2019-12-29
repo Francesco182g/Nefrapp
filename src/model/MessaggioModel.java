@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -24,6 +25,10 @@ import utility.CreaBeanUtility;
 /**
  * Questa classe si occupa di contattare il database ed effettuare tutte le
  * operazioni CRUD relative ai messaggi
+ */
+/**
+ * @author nico
+ *
  */
 public class MessaggioModel {
 
@@ -100,38 +105,61 @@ public class MessaggioModel {
 		return null;
 	}
 	
+	
+	/**
+	 * Metodo che individua un messaggio nel database per id e lo aggiorna con i dati passati,
+	 * ignorando i campi null. Se si vuole aggiornare solo alcuni campi, si passi null negli altri.
+	 * 
+	 * @param id
+	 * @param codiceFiscaleMittente
+	 * @param oggetto
+	 * @param testo
+	 * @param corpoAllegato
+	 * @param nomeAllegato
+	 * @param data
+	 * @param destinatariView
+	 */
 	public static void updateMessaggio (String id, String codiceFiscaleMittente, String oggetto,
 			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
 			HashMap<String, Boolean> destinatariView) {
 		
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
-		Document searchQuery = new Document();
-		Document updateQuery = new Document();		
-		searchQuery.append("_id", id);
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.append("_id", new ObjectId(id));
+		
+		ArrayList<Document> dView = new ArrayList<Document>();
+		Iterator<Entry<String, Boolean>> it = destinatariView.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, Boolean> pair = (Map.Entry<String, Boolean>) it.next();
+			Document coppia = new Document();
+			coppia.append("CFDestinatario", pair.getKey()).append("Visualizzazione", false);
+			dView.add(coppia);
+		}
+		
+		FindIterable<Document> documents = messaggi.find(eq("_id", new ObjectId(id))).projection(Projections.exclude("Allegato"));
+		Document d = documents.first();
 		
 		if (codiceFiscaleMittente!=null) {
-			updateQuery.append("MittenteCodiceFiscale", codiceFiscaleMittente);
+			d.append("MittenteCodiceFiscale", codiceFiscaleMittente);
 		}
 		if (oggetto!=null) {
-			updateQuery.append("Oggetto", oggetto);
+			d.append("Oggetto", oggetto);
 		}
 		if (testo!=null) {
-			updateQuery.append("Testo", testo);
+			d.append("Testo", testo);
 		}
-		if (corpoAllegato!=null) {
-			updateQuery.append("CorpoAllegato", corpoAllegato);
-		}
-		if (nomeAllegato!=null) {
-			updateQuery.append("NomeAllegato", nomeAllegato);
+		if (corpoAllegato!=null && nomeAllegato!=null) {
+			Document allegato = new Document("NomeAllegato", nomeAllegato).append("CorpoAllegato", corpoAllegato);
+			d.append("Allegato", allegato);
 		}
 		if (data!=null) {
-			updateQuery.append("Data", data.toLocalDate());
+			d.append("Data", data.toLocalDate());
 		}
 		if (destinatariView!=null) {
-			updateQuery.append("DestinatariView", destinatariView);
+			d.append("DestinatariView", dView);
 		}
 		
-		messaggi.updateOne(searchQuery, updateQuery);
+		messaggi.updateOne(searchQuery, new Document("$set", d));
 	}
 
 	/**

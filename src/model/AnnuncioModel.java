@@ -2,18 +2,23 @@ package model;
 
 
 import static com.mongodb.client.model.Filters.eq;
+
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Projections;
 
 import bean.Annuncio;
 import utility.CreaBeanUtility;
@@ -37,9 +42,10 @@ public class AnnuncioModel {
 	/**
 	 * Aggiunge un annuncio nel Database
 	 * @param daAggiungere
+	 * @return l'id del messaggio appena inserito
 	 */
 	
-	public static void addAnnuncio(Annuncio daAggiungere) {
+	public static String addAnnuncio(Annuncio daAggiungere) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Document> pazientiView=new ArrayList<Document>();
 		HashMap<String, Boolean> mp = new HashMap<String, Boolean>();
@@ -64,7 +70,67 @@ public class AnnuncioModel {
 				.append("Data", daAggiungere.getData().toInstant())
 				.append("Visualizzato", false).append("PazientiView", pazientiView);
 		annuncioDB.insertOne(doc);
+		
+		ObjectId idObj = (ObjectId)doc.get("_id");
+		return idObj.toString();
 	}
+	
+	/**
+	 * Metodo che individua un annuncio nel database per id e lo aggiorna con i dati passati,
+	 * ignorando i campi null. Se si vuole aggiornare solo alcuni campi, si passi null negli altri.
+	 * 
+	 * @param id
+	 * @param codiceFiscaleMedico
+	 * @param oggetto
+	 * @param testo
+	 * @param corpoAllegato
+	 * @param nomeAllegato
+	 * @param data
+	 * @param destinatariView
+	 */
+	public static void updateAnnuncio (String id, String codiceFiscaleMedico, String oggetto,
+			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
+			HashMap<String, Boolean> destinatariView) {
+		
+		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.append("_id", new ObjectId(id));
+		
+		ArrayList<Document> dView = new ArrayList<Document>();
+		Iterator<Entry<String, Boolean>> it = destinatariView.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, Boolean> pair = (Map.Entry<String, Boolean>) it.next();
+			Document coppia = new Document();
+			coppia.append("CFDestinatario", pair.getKey()).append("Visualizzazione", false);
+			dView.add(coppia);
+		}
+		
+		FindIterable<Document> documents = annunci.find(eq("_id", new ObjectId(id))).projection(Projections.exclude("Allegato"));
+		Document d = documents.first();
+		
+		if (codiceFiscaleMedico!=null) {
+			d.append("MedicoCodiceFiscale", codiceFiscaleMedico);
+		}
+		if (oggetto!=null) {
+			d.append("Oggetto", oggetto);
+		}
+		if (testo!=null) {
+			d.append("Testo", testo);
+		}
+		if (corpoAllegato!=null && nomeAllegato!=null) {
+			Document allegato = new Document("NomeAllegato", nomeAllegato).append("CorpoAllegato", corpoAllegato);
+			d.append("Allegato", allegato);
+		}
+		if (data!=null) {
+			d.append("Data", data.toLocalDate());
+		}
+		if (destinatariView!=null) {
+			d.append("DestinatariView", dView);
+		}
+		
+		annunci.updateOne(searchQuery, new Document("$set", d));
+	}
+	
 	/**
 	 * Cerca e restituisce l'elenco degli annunci scritti da un medico
 	 * @param codiceFiscaleMedico

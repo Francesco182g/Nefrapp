@@ -119,10 +119,10 @@ public class GestioneComunicazione extends HttpServlet {
 	 */
 	protected void inviaComunicazione(HttpServletRequest request, String operazione)
 			throws IOException, ServletException {
-
+		
+		long start, finish;
+		start = System.currentTimeMillis();
 		HttpSession session = request.getSession();
-		Messaggio messaggio = null;
-		Annuncio annuncio = null;
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
 		if (session.getAttribute("accessDone") != null && (boolean) session.getAttribute("accessDone") == true) {
@@ -139,19 +139,17 @@ public class GestioneComunicazione extends HttpServlet {
 				destinatariView.put(temp, false);
 			}
 
-			String allegato = (String) session.getAttribute("allegato");
-			String nomeFile = (String) session.getAttribute("nomeFile");
 			String id = (String) session.getAttribute("id");
-
+			
+			System.out.println(System.currentTimeMillis() - start + " prima dell'if");
 			if (controllaParametri(CFMittente, oggetto, testo)) {
 				if (operazione.equals("inviaMessaggio")) {
 					MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
 				} else if (operazione.equals("inviaAnnuncio")) {
-					annuncio = new AnnuncioCompleto(CFMittente, oggetto, testo, allegato, nomeFile,
-							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView);
-					AnnuncioModel.addAnnuncio(annuncio);
+					AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
 				}
-
+				System.out.println(System.currentTimeMillis() - start + " dopo l'if");
+				
 			} else {
 				System.out.println("L'utente deve essere loggato");
 			}
@@ -162,7 +160,7 @@ public class GestioneComunicazione extends HttpServlet {
 		session.setAttribute("id", null);
 	}
 
-	protected void caricaAllegato(HttpServletRequest request, String operazione, HttpSession session) {
+	protected void caricaAllegato(HttpServletRequest request, String tipo, HttpSession session) {
 		String allegato = null;
 		String nomeFile = null;
 		String id = null;
@@ -180,15 +178,12 @@ public class GestioneComunicazione extends HttpServlet {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
 					
-					messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(), new HashMap<>());
-					id = MessaggioModel.addMessaggio(messaggio);
-					if (operazione.equals("inviaMessaggio")) {
-						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, null, null);
+					if (tipo!= null && tipo.equals("messaggio")) {
+						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(), new HashMap<String, Boolean>());
 						id = MessaggioModel.addMessaggio(messaggio);
-						
-					} else if (operazione.equals("inviaAnnuncio")) {
-						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile, null, null);
-						AnnuncioModel.addAnnuncio(annuncio);
+					} else if (tipo!= null && tipo.equals("annuncio")) {
+						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(), new HashMap<String, Boolean>());
+						id = AnnuncioModel.addAnnuncio(annuncio);
 					}
 					
 				} catch (Exception e) {

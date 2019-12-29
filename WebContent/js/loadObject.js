@@ -46,10 +46,10 @@
 	        showRemove: false, // hide remove button
 	        overwriteInitial: false, // append files to initial preview
 	        minFileCount: 1,
-	        maxFileCount: 5,
+	        maxFileCount: 1,
 	        initialPreviewAsData: true,
 	        uploadExtraData: function(previewId, index) {
-	            return {operazione: "caricaAllegato"};
+	            return {operazione: "caricaAllegato", tipo : "messaggio"};
 	        }
 	    }).on("filebatchselected", function(event, files) {
 	        $messaggio.fileinput("upload");
@@ -71,11 +71,11 @@
 	        showRemove: false, // hide remove button
 	        overwriteInitial: false, // append files to initial preview
 	        minFileCount: 1,
-	        maxFileCount: 5,
+	        maxFileCount: 1,
 	        initialPreviewAsData: true,
 	        
 	        uploadExtraData: function(previewId, index) {
-	            return {operazione: "caricaAllegato"};
+	            return {operazione: "caricaAllegato", tipo : "annuncio"};
 	        }
 	    }).on("filebatchselected", function(event, files) {
 	        $annuncio.fileinput("upload");

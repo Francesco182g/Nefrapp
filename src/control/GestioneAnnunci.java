@@ -35,10 +35,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
-			
 			String operazione = request.getParameter("operazione");
-			System.out.println(operazione);
 			HttpSession session = request.getSession();
 			/*Da Sara: mi sono permessa di conformare l'inserimento dell'annuncio a quello dei messaggi.
 			 * si richiama il metodo "caricaDestinatari" della superclasse GestioneComunicazioni il quale preleva i possibili
@@ -61,7 +58,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			
 			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
 			if (operazione.equals("caricaAllegato")) {
-				caricaAllegato(request, operazione,session);
+				caricaAllegato(request, request.getParameter("tipo"), session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
@@ -70,7 +67,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 			
 			else if(operazione.equals("inviaAnnuncio")) {
-				System.out.println("voglio inviare un annuncio");
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	
 				requestDispatcher.forward(request, response);
@@ -222,7 +218,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
-			System.out.println("stampa annunci :"+annunci);
 			if(tipo != null  && tipo.equals("asincrona"))
 			{
 				response.setContentType("application/json");
