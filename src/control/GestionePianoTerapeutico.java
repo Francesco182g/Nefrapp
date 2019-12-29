@@ -48,7 +48,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			}
 
 			else if (operazione.equals("modifica")) {
-				modificaPiano(request);
+				modificaPiano(request,response);
 				response.sendRedirect(request.getContextPath() + "/listaPazientiView.jsp");
 			}
 
@@ -134,8 +134,10 @@ public class GestionePianoTerapeutico extends HttpServlet {
 	 * @param request richiesta che contiene i parametri da aggiornare
 	 * 
 	 * @author Antonio Donnarumma
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	private void modificaPiano(HttpServletRequest request) {
+	private void modificaPiano(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Medico medico = (Medico) request.getSession().getAttribute("utente");
 
 		if (medico != null) {
@@ -150,10 +152,14 @@ public class GestionePianoTerapeutico extends HttpServlet {
 				PianoTerapeuticoModel.updatePianoTerapeutico(
 						new PianoTerapeutico(codiceFiscalePaziente, diagnosi, farmaci, dataFineTerapia));
 			} else {
-				// TODO Messaggio d'errore, CF non valido
+				request.setAttribute("notifica","Codice fiscale non valido.");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); //TODO inserire jsp modifica piano terapeutico
+				requestDispatcher.forward(request,response);
 			}
 		} else {
-			// TODO messaggio errore perchè il medico non ha loggato
+			request.setAttribute("notifica","Medico non loggato.");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); //TODO inserire jsp modifica piano terapeutico
+			requestDispatcher.forward(request,response);
 		}
 	}
 }
