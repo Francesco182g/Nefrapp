@@ -32,7 +32,7 @@ import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 /**
- * Questa classe è una servlet che modella le operazioni comuni delle
+ * Questa classe è una servlet che svolge le operazioni comuni delle
  * funzionalità di comunicazione
  * 
  * @author nico
@@ -111,11 +111,11 @@ public class GestioneComunicazione extends HttpServlet {
 	}
 
 	/**
-	 * Metodo che prende mittente, destinatari, oggetto, testo e allegato della
-	 * comunicazione e lo salva nel database
+	 * Metodo che prende mittente, destinatari, oggetto e testo della
+	 * comunicazione e la salva nel database
 	 * 
-	 * @param request richiesta utilizzata per ottenere parametri e settare
-	 *                attributi
+	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 * @param operazione, stringa usata per distinguere l'inserimento di un annuncio dall'inserimento di un messaggio
 	 * @throws ServletException
 	 * @throws IOException
 	 */
@@ -152,9 +152,9 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 		}
 
-		session.setAttribute("allegato", null);
-		session.setAttribute("nomeFile", null);
-		session.setAttribute("id", null);
+		session.removeAttribute("allegato");
+		session.removeAttribute("nomeFile");
+		session.removeAttribute("id");
 	}
 
 	protected void caricaAllegato(HttpServletRequest request, String tipo, HttpSession session) {

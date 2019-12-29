@@ -12,21 +12,26 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
+
+/**Servlet filter che effettua il redirect ad una pagina di errore nel caso in cui un utente non registrato
+ * cercasse di fare accesso a una risorsa protetta
+ * 
+ * @author nico
+ */
 @WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAmministratore", 
 		"/GestioneAnnunci", "/GestioneMedico", "/GestioneRegistrazione", 
 		"/inserimentoMessaggioView.jsp", "/annuncioView.jsp", "/inserimentoAnnuncioView.jsp", "/inserimentoParametriView.jsp",
 		"/listaAnnunciView.jsp", "/listaMediciView.jsp", "/listaMessaggiView.jsp", "/listaPazientiView.jsp", "/messaggioView.jsp",
 		"/ModificaAccountMedicoView.jsp", "/ModificaAccountPazienteView.jsp", "/monitoraggioParametriView.jsp", "/profilo.jsp",
 		"/registraMedico.jsp", "/registraPazienteMedico.jsp", "/visualizzaPianoTerapeutico.jsp"})
-public class ErrorPageFilter implements Filter {
+//aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso a visitatori non loggati
+public class PaginaErroreFilter implements Filter {
 	
-    public ErrorPageFilter() {}
+    public PaginaErroreFilter() {}
 
 	public void destroy() {}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session = req.getSession();
@@ -43,11 +48,6 @@ public class ErrorPageFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-	}
+	public void init(FilterConfig fConfig) throws ServletException {}
 
 }
