@@ -88,7 +88,7 @@ public class AnnuncioModel {
 	 * @param data
 	 * @param destinatariView
 	 */
-	public static void updateAnnuncio (String id, String codiceFiscaleMedico, String oggetto,
+	public static void updateAnnuncio (String id, String codiceFiscaleMedico, String titolo,
 			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
 			HashMap<String, Boolean> destinatariView) {
 		
@@ -111,8 +111,8 @@ public class AnnuncioModel {
 		if (codiceFiscaleMedico!=null) {
 			d.append("MedicoCodiceFiscale", codiceFiscaleMedico);
 		}
-		if (oggetto!=null) {
-			d.append("Oggetto", oggetto);
+		if (titolo!=null) {
+			d.append("Titolo", titolo);
 		}
 		if (testo!=null) {
 			d.append("Testo", testo);
@@ -125,7 +125,7 @@ public class AnnuncioModel {
 			d.append("Data", data.toLocalDate());
 		}
 		if (destinatariView!=null) {
-			d.append("DestinatariView", dView);
+			d.append("PazientiView", dView);
 		}
 		
 		annunci.updateOne(searchQuery, new Document("$set", d));

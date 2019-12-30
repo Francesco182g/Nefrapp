@@ -57,7 +57,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 			
 			else if(operazione.equals("inviaAnnuncio")) {
-				System.out.println(request.getParameter("oggetto"));
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	
 				requestDispatcher.forward(request, response);
