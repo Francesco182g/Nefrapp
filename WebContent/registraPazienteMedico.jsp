@@ -118,7 +118,7 @@
                   							</div>
                   							
 							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
-							                	<button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">Registra Paziente</button>
+							                	<button class="btn btn-primary btn-user btn-block" id="registrazioneButton">Registra Paziente</button>
 							               </div>
 							              </form>
 							              
