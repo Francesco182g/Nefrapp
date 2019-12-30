@@ -7,9 +7,10 @@ import java.util.HashMap;
 import model.MessaggioModel;
 
 
-/**Implementazione concreta lightweight di un Messaggio (proxy design pattern)
- * @author nico
- *
+/**
+ * 
+ * @author Domenico Musone
+ * Implementazione concreta lightweight di un Messaggio (proxy design pattern)
  */
 public class MessaggioProxy implements Messaggio {
 	private Messaggio buffer = null;
@@ -22,8 +23,7 @@ public class MessaggioProxy implements Messaggio {
 	
 	public MessaggioProxy() {}
 
-	public MessaggioProxy(String codiceFiscaleMittente, String oggetto, ZonedDateTime data, 
-			HashMap<String, Boolean> destinatariView) {
+	public MessaggioProxy(String codiceFiscaleMittente, String oggetto, ZonedDateTime data, HashMap<String, Boolean> destinatariView) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 		this.oggetto = oggetto;
 		this.data = data;
@@ -137,15 +137,10 @@ public class MessaggioProxy implements Messaggio {
 		return this.idMessaggio;
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
 		return "MessaggioProxy [idMessaggio=" + idMessaggio + ", codiceFiscaleMittente=" + codiceFiscaleMittente
 				+ ", oggetto=" + oggetto + ", data=" + data + ", visualizzato=" + visualizzato
 				+ ", destinatariView=" + destinatariView + "]";
 	}
-
 }

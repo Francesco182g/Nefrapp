@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * 
  * @author Davide Benedetto Strianese Questa classe rappresenta l'annuncio
  */
 public class AnnuncioCompleto implements Annuncio{
@@ -15,14 +16,11 @@ public class AnnuncioCompleto implements Annuncio{
 	private String corpoAllegato; // può essere una presentazione pp o un video, tenere traccia tramite path
 	private String nomeAllegato;
 	private ZonedDateTime data;
-	private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>(); // coppia di CF dei destinatari e il
-																					// campo visualizzato.
+	private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>(); // coppia di CF dei destinatari e il campo visualizzato.
 
-	public AnnuncioCompleto() {
-	}
+	public AnnuncioCompleto() {}
 
-	public AnnuncioCompleto(String medico, String titolo, String testo, String corpoAllegato,
-			String nomeAllegato, ZonedDateTime data, HashMap<String, Boolean> pazientiView) {
+	public AnnuncioCompleto(String medico, String titolo, String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data, HashMap<String, Boolean> pazientiView) {
 		this.medico = medico;
 		this.titolo = titolo;
 		this.testo = testo;
@@ -109,12 +107,6 @@ public class AnnuncioCompleto implements Annuncio{
 	@Override
 	public String toString() {
 		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + ", titolo="
-				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato="
-				+  "]";
+				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato=" + "]";
 	}
-
-	
-
-	
-
 }

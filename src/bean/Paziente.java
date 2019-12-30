@@ -93,5 +93,4 @@ public class Paziente extends Utente{
 				+ ", codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome() + ", cognome="
 				+ getCognome() + "]";
 	}
-	
 }

@@ -5,9 +5,10 @@ import java.util.HashMap;
 
 
 
-/**Interfaccia che determina le operazioni che possono essere compiute da un'implementazione concreta di Messaggio
- * @author nico
- *
+/**
+ * 
+ * @author Domenico Musone
+ * Interfaccia che determina le operazioni che possono essere compiute da un'implementazione concreta di Messaggio
  */
 public interface Messaggio {
 	
@@ -52,5 +53,4 @@ public interface Messaggio {
 	public HashMap<String,Boolean> getDestinatariView();
 	
 	public String toString();
-	
 }

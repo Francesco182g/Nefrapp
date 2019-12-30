@@ -2,15 +2,14 @@ package bean;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import model.AnnuncioModel;
-import model.MessaggioModel;
 
 
-/**Implementazione concreta lightweight di un Annuncio (proxy design pattern)
- *
+/**
+ * 
+ * @author da aggiungere
+ * Implementazione concreta lightweight di un Annuncio (proxy design pattern)
  */
 public class AnnuncioProxy implements Annuncio {
 	private Annuncio buffer = null;
@@ -23,8 +22,7 @@ public class AnnuncioProxy implements Annuncio {
 	
 	public AnnuncioProxy() {}
 
-	public AnnuncioProxy(String medico, String titolo, ZonedDateTime data, 
-			HashMap<String, Boolean> pazientiView) {
+	public AnnuncioProxy(String medico, String titolo, ZonedDateTime data, HashMap<String, Boolean> pazientiView) {
 		this.medico = medico;
 		this.titolo = titolo;
 		this.data = data;
@@ -61,7 +59,7 @@ public class AnnuncioProxy implements Annuncio {
 	}
 
 	public void setTitolo(String titolo) {
-		this.titolo= titolo;
+		this.titolo = titolo;
 	}
 
 	public String getTesto() {
@@ -153,5 +151,4 @@ public class AnnuncioProxy implements Annuncio {
 				+ ", titolo=" + titolo + ", data=" + data + ", visualizzato=" + visualizzato
 				+ ", pazientiView=" + pazientiView + "]";
 	}
-
 }

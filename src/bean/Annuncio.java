@@ -3,7 +3,13 @@ package bean;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author da aggiungere
+ * Interfaccia per l'annuncio
+ */
 public interface Annuncio {
+	
 	public String getMedico();
 	
 	public void setMedico(String medico);

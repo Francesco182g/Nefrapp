@@ -1,6 +1,3 @@
-/**
- * 
- */
 package bean;
 
 import java.time.ZonedDateTime;
@@ -8,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /**
+ * 
+ * @author da aggiungere
  * Implementazione concreta completa di un Messaggio
  */
 public class MessaggioCompleto implements Messaggio {
@@ -20,15 +19,11 @@ public class MessaggioCompleto implements Messaggio {
 	private String nomeAllegato;
 	private ZonedDateTime data;
 	private Boolean visualizzato;
-	private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>(); // coppia di CF dei destinatari e
-																						// il campo visualizzato.
+	private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>(); // coppia di CF dei destinatari e il campo visualizzato.
 
-	public MessaggioCompleto() {
-	}
+	public MessaggioCompleto() {}
 
-	public MessaggioCompleto(String codiceFiscaleMittente, String oggetto,
-			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
-			HashMap<String, Boolean> destinatariView) {
+	public MessaggioCompleto(String codiceFiscaleMittente, String oggetto, String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data, HashMap<String, Boolean> destinatariView) {
 		this.codiceFiscaleMittente = codiceFiscaleMittente;
 		this.oggetto = oggetto;
 		this.testo = testo;
@@ -37,7 +32,6 @@ public class MessaggioCompleto implements Messaggio {
 		this.data = data;
 		this.visualizzato = false;
 		this.destinatariView.putAll(destinatariView);
-
 	}
 
 	public String getCodiceFiscaleMittente() {
@@ -120,6 +114,7 @@ public class MessaggioCompleto implements Messaggio {
 	public HashMap<String,Boolean> getDestinatariView() {
 		return this.destinatariView;
 	}
+	
 	@Override
 	public String toString() {
 		return "Messaggio [mittente=" + codiceFiscaleMittente +  ", oggetto=" + oggetto + 

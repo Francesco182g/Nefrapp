@@ -1,11 +1,14 @@
 package bean;
 
+/**
+ * 
+ * @author da aggiungere
+ */
 public class Utente {
 	private String codiceFiscale;
 	private String nome;
 	private String cognome;
 	private String email;
-	
 	
 	public Utente() {}
 	
@@ -40,8 +43,6 @@ public class Utente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	
-	
 
 	public String getEmail() {
 		return email;
@@ -53,12 +54,8 @@ public class Utente {
 
 	@Override
 	public String toString() {
-		return getClass().getName()+" [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email
-				+ "]";
+		return getClass().getName()+" [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email + "]";
 	}
-
-	
-
 }
 
 

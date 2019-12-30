@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * 
  * @author Antonio Donnarumma
  * Questa classe rappresenta il medico
  */
@@ -13,16 +14,14 @@ public class Medico extends Utente{
 	private LocalDate dataDiNascita;
 	private String luogoDiNascita;
 	
-	public Medico() {
-		super();
-	}
+	public Medico() {}
 
 	public Medico(String sesso, String residenza, LocalDate dataDiNascita, String codiceFiscale, String nome, String cognome,String email,String luogoDiNascita) {
 		super(codiceFiscale, nome, cognome,email);
 		this.sesso = sesso;
 		this.residenza = residenza;
 		this.dataDiNascita = dataDiNascita;
-		this.luogoDiNascita=luogoDiNascita;
+		this.luogoDiNascita = luogoDiNascita;
 	}
 
 	public String getSesso() {
