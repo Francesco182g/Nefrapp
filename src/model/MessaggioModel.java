@@ -76,8 +76,8 @@ public class MessaggioModel {
 		
 		MongoCollection<Document> messaggioDB = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Messaggio> messaggi = new ArrayList<>();
-		FindIterable<Document> it = messaggioDB.find(eq("DestinatariView.CFDestinatario", CFDestinatario)).projection(
-				Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "DestinatariView"));
+		FindIterable<Document> it = messaggioDB.find(eq("DestinatariView.CFDestinatario", CFDestinatario)).
+				sort(new BasicDBObject("Data", -1)).projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "DestinatariView"));
 		
 		for (Document doc : it) {
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc, CFDestinatario));

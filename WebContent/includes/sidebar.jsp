@@ -83,6 +83,10 @@
 					href="./messaggio?operazione=visualizzaElencoMessaggio"> <i
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Leggi
 							Messaggi</span></a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="./annuncio?operazione=visualizzaPersonali"> <i
+						class="fas fa-fw fa-tachometer-alt"></i> <span>Leggi
+							Annunci</span></a></li>
 			</c:when>
 
 			<c:when test='${isMedico==true && accessDone==true}'>

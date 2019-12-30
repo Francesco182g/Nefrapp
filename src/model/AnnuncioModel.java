@@ -139,7 +139,8 @@ public class AnnuncioModel {
 	public static ArrayList<Annuncio> getAnnunciByCFMedico(String codiceFiscaleMedico) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		MongoCursor<Document> documenti = annuncioDB.find(eq("MedicoCodiceFiscale", codiceFiscaleMedico)).iterator();
+		MongoCursor<Document> documenti = annuncioDB.find(eq("MedicoCodiceFiscale", codiceFiscaleMedico))
+				.sort(new BasicDBObject("Data", -1)).iterator();
 
 		while (documenti.hasNext()) {
 			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
@@ -157,8 +158,9 @@ public class AnnuncioModel {
 	public static ArrayList<Annuncio> getAnnuncioByCFPaziente(String codiceFiscalePaziente) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		MongoCursor<Document> documenti = annuncioDB.find(eq("PazientiView.CFDestinatario", codiceFiscalePaziente)).iterator();
-
+		MongoCursor<Document> documenti = annuncioDB.find(eq("PazientiView.CFDestinatario", codiceFiscalePaziente)).
+				sort(new BasicDBObject("Data", -1)).iterator();
+		
 		while (documenti.hasNext()) {
 			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
 		}

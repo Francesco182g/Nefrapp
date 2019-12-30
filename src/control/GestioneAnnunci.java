@@ -15,10 +15,13 @@ import com.google.gson.Gson;
 
 import bean.Annuncio;
 import bean.Medico;
+import bean.Messaggio;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
+import model.MessaggioModel;
 import model.PazienteModel;
+import model.UtenteModel;
 import utility.CriptazioneUtility;
 
 /**
@@ -37,27 +40,14 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		try {
 			String operazione = request.getParameter("operazione");
 			HttpSession session = request.getSession();
-			/*Da Sara: mi sono permessa di conformare l'inserimento dell'annuncio a quello dei messaggi.
-			 * si richiama il metodo "caricaDestinatari" della superclasse GestioneComunicazioni il quale preleva i possibili
-			 * destinatari per un determinato medico e li salva nella sessione.
-			 * Questo lo fa solo dalla side bar...
-			 */
+
 			if(operazione.equals("caricaDestinatariAnnuncio")) {
 				caricaDestinatari(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoAnnuncioView.jsp");
 				requestDispatcher.forward(request, response);
 			}
-			/**
-			 * ..questo credo lo faccia dalla dashboard.
-			 */
-			if(operazione.equals("crea")) {
-				creaAnnuncio(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoAnnuncioView.jsp");
-				requestDispatcher.forward(request, response);
-			}
 			
-			//per Eugenio: la chiamata asincrona per l'upload triggera QUESTO
-			if (operazione.equals("caricaAllegato")) {
+			else if (operazione.equals("caricaAllegato")) {
 				caricaAllegato(request, request.getParameter("tipo"), session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
@@ -67,6 +57,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 			
 			else if(operazione.equals("inviaAnnuncio")) {
+				System.out.println(request.getParameter("oggetto"));
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	
 				requestDispatcher.forward(request, response);
@@ -83,7 +74,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				visualizzaAnnunciPersonali(request, response,tipo);
 				if(!(tipo != null  && tipo.equals("asincrona")))
 				{
-					RequestDispatcher requestDispatcher =request.getRequestDispatcher("./listaAnnunciView.jsp");
+					RequestDispatcher requestDispatcher =request.getRequestDispatcher("./annunci.jsp");
 					requestDispatcher.forward(request, response);
 				}
 				
@@ -110,34 +101,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 		return;
-	}
-	
-	//questo metodo è puro codice duplicato, basta chiamare caricaDestinatari 
-	//also, attenti a 'sti nomi, onegai
-	//questo metodo non "crea un annuncio" in nessun modo immaginabile. Non crea nulla,
-	//e non ha a che fare con gli annunci in nessun punto. Non c'è nemmeno un annuncio dentro.
-	//creaAnnuncio() è un nome tanto azzeccato quanto lo sarebbe sgretolaPandoro() o abbracciaMilf()
-	/*
-	 * Metodo che prepara la creazione e l'invio dell'annuncio. Caricamento dei dati dei pazienti seguiti dal medico
-	 * @param request richiesta utilizzata per ottenere il medico loggato e settare la lista dei pazienti seguiti
-	 * @param response
-	 */
-	private void creaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		Medico medico = (Medico) session.getAttribute("utente");
-		
-		if(medico != null) {
-			ArrayList<Paziente> pazientiSeguiti = new ArrayList<Paziente>();
-			pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
-			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-		}
-		
-		/*else {
-			request.setAttribute("notifica", "Operazione non consentita");
-			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore");
-			requestDispatcher.forward(request, response);
-			
-		}*/
 	}
 	
 	/**
@@ -218,6 +181,34 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
+			
+			
+			ArrayList<String> cache = new ArrayList<>();
+			ArrayList<Utente> utentiCache = new ArrayList<>();
+			Utente utenteSelezionato = new Utente();
+
+			for (Annuncio a : annunci) {
+				if (!cache.contains(a.getMedico())) {
+					cache.add(a.getMedico());
+					utenteSelezionato = UtenteModel.getUtenteByCF(a.getMedico());
+					if (utenteSelezionato != null) {
+						utentiCache.add(utenteSelezionato);
+						request.setAttribute(a.getMedico(),
+								utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
+					}
+				} else if (cache.contains(a.getMedico())) {
+					for (Utente ut : utentiCache) {
+						if (ut.getCodiceFiscale() == a.getMedico()) {
+							utenteSelezionato = ut;
+							request.setAttribute(a.getMedico(),
+									utenteSelezionato.getNome() + " " + utenteSelezionato.getCognome());
+						}
+					}
+
+				}
+			}
+			
+			
 			if(tipo != null  && tipo.equals("asincrona"))
 			{
 				response.setContentType("application/json");
@@ -234,5 +225,4 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			request.setAttribute("notifica", "Operazione non consentita");
 			return;
 		}
-	}
-}
+	}}

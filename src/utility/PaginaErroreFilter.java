@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  * @author nico
  */
 @WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAmministratore", 
-		"/GestioneAnnunci", "/GestioneMedico", "/GestioneRegistrazione", 
+		"/GestioneAnnunci", "/annuncio", "/GestioneMedico", "/GestioneRegistrazione", 
 		"/inserimentoMessaggioView.jsp", "/annuncioView.jsp", "/inserimentoAnnuncioView.jsp", "/inserimentoParametriView.jsp",
 		"/listaAnnunciView.jsp", "/listaMediciView.jsp", "/listaMessaggiView.jsp", "/listaPazientiView.jsp", "/messaggioView.jsp",
 		"/ModificaAccountMedicoView.jsp", "/ModificaAccountPazienteView.jsp", "/monitoraggioParametriView.jsp", "/profilo.jsp",

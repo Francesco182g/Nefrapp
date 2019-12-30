@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebFilter;
  * @author nico
  *
  */
-@WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAccesso",
+@WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAccesso", "/annuncio",
 		"/GestioneAmministratore", "/GestioneAnnunci", "/GestioneMedico", "/GestioneRegistrazione" })
 public class CharacterSetFilter implements Filter {
 

@@ -80,6 +80,11 @@ public class AnnuncioCompleto implements Annuncio{
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return data.format(format);
 	}
+	
+	public String getOraFormattata() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+		return data.format(format);
+	}
 
 	public void setData(ZonedDateTime data) {
 		this.data = data;

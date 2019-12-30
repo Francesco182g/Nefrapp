@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,9 @@ import utility.CriptazioneUtility;
  * @author nico
  */
 @WebServlet("/comunicazione")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
+maxFileSize = 15728640, // 15MB
+maxRequestSize = 15728640) // 15MB
 public class GestioneComunicazione extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
