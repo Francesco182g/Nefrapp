@@ -36,6 +36,10 @@
 									${item.titolo}</h5>
 								<div class="card-body">
 									<p class="card-text">${item.testo}</p>
+									<c:if test="${item.corpoAllegato!=null}">
+									<p><i class="fas fa-download"></i> &emsp;
+									<a id="download" download="" href="">${item.nomeAllegato}</a><p>
+									</c:if>
 									<p class="card-text float-right">Dott. ${dottore}<br>${item.dataFormattata},
 										${item.oraFormattata}</p>
 								</div>
