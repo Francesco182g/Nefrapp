@@ -10,7 +10,7 @@ import model.MessaggioModel;
 
 
 /**Implementazione concreta lightweight di un Annuncio (proxy design pattern)
- *
+ *@author Sara
  */
 public class AnnuncioProxy implements Annuncio {
 	private Annuncio buffer = null;

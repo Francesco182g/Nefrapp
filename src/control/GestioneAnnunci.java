@@ -25,7 +25,7 @@ import model.UtenteModel;
 import utility.CriptazioneUtility;
 
 /**
- * @author Davide Benedetto Strianese
+ * @author Davide Benedetto Strianese, Sara
  * Questa classe � una servlet che si occupa della gestione degli annunci
  */
 @WebServlet("/GestioneAnnunci")
