@@ -4,15 +4,15 @@
 (function($) {
 	"use strict"; // Start of use strict
 	var sub = false
-	
+
 	$(document).ready(function() {
-		
+
 		var admin = $("#admin")
 		var paziente = $("#paziente")
 		var medico = $("#medico")
 		var caricaAnnuncio = $("#caricaAnnuncio")
 		var caricaMessaggio = $("#caricaMessaggio")
-		
+
 		console.log(caricaAnnuncio)
 		if (admin.length != 0) {
 			caricaDatiAdmin();
@@ -21,93 +21,126 @@
 		} else if (medico.length != 0) {
 
 			caricaDatiMedico()
-		}else if (caricaAnnuncio.length != 0)
-			{
-				loadAnnuncio()
-			}
-		else if (caricaMessaggio.length != 0)
-		{
+		} else if (caricaAnnuncio.length != 0) {
+			loadAnnuncio()
+		} else if (caricaMessaggio.length != 0) {
 			loadMessaggio()
 		}
-		
 
 	});
-	
-	function loadMessaggio()
-	{
-		var $messaggio =$("#messaggio");
-	    $messaggio.fileinput({
-	        theme: "fas",
-	        dropZoneEnabled: false,
-	        language:"it",
-	        allowedFileExtensions: ["bmp","jpeg","jfif","pjpeg","pjp", "jpg", "gif", "png"],
-	        uploadUrl: "GestioneMessaggi",
-	        showUpload: false, // hide upload button
-	        showRemove: false, // hide remove button
-	        overwriteInitial: false, // append files to initial preview
-	        minFileCount: 1,
-	        maxFileCount: 1,
-	        initialPreviewAsData: true,
-	        uploadExtraData: function(previewId, index) {
-	            return {operazione: "caricaAllegato"};
-	        }
-	    }).on("filebatchselected", function(event, files) {
-	        $messaggio.fileinput("upload");
-	    }).on('fileuploaded', function(event, previewId, index, fileId) {
-	       console.log("caricato")
-	    });
+
+	function loadMessaggio() {
+		var $messaggio = $("#messaggio");
+		$messaggio.fileinput(
+				{
+					theme : "fas",
+					dropZoneEnabled : false,
+					language : "it",
+					allowedFileExtensions : [ "bmp", "jpeg", "jfif", "pjpeg",
+							"pjp", "jpg", "gif", "png" ],
+					uploadUrl : "GestioneMessaggi",
+					showUpload : false, // hide upload button
+					showRemove : false, // hide remove button
+					overwriteInitial : false, // append files to initial
+												// preview
+					minFileCount : 1,
+					maxFileCount : 1,
+					initialPreviewAsData : true,
+					uploadExtraData : function(previewId, index) {
+						return {
+							operazione : "caricaAllegato"
+						};
+					}
+				}).on("filebatchselected", function(event, files) {
+			$messaggio.fileinput("upload");
+			$("#inviaMessaggio").attr("disabled", true);
+				}).on('fileuploaded', function(event, previewId, index, fileId) {
+				$("#inviaMessaggio").attr("disabled", false);
+				$(".kv-file-remove").click(function() {
+					$.post("GestioneMessaggi", {
+						operazione : "rimuoviAllegato"
+					}, function(data) {
+						console.log("eliminazione effettuata")
+					}).fail(function() {
+						alert("si è verificato un errore")
+					})
+				})
+		});
 	}
-	
-	function loadAnnuncio()
-	{
-		var $annuncio =$("#annuncio");
-	    $annuncio.fileinput({
-	        theme: "fas",
-	        dropZoneEnabled: false,
-	        language:"it",
-	        allowedFileExtensions: ["bmp","jpeg","jfif","pjpeg","pjp", "jpg", "gif", "png", "pdf"],
-	        uploadUrl: "GestioneAnnunci",
-	        showUpload: false, // hide upload button
-	        showRemove: false, // hide remove button
-	        overwriteInitial: false, // append files to initial preview
-	        minFileCount: 1,
-	        maxFileCount: 1,
-	        initialPreviewAsData: true,
-	        
-	        uploadExtraData: function(previewId, index) {
-	            return {operazione: "caricaAllegato"};
-	        }
-	    }).on("filebatchselected", function(event, files) {
-	        $annuncio.fileinput("upload");
-	    }).on('fileuploaded', function(event, previewId, index, fileId) {
-	        console.log('File uploaded', previewId, index, fileId);
-	        console.log("pre",previewId)
-	        console.log("ind",index)
-	        console.log("fileId",fileId)
-	        
-	    });
+
+	function loadAnnuncio() {
+		var $annuncio = $("#annuncio");
+		$annuncio.fileinput(
+				{
+					theme : "fas",
+					dropZoneEnabled : false,
+					language : "it",
+					allowedFileExtensions : [ "bmp", "jpeg", "jfif", "pjpeg",
+							"pjp", "jpg", "gif", "png", "pdf" ],
+					uploadUrl : "GestioneAnnunci",
+					showUpload : false, // hide upload button
+					showRemove : false, // hide remove button
+					showCancel : false,
+					overwriteInitial : false, // append files to initial
+												// preview
+					minFileCount : 1,
+					maxFileCount : 1,
+					uploadExtraData : function(previewId, index) {
+						return {
+							operazione : "caricaAllegato"
+						};
+					}
+				}).on("filebatchselected", function(event, files) {
+			$annuncio.fileinput("upload");
+			$("#inviaAnnuncio").attr("disabled", true);
+		}).on('fileuploaded', function(event, previewId, index, fileId) {
+
+			$("#inviaAnnuncio").attr("disabled", false);
+			$(".kv-file-remove").click(function() {
+				$.post("GestioneAnnunci", {
+					operazione : "rimuoviAllegato"
+				}, function(data) {
+					console.log("eliminazione effettuata")
+				}).fail(function() {
+					alert("si è verificato un errore")
+				})
+			})
+		})
+
 	}
 	/**
 	 * funzione che esegue una chimata asincrona per poter prendere i dati del
 	 * paziente dalla servlet e caricarli nella dashboard del paziente
 	 */
-	function caricaDatiPaziente(){
-		$.post("GestionePianoTerapeutico",{operazione : "visualizza",tipo :"asincrona"},function(data){
-			var diagnosi= $("#diagnosi")
-			var farmaco= $("#farmaco")
-			var dataFine= $("#data")
-			$(diagnosi).html(data.diagnosi)
-			$(farmaco).html(data.farmaco)
-			$(dataFine).html(data.dataFineTerapia.day+"/"+data.dataFineTerapia.month+"/"+data.dataFineTerapia.year)
-			
-		}).fail(function(){
+	function caricaDatiPaziente() {
+		$.post(
+				"GestionePianoTerapeutico",
+				{
+					operazione : "visualizza",
+					tipo : "asincrona"
+				},
+				function(data) {
+					var diagnosi = $("#diagnosi")
+					var farmaco = $("#farmaco")
+					var dataFine = $("#data")
+					$(diagnosi).html(data.diagnosi)
+					$(farmaco).html(data.farmaco)
+					$(dataFine).html(
+							data.dataFineTerapia.day + "/"
+									+ data.dataFineTerapia.month + "/"
+									+ data.dataFineTerapia.year)
+
+				}).fail(function() {
 			alert("si è verificato un errore")
 		})
-		$.post("GestioneAnnunci",{operazione : "visualizzaPersonali",tipo :"asincrona"},function(data){
+		$.post("GestioneAnnunci", {
+			operazione : "visualizzaPersonali",
+			tipo : "asincrona"
+		}, function(data) {
 			console.log(data)
-				loadTabellaAnnunci(data)
-			
-		}).fail(function(){
+			loadTabellaAnnunci(data)
+
+		}).fail(function() {
 			alert("si è verificato un errore")
 		})
 	}
@@ -115,34 +148,41 @@
 	 * funzione che esegue una chimata asincrona per poter prendere i dati del
 	 * medico dalla servlet e caricarli nella dashboard del medico
 	 */
-	function caricaDatiMedico(){
+	function caricaDatiMedico() {
 		console.log("Ciao sto caricando i dati del medico")
-		$.post("GestioneMedico",{operazione : "VisualizzaPazientiSeguiti",tipo :"asincrona"},function(data){
+		$.post("GestioneMedico", {
+			operazione : "VisualizzaPazientiSeguiti",
+			tipo : "asincrona"
+		}, function(data) {
 			console.log("OPERAZIONE ESEGUITA CON SUCCESSO")
 			console.log(data)
-			loadTabellaPazienti(data,false)
-		}).fail(function(){
+			loadTabellaPazienti(data, false)
+		}).fail(function() {
 			alert("si è verificato un errore")
 		})
-		$.post("GestioneAnnunci",{operazione : "visualizzaPersonali",tipo :"asincrona"},function(data){
+		$.post("GestioneAnnunci", {
+			operazione : "visualizzaPersonali",
+			tipo : "asincrona"
+		}, function(data) {
 			console.log(data)
 			loadTabellaAnnunci(data)
-			
-		}).fail(function(){
+
+		}).fail(function() {
 			alert("si è verificato un errore")
 		})
 	}
-	
+
 	/**
 	 * funzione che esegue una chimata asincrona per poter prendere i dati del
-	 * paziente e del medico dalla servlet e caricarli nella dashboard dell'admin
+	 * paziente e del medico dalla servlet e caricarli nella dashboard
+	 * dell'admin
 	 */
 	function caricaDatiAdmin() {
 		$.post("GestioneAmministratore", {
 			operazione : "caricaMedPaz"
 		}, function(data) {
 			loadTabellaMedici(data[0])
-			loadTabellaPazienti(data[1],true)
+			loadTabellaPazienti(data[1], true)
 
 			$(".eliminaButtonMedico").click(function() {
 				$("#eliminazione").children().remove()
@@ -247,15 +287,15 @@
 	 */
 	function loadTabellaAnnunci(annunci) {
 		var tabellaMedici = $("#tabellaAnnunci")
-	
-		 
+
 		var riga = ""
 		for (var i = 0; i < annunci.length; i++) {
-			riga += " <div class='card mt-3'><div class='card-header py-3'>" +
-			"<h6 class='m-0 font-weight-bold text-primary'>"+annunci[i].titolo+"</h6></div>" +
-			"<div class='card-body'><p>"+annunci[i].testo+"</p></div></div>"
+			riga += " <div class='card mt-3'><div class='card-header py-3'>"
+					+ "<h6 class='m-0 font-weight-bold text-primary'>"
+					+ annunci[i].titolo + "</h6></div>"
+					+ "<div class='card-body'><p>" + annunci[i].testo
+					+ "</p></div></div>"
 		}
-		
 
 		tabellaMedici.append(riga)
 
@@ -287,7 +327,7 @@
 	/**
 	 * funzione che carica i dati del paziente nella tabella
 	 */
-	function loadTabellaPazienti(pazienti,bottoni) {
+	function loadTabellaPazienti(pazienti, bottoni) {
 		var tabellaPazienti = $("#tabellaPazienti")
 		var riga = ""
 		for (var i = 0; i < pazienti.length; i++) {
@@ -302,27 +342,27 @@
 			riga += "<tr><td><p>Email: </p></td>"
 			riga += "<td><p>" + pazienti[i].email + "</p></td></tr>"
 			riga += "</table></div>"
-			if(bottoni)
-				{
-				riga +="<div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"
-					+ i
-					+ "' class='btn btn-primary btn-user mr-sm-5 modificaPazienteButton'>Modifica</button><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
-					+ i
-					+ "' class='btn btn-danger btn-user eliminaButtonPaziente'>Elimina</button></div>"
-				}
-			else
-				{
-					riga+="<div class='col-12 mt-3 d-flex justify-content-center'><a href='GestionePianoTerapeutico?operazione=visualizza&CFPaziente="+pazienti[i].codiceFiscale+"' class='btn mr-sm-5 btn-info btn-icon-split'>" +
-							"<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Piano terapeutico</span></a>" +
-							"<a href='GestioneParametri?operazione=visualizzaScheda&CFPaziente="+pazienti[i].codiceFiscale+"'class='btn btn-info btn-icon-split'>" +
-									"<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Scheda parametri</span></a></div>"
-				}
+			if (bottoni) {
+				riga += "<div class='col-12 mt-3 d-flex justify-content-center'><button type='button' id = '"
+						+ i
+						+ "' class='btn btn-primary btn-user mr-sm-5 modificaPazienteButton'>Modifica</button><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
+						+ i
+						+ "' class='btn btn-danger btn-user eliminaButtonPaziente'>Elimina</button></div>"
+			} else {
+				riga += "<div class='col-12 mt-3 d-flex justify-content-center'><a href='GestionePianoTerapeutico?operazione=visualizza&CFPaziente="
+						+ pazienti[i].codiceFiscale
+						+ "' class='btn mr-sm-5 btn-info btn-icon-split'>"
+						+ "<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Piano terapeutico</span></a>"
+						+ "<a href='GestioneParametri?operazione=visualizzaScheda&CFPaziente="
+						+ pazienti[i].codiceFiscale
+						+ "'class='btn btn-info btn-icon-split'>"
+						+ "<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Scheda parametri</span></a></div>"
+			}
 		}
 
 		tabellaPazienti.append(riga)
 
 	}
-
 
 })(jQuery); // End of use strict
 

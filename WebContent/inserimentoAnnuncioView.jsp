@@ -26,6 +26,8 @@
 <script src="./js/loadObject.js"></script>
 <script type="text/javascript" src="./js/messaggi.js"></script>
 <script src="js/ParameterControl.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 </head>
 <body id="page-top"> 
 	<!-- Page Wrapper -->
