@@ -48,12 +48,20 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 			
 			else if (operazione.equals("caricaAllegato")) {
-				caricaAllegato(request, request.getParameter("tipo"), session);
+				caricaAllegato(request, "annuncio", session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
 				response.getWriter().write(gg.toJson("success"));
 				
+			}
+			
+			else if (operazione.equals("rimuoviAllegato")) {
+				rimuoviAllegato("messaggio", session);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));	
 			}
 			
 			else if(operazione.equals("inviaAnnuncio")) {

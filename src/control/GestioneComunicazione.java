@@ -220,7 +220,7 @@ public class GestioneComunicazione extends HttpServlet {
 		}
 	}
 	
-	protected void rimuoviAllegato(HttpServletRequest request, String tipo, HttpSession session) {
+	protected void rimuoviAllegato(String tipo, HttpSession session) {
 
 		String id = (String)session.getAttribute("id");
 		

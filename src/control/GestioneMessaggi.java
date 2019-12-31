@@ -51,28 +51,34 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				requestDispatcher.forward(request, response);
 			}
 			
-			
-			if (operazione.equals("caricaAllegato")) {
-				caricaAllegato(request, request.getParameter("tipo"), session);
+			else if (operazione.equals("caricaAllegato")) {
+				caricaAllegato(request, "messaggio", session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
-				response.getWriter().write(gg.toJson("success"));
-				
+				response.getWriter().write(gg.toJson("success"));	
 			}
 			
-			if (operazione.equals("inviaMessaggio")) {
+			else if (operazione.equals("rimuoviAllegato")) {
+				rimuoviAllegato("messaggio", session);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));	
+			}
+			
+			else if (operazione.equals("inviaMessaggio")) {
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
 				requestDispatcher.forward(request, response);
 				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
 			}
-			if (operazione.equals("visualizzaElencoMessaggio")) {
+			else if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaListaMessaggi(request);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
 				requestDispatcher.forward(request, response);
 			}
-			if (operazione.equals("visualizzaMessaggio")) {
+			else if (operazione.equals("visualizzaMessaggio")) {
 				visualizzaMessaggio(request);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./messaggioView.jsp");
 				requestDispatcher.forward(request, response);

@@ -49,7 +49,7 @@
 	        maxFileCount: 1,
 	        initialPreviewAsData: true,
 	        uploadExtraData: function(previewId, index) {
-	            return {operazione: "caricaAllegato", tipo : "messaggio"};
+	            return {operazione: "caricaAllegato"};
 	        }
 	    }).on("filebatchselected", function(event, files) {
 	        $messaggio.fileinput("upload");
@@ -75,7 +75,7 @@
 	        initialPreviewAsData: true,
 	        
 	        uploadExtraData: function(previewId, index) {
-	            return {operazione: "caricaAllegato", tipo : "annuncio"};
+	            return {operazione: "caricaAllegato"};
 	        }
 	    }).on("filebatchselected", function(event, files) {
 	        $annuncio.fileinput("upload");
