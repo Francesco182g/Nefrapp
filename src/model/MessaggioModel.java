@@ -64,6 +64,19 @@ public class MessaggioModel {
 		ObjectId idObj = (ObjectId)doc.get("_id");
 		return idObj.toString();
 	}
+	
+	/**
+	 * Cancella un annuncio dal database
+	 * @param idAnnuncio
+	 * @return
+	 */
+	public static void deleteMessaggioById(String idMessaggio) {
+		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
+		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio))).first();
+		if (messaggioDoc != null) {
+			messaggi.deleteOne(messaggioDoc);
+		}
+	}
 
 	/**
 	 * Metodo che ricerca i messaggi per codice fiscale dei destinatari

@@ -40,7 +40,7 @@ public class AnnuncioProxy implements Annuncio {
 
 	public HashMap<String, Boolean> getPazientiView() {
 		if (buffer == null) {
-			buffer = AnnuncioModel.getAnnunioById(idAnnuncio);
+			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
 		}
 		
 		return buffer.getPazientiView();

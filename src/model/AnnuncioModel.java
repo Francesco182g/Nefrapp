@@ -24,12 +24,12 @@ import bean.Annuncio;
 import utility.CreaBeanUtility;
 
 public class AnnuncioModel {
+	
 	/**
 	 * Cerca un annuncio nel Database
 	 * @param idAnnuncio
 	 * @return
 	 */
-	
 	public static Annuncio getAnnuncioById(String idAnnuncio) {
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
 		Document annuncioDoc = annunci.find(eq("_id", new ObjectId(idAnnuncio))).first();
@@ -39,12 +39,25 @@ public class AnnuncioModel {
 		}
 		return null;
 	}
+	
+	/**
+	 * Cancella un annuncio dal database
+	 * @param idAnnuncio
+	 * @return
+	 */
+	public static void deleteAnnuncioById(String idAnnuncio) {
+		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
+		Document annuncioDoc = annunci.find(eq("_id", new ObjectId(idAnnuncio))).first();
+		if (annuncioDoc != null) {
+			annunci.deleteOne(annuncioDoc);
+		}
+	}
+	
 	/**
 	 * Aggiunge un annuncio nel Database
 	 * @param daAggiungere
 	 * @return l'id del messaggio appena inserito
 	 */
-	
 	public static String addAnnuncio(Annuncio daAggiungere) {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Document> pazientiView=new ArrayList<Document>();
@@ -196,10 +209,6 @@ public class AnnuncioModel {
 		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
 		annunciDB.updateOne( new BasicDBObject("_id", new ObjectId(idAnnuncio)),
 			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
-	}
-	public static Annuncio getAnnunioById(String idAnnuncio) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	/*

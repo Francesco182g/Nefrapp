@@ -219,6 +219,21 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 		}
 	}
+	
+	protected void rimuoviAllegato(HttpServletRequest request, String tipo, HttpSession session) {
+
+		String id = (String)session.getAttribute("id");
+		
+		if (tipo!= null && id!=null && tipo.equals("messaggio")) {
+			MessaggioModel.deleteMessaggioById(id);
+		} else if (tipo!= null && id!=null && tipo.equals("annuncio")) {
+			AnnuncioModel.deleteAnnuncioById(id);
+		}
+		
+		session.removeAttribute("allegato");
+		session.removeAttribute("nomeFile");
+		session.removeAttribute("id");
+	}
 
 	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo) {
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
