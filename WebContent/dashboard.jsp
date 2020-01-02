@@ -11,10 +11,6 @@
 <meta name="author" content="">
 <title>Home - Nefrapp</title>
 
-<!-- Custom fonts for this template-->
-<script src="./vendor/jquery/jquery.min.js"></script>
-<script src="./js/loadObject.js"></script>
-
 </head>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -207,4 +203,6 @@
 		class="fas fa-angle-up"></i>
 	</a>
 </body>
+	<script src="./js/jquery-confirm.js"></script>
+<script src="./js/loadObject.js"></script>
 </html>

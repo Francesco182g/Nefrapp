@@ -68,6 +68,7 @@ public class GestionePaziente extends HttpServlet {
 			else if(operazione.equals("modificaAccount"))
 			{
 				modificaDatiPersonali(request, response);
+				caricaMedici(request,response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
 				requestDispatcher.forward(request, response);
 				

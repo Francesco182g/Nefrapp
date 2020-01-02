@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 /**
  * 
- * @author da aggiungere
- * Interfaccia per l'annuncio
+ * @author NefrappTeam
+ * Interfaccia che determina le operazioni che possono essere compiute da un'implementazione concreta di Annuncio
  */
 public interface Annuncio {
 	

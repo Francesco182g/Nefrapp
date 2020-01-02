@@ -5,7 +5,7 @@ package bean;
  * @author Eugenio Corbisiero
  * Questa classe rappresenta l'amministratore
  */
-public class Amministratore extends Utente{
+public class Amministratore extends Utente {
 	
 	public Amministratore() {}
 	

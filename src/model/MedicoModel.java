@@ -11,17 +11,23 @@ import utility.CreaBeanUtility;
 
 /**
  * 
- * @author Luca Esposito
- * 
+ * @author Luca Esposito, Antonio Donnarumma.
+ * Questa classe è un manager che si occupa di interagire con il database.
+ * Gestisce le query riguardanti il medico.
  */
 
 public class MedicoModel {
 
 	/**
-	 * Metodo che effettua il login per il medico
-	 * @param codiceFiscale codice fiscale del medico
-	 * @param password password del medico
-	 * @return dati del medico se le credenziali sono corrette, null altrimenti
+	 * 
+	 * Questo metodo si occupa di verificare se i dati immessi dal medico per effettuare il login sono presenti nel database.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del medico.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta la password del medico.
+	 * 
+	 * @return un oggetto di tipo <strong>Medico</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null && password != null .
 	 */
 	public static Medico getMedicoByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
@@ -42,29 +48,38 @@ public class MedicoModel {
 	}
 	
 	/**
-	 * Metodo che permette l'aggiunta di un medico al database
-	 * @param toAdd medico da aggiungere
-	 * @param password password del medico
+	 * 
+	 * Questo metodo consente di aggiungere un medico al database.
+	 * 
+	 * @param daAggiungere oggetto di tipo <strong>Medico</strong> che rappresenta il medico da aggiungere.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta la password del medico da aggiungere.
+	 * 
+	 * @precondition toAdd != null && password != null.
 	 */
-	public static void addMedico(Medico toAdd, String password) {
+	public static void addMedico(Medico daAggiungere, String password) {
 		MongoCollection<Document> medico = DriverConnection.getConnection().getCollection("Medico");
 		
-		Document doc = new Document("CodiceFiscale", toAdd.getCodiceFiscale())
-				.append("Nome", toAdd.getNome())
-				.append("Cognome", toAdd.getCognome())
+		Document doc = new Document("CodiceFiscale", daAggiungere.getCodiceFiscale())
+				.append("Nome", daAggiungere.getNome())
+				.append("Cognome", daAggiungere.getCognome())
 				.append("Password",password)
-				.append("DataDiNascita", toAdd.getDataDiNascita())
-				.append("Sesso", toAdd.getSesso())
-				.append("Residenza", toAdd.getResidenza())
-				.append("LuogoDiNascita", toAdd.getLuogoDiNascita())
-				.append("Email", toAdd.getEmail());
+				.append("DataDiNascita", daAggiungere.getDataDiNascita())
+				.append("Sesso", daAggiungere.getSesso())
+				.append("Residenza", daAggiungere.getResidenza())
+				.append("LuogoDiNascita", daAggiungere.getLuogoDiNascita())
+				.append("Email", daAggiungere.getEmail());
 		medico.insertOne(doc);	
 	}
 	
 	/**
-	 * Query che ricerca un medico per codice fiscale
-	 * @param codiceFiscale del medico da ricercare
-	 * @return medico se trovato, altrimenti null
+	 * 
+	 * Questo metodo si occupa di ricercare un medico tramite codice fiscale.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del medico.
+	 * 
+	 * @return medico oggetto di tipo <strong>Medico</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null.
 	 */
 	public static Medico getMedicoByCF(String codiceFiscale) {
 		
@@ -79,8 +94,12 @@ public class MedicoModel {
 	}
 	
 	/**
-	 * Query che rimuove un medico dal database
-	 * @param daRimuovere codice fiscale del medico da rimuovere
+	 * 
+	 * Questo metodo si occupa di rimuovere un medico dal database.
+	 * 
+	 * @param daRimuovere oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del medico da rimuovere.
+	 * 
+	 * @precondition daRimuovere != null.
 	 */
 	public static void removeMedico(String daRimuovere) {
 		
@@ -91,8 +110,10 @@ public class MedicoModel {
 	}
 	
 	/**
-	 * Metodo che restituisce tutti i medici che sono presenti nel database
-	 * @return un arraylist di medici
+	 * 
+	 * Questo metodo si occupa di ricercare e restituire tutti i medici presenti nel database.
+	 * 
+	 * @return una lista di medici di tipo <strong>Medico</strong>, altrimenti null.
 	 */
 	public static ArrayList<Medico> getAllMedici() {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
@@ -105,11 +126,7 @@ public class MedicoModel {
 		return listaMedici;
 	}
 	
-	/**
-	 * Query che modifica la password del medico
-	 * @param daAggiornare codice fiscale del medico
-	 * @param password aggiornata
-	 */
+	/*
 	public static void changePassword(String daAggiornare,String password) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		BasicDBObject nuovoMedico = new BasicDBObject();
@@ -117,10 +134,15 @@ public class MedicoModel {
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
 		medici.updateOne(searchQuery, nuovoMedico);
 	}
+	*/
 	
 	/**
-	 * Query che aggiorna il medico
-	 * @param daAggiornare medico
+	 * 
+	 * Questo metodo si occupa di modificare i dati di un medico.
+	 * 
+	 * @param daAggiornare oggetto di tipo <strong>Medico</strong> che include i nuovi dati del medico.
+	 * 
+	 * @precondition daAggiornare != null.
 	 */
 	public static void updateMedico(Medico daAggiornare) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
@@ -138,8 +160,11 @@ public class MedicoModel {
 	
 	
 	/**
-	 * Query che ottiene tutti i dati dei medici che seguino un paziente
+	 * 
+	 * Questo metodo si occupa di ricercare e restituire tutti i medici che seguono un determinato paziente.
+	 * 
 	 * @param codiciFiscaliMedici array contenente i codici fiscali dei medici che seguono il paziente
+	 * 
 	 * @return oggetti medico richiesti
 	 */
 	public static ArrayList<Medico> getMediciByPazienteSeguito(ArrayList<String> codiciFiscaliMedici) {
@@ -152,9 +177,14 @@ public class MedicoModel {
 	}
 	
 	/**
-	 * Query che ricerca un medico per email
-	 * @param email del medico da ricercare
-	 * @return medico se trovato, altrimenti null
+	 * 
+	 * Questo metodo si occupa di ricercare un medico tramite il suo indirizzo email.
+	 *
+	 * @param email oggetto di tipo <strong>String</strong> che rappresenta l'indirizzo email del medico.
+	 * 
+	 * @return medico oggetto di tipo <strong>Medico</strong>, altrimenti null.
+	 * 
+	 * @precondition email != null.
 	 */
 	public static Medico getMedicoByEmail(String email) {
 		
@@ -169,9 +199,13 @@ public class MedicoModel {
 	}
 	
 	/**
-	 * Query che aggiorna la password per un medico
-	 * @param codiceFiscale del medico da aggiornare
-	 * @param nuovaPassword per il medico da aggiornare
+	 * 
+	 * Questo medico si occupa di modificare la password di un medico.
+	 *
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del medico al quale bisogna aggiornare la password.
+	 * @param nuovaPassword oggetto di tipo <strong>String</strong> che rappresenta il nuovo valore della password.
+	 * 
+	 * @precondition codiceFiscale != null && nuovaPassword != null.
 	 */
 	public static void updatePasswordMedico(String codiceFiscale, String nuovaPassword) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
@@ -182,7 +216,4 @@ public class MedicoModel {
 		
 		medici.updateOne(searchQuery, nuovoMedico);
 	}	
-	
-	
-	
 }

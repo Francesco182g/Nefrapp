@@ -14,7 +14,7 @@
 	  var button6 = $("#inviaMessaggio")
 	  var button7 = $("#inviaAnnuncio")
 	  var button8 = $("#registrazioneButton")
-	  console.log(button8)
+	
 	  
 	  $(document).submit(function(){
 				  return sub; 
@@ -50,28 +50,49 @@
 	  
 	  
 	});
-
   
+  /**
+   * Funzione che permette di customizzare gli alert
+   */
+  function customAlert(msg)
+  {
+	  $.alert({
+		    title:msg,
+		    content: 'Questo box si chiudera automaticamente entro 6 secondi se non premi su ok',
+		    type: 'red',
+		    typeAnimated: true,
+		    autoClose: 'ok|6000',
+		    
+		});
+  }
+  
+  /**
+   * Funzione che permette di validare la registrazione del paziente e anche la validazione delle modifiche sia di medico che paziente
+   */
   function registrazioneValidator(){
 	  $("#registrazioneButton").click(function(){
 			
 			
 			var valid = registrazioneCheck()
-			console.log(valid)
+			
 				if (!valid [0])
 					{
 						sub = false;
 						
-						alert(valid[1])
+						customAlert(valid[1])
 					}
 				else
 					{
-						//sub = true;
-						//$(document).submit();
+						sub = true;
+						$(document).submit();
 					}
 				
 			});
   }
+  /**
+   * Funzione che effettua la verifica dei campi di registrazione paziente e modifica paziente e medico restituisce una lista contenente
+   * un valore booleano che indica se i campi sono validi o meno in caso di campo invalido ti quale campo non è valido.
+   */
   function registrazioneCheck(){
 	  
 	  	var valido=[true];
@@ -96,8 +117,8 @@
 		var registrato = $("input[name='registrato']:checked").val()
 		var medico = $("#medico").val();
 		var confermaPsw = $("#confermaPsw").val();
-		console.log(medico)
-		console.log(email.length)
+		
+		
 		if (medico == undefined)
 			{
 			if (registrato == "No"){
@@ -177,12 +198,12 @@
 			
 			
 		var valid = inviaMessaggioCheck()
-		console.log(valid)
+		
 			if (!valid [0])
 				{
 					sub = false;
 					
-					alert(valid[1])
+					customAlert(valid[1])
 				}
 			else
 				{
@@ -203,12 +224,12 @@
 			
 			
 		var valid = inviaMessaggioCheck()
-		console.log(valid)
+		
 			if (!valid [0])
 				{
 					sub = false;
 					
-					alert(valid[1])
+					customAlert(valid[1])
 				}
 			else
 				{
@@ -233,7 +254,7 @@
 				{
 					sub = false;
 					
-					alert(valid[1])
+					customAlert(valid[1])
 				}
 			else
 				{
@@ -255,7 +276,7 @@
 			if (!valid [0])
 				{
 					sub = false;
-					alert(valid[1])
+					customAlert(valid[1])
 				}
 			else
 				{
@@ -273,7 +294,7 @@
 			if (!valid [0])
 				{
 					sub = false;
-					alert(valid[1])
+					customAlert(valid[1])
 				}
 			else
 				{
@@ -371,7 +392,7 @@
 			{
 			if(notifica.length!=0)
 			{
-				alert(notifica)
+				customAlert(notifica)
 			}
 			}
 		
@@ -388,11 +409,11 @@
 					if (!valid [0])
 					{
 						sub = false;
-						alert(valid[1])
+						customAlert(valid[1])
 					}
 					else
 					{
-						console.log("controlli ok")
+						
 						sub = true;
 						$(document).submit();
 					}
@@ -406,11 +427,11 @@
 					if (!valid [0])
 					{
 						sub = false;
-						alert(valid[1])
+						customAlert(valid[1])
 					}
 					else
 					{
-						console.log("controlli ok")
+						
 						sub = true;
 						$(document).submit();
 					}
@@ -476,17 +497,7 @@
 			var oggetto = $("#oggetto").val()
 			var testo = $("#testo").val()
 			var fileExt = getFileExtension($('#file').val());
-			console.log(fileExt)
-			
-			//studiare l'inserimento di escape di sicurezza e sanitizzazione.
-			//
-			//direi che non puoi pickare singolarmente tutte le cose che possono stare in un messaggio, lol
-			//e soprattutto non c'è da bloccare, c'è da sanitizzare
-			//se scrivi <script> in un form di un sito fatto bene non ti fa esplodere la casa
-			//semplicemente sotto il cofano sostituisce < con &lt e > con &gt
-			//in modo che non sia valutato eseguibile dal js engine del browser 
-			// ma sia comunque mostrato a schermo in quanto html valido.
-			
+					
 			if (selettore.length<=0)
 				valido=[false,"selezionare un destinatario"];
 			else if (testo.length<1||testo.length>1000)
@@ -499,12 +510,7 @@
 			
 		}
 		 
-		/**
-		 * converte i caratteri speciali <> & in caratteri unicode
-		 */
-		function escapehtml(s) {
-		    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-		}
+
 	
 })(jQuery); // End of use strict
 

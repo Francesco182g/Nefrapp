@@ -190,7 +190,7 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setSesso(sesso);
 						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
 							password = CriptazioneUtility.criptaConMD5(password);
-							MedicoModel.changePassword(codiceFiscale, password);
+							MedicoModel.updatePasswordMedico(codiceFiscale, password);
 						} else {
 							request.setAttribute("notifica","Password non valide o non corrispondenti.");
 							RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");

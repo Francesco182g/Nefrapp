@@ -23,22 +23,21 @@ import bean.Messaggio;
 import utility.CreaBeanUtility;
 
 /**
- * Questa classe si occupa di contattare il database ed effettuare tutte le
- * operazioni CRUD relative ai messaggi
- */
-/**
- * @author nico
- *
+ * 
+ * @author Domenici Musone.
+ * Questa classe si occupa di contattare il database ed effettuare tutte leoperazioni CRUD relative ai messaggi.
  */
 public class MessaggioModel {
 
 	/**
 	 * 
-	 * Metodo che aggiunge un messaggio al database
+	 * Questo metodo si occupa di aggiungere un messaggio all'interno del database.
 	 * 
-	 * @param daAggiungere messaggio da aggiungere
-	 * @return String con l'id del messaggio appena inserito
-	 * @author nico
+	 * @param daAggiungere oggetto di tipo <strong>Messaggio</strong> che rappresenta il messaggio da aggiungere.
+	 * 
+	 * @return oggetto di tipo <strong>String</strong> che rappresenta l'id del messaggio inserito.
+	 * 
+	 * @precondition daAggiungere != null.
 	 */
 	public static String addMessaggio(Messaggio daAggiungere) {
 		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
@@ -72,9 +71,12 @@ public class MessaggioModel {
 	}
 	
 	/**
-	 * Cancella un annuncio dal database
-	 * @param idAnnuncio
-	 * @return
+	 * 
+	 * Questo metodo si occupa di rimuovere un messaggio dal database tramite il suo id.
+	 * 
+	 * @param idMessaggio oggetto di tipo <strong>String</strong> che rappresenta l'id del messaggio da rimuovere.
+	 * 
+	 * @precondition idMessaggio != null.
 	 */
 	public static void deleteMessaggioById(String idMessaggio) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
@@ -86,10 +88,14 @@ public class MessaggioModel {
 	}
 
 	/**
-	 * Metodo che ricerca i messaggi per codice fiscale dei destinatari
 	 * 
-	 * @param CFDestinatario Codice Fiscale del destinatario
-	 * @return messaggi: ArrayList contenente i messaggi trovati
+	 * Questo metodo si occupa di ricercare e restituire i messaggi tramite il codice fiscale di un destinatario.
+	 * 
+	 * @param CFDestinatario oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del destinatario.
+	 *
+	 * @return una lista di messaggi di tipo <strong>Messaggio</strong>, altrimenti null.
+	 * 
+	 * @precondition CFDestinatario != null.
 	 */
 
 	public static ArrayList<Messaggio> getMessaggiByDestinatario(String CFDestinatario) {
@@ -107,11 +113,14 @@ public class MessaggioModel {
 	}
 
 	/**
-	 * Metodo che ricerca un messaggio nel database per id
 	 * 
-	 * @param idMessaggio: id del messaggio
-	 * @return messaggio: risultato della ricerca, vale null se non si trovano
-	 *         corrispondenze
+	 * Questo metodo si occupa di ricercare un messaggio nel database tramite il suo id.
+	 *
+	 * @param idMessaggio oggetto di tipo <strong>String</strong> che rappresenta l'id del messaggio.
+	 * 
+	 * @return messaggio oggetto di tipo <strong>Messaggio</strong>, altrimenti null.
+	 * 
+	 * @precondition idMessaggio != null.
 	 */
 	public static Messaggio getMessaggioById(String idMessaggio) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
@@ -126,13 +135,13 @@ public class MessaggioModel {
 	
 	
 	/**
-	 * Metodo che individua un messaggio nel database per id e lo aggiorna con i dati passati,
+	 * Questo metodo si occupa di individuare un messaggio nel database tramite il suo id e lo aggiorna con i dati passati,
 	 * ignorando i campi null. Se si vuole aggiornare solo alcuni campi, si passi null negli altri.
 	 * 
-	 * @param id
-	 * @param codiceFiscaleMittente
+	 * @param id oggetto di tipo <strong>String</strong> che rappresenta l'id del messaggio.
+	 * @param codiceFiscaleMittente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del mittente.
 	 * @param oggetto
-	 * @param testo
+	 * @param testo oggetto di tipo <strong>String</strong> che rappresenta il testo del messaggio.
 	 * @param corpoAllegato
 	 * @param nomeAllegato
 	 * @param data
@@ -182,13 +191,14 @@ public class MessaggioModel {
 	}
 
 	/**
-	 * Cambia lo stato della lettura del messaggio.
 	 * 
-	 * @param idMessaggio    id del messaggio che è stato appena aperto
-	 * @param visualizzato   settaggio a true del campo "visualizzato" del messaggio
-	 *                       appena aperto
-	 * @param CFDestinatario codiceFiscale dell'utente che ha visualizzato il
-	 *                       messaggio
+	 * Questo metodo si occupa di modificare lo stato della lettura del messaggio.
+	 * 
+	 * @param idMessaggio oggetto di tipo <strong>String</strong> che rappresenta l'id del messaggio.
+	 * @param visualizzato oggetto di tipo <strong>Boolean</strong> che rappresenta lo stato di lettura da settare del messaggio.
+	 * @param CFDestinatario oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del destinatario che ha visualizzato il messaggio.
+	 * 
+	 * @precondition idMessaggio != null && CFDestinatario != null.
 	 */
 	public static void setVisualizzatoMessaggio(String idMessaggio, String CFDestinatario, Boolean visualizzato) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
@@ -207,10 +217,14 @@ public class MessaggioModel {
 	}
 
 	/**
-	 * Conta quanti messaggi non sono stati letti da un determinato destinatario
 	 * 
-	 * @param CFDestinatario
-	 * @return n il numero di messaggi che non sono stati letti
+	 * Questo metodo si occupa di effettuare il conteggio dei messaggi non letti da un destinatario tramite il suo codice fiscale.
+	 * 
+	 * @param CFDestinatario oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del destinatario.
+	 * 
+	 * @return oggetto di tipo <strong>int</strong> che rappresenta il numero di messaggi non letti.
+	 * 
+	 * @precondition CFDestinatario != null.
 	 */
 	public static int countMessaggiNonLetti(String CFDestinatario) {
 
@@ -219,8 +233,7 @@ public class MessaggioModel {
 		obj.add(new BasicDBObject("DestinatariView.CFDestinatario", CFDestinatario));
 		obj.add(new BasicDBObject("DestinatariView.Visualizzazione", false));
 		BasicDBObject andQuery = new BasicDBObject("$and", obj);
-		int n = (int) messaggioDB.count(andQuery);
-		return n;
+		int numeroMessaggi = (int) messaggioDB.count(andQuery);
+		return numeroMessaggi;
 	}
-
 }

@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import model.MessaggioModel;
 
-
 /**
  * 
  * @author Domenico Musone

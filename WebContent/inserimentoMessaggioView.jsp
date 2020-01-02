@@ -15,16 +15,6 @@
 
 <!-- Custom styles for this template-->
 <link href="./css/fileinput.css" rel="stylesheet">
-<script src="./vendor/jquery/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-<script src="./js/plugins/piexif.js"></script>
-<script src="./js/fileinput.js"></script>
-<script src="./themes/fas/theme.js"></script>
-<script src="./js/locales/it.js"></script>
-<script src="./js/loadObject.js"></script>
-<script type="text/javascript" src="./js/messaggi.js"></script>
-<script src="js/ParameterControl.js"></script>
 </head>
 <body id="page-top" onload="selezionaDestinatario('${param['destinatario']}')">
 	<!-- Page Wrapper -->
@@ -139,4 +129,15 @@
 		class="fas fa-angle-up"></i>
 	</a>
 </body>
+	<script src="./js/jquery-confirm.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="./js/plugins/piexif.js"></script>
+<script src="./js/fileinput.js"></script>
+<script src="./themes/fas/theme.js"></script>
+<script src="./js/locales/it.js"></script>
+<script src="./js/loadObject.js"></script>
+<script type="text/javascript" src="./js/messaggi.js"></script>
+<script src="js/ParameterControl.js"></script>
+
 </html>

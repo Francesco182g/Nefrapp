@@ -67,6 +67,4 @@ public class Medico extends Utente{
 	public void setLuogoDiNascita(String luogoDiNascita) {
 		this.luogoDiNascita=luogoDiNascita;
 	}
-
-
 }

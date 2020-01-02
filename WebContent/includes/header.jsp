@@ -9,6 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+	<link href="./css/jquery-confirm.css" rel="stylesheet" type="text/css" />
 </head>
 
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -196,4 +197,12 @@
 
 
 </body>
+<!-- Core Plugins per tutte le pagine -->
+<script src="./vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	   	 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	   	 		   	 	<script src="./js/jquery-confirm.js"></script>
+	   	 
 </html>
