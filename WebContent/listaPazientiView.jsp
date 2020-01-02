@@ -9,6 +9,8 @@
     	<meta name="description" content="">
     	<meta name="author" content="">
 		<title>Lista pazienti - Nefrapp</title>
+		
+		<%@include file="./includes/cssLinks.jsp"%>
 	</head>
 	
 	<body id="page-top">
@@ -109,4 +111,5 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
+	<%@include file="./includes/scripts.jsp"%>
 </html>

@@ -11,6 +11,7 @@
     	<meta name="author" content="Davide Benedetto Strianese">
 		<title>Modulo reset password - Nefrapp</title>
     	
+    	<%@include file="./includes/cssLinks.jsp"%>
    	</head>
 
 	<body id="page-top">
@@ -84,7 +85,8 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
-		<script src="./js/jquery-confirm.js"></script>
-	   	 	<script src="./js/ParameterControl.js"></script>
-   	 	
+<%@include file="./includes/scripts.jsp"%>
+<script src="./js/jquery-confirm.js"></script>
+<script src="./js/ParameterControl.js"></script>
+
 </html>

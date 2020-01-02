@@ -11,11 +11,9 @@
     	<meta name="author" content="">
 		<title>Modifica Paziente - Nefrapp</title>
     	
-    	<!-- Custom fonts for this template-->
-    	
-    	<!-- Custom styles for this template-->
-   	 	
-	<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
+    	<%@include file="./includes/cssLinks.jsp"%>
+		
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
    	 	<!-- Script per la registrazione -->
 
   
@@ -172,10 +170,8 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
-		<script src="./js/jquery-confirm.js"></script>
-	   	 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
-   	 	<script src="./js/ParameterControl.js"></script>	
-   	 	<script src="./js/dataPicker.js"></script>
-   	 	<script src="./js/autoCompleteInput.js"></script>	
-   	 	
-	
+<%@include file="./includes/scripts.jsp"%>
+<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+<script src="./js/ParameterControl.js"></script>
+<script src="./js/dataPicker.js"></script>
+<script src="./js/autoCompleteInput.js"></script>

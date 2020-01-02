@@ -12,10 +12,9 @@
     	<meta name="author" content="">
 		<title>Profilo - Nefrapp</title>
     	
-   	 	
+   	 	<%@include file="./includes/cssLinks.jsp"%>
+
    	 	<!-- DatePicker -->
-   	 	
-		
 		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >
 		
 		<!-- Script per la registrazione -->
@@ -164,8 +163,8 @@
 		</div>
 	</div>
 	    </body>
+	    <%@include file="./includes/scripts.jsp"%>
 	    <script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
-   	
    	 	<script src="./js/dataPicker.js"></script>
 	    
 	    </html>

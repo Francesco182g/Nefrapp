@@ -12,6 +12,7 @@
 <meta name="author" content="">
 <title>Guarda un po' sti fessi che hanno fatto sto progetto...</title>
 
+<%@include file="./includes/cssLinks.jsp"%>
 </head>
 
 <body id="page-top">
@@ -329,4 +330,5 @@
 		class="fas fa-angle-up"></i>
 	</a>
 </body>
+<%@include file="./includes/scripts.jsp"%>
 </html>

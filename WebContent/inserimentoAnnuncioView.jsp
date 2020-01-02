@@ -11,10 +11,7 @@
 <meta name="author" content="">
 <title>Nuovo Annuncio - Nefrapp</title>
 
-<!-- Custom fonts for this template-->
-
-<!-- Custom styles for this template-->
-
+<%@include file="./includes/cssLinks.jsp"%>
 <link href="./css/fileinput.css" rel="stylesheet">
 
 </head>
@@ -116,8 +113,7 @@
 		class="fas fa-angle-up"></i>
 	</a>
 </body>
-	<script src="./js/jquery-confirm.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<%@include file="./includes/scripts.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <script src="./js/plugins/piexif.js"></script>
 <script src="./js/fileinput.js"></script>

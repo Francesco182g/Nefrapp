@@ -11,6 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>Nuova Scheda Parametri - Nefrapp</title>
+<%@include file="./includes/cssLinks.jsp"%>
 </head>
 
 <body id="page-top">
@@ -40,7 +41,8 @@
 							<input type="hidden" name="operazione" value="inserisciScheda">
 									Scheda parametri: <br>
 									<div class="form-group row">
-									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+									<d<%@include file="./includes/scripts.jsp"%>
+									iv class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
 										Peso: <br> <input type="text"
 											class="form-control form-control-user" id="Peso" name="Peso"
 											placeholder="Esempio: 80,00" required="required"
@@ -118,6 +120,7 @@
 	</a>
 
 </body>
-	<script src="./js/jquery-confirm.js"></script>
+<%@include file="./includes/scripts.jsp"%>
+<script src="./js/jquery-confirm.js"></script>
 <script type="text/javascript" src="/js/inserimentoControl.js"></script>
 </html>

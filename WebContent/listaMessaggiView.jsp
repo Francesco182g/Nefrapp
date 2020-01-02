@@ -11,6 +11,8 @@
     	<meta name="author" content="">
 		<title>Messaggi - Nefrapp</title>
        	 	
+       	 <%@include file="./includes/cssLinks.jsp"%>
+       	 <link href="./css/custom-rules.css" rel=stylesheet>
    		<link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css" >  		
 	</head>
 	
@@ -96,8 +98,8 @@
 	    </a>
 	   	
 	</body>
-		<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
-	
-		<script type="text/javascript" src="./js/messaggi.js"></script>
+	<%@include file="./includes/scripts.jsp"%>
+	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="./js/messaggi.js"></script>
 	
 </html>

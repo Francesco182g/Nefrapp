@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>Home - Nefrapp</title>
-
+<%@include file="./includes/cssLinks.jsp"%>
 </head>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -203,6 +203,6 @@
 		class="fas fa-angle-up"></i>
 	</a>
 </body>
-	<script src="./js/jquery-confirm.js"></script>
+<%@include file="./includes/scripts.jsp"%>
 <script src="./js/loadObject.js"></script>
 </html>

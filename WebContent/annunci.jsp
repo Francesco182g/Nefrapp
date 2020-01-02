@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Annunci - Nefrapp</title>
+<%@include file="./includes/cssLinks.jsp"%>
 </head>
 <body>
 	<!-- Page Wrapper -->
@@ -65,4 +66,5 @@
 	</a>
 
 </body>
+<%@include file="./includes/scripts.jsp"%>
 </html>

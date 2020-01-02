@@ -10,7 +10,7 @@
     	<meta name="author" content="">
 		<title>Home - Nefrapp</title>
     	
-    	
+    	<%@include file="./includes/cssLinks.jsp"%>
 	</head>
 	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	
@@ -53,4 +53,5 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
+	<%@include file="./includes/scripts.jsp"%>
 </html>

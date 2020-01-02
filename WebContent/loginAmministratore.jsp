@@ -11,6 +11,7 @@
     	<meta name="author" content="">
 		<title>Login Admin - Nefrapp</title>
 	
+		<%@include file="./includes/cssLinks.jsp"%>
 	</head>
 	
 	<body id="page-top">
@@ -83,7 +84,8 @@
 	    </a>
 	    
 	</body>
-		<script src="./js/jquery-confirm.js"></script>
+	<%@include file="./includes/scripts.jsp"%>
+	<script src="./js/jquery-confirm.js"></script>
 	<script src="./js/ParameterControl.js"></script>
    	 	
 </html>

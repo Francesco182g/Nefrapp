@@ -10,6 +10,7 @@
     	<meta name="author" content="Davide Benedetto Strianese">
 		<title>Piano Terapeutico - Nefrapp</title>
     
+    	<%@include file="./includes/cssLinks.jsp"%>
 	</head>
 	
 	<body id="page-top">
@@ -42,7 +43,13 @@
               		<c:if test='${isMedico == true}'>
 <!--               			inserire logica di visualizzazione da parte del medico -->
 <!--               			 <div class="card shadow mb-4"> -->
-<!--                 			<div class="card-header py-3"> -->
+<!--                 			<div class="card-header
+<%@include file="./includes/scripts.jsp"%>
+
+<script src="./js/jquery-confirm.js"></script>
+<script src="./js/ParameterControl.js"></script>
+
+ py-3"> -->
 <!--                   				<h6 class="m-0 font-weight-bold text-primary">Paziente</h6> -->
 <!--                 			</div> -->
 <!--                 			<div class="card-body"> -->
@@ -152,4 +159,5 @@
 	    </script>
 	    
 	</body>
+	<%@include file="./includes/scripts.jsp"%>
 </html>

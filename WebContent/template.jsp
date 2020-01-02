@@ -51,4 +51,5 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
+	<%@include file="./includes/scripts.jsp"%>
 </html>

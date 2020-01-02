@@ -12,7 +12,7 @@
     	<meta name="author" content="">
 		<title>Scheda Parametri - Nefrapp</title>
     	
-    	<!-- Custom fonts for this template-->
+    	<%@include file="./includes/cssLinks.jsp"%>
     	   	 	
    	 	<!-- DatePicker -->
    	 	
@@ -142,8 +142,9 @@
 	    </a>
 	   	
 	</body>
-	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
-		
-		<script src="./js/dataPicker.js"></script>
-	
+<%@include file="./includes/scripts.jsp"%>
+<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+
+<script src="./js/dataPicker.js"></script>
+
 </html>

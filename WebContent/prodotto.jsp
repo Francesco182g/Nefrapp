@@ -10,9 +10,7 @@
     	<meta name="author" content="">
 		<title>Nefrapp</title>
     	
-    	<!-- Custom fonts for this template-->
-    	
-    	<!-- Custom styles for this template-->
+    	<%@include file="./includes/cssLinks.jsp"%>
 	</head>
 	
 	<body id="page-top">
@@ -62,4 +60,5 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
+	<%@include file="./includes/scripts.jsp"%>
 </html>

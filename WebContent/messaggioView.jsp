@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>Messaggi - Nefrapp</title>
-
+<%@include file="./includes/cssLinks.jsp"%>
 <!-- DatePicker -->
 
 <link rel="stylesheet" type="text/css"
@@ -143,6 +143,7 @@
 		
 	</script>
 </body>
+<%@include file="./includes/scripts.jsp"%>
 <script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="./js/messaggi.js"></script>
 
