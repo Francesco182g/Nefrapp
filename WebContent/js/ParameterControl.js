@@ -66,8 +66,8 @@
 					}
 				else
 					{
-						//sub = true;
-						//$(document).submit();
+						sub = true;
+						$(document).submit();
 					}
 				
 			});
