@@ -12,7 +12,7 @@
 	  $(document).submit(function(){
 			  return sub; 
 	  });
-	  console.log("ciao mondo");
+	
 	  /**
 	   * Funzione che permette di eseguire la registrazione del medico fa prima dei controlli e se nella pagina è tutto ok invia i dati alla servlet
 	   */
@@ -27,7 +27,7 @@
 			var valid = checkValidity()
 			if (!valid [0])
 				{
-					alert(valid[1])
+					customAlert(valid[1])
 				}
 			else
 				{
@@ -83,7 +83,17 @@
 		
 		return valido;
 	}
-
+	function customAlert(msg)
+	  {
+		  $.alert({
+			    title:msg,
+			    content: 'Questo box si chiudera automaticamente entro 6 secondi se non premi su ok',
+			    type: 'red',
+			    typeAnimated: true,
+			    autoClose: 'ok|6000',
+			    
+			});
+	  }
   
 
 })(jQuery); // End of use strict

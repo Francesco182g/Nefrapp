@@ -10,7 +10,7 @@
     	<meta name="author" content="Davide Benedetto Strianese, Sara Corrente">
 		<title>Richiesta reset password - Nefrapp</title>
 
-<!--  	 	<script src="./js/ParameterControl.js"></script> -->
+<!--  	 	 -->
    	 	
    	 	
    	 	<!-- Script per controllo del form --> <!-- TODO da inserire -->
@@ -81,4 +81,6 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
+	<script src="./js/jquery-confirm.js"></script>
+	<script src="./js/ParameterControl.js"></script>
 </html>

@@ -13,7 +13,6 @@
 		var caricaAnnuncio = $("#caricaAnnuncio")
 		var caricaMessaggio = $("#caricaMessaggio")
 
-		console.log(caricaAnnuncio)
 		if (admin.length != 0) {
 			caricaDatiAdmin();
 		} else if (paziente.length != 0) {
@@ -29,6 +28,9 @@
 
 	});
 
+	/**
+	 * Funzione che permette di caricare lo script per l'insermento dell' file all'interno della view messaggi
+	 */
 	function loadMessaggio() {
 		var $messaggio = $("#messaggio");
 		$messaggio.fileinput(
@@ -62,12 +64,28 @@
 					}, function(data) {
 						console.log("eliminazione effettuata")
 					}).fail(function() {
-						alert("si è verificato un errore")
+						customAlert("si è verificato un errore nella rimozione degli allegati")
 					})
 				})
 		});
 	}
-
+	/**
+	 * Funzione che permette di customizzare gli alert
+	 */
+	function customAlert(msg)
+	  {
+		  $.alert({
+			    title:msg,
+			    content: 'Questo box si chiudera automaticamente entro 6 secondi se non premi su ok',
+			    type: 'red',
+			    typeAnimated: true,
+			    autoClose: 'ok|6000',
+			    
+			});
+	  }
+	/**
+	 * Funzione che permette di caricare lo script per l'insermento dell' file all'interno della view annunci
+	 */
 	function loadAnnuncio() {
 		var $annuncio = $("#annuncio");
 		$annuncio.fileinput(
@@ -102,7 +120,7 @@
 				}, function(data) {
 					console.log("eliminazione effettuata")
 				}).fail(function() {
-					alert("si è verificato un errore")
+					customAlert("si è verificato un errore nella rimozione dell'allegato")
 				})
 			})
 		})
@@ -131,17 +149,17 @@
 									+ data.dataFineTerapia.year)
 
 				}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato un errore nella visualizzazione del piano terapeutico")
 		})
 		$.post("GestioneAnnunci", {
 			operazione : "visualizzaPersonali",
 			tipo : "asincrona"
 		}, function(data) {
-			console.log(data)
+
 			loadTabellaAnnunci(data)
 
 		}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato un errore nella visualizzazione degli annunci")
 		})
 	}
 	/**
@@ -149,26 +167,25 @@
 	 * medico dalla servlet e caricarli nella dashboard del medico
 	 */
 	function caricaDatiMedico() {
-		console.log("Ciao sto caricando i dati del medico")
+
 		$.post("GestioneMedico", {
 			operazione : "VisualizzaPazientiSeguiti",
 			tipo : "asincrona"
 		}, function(data) {
-			console.log("OPERAZIONE ESEGUITA CON SUCCESSO")
-			console.log(data)
+
 			loadTabellaPazienti(data, false)
 		}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato nella visualizzazione dei pazienti seguiti")
 		})
 		$.post("GestioneAnnunci", {
 			operazione : "visualizzaPersonali",
 			tipo : "asincrona"
 		}, function(data) {
-			console.log(data)
+
 			loadTabellaAnnunci(data)
 
 		}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato un errore nella visuallizzazione dei dati personali")
 		})
 	}
 
@@ -221,7 +238,7 @@
 
 			});
 		}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato un errore nel caricamento dei dati dei medici e pazienti")
 		});
 	}
 
@@ -237,7 +254,7 @@
 		}, function(data) {
 			location.reload();
 		}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato un errore nella rimozione dell'account del medico")
 		});
 	}
 	/**
@@ -252,7 +269,7 @@
 		}, function(data) {
 			location.reload();
 		}).fail(function() {
-			alert("si è verificato un errore")
+			customAlert("si è verificato un errore nella rimozione dell'account del paziente")
 		});
 	}
 	/**

@@ -203,5 +203,6 @@
 		class="fas fa-angle-up"></i>
 	</a>
 </body>
+	<script src="./js/jquery-confirm.js"></script>
 <script src="./js/loadObject.js"></script>
 </html>

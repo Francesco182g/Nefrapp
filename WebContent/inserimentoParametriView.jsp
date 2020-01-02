@@ -118,5 +118,6 @@
 	</a>
 
 </body>
+	<script src="./js/jquery-confirm.js"></script>
 <script type="text/javascript" src="/js/inserimentoControl.js"></script>
 </html>

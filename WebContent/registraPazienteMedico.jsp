@@ -154,6 +154,7 @@
 	        </div>
 	    </div>
 	    </body>
+	    	<script src="./js/jquery-confirm.js"></script>
 	    <script src="js/ParameterControl.js"></script>
    	 	<script src="js/registrazione.js"></script>
    	 	

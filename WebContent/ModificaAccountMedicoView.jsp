@@ -144,6 +144,7 @@
 	        <i class="fas fa-angle-up"></i>
 	    </a>
 	</body>
+		<script src="./js/jquery-confirm.js"></script>
 		 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
    	 	<script src="./js/ParameterControl.js"></script>	
    	 	<script src="./js/dataPicker.js"></script>
