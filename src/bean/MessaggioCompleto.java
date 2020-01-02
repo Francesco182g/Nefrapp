@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 /**
  * 
- * @author da aggiungere
+ * @author NefrappTeam
  * Implementazione concreta completa di un Messaggio
  */
 public class MessaggioCompleto implements Messaggio {

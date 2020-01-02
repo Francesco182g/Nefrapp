@@ -2,7 +2,8 @@ package bean;
 
 /**
  * 
- * @author da aggiungere
+ * @author NefrappTeam
+ * Questa classe rappresenta l'utnte generico del sito
  */
 public class Utente {
 	private String codiceFiscale;
@@ -57,5 +58,3 @@ public class Utente {
 		return getClass().getName()+" [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email + "]";
 	}
 }
-
-

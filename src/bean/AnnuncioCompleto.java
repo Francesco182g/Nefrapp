@@ -6,7 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 
- * @author Davide Benedetto Strianese Questa classe rappresenta l'annuncio
+ * @author Davide Benedetto Strianese 
+ * Questa classe rappresenta l'annuncio
  */
 public class AnnuncioCompleto implements Annuncio{
 	private String idAnnuncio;

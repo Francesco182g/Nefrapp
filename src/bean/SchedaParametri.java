@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
  * @author Silvio Di Martino 
  * Questa classe rappresenta la scheda parametri
  */
-
 public class SchedaParametri {
 	private String pazienteCodiceFiscale;
 	private BigDecimal peso;

@@ -3,8 +3,6 @@ package bean;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 
-
-
 /**
  * 
  * @author Domenico Musone
