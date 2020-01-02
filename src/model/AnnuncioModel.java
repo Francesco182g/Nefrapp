@@ -25,7 +25,7 @@ import utility.CreaBeanUtility;
 /**
  * 
  * @author 
- * Questa classe è un manager che si occupa di interagire con il database.
+ * Questa classe ï¿½ un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti l'annuncio
  */
 public class AnnuncioModel {
@@ -87,14 +87,14 @@ public class AnnuncioModel {
 			Document coppia = new Document();
 			coppia.append("CFDestinatario", null).append("Visualizzazione", false);
 			pazientiView.add(coppia);
-		}
-
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-			Document coppia = new Document();
-			coppia.append("CFDestinatario", pair.getKey())
-					.append("Visualizzazione", false);
-			pazientiView.add(coppia);
+		} else {	
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				Document coppia = new Document();
+				coppia.append("CFDestinatario", pair.getKey())
+						.append("Visualizzazione", false);
+				pazientiView.add(coppia);
+			}
 		}
 		
 		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).

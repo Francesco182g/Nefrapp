@@ -80,8 +80,7 @@ public class GestioneComunicazione extends HttpServlet {
 	/**
 	 * Metodo che carica i destinatari ammessi per inviare messaggi e annunci
 	 * 
-	 * @param request richiesta utilizzata per ottenere parametri e settare
-	 *                attributi
+	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 * @throws ServletException
 	 * @throws IOException
 	 */
@@ -235,6 +234,11 @@ public class GestioneComunicazione extends HttpServlet {
 		session.removeAttribute("id");
 	}
 	
+	
+	/**Questo metodo rimuove una comunicazione incompleta nel caso in cui l'utente esca dalla pagina di invio.
+	 * @param tipo, stringa contenente il tipo di comunicazione da eliminare
+	 * @param session, HttpSession da cui eliminare gli attributi relativi all'allegato
+	 */
 	protected void rimuoviIncompleta(String tipo, HttpSession session) {
 		ArrayList<Messaggio> messaggi;
 		ArrayList<Annuncio> annunci;

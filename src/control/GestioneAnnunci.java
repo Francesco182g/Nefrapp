@@ -64,6 +64,14 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				response.getWriter().write(gg.toJson("success"));	
 			}
 			
+			else if (operazione.equals("rimuoviAnnuncioIncompleto")) {
+				rimuoviIncompleta("annuncio", session);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));	
+			}
+			
 			else if(operazione.equals("inviaAnnuncio")) {
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	

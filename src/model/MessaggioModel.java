@@ -48,13 +48,13 @@ public class MessaggioModel {
 			Document coppia = new Document();
 			coppia.append("CFDestinatario", null).append("Visualizzazione", false);
 			destinatariView.add(coppia);
-		}
-
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-			Document coppia = new Document();
-			coppia.append("CFDestinatario", pair.getKey()).append("Visualizzazione", false);
-			destinatariView.add(coppia);
+		} else {
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				Document coppia = new Document();
+				coppia.append("CFDestinatario", pair.getKey()).append("Visualizzazione", false);
+				destinatariView.add(coppia);
+			}
 		}
 
 		Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).append("CorpoAllegato",

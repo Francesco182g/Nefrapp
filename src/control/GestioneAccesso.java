@@ -56,7 +56,7 @@ public class GestioneAccesso extends HttpServlet {
 
 				if (operazione.equals("logout")) {
 					logout(request);
-					response.sendRedirect("index.jsp");
+					response.sendRedirect("dashboard.jsp");
 				}
 
 				else if (operazione.equals("loginAdmin")) {

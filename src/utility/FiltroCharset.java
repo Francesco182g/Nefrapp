@@ -19,7 +19,7 @@ import javax.servlet.annotation.WebFilter;
  */
 @WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAccesso", "/annuncio",
 		"/GestioneAmministratore", "/GestioneAnnunci", "/GestioneMedico", "/GestioneRegistrazione" })
-public class CharacterSetFilter implements Filter {
+public class FiltroCharset implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
 			throws IOException, ServletException {

@@ -42,14 +42,14 @@ function creaDownload(allegato, nomeAllegato) {
 //seleziona il destinatario del messaggio in caso si arrivi alla pagina di invio messaggi dal tasto Rispondi 	
 function selezionaDestinatario (valore) {
  		if (valore != null && valore!= "") {
- 	    	var selMed = document.getElementById("selectMedico");
- 	    	if (selMed != null && selMed != undefined)
- 	    		selMed.value = valore;
- 	    	
- 	    	var selPaz = document.getElementById("selectPaziente");
- 	    	if (selPaz != null && selPaz != undefined)
- 	    		selPaz.value = valore;
+    	var selMed = document.getElementById("selectMedico");
+    	if (selMed != null && selMed != undefined)
+    		selMed.value = valore;
+    	
+    	var selPaz = document.getElementById("selectPaziente");
+    	if (selPaz != null && selPaz != undefined)
+    		selPaz.value = valore;
 
-		}
 	}
+}
 
