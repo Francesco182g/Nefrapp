@@ -10,8 +10,6 @@
     	<meta name="author" content="">
 		<title>Home - Nefrapp</title>
     	
-    	<!-- Custom fonts for this template-->
-    	<script src="./vendor/jquery/jquery.min.js"></script>
     	
 	</head>
 	<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -33,7 +31,7 @@
 	                <div class="container-fluid">
 						<!-- 404 Error Text -->
           				<div class="text-center">
-            				<div class="error mx-auto" data-text="404">404</div>
+            				<div class="error mx-auto" data-text="500">500</div>
             					<p class="lead text-gray-800 mb-5">Page Not Found</p>
             					<p class="text-gray-500 mb-0"><c:out value="${requestScope.notifica}"></c:out></p>
             					<a href="dashboard.jsp">&larr; Torna alla dashboard</a>
