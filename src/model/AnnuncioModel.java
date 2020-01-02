@@ -47,7 +47,8 @@ public class AnnuncioModel {
 	 */
 	public static void deleteAnnuncioById(String idAnnuncio) {
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
-		Document annuncioDoc = annunci.find(eq("_id", new ObjectId(idAnnuncio))).first();
+		Document annuncioDoc = annunci.find(eq("_id", new ObjectId(idAnnuncio)))
+				.projection(Projections.include("_id")).first();
 		if (annuncioDoc != null) {
 			annunci.deleteOne(annuncioDoc);
 		}
@@ -63,6 +64,12 @@ public class AnnuncioModel {
 		ArrayList<Document> pazientiView=new ArrayList<Document>();
 		HashMap<String, Boolean> mp = new HashMap<String, Boolean>();
 		Iterator it = daAggiungere.getPazientiView().entrySet().iterator();
+		
+		if (!it.hasNext()) {
+			Document coppia = new Document();
+			coppia.append("CFDestinatario", null).append("Visualizzazione", false);
+			pazientiView.add(coppia);
+		}
 
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();

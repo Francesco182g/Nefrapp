@@ -44,6 +44,12 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggio = DriverConnection.getConnection().getCollection("Messaggio");
 		ArrayList<Document> destinatariView = new ArrayList<Document>();
 		Iterator it = daAggiungere.getDestinatariView().entrySet().iterator();
+		
+		if (!it.hasNext()) {
+			Document coppia = new Document();
+			coppia.append("CFDestinatario", null).append("Visualizzazione", false);
+			destinatariView.add(coppia);
+		}
 
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
@@ -72,7 +78,8 @@ public class MessaggioModel {
 	 */
 	public static void deleteMessaggioById(String idMessaggio) {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
-		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio))).first();
+		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio)))
+				.projection(Projections.include("_id")).first();
 		if (messaggioDoc != null) {
 			messaggi.deleteOne(messaggioDoc);
 		}
@@ -94,7 +101,6 @@ public class MessaggioModel {
 		
 		for (Document doc : it) {
 			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc, CFDestinatario));
-
 		}
 		
 		return messaggi;

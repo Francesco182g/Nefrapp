@@ -67,6 +67,14 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				response.getWriter().write(gg.toJson("success"));	
 			}
 			
+			else if (operazione.equals("rimuoviMessaggioIncompleto")) {
+				rimuoviIncompleta("messaggio", session);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));	
+			}
+			
 			else if (operazione.equals("inviaMessaggio")) {
 				inviaComunicazione(request, operazione);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");

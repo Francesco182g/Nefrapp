@@ -234,6 +234,27 @@ public class GestioneComunicazione extends HttpServlet {
 		session.removeAttribute("nomeFile");
 		session.removeAttribute("id");
 	}
+	
+	protected void rimuoviIncompleta(String tipo, HttpSession session) {
+		ArrayList<Messaggio> messaggi;
+		ArrayList<Annuncio> annunci;
+		
+		if (tipo!= null && tipo.equals("messaggio")) {
+			messaggi = MessaggioModel.getMessaggiByDestinatario(null);
+			for (Messaggio m : messaggi) {
+				MessaggioModel.deleteMessaggioById(m.getIdMessaggio());
+			}
+		} else if (tipo!= null && tipo.equals("annuncio")) {
+			annunci = AnnuncioModel.getAnnunciByCFMedico(null);
+			for (Annuncio a : annunci) {
+				AnnuncioModel.deleteAnnuncioById(a.getIdAnnuncio());
+			}
+		}
+		
+		session.removeAttribute("allegato");
+		session.removeAttribute("nomeFile");
+		session.removeAttribute("id");
+	}
 
 	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo) {
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";

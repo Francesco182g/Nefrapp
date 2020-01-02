@@ -5,6 +5,21 @@ jQuery(document).ready(function($) {
     });
 });
 
+window.onbeforeunload = function() {
+	$.ajax({
+		  type: 'POST',
+		  url: 'GestioneMessaggi',
+		  data: {'operazione' : 'rimuoviMessaggioIncompleto'},
+		  success: function(data) {
+				console.log("eliminazione effettuata")
+			},
+		  async:false
+		});
+	
+	return null;
+};
+
+
 function creaDownload(allegato, nomeAllegato) {
 	const byteCharacters = atob(allegato);
 	
@@ -37,3 +52,4 @@ function selezionaDestinatario (valore) {
 
 		}
 	}
+

@@ -27,9 +27,9 @@ import javax.servlet.http.HttpSession;
 		"/ModificaAccountMedicoView.jsp", "/ModificaAccountPazienteView.jsp", "/monitoraggioParametriView.jsp", "/profilo.jsp",
 		"/registraMedico.jsp", "/registraPazienteMedico.jsp", "/visualizzaPianoTerapeutico.jsp"})
 //aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso a visitatori non loggati
-public class PaginaErroreFilter implements Filter {
+public class AccessoVisitatoreFilter implements Filter {
 	
-    public PaginaErroreFilter() {}
+    public AccessoVisitatoreFilter() {}
 	RequestDispatcher dispatcher;
 
 	public void destroy() {}
