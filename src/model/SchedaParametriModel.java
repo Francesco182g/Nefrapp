@@ -1,4 +1,5 @@
 package model;
+
 import static com.mongodb.client.model.Filters.eq;
 
 import java.time.LocalDate;
@@ -10,11 +11,22 @@ import com.mongodb.client.model.Filters;
 import bean.SchedaParametri;
 import utility.CreaBeanUtility;
 
+/**
+ * 
+ * @author NefrappTeam.
+ * Questa classe è un manager che si occupa di interagire con il database.
+ * Gestisce le query riguardanti la scheda dei parametri.
+ */
 public class SchedaParametriModel {
+	
 	/**
-	 * Metodo che preleva le schede parametri di un paziente dal DataBase
-	 * @param pazienteCodiceFiscale codice fiscale del paziente
-	 * @return schedeParametri array di schede di un paziente, null altrimenti
+	 * Questo metodo si occupa di prelevare le schede parametri di un paziente tramite il suo codice fiscale.
+	 * 
+	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * 
+	 * @return schedeParametri lista di schede di tipo <strong>SchedaParametri</strong>, null altrimenti.
+	 * 
+	 * @precodition codiceFiscalePaziente != null.
 	 */
 	public static ArrayList<SchedaParametri> getSchedaParametriByCF(String codiceFiscalePaziente) {
 		MongoCollection<Document> schedeParametriDB = DriverConnection.getConnection().getCollection("SchedaParametri");
@@ -31,8 +43,11 @@ public class SchedaParametriModel {
 	
 	/**
 	 * 
-	 * Query che aggiunge una scheda parametri al database
-	 * @param daAggiungere scheda da aggiungere
+	 * Questo metodo si occupa di aggiungere una scheda parametri all'interno del database.
+	 * 
+	 * @param daAggiungere oggetto di tipo <strong>SchedaParametri</strong> che rappresenta la scheda parametri da aggiungere.
+	 * 
+	 * @precondition daAggiungere != null.
 	 */
 	public static void addSchedaParametri(SchedaParametri daAggiungere) 
 	{
@@ -54,11 +69,13 @@ public class SchedaParametriModel {
 	
 	/**
 	 * 
-	 * Query che prende tutte le schede per un dato range di date di un paziente
-	 * @param codiceFiscalePaziente codice fiscale del paziente di cui si vuole ottenere il report
-	 * @param dataInizio data di inizio da cui generare il report
-	 * @param dataFine data di fine da cui generare il report
-	 * @return ArrayList contenente tutte le schede del report richiest
+	 * Questo metodo si occupa di ricercare e di restituire tutte le schede parametri di un paziente comprese in un range di date.
+	 * 
+	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * @param dataInizio oggetto di tipo <strong>LocalDate</strong> che rappresenta la data di inizio range.
+	 * @param dataFine oggetto di tipo <strong>LocalDate</strong> che rappresenta la data di fine range.
+	 * 
+	 * @return schedeParametri lista di schede di tipo <strong>SchedaParametri</strong>, altrimenti null.
 	 */
 	public static ArrayList<SchedaParametri> getReportByPaziente(String codiceFiscalePaziente, LocalDate dataInizio, LocalDate dataFine){
 		
@@ -70,7 +87,4 @@ public class SchedaParametriModel {
 		}
 		return schedeParametri;
 	}
-	
-
-	
 }

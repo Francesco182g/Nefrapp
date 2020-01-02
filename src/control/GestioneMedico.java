@@ -147,7 +147,7 @@ public class GestioneMedico extends HttpServlet {
 																				// spostate la classe
 
 				// TODO aggiorna dati del medico, anche la password
-				MedicoModel.changePassword(medico.getCodiceFiscale(), password);
+				MedicoModel.updatePasswordMedico(medico.getCodiceFiscale(), password);
 				dispatcher = request.getRequestDispatcher("/dashboard.jsp"); //TODO reindirizzamento pagina modifica (chiedere admin) 
 			} else {
 				request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
