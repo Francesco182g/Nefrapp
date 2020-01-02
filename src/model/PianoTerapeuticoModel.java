@@ -15,17 +15,20 @@ import bean.PianoTerapeutico;
 import utility.CreaBeanUtility;
 
 /**
- * @author nico Questa classe si occupa di contattare il database ed effettuare
- *         tutte le operazioni CRUD relative ai piani terapeutici
+ * 
+ * @author Domenico Musono
+ * Questa classe si occupa di contattare il database ed effettuare tutte le operazioni CRUD relative ai piani terapeutici
  */
 public class PianoTerapeuticoModel {
 
 	/**
-	 * Metodo che preleva il piano terapeutico di un paziente dal DataBase
+	 * Questo metodo si occupa di ricercare il piano terapeutico di un paziente tramite il suo codice fiscale.
 	 * 
-	 * @param pazienteCodiceFiscale: codice fiscale del paziente
-	 * @return PianoTerapeutico: il piano terapeutico trovato
-	 * @author nico
+	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * 
+	 * @return piano: oggetto di tipo <strong>PianoTerapeutico</strong>, null altrimenti.
+	 * 
+	 * @precondition codiceFiscalePaziente != null.
 	 */
 	public static PianoTerapeutico getPianoTerapeuticoByPaziente(String codiceFiscalePaziente) {
 		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection()
@@ -43,9 +46,11 @@ public class PianoTerapeuticoModel {
 
 	/**
 	 * 
-	 * Query che aggiorna il piano terapeutico passato in input
+	 * Questo metodo si occupa di aggiornare il piano terapeutico
 	 * 
-	 * @param daAggiornare piano terapeutico da aggiornare
+	 * @param daAggiornare oggetto di tipo <strong>PianoTerapeutico</strong> che include i nuovi dati del piano terapeutico.
+	 * 
+	 * @precondition daAggiornare != null.
 	 */
 	public static void updatePianoTerapeutico(PianoTerapeutico daAggiornare) {
 		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection()
@@ -58,19 +63,25 @@ public class PianoTerapeuticoModel {
 				daAggiornare.getCodiceFiscalePaziente());
 		pianoTerapeuticoDB.updateOne(searchQuery, nuovoPianoTerapeutico);
 	}
-/**
- * Controlla se il piano terapeutico è stato già visualizzato dal paziente
- * @param codiceFiscalePaziente
- * @return boolean true se è stato visualizzato, false altrimenti
- */
+	
+	/**
+	 * 
+	 * Questo metodo si occupa di controllare se il piano terapeutico di un paziente � stato visualizzato.
+	 * 
+	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * 
+	 * @return oggetto di tipo <strong>Boolena</strong> che indica se � stato visualizzato (true) oppure no (false).
+	 * 
+	 * @precondition codiceFiscalePaziente != null.
+	 */
 	public static boolean isPianoTerapeuticoVisualizzato(String codiceFiscalePaziente) {
 		MongoCollection<Document> annunciDB = DriverConnection.getConnection().getCollection("Annuncio");
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
 		obj.add(new BasicDBObject("Visualizzato", false));
 		BasicDBObject andQuery = new BasicDBObject("$and", obj);
-		int n= (int) annunciDB.count(andQuery);
-		if(n==1) {
+		int n = (int) annunciDB.count(andQuery);
+		if(n == 1) {
 			return false;
 		}
 		else {
@@ -90,11 +101,13 @@ public class PianoTerapeuticoModel {
 	}
 
 	/**
-	 * Cambia lo stato della lettura del piano terapeutico.
 	 * 
-	 * @param pazienteCodiceFiscale codice fiscale collegato al piano terapeutico che è stato appena aperto
-	 * @param visualizzato settaggio del campo "visualizzato" del piano terapeutico appena
-	 *                     aperto
+	 * Questo metodo si occupa di modificare lo stato della visualizzazione del piano terapeutico.
+	 
+	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * @param visualizzato oggetto di tipo <strong>Boolean</strong> che rappresenta lo stato di visualizzazione da settare del piano terapeutico.
+	 * 
+	 * @precondition codiceFiscalePaziente != null.
 	 */
 	public static void setVisualizzatoPianoTerapeutico(String codiceFiscalePaziente, Boolean visualizzato) {
 		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection().getCollection("PianoTerapeutico");

@@ -18,17 +18,23 @@ import static com.mongodb.client.model.Filters.*;
 
 /**
  * 
- * @author Antonio Donnarumma, Luca Esposito 
- * 
+ * @author Antonio Donnarumma, Luca Esposito.
+ * Questa classe è un manager che si occupa di interagire con il database.
+ * Gestisce le query riguardanti il paziente.
  */
 
 public class PazienteModel {
 
 	/**
-	 * Metodo che effettua il login per il paziente
-	 * @param codiceFiscale codice fiscale del paziente
-	 * @param password password del paziente
-	 * @return dati del paziente se le credenziali sono corrette, null altrimenti
+	 * 
+	 * Questo metodo si occupa di verificare se i dati immessi dal paziente per effettuare il login sono presenti nel database.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta la password del paziente.
+	 * 
+	 * @return un oggetto di tipo <strong>Paziente</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null && password != null .
 	 */
 	public static Paziente getPazienteByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
@@ -50,9 +56,12 @@ public class PazienteModel {
 	
 	
 	/**
-	 * Metodo che ottiene tutti i dati dei pazienti seguiti da un medico
-	 * @param codiceFiscaleMedico codice fiscale del medico che richiede i dati dei pazienti
-	 * @return pazienti seguiti dal medico
+	 * 
+	 * Questo metodo si occupa di restituire i pazienti seguiti da un medico.
+	 * 
+	 * @param codiceFiscaleMedico oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del medico.
+	 * 
+	 * @return una lista di pazienti di tipo <strong>Paziente</strong>, altrimenti null.
 	 */
 	public static ArrayList<Paziente> getPazientiSeguiti(String codiceFiscaleMedico) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
@@ -68,9 +77,13 @@ public class PazienteModel {
 	}
 	
 	/**
-	 * Metodo che permette l'aggiunta di un paziente al database
-	 * @param toAdd paziente da aggiungere
-	 * @param password password del paziente
+	 * 
+	 * Questo metodo consente di aggiungere un paziente al database.
+	 * 
+	 * @param daAggiungere oggetto di tipo <strong>Paziente</strong> che rappresenta il paziente da aggiungere.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta la password del paziente da aggiungere.
+	 * 
+	 * @precondition daAggiungere != null && password != null.
 	 */
 	public static void addPaziente(Paziente daAggiungere,String password) {
 		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
@@ -88,9 +101,14 @@ public class PazienteModel {
 	}
 		
 	/**
-	 * Query che ricerca un paziente per codice fiscale
-	 * @param codiceFiscale del paziente da ricercare
-	 * @return paziente se trovato, altrimenti null
+	 * 
+	 * Questo metodo si occupa di ricercare un paziente tramite codice fiscale.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * 
+	 * @return paziente oggetto di tipo <strong>Paziente</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null.
 	 */
 	public static Paziente getPazienteByCF(String codiceFiscale) {
 		
@@ -105,9 +123,13 @@ public class PazienteModel {
 	
 	/**
 	 * 
-	 * Query che ricerca l'id di un paziente per codice fiscale
-	 * @param codiceFiscale del paziente da ricercare
-	 * @return id del paziente se trovato, altrimenti null
+	 * Questo metodo si occupa di ricercare l'ID di un paziente tramite codice fiscale.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
+	 * 
+	 * @return pazienteID oggetto di tipo <strong>String</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null.
 	 */
 	public static String getIdPazienteByCF(String codiceFiscale)
 	{
@@ -120,14 +142,16 @@ public class PazienteModel {
 			String pazienteID=CriptazioneUtility.criptaConMD5(datiPaziente.getObjectId("_id").toString());
 			return pazienteID;
 		}
-		
 		return null;
-		
 	}
 	
 	/**
-	 * Query che rimuove un paziente dal database
-	 * @param daRimuovere codice fiscale del paziente da rimuovere
+	 * 
+	 * Questo metodo si occupa di rimuovere un paziente dal database.
+	 * 
+	 * @param daRimuovere oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente da rimuovere.
+	 * 
+	 * @precondition daRimuovere != null.
 	 */
 	public static void removePaziente(String daRimuovere) {
 		
@@ -138,8 +162,10 @@ public class PazienteModel {
 	}
 	
 	/**
-	 * Metodo che restituisce tutti i pazienti che sono presenti nel database
-	 * @return un arraylist di pazienti
+	 * 
+	 * Questo metodo si occupa di ricercare e restituire tutti i pazienti presenti nel database.
+	 * 
+	 * @return listaPazienti lista di pazienti di tipo <strong>Paziente</strong>, altrimenti null.
 	 */
 	public static ArrayList<Paziente> getAllPazienti() {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
@@ -152,9 +178,13 @@ public class PazienteModel {
 	}
 	
 	/**
-	 * Query che modifica la password del paziente
-	 * @param daAggiornare codice fiscale del paziente
-	 * @param password aggiornata
+	 * 
+	 * Questo medico si occupa di modificare la password di un paziente.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente al quale bisogna aggiornare la password.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta il nuovo valore della password.
+	 * 
+	 * @precondition codiceFiscale != null && password != null.
 	 */
 	public static void changePassword(String daAggiornare,String password) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
@@ -185,8 +215,12 @@ public class PazienteModel {
 //	} 
 	
 	/**
-	 * Query che aggiorna il paziente
-	 * @param daAggiornare paziente
+	 * 
+	 * Questo metodo si occupa di modificare i dati di un paziente.
+	 * 
+	 * @param daAggiornare oggetto di tipo <strong>Paziente</strong> che include i nuovi dati del paziente.
+	 * 
+	 * @precondition daAggiornare != null.
 	 */
 	public static void updatePaziente(Paziente daAggiornare) {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
@@ -210,5 +244,5 @@ public class PazienteModel {
         update.append("$set", nuovoPaziente);
         pazienti.updateOne(query, update);
 		
-		}
+	}
 }

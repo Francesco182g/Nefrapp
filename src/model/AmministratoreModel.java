@@ -16,12 +16,17 @@ import utility.CreaBeanUtility;
  * Gestisce le query riguardanti l'amministratore
  */
 public class AmministratoreModel {
+	
 	/**
 	 * 
-	 * Metodo che effettua il login per l'amministratore
-	 * @param codiceFiscale codice fiscale dell'amministratore
-	 * @param password password dell'amministratore
-	 * @return dati dell'amministratore se le credenziali sono corrette, null altrimenti
+	 * Questo metodo si occupa di verificare se i dati immessi dall'amministratore per effettuare il login sono presenti nel database.
+	 *
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale dell'amministratore.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta la password dell'amministratore.
+	 * 
+	 * @return un oggetto di tipo <strong>Amministratore</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null && password != null .
 	 */
 	public static Amministratore getAmministratoreByCFPassword(String codiceFiscale, String password) {
 		MongoCollection<Document> amministratori = DriverConnection.getConnection().getCollection("Amministratore");
@@ -41,21 +46,30 @@ public class AmministratoreModel {
 	}
 	
 	/**
-	 * Query che ricerca la password dell'amministratore
-	 * @param codiceFiscale dell'amministratore
-	 * @return password dell'amministratore
+	 * 
+	 * Questo metodo si occupa di ottenre la password di un amministratore tramite codice fiscale .
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale dell'amministratore.
+	 * 
+	 * @return password oggetto di tipo <strong>String</strong> che rappresenta la password dell'amministratore.
+	 * 
+	 * @precondition codiceFiscale != null.
 	 */
 	public static String getPassword(String codiceFiscale) {
 		MongoCollection<Document> amministratori = DriverConnection.getConnection().getCollection("Amministratore");
 		Document datiAmministratore = amministratori.find(eq("CodiceFiscale", codiceFiscale)).first();
-		String password=datiAmministratore.getString("Password");
+		String password = datiAmministratore.getString("Password");
 		return password;
 	}
 	
 	/**
-	 * Query che aggiorna l'amministratore
-	 * @param daAggiornare amministratore
-	 * @param password aggiornata
+	 * 
+	 * Questo metodo si occupa di aggiornare i dati dell'amministratore.
+	 * 
+	 * @param daAggiornare oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale dell'amministratore.
+	 * @param password oggetto di tipo <strong>String</strong> che rappresenta la password dell'amministratore.
+	 * 
+	 * @precondition daAggiornare != null && password != null.
 	 */
 	public static void updateAmministratore(String daAggiornare,String password) {
 		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
@@ -66,9 +80,14 @@ public class AmministratoreModel {
 	}
 	
 	/**
-	 * Query che ricerca l'amministratore per codice fiscale
-	 * @param codiceFiscale dell'amministratore
-	 * @return amministratore se trovato, altrimenti null
+	 * 
+	 * Questo metodo si occupa di ricercare un amministratore tramite codice fiscale.
+	 * 
+	 * @param codiceFiscale oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale dell'amministratore.
+	 * 
+	 * @return amministratore oggetto di tipo <strong>Amministratore</strong>, altrimenti null.
+	 * 
+	 * @precondition codiceFiscale != null.
 	 */
 	public static Amministratore getAmministratoreByCF(String codiceFiscale) {
 		

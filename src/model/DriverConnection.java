@@ -6,10 +6,9 @@ import com.mongodb.client.MongoDatabase;
 
 /**
  * 
- * @author Antonio
- * 
+ * @author Antonio Donnarumma
+ * Questa classe si occupa di gestire la connessione con il database.
  */
-
 public class DriverConnection {
 	private static MongoClientURI uri = new MongoClientURI("mongodb+srv://teamNefrapp:nefrapp01@cluster0-gkgb4.azure.mongodb.net/test");
 	
@@ -20,10 +19,10 @@ public class DriverConnection {
 	private static MongoDatabase database = mongoClient.getDatabase("NefrApp");
 	
 	/**
-	 * @return restituisce la connessione al database Mongo
+	 * Questo metodo si occupa di restituire la connessione al database.
+	 * @return oggetto di tipo <strong>MongoDatabase</string> che rappresenta la connessione al database
 	 */
-	public static  MongoDatabase getConnection() {
+	public static MongoDatabase getConnection() {
 		return database;
 	}
-	
 }
