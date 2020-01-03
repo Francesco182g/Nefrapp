@@ -1,7 +1,6 @@
 package control;
 
-import java.io.File;
-import java.io.FileInputStream;
+import org.apache.tomcat.util.codec.binary.Base64;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -15,15 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-
 import bean.Annuncio;
 import bean.Medico;
-import bean.Messaggio;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
-import model.MessaggioModel;
-import model.PazienteModel;
 import model.UtenteModel;
 import utility.CriptazioneUtility;
 
@@ -126,6 +121,11 @@ public class GestioneAnnunci extends GestioneComunicazione {
 	}
 	
 	
+	/**Metodo che permette di scaricare un allegato dalla pagina di visualizzazione degli annunci
+	 * 
+	 * @param request HttpRequest da cui prelevare l'id dell'annuncio 
+	 * @param response HttpResponse su cui scrivere l'allegato da rendere scaricabile
+	 */
 	private void generaDownload(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String fileType = "*";
@@ -138,14 +138,14 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			annuncio = AnnuncioModel.getAnnuncioById(id);
 		}
 		fileName = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato(), false);
-		file = CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), false);
+		file = CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), true);
 		
 		response.setContentType(fileType);
 		response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 
 		try {
 	        out = response.getOutputStream();
-	        out.write(file.getBytes("UTF-8"));
+	        out.write((Base64.decodeBase64(file)));
 	        out.flush();
 	        out.close();
 		} catch (IOException e) {
@@ -167,10 +167,10 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Annuncio annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
 			//solo se l'utente è un paziente, la visualizzazione viene settata a false
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
-				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
+				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, utente.getCodiceFiscale(), true);
 				
 				if (annuncio != null) {
-					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, true);
+					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, utente.getCodiceFiscale(), true);
 					annuncio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), true));
 					String nomeAllegato = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato(), false);
 					annuncio.setNomeAllegato(nomeAllegato);
@@ -244,11 +244,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				if (a.getNomeAllegato() != "" && a.getNomeAllegato() != null) {
 					a.setNomeAllegato(CriptazioneUtility.decodificaStringa(a.getNomeAllegato(), false));
 				}
-		
-//				blocco usato per testing		
-//				if (a.getCorpoAllegato()!="" && a.getCorpoAllegato()!=null) {
-//					a.setCorpoAllegato(CriptazioneUtility.decodificaStringa(a.getCorpoAllegato(), true)); 
-//				}
 			}
 			
 			ArrayList<String> cache = new ArrayList<>();
