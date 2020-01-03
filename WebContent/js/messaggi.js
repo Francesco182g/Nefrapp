@@ -19,6 +19,20 @@ window.onbeforeunload = function() {
 	return null;
 };
 
+$( "#inviaMessaggio" ).click(function() {
+		var form = document.getElementById("formMessaggi")
+	
+		if (form.oggetto.value=="" || form.testo.value=="" || 
+			(form.selectPaziente == undefined && form.selectMedico.value == "") ||
+			(form.selectPaziente.value == "" && form.selectMedico == undefined)) {	
+			
+			return;
+		} else {
+			window.onbeforeunload = null;
+			form.submit();
+		}
+	});
+
 
 function creaDownload(allegato, nomeAllegato) {
 	const byteCharacters = atob(allegato);
@@ -41,14 +55,14 @@ function creaDownload(allegato, nomeAllegato) {
 	    
 //seleziona il destinatario del messaggio in caso si arrivi alla pagina di invio messaggi dal tasto Rispondi 	
 function selezionaDestinatario (valore) {
- 		if (valore != null && valore!= "") {
-    	var selMed = document.getElementById("selectMedico");
-    	if (selMed != null && selMed != undefined)
-    		selMed.value = valore;
-    	
-    	var selPaz = document.getElementById("selectPaziente");
-    	if (selPaz != null && selPaz != undefined)
-    		selPaz.value = valore;
+	if (valore != null && valore!= "") {
+	var selMed = document.getElementById("selectMedico");
+	if (selMed != null && selMed != undefined)
+		selMed.value = valore;
+	
+	var selPaz = document.getElementById("selectPaziente");
+	if (selPaz != null && selPaz != undefined)
+		selPaz.value = valore;
 
 	}
 }

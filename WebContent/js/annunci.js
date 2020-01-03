@@ -12,19 +12,19 @@ window.onbeforeunload = function() {
 	return null;
 };
 
-//seleziona il destinatario dell'annuncio in caso si arrivi alla pagina di invio messaggi dal tasto Rispondi 	
-function selezionaDestinatario (valore) {
-	if (valore != null && valore!= "") {
-    	var selMed = document.getElementById("selectMedico");
-    	if (selMed != null && selMed != undefined)
-    		selMed.value = valore;
-    	
-    	var selPaz = document.getElementById("selectPaziente");
-    	if (selPaz != null && selPaz != undefined)
-    		selPaz.value = valore;
-
+$( "#inviaAnnuncio" ).click(function() {
+	var form = document.getElementById("formAnnunci")
+	
+	if (form.oggetto.value=="" || form.testo.value=="" || 
+		form.selectPaziente.value == undefined ||
+		form.selectPaziente.value == "") {	
+		
+		return;
+	} else {
+		window.onbeforeunload = null;
+		form.submit();
 	}
-}
+});
 
 function creaDownload(allegato, nomeAllegato) {
 	const byteCharacters = atob(allegato);

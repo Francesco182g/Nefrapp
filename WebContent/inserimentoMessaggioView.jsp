@@ -101,9 +101,9 @@
     					<input id="messaggio" name="file" type="file" multiple>
 						</div>
 						<div class="form-group row mt-3">
-							<button class="btn btn-primary btn-user" type="submit"
-								id="inviaMessaggio" style="float: right">Invia
-								Messaggio</button>
+							<button class="btn btn-primary btn-user" type="button"
+								id="inviaMessaggio" style="float: right">
+								Invia Messaggio</button>
 						</div>
 
 						</form>
