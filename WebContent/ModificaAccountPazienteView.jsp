@@ -22,9 +22,9 @@
    	 	<%String azione=""; %>
    	 	<c:if test="${isAmministratore}">
    	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Paziente";%>
-   	 		<c:set var = "utente" value="${paziente }"></c:set>
    	 	</c:if>
    	 	<c:if test="${isPaziente}">
+   	 		<c:set var = "utente" value="${paziente}"></c:set>
    	 		<c:set var ="azione" value="./GestionePaziente?operazione=modificaAccount"></c:set>
    	 		<c:set var = "nome" value="${utente.nome}"></c:set>
             <c:set var = "cognome" value="${utente.cognome}"></c:set>
@@ -64,9 +64,9 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4"><%=intestazione %></h1>
 							              </div>
-							              <form class="user" method="post"  action="${azione}">
+							              <form class="user" method="post" action=<%=azione %>>
 											
-											<input type="hidden" id="operazione" value="modifica">
+											<input type="hidden" name="operazione" value="modifica">
 											<input type="hidden" name="tipoUtente" value="paziente">
 											<input type="hidden" id="notifica" value="${requestScope.notifica}">
 											<div class="form-group row col-lg-12">
@@ -108,6 +108,20 @@
 							                    	</div>
 							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
                     								<input type="radio" name="sesso" value="F" checked="checked"> Femmina
+                    								</div>
+                    								<br>	
+                  							</div>
+                  							</c:if>
+                  							 <c:if test="${empty sesso}">
+											<div class="form-group row">
+													<div class="col-lg-4 col-mb-12 col-sm-4">
+							                    	Sesso:
+							                    	</div>
+							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
+							                    	<input type="radio"  id="M" name="sesso" value="M"> Maschio
+							                    	</div>
+							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
+                    								<input type="radio" id="F" name="sesso" value="F" checked="checked"> Femmina
                     								</div>
                     								<br>	
                   							</div>
