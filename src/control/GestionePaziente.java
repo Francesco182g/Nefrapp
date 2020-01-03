@@ -39,8 +39,7 @@ public class GestionePaziente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta!");
@@ -135,7 +134,7 @@ public class GestionePaziente extends HttpServlet {
 		String confermaPsw = request.getParameter("confermaPsw");
 
 		if (validazione(codiceFiscale, nome, cognome, sesso, email, residenza, luogoDiNascita, dataDiNascita, password, confermaPsw)) {
-
+			
 			Paziente paziente = (Paziente) session.getAttribute("utente");
 			
 			if (paziente != null) {
@@ -154,7 +153,6 @@ public class GestionePaziente extends HttpServlet {
 				
 				session.setAttribute("paziente", paziente);
 				
-				System.out.println(paziente.toString());
 				
 				
 			} else {
@@ -210,8 +208,10 @@ public class GestionePaziente extends HttpServlet {
 			valido = false;
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
 			valido = false;
-		if (!Pattern.matches(expEmail, email))
-			valido = false;
+		if (email.length()!=0) {
+			if(!Pattern.matches(expEmail, email))
+				valido = false;
+			}
 		if (!residenza.equals(""))
 			if (!Pattern.matches(expResidenza, residenza))
 				valido = false;

@@ -31,7 +31,7 @@
 			<c:set var= "sesso" value="${utente.sesso}"></c:set>
 			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
 			<c:set var= "email" value="${utente.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var= "dataDiNascita" value="${utente.getDataFormattata()}"></c:set>
             <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
             <c:set var= "residenza" value="${utente.residenza}"></c:set>
    	 	</c:if>
@@ -71,19 +71,19 @@
 											<input type="hidden" id="notifica" value="${requestScope.notifica}">
 											<div class="form-group row col-lg-12">
 							                Codice Fiscale:
-							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" value="${utente.codiceFiscale}" readonly>
+							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" value="${codiceFiscale}" readonly>
 							                </div>
 							                <div class="form-group row">
 							                  <div class="col-sm-6 mb-3 mb-sm-0">
 							                  Nome:
-							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" value="${utente.nome}" required="required" min="2" max="30" maxlength="30">
+							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" value="${nome}" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                  <div class="col-sm-6">
 							                  Cognome:
-							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" value="${utente.cognome}" required="required" min="2" max="30" maxlength="30">
+							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" value="${cognome}" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                </div>
-        							        <c:if test="${utente.sesso eq 'M' }">
+        							        <c:if test="${sesso eq 'M' }">
 											<div class="form-group row">
 													<div class="col-lg-4 col-mb-12 col-sm-4">
 							                    	Sesso:
@@ -98,7 +98,7 @@
                   							</div>
                   							</c:if>
                   							
-                  							 <c:if test="${utente.sesso eq 'F' }">
+                  							 <c:if test="${sesso eq 'F' }">
 											<div class="form-group row">
 													<div class="col-lg-4 col-mb-12 col-sm-4">
 							                    	Sesso:
@@ -115,19 +115,19 @@
                   							
                   							<div class="form-group row col-lg-12">
                   							Data di nascita:
-							                  <input type="text" class="form-control form-control-user" id="dataDiNascita" name="dataDiNascita"  value="${utente.dataDiNascita}"  autocomplete="off">
+							                  <input type="text" class="form-control form-control-user" id="dataDiNascita" name="dataDiNascita"  value="${dataDiNascita}"  autocomplete="off">
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Luogo di Nascita:
-							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita"  value="${utente.luogoDiNascita}" >
+							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita"  value="${luogoDiNascita}" >
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Residenza:
-							                  <input type="text" class="form-control form-control-user" name="residenza" id="residenza"  value="${utente.residenza}" min="5" max="50" maxlength="50" >
+							                  <input type="text" class="form-control form-control-user" name="residenza" id="residenza"  value="${residenza}" min="5" max="50" maxlength="50" >
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
-							                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email"  value="${utente.email}"  min="6" max="50" maxlength="50">
+							                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email"  value="${email}"  min="6" max="50" maxlength="50">
 							                </div>
 							                <div class="form-group row col-lg-12">
 							                Password:
