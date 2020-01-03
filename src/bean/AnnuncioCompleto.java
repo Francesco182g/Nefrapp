@@ -17,6 +17,7 @@ public class AnnuncioCompleto implements Annuncio{
 	private String corpoAllegato; // può essere una presentazione pp o un video, tenere traccia tramite path
 	private String nomeAllegato;
 	private ZonedDateTime data;
+	private Boolean visualizzato;
 	private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>(); // coppia di CF dei destinatari e il campo visualizzato.
 
 	public AnnuncioCompleto() {}
@@ -95,6 +96,14 @@ public class AnnuncioCompleto implements Annuncio{
 
 	public String getIdAnnuncio() {
 		return this.idAnnuncio;
+	}
+	
+	public void setVisualizzato(Boolean visualizzato) {
+		this.visualizzato = visualizzato;
+	}
+
+	public Boolean getVisualizzato() {
+		return this.visualizzato;
 	}
 
 	public void setPazientiView(HashMap<String, Boolean> pazientiView) {

@@ -1,6 +1,9 @@
 package control;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -95,6 +98,10 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				
 			}
 			
+			else if (operazione.equals("generaDownload")) {
+				generaDownload(request, response);
+			}
+			
 			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
 				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
@@ -112,11 +119,37 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		
 		return;
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 		return;
 	}
+	
+	private void generaDownload(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("generaDownload");
+		String id = request.getParameter("id");
+		String fileType = "*";
+		String fileName = "";
+		OutputStream out;
+		Annuncio annuncio = null;
+		
+		if (id != null) {
+			annuncio = AnnuncioModel.getAnnuncioById(id);
+		}
+		fileName = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato(), false);
+		
+		response.setContentType(fileType);
+		response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+
+		try {
+	        out = response.getOutputStream();
+	        out.write(CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), true).getBytes("UTF-8"));
+	        out.flush();
+		} catch (IOException e) {
+			System.out.println("generaDownload: errore nella generazione del file");
+		} 
+	}
+	
 	
 	/**
 	 * Metodo che prende l'annuncio e lo salva nella richiesta cos� da poter essere visualizzato

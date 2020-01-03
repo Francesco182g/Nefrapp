@@ -29,23 +29,27 @@
 
 
 						<!-- Inizio iterazione dei risultati ottenuti dalla servlet) -->
-
-						<c:forEach items="${annunci}" var="item">
+						<c:set var="count" value="0" scope="page" />
+						<c:forEach items="${annunci}" var="item" end="50">
 							<c:set var="dottore" value="${requestScope[item.medico]}" />
 							<div class="card shadow mb-4">
 								<h5 class="card-header text-center">
 									${item.titolo}</h5>
 								<div class="card-body">
 									<p class="card-text">${item.testo}</p>
-									<c:if test="${item.corpoAllegato!=null}">
-									<p><i class="fas fa-download"></i> &emsp;
-									<a id="download" download="" href="">${item.nomeAllegato}</a><p>
+									<c:if test='${item.nomeAllegato!=null && item.nomeAllegato!= ""}'>
+									<form id="downloadForm${count}" method="POST" action="./annuncio">
+										<input type="hidden" name="operazione" id="operazione" value="generaDownload"/>
+										<input type="hidden" name="id" id="id" value="${item.idAnnuncio}"/>
+										<p><i class="fas fa-download"></i> &emsp;
+										<button type="submit" form="downloadForm${count}" class="download btn btn-link">${item.nomeAllegato}</button><p>
+									</form>
 									</c:if>
 									<p class="card-text float-right">Dott. ${dottore}<br>${item.dataFormattata},
 										${item.oraFormattata}</p>
 								</div>
 							</div>
-
+							<c:set var="count" value="${count + 1}" scope="page"/>
 						</c:forEach>
 
 				</div>
@@ -67,4 +71,5 @@
 
 </body>
 <%@include file="./includes/scripts.jsp"%>
+<script src="./js/annunci.js"></script>
 </html>

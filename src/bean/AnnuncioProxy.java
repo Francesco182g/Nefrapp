@@ -15,16 +15,20 @@ public class AnnuncioProxy implements Annuncio {
 	private String idAnnuncio;
 	private String medico; // CF del medico che ha pubblicato l'annuncio
 	private String titolo;
+	private String testo;
+	private String nomeAllegato;
 	private ZonedDateTime data;
 	private Boolean visualizzato;
 	private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>();
 	
 	public AnnuncioProxy() {}
 
-	public AnnuncioProxy(String medico, String titolo, ZonedDateTime data, HashMap<String, Boolean> pazientiView) {
+	public AnnuncioProxy(String medico, String titolo, String testo, String nomeAllegato, ZonedDateTime data, HashMap<String, Boolean> pazientiView) {
 		this.medico = medico;
 		this.titolo = titolo;
+		this.testo = testo;
 		this.data = data;
+		this.nomeAllegato = nomeAllegato;
 		this.visualizzato = false;
 		this.pazientiView.putAll(pazientiView);
 	}
@@ -62,19 +66,11 @@ public class AnnuncioProxy implements Annuncio {
 	}
 
 	public String getTesto() {
-		if (buffer == null) {
-			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
-		}
-		
-		return buffer.getTesto();	
+		return this.testo;
 	}
 
 	public void setTesto(String testo) {
-		if (buffer == null) {
-			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
-		}
-		
-		buffer.setTesto(testo);
+		this.testo = testo;
 	}
 
 	public String getCorpoAllegato() {
@@ -94,19 +90,11 @@ public class AnnuncioProxy implements Annuncio {
 	}
 
 	public String getNomeAllegato() {
-		if (buffer == null) {
-			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
-		}
-		
-		return buffer.getNomeAllegato();	
+		return nomeAllegato;
 	}
 
 	public void setNomeAllegato(String nomeAllegato) {
-		if (buffer == null) {
-			buffer =AnnuncioModel.getAnnuncioById(idAnnuncio);
-		}
-		
-		buffer.setNomeAllegato(nomeAllegato);	
+		this.nomeAllegato = nomeAllegato;
 	}
 
 	public String getOraFormattata() {

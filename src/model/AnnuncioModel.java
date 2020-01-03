@@ -183,10 +183,10 @@ public class AnnuncioModel {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Annuncio> annunci = new ArrayList<>();
 		MongoCursor<Document> documenti = annuncioDB.find(eq("MedicoCodiceFiscale", codiceFiscaleMedico))
-				.sort(new BasicDBObject("Data", -1)).iterator();
+				.sort(new BasicDBObject("Data", -1)).projection(Projections.exclude("Allegato.CorpoAllegato")).iterator();
 
 		while (documenti.hasNext()) {
-			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
+			annunci.add(CreaBeanUtility.daDocumentAAnnuncioProxy(documenti.next()));
 		}
 		
 		documenti.close();
@@ -207,10 +207,10 @@ public class AnnuncioModel {
 		MongoCollection<Document> annuncioDB = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Annuncio> annunci = new ArrayList<>();
 		MongoCursor<Document> documenti = annuncioDB.find(eq("PazientiView.CFDestinatario", codiceFiscalePaziente)).
-				sort(new BasicDBObject("Data", -1)).iterator();
+				sort(new BasicDBObject("Data", -1)).projection(Projections.exclude("Allegato.CorpoAllegato")).iterator();
 		
 		while (documenti.hasNext()) {
-			annunci.add(CreaBeanUtility.daDocumentAAnnuncio(documenti.next()));
+			annunci.add(CreaBeanUtility.daDocumentAAnnuncioProxy(documenti.next()));
 		}
 		
 		documenti.close();

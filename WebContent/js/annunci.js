@@ -26,6 +26,7 @@ $( "#inviaAnnuncio" ).click(function() {
 	}
 });
 
+
 function creaDownload(allegato, nomeAllegato) {
 	const byteCharacters = atob(allegato);
 	

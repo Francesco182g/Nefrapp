@@ -12,6 +12,7 @@ import org.bson.Document;
 import bean.Amministratore;
 import bean.Annuncio;
 import bean.AnnuncioCompleto;
+import bean.AnnuncioProxy;
 import bean.Medico;
 import bean.Messaggio;
 import bean.MessaggioCompleto;
@@ -184,6 +185,18 @@ public class CreaBeanUtility {
 		annuncio.setData(data);
 		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
 		
+		//caricamento dell'hashmap dall'array di documenti nel database
+		HashMap <String, Boolean> pazientiView = new HashMap <String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>)datiAnnuncio.get("DestinatariView");
+		
+		if (campo != null) {
+			for (Document d : campo) {
+				pazientiView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
+			}
+		}
+		
+		annuncio.setPazientiView(pazientiView);
+		
 		return annuncio;
 	}
 
@@ -216,5 +229,32 @@ public class CreaBeanUtility {
 		}
 		
 		return messaggio;
+	}
+
+	public static Annuncio daDocumentAAnnuncioProxy(Document datiAnnuncio) {
+		Annuncio annuncio = new AnnuncioProxy();
+		annuncio.setMedico(datiAnnuncio.getString("MedicoCodiceFiscale"));
+		Document allegato = (Document)datiAnnuncio.get("Allegato");
+		annuncio.setNomeAllegato(allegato.getString("NomeAllegato"));
+		annuncio.setTitolo(datiAnnuncio.getString("Titolo"));
+		annuncio.setTesto(datiAnnuncio.getString("Testo"));
+		Date temp = datiAnnuncio.getDate("Data");
+		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
+		annuncio.setData(data);
+		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
+		
+		//caricamento dell'hashmap dall'array di documenti nel database
+		HashMap <String, Boolean> pazientiView = new HashMap <String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>)datiAnnuncio.get("DestinatariView");
+		
+		if (campo != null) {
+			for (Document d : campo) {
+				pazientiView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
+			}
+		}
+		
+		annuncio.setPazientiView(pazientiView);
+		
+		return annuncio;
 	}
 }
