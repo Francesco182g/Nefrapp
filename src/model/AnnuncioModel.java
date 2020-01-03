@@ -106,7 +106,7 @@ public class AnnuncioModel {
 				.append("Testo", daAggiungere.getTesto())
 				.append("Allegato", allegato)
 				.append("Data", daAggiungere.getData().toInstant())
-				.append("Visualizzato", false).append("PazientiView", pazientiView);
+				.append("PazientiView", pazientiView);
 		annuncioDB.insertOne(doc);
 		
 		ObjectId idObj = (ObjectId)doc.get("_id");
@@ -250,10 +250,13 @@ public class AnnuncioModel {
 	 * 
 	 * @precondition idAnnuncio != null.
 	 */
-	public static void setVisualizzatoAnnuncio(String idAnnuncio, Boolean visualizzato) {
+	public static void setVisualizzatoAnnuncio(String idAnnuncio, String CFPaziente, Boolean visualizzato) {
 		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
-		annunciDB.updateOne( new BasicDBObject("_id", new ObjectId(idAnnuncio)),
-			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
+		Document updateQuery = new Document();
+		Document query = new Document(new BasicDBObject("_id", new ObjectId(idAnnuncio)))
+				.append("DestinatariView.CFDestinatario", CFPaziente);
+		updateQuery.put("DestinatariView.$.Visualizzazione", visualizzato);
+		annunciDB.updateOne(query, new Document("$set", updateQuery));
 	}
 	
 	/*
