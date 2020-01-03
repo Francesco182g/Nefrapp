@@ -3,7 +3,7 @@ package control;
 import java.io.IOException;
 
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -51,6 +51,8 @@ public class GestioneAmministratore extends HttpServlet {
 					}
 					else if(operazione.equals("modifica")) {
 						modificaDatiPersonali(request, response, session);
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
+						requestDispatcher.forward(request,response);	
 					}
 					else if(operazione.equals("caricaMedPaz")) {
 						Utente utente = (Utente) session.getAttribute("utente");
@@ -113,8 +115,7 @@ public class GestioneAmministratore extends HttpServlet {
 	}
 	
 	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-		String codiceFiscale = request.getParameter("codiceFiscale");
-				
+		String codiceFiscale = request.getParameter("codiceFiscale");		
 		if(request.getParameter("tipoUtente").equals("amministratore")) {
 			Amministratore amministratoreLoggato= (Amministratore) session.getAttribute("utente");
 			if(amministratoreLoggato!=null) {
@@ -148,7 +149,7 @@ public class GestioneAmministratore extends HttpServlet {
 			String email = request.getParameter("email");
 			String residenza=request.getParameter("residenza");
 			String password = request.getParameter("password");
-			String confermaPassword=request.getParameter("confermaPassword");
+			String confermaPassword=request.getParameter("confermaPsw");
 		
 			
 			if(request.getParameter("tipoUtente").equals("paziente")) {
@@ -156,7 +157,7 @@ public class GestioneAmministratore extends HttpServlet {
 				if(validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita)) {
 					paziente.setCognome(cognome);
 					paziente.setNome(nome);
-					paziente.setDataDiNascita(LocalDate.parse(dataDiNascita));
+					paziente.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 					paziente.setEmail(email);
 					paziente.setResidenza(residenza);
 					paziente.setLuogoDiNascita(luogoDiNascita);
@@ -171,7 +172,7 @@ public class GestioneAmministratore extends HttpServlet {
 					}
 					PazienteModel.updatePaziente(paziente);
 				} else {
-					request.setAttribute("notifica","Uno o più parametri del paziente non sono validi.");
+					request.setAttribute("notifica","Uno o piÃ¹ parametri del paziente non sono validi.");
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountPazienteView.jsp");
 					requestDispatcher.forward(request,response);
 				}
@@ -198,7 +199,7 @@ public class GestioneAmministratore extends HttpServlet {
 						}
 						MedicoModel.updateMedico(medico);
 					} else {
-						request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
+						request.setAttribute("notifica","Uno o piÃ¹ parametri del medico non sono validi.");
 						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
 						requestDispatcher.forward(request,response);
 					}
@@ -213,30 +214,55 @@ public class GestioneAmministratore extends HttpServlet {
 		String expCognome = "^[A-Z][a-zA-Z ']*$";
 		String expSesso = "^[MF]$";
 		String expEmail = "^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
-		String expResidenza= "^[A-Z][a-zA-Z ']*$";
+		String expResidenza= "^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$";
 		String expLuogoDiNascita= "^[A-Z][a-zA-Z ']*$";
 		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 		
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
+		{
 			valido = false;
+			System.out.println("codiceFiscale");
+		}
+			
 		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30)
+		{
 			valido = false;
+			System.out.println("nome");
+		}
 		if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
+		{
 			valido = false;
+			System.out.println("cognome");
+		}
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
+		{
 			valido = false;
+			System.out.println("sesso");
+		}
 		if(!email.equals(""))
 			if (!Pattern.matches(expEmail, email))
+			{
 				valido = false;
+				System.out.println("email");
+			}
 		if(!residenza.equals(""))
 			if(!Pattern.matches(expResidenza, residenza))
-				valido=false;
+			{
+				valido = false;
+				System.out.println("residenza");
+			}
 		if(!luogoDiNascita.equals(""))
 			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
-				valido=false;
+			{
+				valido = false;
+				System.out.println("luogo di nascita");
+			}
 		if(!dataDiNascita.equals(""))
 			if(!Pattern.matches(expDataDiNascita, dataDiNascita))
-				valido=false;
+			{
+				valido = false;
+				System.out.println("data di nascita");
+			}
 		return valido;
 	}
 	

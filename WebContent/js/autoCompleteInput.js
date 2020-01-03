@@ -42,6 +42,18 @@
 		$("#luogoDiNascita").val(medico.luogoDiNascita);
 		$("#residenza").val(medico.residenza);
 		$("#email").val(medico.email);
+		if (medico.sesso == "M")
+		{
+			$("#M").prop("checked", true);
+			$("#F").prop("checked", false);
+		}
+	else
+		{
+			$("#M").prop("checked", false);
+			$("#F").prop("checked", true);
+		}
+			
+			
 		
   }
   function caricaPaziente(){
@@ -61,7 +73,16 @@
 		console.log(paziente.residenza)
 		$("#residenza").val(paziente.residenza);
 		$("#email").val(paziente.email);
-		
+		if (paziente.sesso == "M")
+		{
+			$("#M").prop("checked", true);
+			$("#F").prop("checked", false);
+		}
+	else
+		{
+			$("#M").prop("checked", false);
+			$("#F").prop("checked", true);
+		}
 }
     
 })(jQuery); // End of use strict

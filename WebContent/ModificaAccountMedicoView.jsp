@@ -80,10 +80,10 @@
 							                    	Sesso:
 							                    	</div>
 							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
-							                    	<input type="radio"  name="sesso" value="M" checked="checked"> Maschio
+							                    	<input type="radio" id="M" name="sesso" value="M" checked="checked"> Maschio
 							                    	</div>
 							                    	<div class="col-lg-4 col-mb-12 col-sm-12">
-                    								<input type="radio" name="sesso" value="F"> Femmina
+                    								<input type="radio" id="F" name="sesso" value="F"> Femmina
                     								</div>
                     								<br>	
                   							</div>

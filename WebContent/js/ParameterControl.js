@@ -21,30 +21,37 @@
 		  });
 	  if(button1.length>0)
 		  {
+		  console.log("tasto premuto1")
 		  	registraMedicoValidator();
 		  }
 	  else if(button2.length>0 || button3.length>0)
 	  	{
+		  console.log("tasto premuto2")
 		  loginValidator();
 	  	}
 	  else if(button4.length>0)
 		  {
+		  console.log("tasto premuto3")
 		  	resetPasswordValidator(0)
 		  }
 	  else if(button5.length>0)
 	  {
+		  console.log("tasto premuto4")
 		  resetPasswordValidator(1)
 	  }
 	  else if(button6.length>0)
 		  {
+		  console.log("tasto premuto5")
 		  	inviaMessaggioValidator()
 		  }
 	  else if(button7.length>0)
 	  {
+		  console.log("tasto premuto6")
 	  	inviaAnnuncioValidator()
 	  }
 	  else if(button8.length>0)
 	  {
+		  console.log("tasto premuto7")
 		  registrazioneValidator();
 	  }
 	  
@@ -117,11 +124,11 @@
 		var registrato = $("input[name='registrato']:checked").val()
 		var medico = $("#medico").val();
 		var confermaPsw = $("#confermaPsw").val();
-		
+	
 		
 		if (medico == undefined)
 			{
-			if (registrato == "No"){
+			if (registrato == "No" ||registrato==undefined){
 				if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
 					valido=[false,"formato codiceFiscale non valido"];
 				else if (!expNome.test(nome)||nome.length<2||nome.length>30)
@@ -130,25 +137,28 @@
 					valido=[false,"formato cognome non valido"];
 				else if (!expPassword.test(password)||password.length<6||password.length>20)
 					valido=[false,"formato password non valido"];
-				else if (!expSesso.test(sesso)||sesso.length!=1)
-					valido=[false,"formato sesso non valido"];
+				else if (!expDataDiNascita.test(dataDiNascita))
+					valido=[false,"formato data di nascita non valido"];
+			else if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
+					valido=[false,"formato luogo di nascita non valido"];
+			else if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
+					valido=[false,"formato residenza non valido"];
+		
+			else 	if(!expSesso.test(sesso)||sesso.length!=1)
+							valido=[false,"formato sesso non valido"];
+				
+						else if (confermaPsw != undefined)
+						{
+							if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
+								valido=[false,"formato conferma password non valido"];
+						}
+						
 				else if (email.length != 0)
 					{
 						if (!expEmail.test(email))
 						valido=[false,"formato email non valido"];
 					}
-				else if (confermaPsw != undefined)
-				{
-					if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-						valido=[false,"formato conferma password non valido"];
-				}
-				else if (!expDataDiNascita.test(dataDiNascita))
-						valido=[false,"formato data di nascita non valido"];
-				else if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
-						valido=[false,"formato luogo di nascita non valido"];
-				else if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
-						valido=[false,"formato residenza non valido"];
-			
+				
 				}	
 				else
 					{
