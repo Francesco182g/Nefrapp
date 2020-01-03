@@ -100,7 +100,7 @@
 		var expNome=RegExp("^[A-Z][a-zA-Z ']*$");
 		var expCognome=RegExp("^[A-Z][a-zA-Z ']*$");
 		var expSesso=RegExp("^[MF]$");
-		var expDataDiNascita=RegExp("^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$");
+		var expDataDiNascita=RegExp("^(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}$");
 		var expLuogoDiNascita=RegExp("^[A-Z][a-zA-Z ']*$");
 		var expResidenza=RegExp("^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$");
 		var expEmail=RegExp("^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$");
