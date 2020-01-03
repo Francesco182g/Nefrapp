@@ -31,7 +31,7 @@
 			<c:set var = "sesso" value="${utente.sesso}"></c:set>
 			<c:set var = "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
 			<c:set var = "email" value="${utente.email}"></c:set>
-            <c:set var = "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var = "dataDiNascita" value="${utente.getDataFormattata()}"></c:set>
             <c:set var = "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
             <c:set var = "residenza" value="${utente.residenza}"></c:set>
 			<c:set var ="dottori" value='${requestScope["mediciCuranti"]}' />
@@ -44,7 +44,7 @@
     		<c:set var = "sesso" value="${utente.sesso}"></c:set>
 			<c:set var = "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
 			<c:set var = "email" value="${utente.email}"></c:set>
-            <c:set var = "dataDiNascita" value="${utente.dataDiNascita}"></c:set>
+            <c:set var = "dataDiNascita" value="${utente.getDataFormattata()}"></c:set>
             <c:set var = "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
             <c:set var = "residenza" value="${utente.residenza}"></c:set>
             <c:set var ="pazienti" value='${requestScope["pazientiSeguiti"]}' />
