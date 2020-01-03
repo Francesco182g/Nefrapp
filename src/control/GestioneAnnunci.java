@@ -125,11 +125,12 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		return;
 	}
 	
+	
 	private void generaDownload(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("generaDownload");
 		String id = request.getParameter("id");
 		String fileType = "*";
 		String fileName = "";
+		String file = "";
 		OutputStream out;
 		Annuncio annuncio = null;
 		
@@ -137,14 +138,16 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			annuncio = AnnuncioModel.getAnnuncioById(id);
 		}
 		fileName = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato(), false);
+		file = CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), false);
 		
 		response.setContentType(fileType);
 		response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 
 		try {
 	        out = response.getOutputStream();
-	        out.write(CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), true).getBytes("UTF-8"));
+	        out.write(file.getBytes("UTF-8"));
 	        out.flush();
+	        out.close();
 		} catch (IOException e) {
 			System.out.println("generaDownload: errore nella generazione del file");
 		} 
@@ -212,6 +215,13 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
+			
+			for (Annuncio a : annunci) {
+				if (a.getNomeAllegato() != "" && a.getNomeAllegato() != null) {
+					a.setNomeAllegato(CriptazioneUtility.decodificaStringa(a.getNomeAllegato(), false));
+				}
+			}
+			
 			if(tipo != null  && tipo.equals("asincrona"))
 			{
 				response.setContentType("application/json");
@@ -230,6 +240,16 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnuncioByCFPaziente(paziente.getCodiceFiscale());
 			
+			for (Annuncio a : annunci) {
+				if (a.getNomeAllegato() != "" && a.getNomeAllegato() != null) {
+					a.setNomeAllegato(CriptazioneUtility.decodificaStringa(a.getNomeAllegato(), false));
+				}
+		
+//				blocco usato per testing		
+//				if (a.getCorpoAllegato()!="" && a.getCorpoAllegato()!=null) {
+//					a.setCorpoAllegato(CriptazioneUtility.decodificaStringa(a.getCorpoAllegato(), true)); 
+//				}
+			}
 			
 			ArrayList<String> cache = new ArrayList<>();
 			ArrayList<Utente> utentiCache = new ArrayList<>();

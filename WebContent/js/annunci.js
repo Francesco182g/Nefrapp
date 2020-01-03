@@ -25,23 +25,3 @@ $( "#inviaAnnuncio" ).click(function() {
 		form.submit();
 	}
 });
-
-
-function creaDownload(allegato, nomeAllegato) {
-	const byteCharacters = atob(allegato);
-	
-	const byteNumbers = new Array(byteCharacters.length);
-	for (let i = 0; i < byteCharacters.length; i++) {
-	    byteNumbers[i] = byteCharacters.charCodeAt(i);
-	}
-	
-	const byteArray = new Uint8Array(byteNumbers);	
-	const blob = new Blob([byteArray], {type: "*"});
-	
-	blob.lastModifiedDate = new Date();
-    blob.name = nomeAllegato;
-
-	var url = window.URL.createObjectURL(blob);
-	document.getElementById("download").href = url;
-	document.getElementById("download").download = nomeAllegato;
-}

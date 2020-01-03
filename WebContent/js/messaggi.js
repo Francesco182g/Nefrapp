@@ -22,12 +22,15 @@ window.onbeforeunload = function() {
 $( "#inviaMessaggio" ).click(function() {
 		var form = document.getElementById("formMessaggi")
 	
-		if (form.oggetto.value=="" || form.testo.value=="" || 
-			(form.selectPaziente == undefined && form.selectMedico.value == "") ||
-			(form.selectPaziente.value == "" && form.selectMedico == undefined)) {	
-			
+		if (form.oggetto.value=="" || form.testo.value=="") {	
 			return;
-		} else {
+		} else if((form.selectPaziente == undefined && form.selectMedico.value == "")) { 
+			return;
+		} else if ((form.selectPaziente!= undefined && form.selectPaziente.value == "" && form.selectMedico == undefined)) {
+			return;
+		}
+		
+		else {
 			window.onbeforeunload = null;
 			form.submit();
 		}
