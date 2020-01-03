@@ -38,14 +38,12 @@
 
 						<div class="card-body">
 							<form class="user" action="./parametri" method="POST">
-							<input type="hidden" name="operazione" value="inserisciScheda">
-									Scheda parametri: <br>
-									<div class="form-group row">
-									<d<%@include file="./includes/scripts.jsp"%>
-									iv class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
-										Peso: <br> <input type="text"
-											class="form-control form-control-user" id="Peso" name="Peso"
-											placeholder="Esempio: 80,00" required="required"
+								<input type="hidden" name="operazione" value="inserisciScheda">
+								Scheda parametri: <br>
+								<div class="form-group row">
+									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12"> Peso: <br> <input
+											type="text" class="form-control form-control-user" id="Peso"
+											name="Peso" placeholder="Esempio: 80,00" required="required"
 											maxlength="5">
 									</div>
 									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
@@ -67,49 +65,49 @@
 											maxlength="5">
 									</div>
 								</div>
-						<div class="form-group row">
-							<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
-								UF: <br> <input type="text"
-									class="form-control form-control-user" id="UF" name="UF"
-									placeholder="Esempio: +500, -200" required="required"
-									maxlength="5">
-							</div>
-							<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
-								Tempo di sosta:<br> <input type="text"
-									class="form-control form-control-user" id="TempoSosta"
-									name="TempoSosta" placeholder="Esempio: 1" required="required"
-									maxlength="2">
-							</div>
-							<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
-								Carico:<br> <input type="text"
-									class="form-control form-control-user" id="Carico"
-									name="Carico" placeholder="Esempio: 1000" required="required"
-									maxlength="4">
-							</div>
-							<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
-								Scarico:<br> <input type="text"
-									class="form-control form-control-user" id="Scarico"
-									name="Scarico" placeholder="Esempio: 500" required="required"
-									maxlength="4">
-							</div>
+								<div class="form-group row">
+									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+										UF: <br> <input type="text"
+											class="form-control form-control-user" id="UF" name="UF"
+											placeholder="Esempio: +500, -200" required="required"
+											maxlength="5">
+									</div>
+									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+										Tempo di sosta:<br> <input type="text"
+											class="form-control form-control-user" id="TempoSosta"
+											name="TempoSosta" placeholder="Esempio: 1"
+											required="required" maxlength="2">
+									</div>
+									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+										Carico:<br> <input type="text"
+											class="form-control form-control-user" id="Carico"
+											name="Carico" placeholder="Esempio: 1000" required="required"
+											maxlength="4">
+									</div>
+									<div class="col-lg-3 col-sm-3 mb-3 mb-sm-12">
+										Scarico:<br> <input type="text"
+											class="form-control form-control-user" id="Scarico"
+											name="Scarico" placeholder="Esempio: 500" required="required"
+											maxlength="4">
+									</div>
+								</div>
+								<div class="col-lg-3 sm-12"
+									style="margin-left: auto; margin-right: auto; display: block; margin-top: 22%; margin-bottom: 0%">
+									<button class="btn btn-primary btn-user btn-block"
+										id="inserimentoSchedaButton">Salva Parametri</button>
+								</div>
+							</form>
 						</div>
-						<div class="col-lg-3 sm-12"
-							style="margin-left: auto; margin-right: auto; display: block; margin-top: 22%; margin-bottom: 0%">
-							<button class="btn btn-primary btn-user btn-block"
-								id="inserimentoSchedaButton" >Salva Parametri</button>
-						</div>
-						</form>
 					</div>
+
 				</div>
+				<!-- /.container-fluid -->
 
 			</div>
-			<!-- /.container-fluid -->
-
+			<!-- End of Main Content -->
+			<%@include file="../includes/footer.jsp"%>
 		</div>
-		<!-- End of Main Content -->
-		<%@include file="../includes/footer.jsp"%>
-	</div>
-	<!-- End of Content Wrapper -->
+		<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->

@@ -36,11 +36,10 @@ public class GestionePianoTerapeutico extends HttpServlet {
 
 			String operazione = request.getParameter("operazione");
 			String tipo = request.getParameter("tipo");
-			System.out.println(operazione);
+
 			if (operazione.equals("visualizza")) {
 				visualizzaPiano(request, response, tipo);
 				if (!(tipo != null && tipo.equals("asincrona"))) {
-					System.out.println("sto redirectando ");
 					dispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
 					dispatcher.forward(request, response);
 				}
