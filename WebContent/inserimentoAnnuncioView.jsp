@@ -36,7 +36,7 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							<form class="user" action="./annuncio" method="POST" 
+							<form class="user" action="./annuncio" method="POST" onsubmit="abilitaInvio()"
 								enctype="multipart/form-data" id ="formAnnunci">
 								<input type="hidden" name="operazione" value="inviaAnnuncio" >
 								<div class="form-group row">
@@ -87,7 +87,7 @@
 						</div>
 					
 						<div class="form-group row mt-3">
-							<button class="btn btn-primary btn-user" id="inviaAnnuncio" 
+							<button type="submit" class="btn btn-primary btn-user" id="inviaAnnuncio" 
 							name="operazione" value="inviaAnnuncio" style="float: right">Invia
 								Annuncio</button>
 						</div>

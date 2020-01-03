@@ -1,3 +1,5 @@
+//effettua la rimozione di annunci composti di solo allegato 
+//nel caso si esca dalla pagina senza inviare l'annuncio
 window.onbeforeunload = function() {
 	$.ajax({
 		  type: 'POST',
@@ -12,16 +14,7 @@ window.onbeforeunload = function() {
 	return null;
 };
 
-$( "#inviaAnnuncio" ).click(function() {
-	var form = document.getElementById("formAnnunci")
-	
-	if (form.oggetto.value=="" || form.testo.value=="" || 
-		form.selectPaziente.value == undefined ||
-		form.selectPaziente.value == "") {	
-		
-		return;
-	} else {
-		window.onbeforeunload = null;
-		form.submit();
-	}
-});
+//permette l'invio di un annuncio completo disabilitando l'evento soprastante
+function abilitaInvio() {
+	window.onbeforeunload = null;
+}

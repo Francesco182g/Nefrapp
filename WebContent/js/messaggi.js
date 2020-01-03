@@ -5,6 +5,8 @@ jQuery(document).ready(function($) {
     });
 });
 
+//effettua la rimozione di messaggi composti di solo allegato 
+//nel caso si esca dalla pagina senza inviare
 window.onbeforeunload = function() {
 	$.ajax({
 		  type: 'POST',
@@ -19,24 +21,12 @@ window.onbeforeunload = function() {
 	return null;
 };
 
-$( "#inviaMessaggio" ).click(function() {
-		var form = document.getElementById("formMessaggi")
-	
-		if (form.oggetto.value=="" || form.testo.value=="") {	
-			return;
-		} else if((form.selectPaziente == undefined && form.selectMedico.value == "")) { 
-			return;
-		} else if ((form.selectPaziente!= undefined && form.selectPaziente.value == "" && form.selectMedico == undefined)) {
-			return;
-		}
-		
-		else {
-			window.onbeforeunload = null;
-			form.submit();
-		}
-	});
+//permette l'invio di un messaggio completo disabilitando l'evento soprastante
+function abilitaInvio() {
+	window.onbeforeunload = null;
+}
 
-
+//genera un link funzionante per scaricare l'allegato di un messaggio 
 function creaDownload(allegato, nomeAllegato) {
 	const byteCharacters = atob(allegato);
 	

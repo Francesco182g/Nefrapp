@@ -35,7 +35,7 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							<form class="user" action="./messaggio" method="POST"
+							<form class="user" action="./messaggio" method="POST" onsubmit="abilitaInvio()"
 								enctype="multipart/form-data" id="formMessaggi">
 								<input type="hidden" name="operazione" value="inviaMessaggio">
 								<div class="form-group row">
@@ -101,7 +101,7 @@
     					<input id="messaggio" name="file" type="file" multiple>
 						</div>
 						<div class="form-group row mt-3">
-							<button class="btn btn-primary btn-user" type="button"
+							<button class="btn btn-primary btn-user" type="submit"
 								id="inviaMessaggio" style="float: right">
 								Invia Messaggio</button>
 						</div>

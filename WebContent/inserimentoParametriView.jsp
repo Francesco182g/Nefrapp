@@ -93,7 +93,7 @@
 								</div>
 								<div class="col-lg-3 sm-12"
 									style="margin-left: auto; margin-right: auto; display: block; margin-top: 22%; margin-bottom: 0%">
-									<button class="btn btn-primary btn-user btn-block"
+									<button class="btn btn-primary btn-user btn-block" type="submit"
 										id="inserimentoSchedaButton">Salva Parametri</button>
 								</div>
 							</form>
@@ -119,6 +119,5 @@
 
 </body>
 <%@include file="./includes/scripts.jsp"%>
-<script src="./js/jquery-confirm.js"></script>
-<script type="text/javascript" src="/js/inserimentoControl.js"></script>
+<script type="text/javascript" src="./js/inserimentoControl.js"></script>
 </html>
