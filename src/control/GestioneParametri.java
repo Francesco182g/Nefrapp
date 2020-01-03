@@ -55,6 +55,7 @@ public class GestioneParametri extends HttpServlet {
 			//Visualizza la scheda dei parametri del paziente selezionato
 			else if(operazione.equals("visualizzaScheda")) {
 				monitoraParametri(request);
+				dispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -110,7 +111,6 @@ public class GestioneParametri extends HttpServlet {
 		}
 		
 		request.setAttribute("schedaParametri", scheda);
-		dispatcher = request.getRequestDispatcher("/monitoraggioParametriView.jsp");
 	}
 	
 	/**Questo metodo inserisce nel database una SchedaParametri formata dai dati inseriti dall'utente.
@@ -138,7 +138,6 @@ public class GestioneParametri extends HttpServlet {
 		HttpSession session=request.getSession();
 		Paziente pazienteLoggato = (Paziente) session.getAttribute("utente");
 		
-		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 		String cf = pazienteLoggato.getCodiceFiscale(); 
 		String peso = request.getParameter("Peso");
 		String paMin = request.getParameter("PaMin"); 
@@ -167,21 +166,25 @@ public class GestioneParametri extends HttpServlet {
 			return;
 		}
 
-		if (Pattern.matches(REGEX_CF, cf) && sonoValidi(newPeso, newPaMin, newPaMax, newScaricoIniziale, 
+		if (sonoValidi(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico)) {
 			daAggiungere = new SchedaParametri(cf, newPeso, newPaMin, newPaMax, newScaricoIniziale, 
 				newUf, newTempoSosta, newScarico, newCarico, LocalDate.now());
 			SchedaParametriModel.addSchedaParametri(daAggiungere);
 		}else {
-			request.setAttribute("notifica","Uno o più parametri non sono validi.");
+			request.setAttribute("notifica","Uno o piÃ¹ parametri non sono validi.");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/inserimentoParametriView.jsp");
 			requestDispatcher.forward(request,response);
 		}
 	}
 
-	private boolean sonoValidi(BigDecimal newPeso, int newPaMin, int newPaMax, int newScaricoIniziale, int newUf,
+	private boolean sonoValidi(String cf, BigDecimal newPeso, int newPaMin, int newPaMax, int newScaricoIniziale, int newUf,
 			int newTempoSosta, int newScarico, int newCarico) {
-		if (newPeso.compareTo(new BigDecimal("29")) > 0 && newPeso.compareTo(new BigDecimal("151")) < 0 &&
+		
+		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
+		
+		if (Pattern.matches(REGEX_CF, cf) &&
+			newPeso.compareTo(new BigDecimal("29")) > 0 && newPeso.compareTo(new BigDecimal("151")) < 0 &&
 			newPaMin > 39 && newPaMin < 131 &&
 			newPaMax > 79 && newPaMax < 221 &&
 			newScaricoIniziale > -1001 && newScaricoIniziale < 3000 &&
