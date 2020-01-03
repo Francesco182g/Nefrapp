@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  * @author nico
  */
 @WebFilter(urlPatterns = { 
-		"/inserimentoParametriView.jsp", "/annunci.jsp", "/listaMediciView.jsp", "/messaggioView.jsp",
-		"/ModificaAccountPazienteView.jsp", "/registraMedico.jsp"})
+		"/inserimentoParametriView.jsp", "/annunci.jsp", "/listaMediciView.jsp",
+		"/loginAmministratore.jsp", "/ModificaAccountPazienteView.jsp", "/registraMedico.jsp"})
 //aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso ai medici
 public class FiltroMedico implements Filter {
 	
@@ -44,6 +44,7 @@ public class FiltroMedico implements Filter {
 			
 			req.setAttribute("notifica", "Non hai il permesso di accedere a questa pagina! ");
 			res.sendRedirect("./paginaErrore.jsp");
+			return;
 		}
 		chain.doFilter(request, response);
 	}

@@ -45,6 +45,7 @@ public class FiltroVisitatore implements Filter {
 			
 			req.setAttribute("notifica", "Non hai il permesso di accedere a questa pagina! ");
 			res.sendRedirect("./paginaErrore.jsp");
+			return;
 		}
 		chain.doFilter(request, response);
 	}

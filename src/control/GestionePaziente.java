@@ -23,6 +23,11 @@ import utility.CriptazioneUtility;
 /**
  * Servlet implementation class GestionePaziente
  */
+/**
+ * @author Silvio Di Martino
+ * Questa clase è una servlet che si occupa della gestione del paziente
+ *
+ */
 @WebServlet("/GestionePaziente")
 public class GestionePaziente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
