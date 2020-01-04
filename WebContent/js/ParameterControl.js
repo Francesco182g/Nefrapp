@@ -448,7 +448,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 		else if (num == 1)
 			{
 				$("#richiestaReset").click(function(){
-					var valid = checkEmail()
+					var valid = checkCF()
 					if (!valid [0])
 					{
 						sub = false;
@@ -505,6 +505,22 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 		return valido
 		
 	}
+	
+	/**
+	 * funzione che permette di controllare se il cf è valido
+	 */
+	function checkCF(){
+		var cf = $("#codiceFiscale").val()
+		var expCf=RegExp("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$");
+		var valido=[true];
+		
+		if (!expCf.test(cf))
+			valido=[false,CFMsg];
+		
+		return valido
+		
+	}
+	
 	  /*
 	   * Funzione che permette di ottenere l'estenzione di un file
 	   * */

@@ -32,8 +32,7 @@ public class GestioneResetPassword extends HttpServlet {
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp"); // TODO reindirizzamento
-																								// home
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp"); 
 				dispatcher.forward(request, response);
 				return;
 			}
@@ -43,49 +42,63 @@ public class GestioneResetPassword extends HttpServlet {
 			// Controllo per verifica se c'� un utente in sessione, se � presente allora si
 			// reindirizza alla home
 			if (utente != null) {
-				request.setAttribute("notifica", "Non � possibile effettuare questa operazione se si � loggati");
-				response.sendRedirect("./dashboard.jsp");
+				response.sendRedirect("./paginaErrore.jsp?notifica=noUtente");
+				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+				//nel caso in cui il valore corrisponda. 
 				return;
 			}
 
 			String operazione = request.getParameter("operazione");
 			
 			if (operazione == null) {
-				response.sendRedirect("./dashboard.jsp");	
+				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
+				//come sopra
 				return;
 			}
 
 			// Viene scelta l'operaizione per richiedere il reset della password
 			if (operazione.equals("identificaRichiedente")) {
 				identificaRichiedente(request, response);
-				dispatcher.forward(request, response);
+				
+				if (!response.isCommitted()) {
+					response.sendRedirect("./dashboard.jsp");
+				}
 				return;
 			}
 
 			else if (operazione.equals("richiesta")) {
 				richiediReset(request, response);
-				dispatcher.forward(request, response);
+				
+				if (!response.isCommitted()) {
+					response.sendRedirect("./dashboard.jsp");
+				}
+				
 				return;
 			}
 
 			// Operaizone per effettuare il reset della password
 			else if (operazione.equals("reset")) {
 				effettuaReset(request, response);
-				dispatcher.forward(request, response);
+				if (!response.isCommitted()) {
+					response.sendRedirect("./dashboard.jsp?notifica=resetSuccesso");
+				}
+				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+				//nel caso in cui il valore corrisponda. 
 				return;
 			}
 
 			else {
-				request.setAttribute("notifica", "Operazione scelta non valida");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./paginaErrore.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
+				//come sopra
+				return;
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("notifica", "Errore in Gestione reset password " + e.getMessage());
 			e.printStackTrace();
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./paginaErrore.jsp");
-			requestDispatcher.forward(request, response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
+			//come sopra
 		}
 
 		return;
@@ -116,21 +129,22 @@ public class GestioneResetPassword extends HttpServlet {
 				// è un medico, manda la mail con il link per la modifica della password
 				String destinatario = utente.getEmail();
 				InvioEmailUtility.inviaEmail(destinatario);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
-				requestDispatcher.forward(request, response);
+				return;
 
 			} else if (PazienteModel.getIdPazienteByCF(utente.getCodiceFiscale()) != null) {
 				// è un paziente, viene mandata una mail, dove il destinatario è
 				// l'amministratore
 				String destinatario = "cuccy15@hotmail.it"; // mail di prova
 				InvioEmailUtility.inviaEmail(destinatario);
-				// TODO: non fa il dispatch
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
-				requestDispatcher.forward(request, response);
+				return;
 			}
 		} else { // il CF inserito non è nel DD TODO: reindirizzamento dove???
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/richiestaResetView.jsp");
-			requestDispatcher.forward(request, response);
+			System.out.println("identificaRichiedente: il CF inserito non è nel DB");
+			response.sendRedirect("./richiestaResetView.jsp?notifica=CFnonPresente");
+			//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+			//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+			//nel caso in cui il valore corrisponda. 
+			return;
 		}
 	}
 	
@@ -181,18 +195,19 @@ public class GestioneResetPassword extends HttpServlet {
 			if (medico.getEmail().equals(email)) {
 				System.out.println("Email corrisponde");
 				MedicoModel.updatePasswordMedico(codiceFiscale, password);
-				request.setAttribute("notifica", "Reset password avvenuto con successo");
-				dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
 				return;
 			} else {
-				request.setAttribute("notifica",
-						"Codice fiscale ed indirizzo email non appartengono allo stesso accounto. Riprova");
-				dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
+				System.out.println("effettuaReset: codice fiscale ed indirizzo email non appartengono allo stesso account");
+				response.sendRedirect("./resetPasswordView.jsp?notifica=datiErrati");
+				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+				//nel caso in cui il valore corrisponda. 
 				return;
 			}
 		} else {
-			request.setAttribute("notifica", "Formato parametri non valido");
-			dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
+			System.out.println("effettuaReset: i dati inseriti nella richiesta di reset non sono validi");
+			response.sendRedirect("./paginaErrore.jsp?notifica=datiErrati");
+			//come sopra
 			return;
 		}
 	}

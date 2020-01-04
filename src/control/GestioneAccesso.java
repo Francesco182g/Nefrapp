@@ -62,17 +62,26 @@ public class GestioneAccesso extends HttpServlet {
 				else if (operazione.equals("loginAdmin")) {
 					// Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
+					if (!response.isCommitted()) {
+						response.sendRedirect("./dashboard.jsp");
+					}
 				}
 
 				else {
 					// Aggiungere un try-catch per catturare IOException
 					loginUtente(request, response, session);
+					if (!response.isCommitted()) {
+						response.sendRedirect("./dashboard.jsp");
+					}
 				}
 			}
 		} catch (Exception e) {
 			request.setAttribute("notifica",e.getMessage());
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			requestDispatcher.forward(request,response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
+			//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+			//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+			//nel caso in cui il valore corrisponda. 
+			return;
 		}
 		return;
 	}
@@ -101,19 +110,22 @@ public class GestioneAccesso extends HttpServlet {
 				session.setAttribute("isAmministratore", true);
 				session.setAttribute("utente", amministratore);
 				session.setAttribute("accessDone", true);
-				response.sendRedirect("./dashboard.jsp");
+				return;
 			} 
 			
 			else {
 				session.setAttribute("accessDone", false);
-				response.sendRedirect("./loginAmministratore.jsp");
+				response.sendRedirect("./loginAmministratore.jsp?notifica=datiNonValidi");
+				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+				//nel caso in cui il valore corrisponda. 
 				return;
 			}
 			
 		} else {
-			request.setAttribute("notifica","Codice fiscale o password non validi.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/loginAmministratore.jsp");
-			requestDispatcher.forward(request,response);
+			response.sendRedirect("./loginAmministratore.jsp?notifica=datiNonValidi");
+			//come sopra
+			return;
 		}
 	}
 
@@ -140,7 +152,11 @@ public class GestioneAccesso extends HttpServlet {
 				
 				else {
 					session.setAttribute("accessDone", false);
-					response.sendRedirect("login.jsp");
+					System.out.println("loginUtente: la combinazione CF-password non è stata trovata");
+					response.sendRedirect("./login.jsp?notifica=datiErrati");
+					//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+					//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+					//nel caso in cui il valore corrisponda. 
 					return;
 				}
 			}
@@ -152,7 +168,6 @@ public class GestioneAccesso extends HttpServlet {
 			if (utente != null) 
 			{
 				session.setAttribute("utente", utente);
-				response.sendRedirect("dashboard.jsp");
 				GestioneNotifica gn=new GestioneNotifica();
 				gn.doGet(request, response);
 				return;
@@ -162,9 +177,11 @@ public class GestioneAccesso extends HttpServlet {
 		}
 		
 		else {
-			request.setAttribute("notifica","Codice fiscale o password non validi.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
-			requestDispatcher.forward(request,response);
+			response.sendRedirect("./login.jsp?notifica=datiErrati");
+			//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+			//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+			//nel caso in cui il valore corrisponda. 
+			return;
 		}
 	}
 
