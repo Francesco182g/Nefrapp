@@ -27,6 +27,19 @@
 			<!-- Main Content -->
 			<div id="content">
 				<%@include file="../includes/header.jsp"%>
+				
+				<c:if test="${notifica == 'identificazioneSuccesso'}">
+					<div class="alert alert-success alert-dismissible fade show"
+						role="alert">
+						La richiesta di reset password è stata inviata con successo!<br>
+						Se sei un medico, troverai il link per effettuare il reset nella tua casella di posta elettronica,<br>
+						se sei un paziente, sarai contattato dall'amministratore di Nefrapp per ricevere la tua nuova password.
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:if>
 
 
 				<!-- Begin Page Content -->

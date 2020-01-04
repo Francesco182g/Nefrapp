@@ -9,3 +9,5 @@
 		integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
 		crossorigin="anonymous"></script>
 	<script src="./js/jquery-confirm.js"></script>
+	<script src="./js/DismissAlert.js"></script>
+	

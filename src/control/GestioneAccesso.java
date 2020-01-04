@@ -78,9 +78,7 @@ public class GestioneAccesso extends HttpServlet {
 		} catch (Exception e) {
 			request.setAttribute("notifica",e.getMessage());
 			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
-			//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-			//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-			//nel caso in cui il valore corrisponda. 
+			//già implementata
 			return;
 		}
 		return;
@@ -115,15 +113,15 @@ public class GestioneAccesso extends HttpServlet {
 			
 			else {
 				session.setAttribute("accessDone", false);
-				response.sendRedirect("./loginAmministratore.jsp?notifica=datiNonValidi");
-				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				response.sendRedirect("./loginAmministratore.jsp?notifica=datiLoginErrati");
+				//modificare la jsp per scegliere la notifica da mostrare nella pagina di errore laddove necessario
 				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-				//nel caso in cui il valore corrisponda. 
+				//nel caso in cui il valore corrisponda. Vedere in login utente (già implementata).
 				return;
 			}
 			
 		} else {
-			response.sendRedirect("./loginAmministratore.jsp?notifica=datiNonValidi");
+			response.sendRedirect("./loginAmministratore.jsp?notifica=datiLoginErrati");
 			//come sopra
 			return;
 		}
@@ -133,9 +131,9 @@ public class GestioneAccesso extends HttpServlet {
 			throws IOException, ServletException {
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
-		String ricordaUtente = request.getParameter("ricordaUtente");
-		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
-		Cookie pazienteID;
+//		String ricordaUtente = request.getParameter("ricordaUtente");
+//		String idPaziente = PazienteModel.getIdPazienteByCF(codiceFiscale);
+//		Cookie pazienteID;
 		Utente utente = null;
 
 		if (controllaParametri(codiceFiscale, password)) {
@@ -153,10 +151,8 @@ public class GestioneAccesso extends HttpServlet {
 				else {
 					session.setAttribute("accessDone", false);
 					System.out.println("loginUtente: la combinazione CF-password non è stata trovata");
-					response.sendRedirect("./login.jsp?notifica=datiErrati");
-					//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-					//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-					//nel caso in cui il valore corrisponda. 
+					response.sendRedirect("./login.jsp?notifica=datiLoginErrati");
+					//questa notifica è già stata implementata
 					return;
 				}
 			}

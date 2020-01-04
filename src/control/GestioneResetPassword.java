@@ -52,20 +52,21 @@ public class GestioneResetPassword extends HttpServlet {
 				identificaRichiedente(request, response);
 				
 				if (!response.isCommitted()) {
-					response.sendRedirect("./dashboard.jsp");
+					response.sendRedirect("./dashboard.jsp?notifica=identificazioneSuccesso");
+					//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+					//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+					//nel caso in cui il valore corrisponda. 
 				}
 				return;
 			}
-
+			
+			//operazione non in uso. si può rimuovere?
 			else if (operazione.equals("richiesta")) {
 				richiediReset(request, response);
 				
 				if (!response.isCommitted()) {
-					response.sendRedirect("./dashboard.jsp?notifica=richiestaSuccesso");	
+					response.sendRedirect("./dashboard.jsp?");	
 				}
-				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-				//nel caso in cui il valore corrisponda. 
 				
 				return;
 			}
@@ -129,12 +130,10 @@ public class GestioneResetPassword extends HttpServlet {
 				InvioEmailUtility.inviaEmail(destinatario);
 				return;
 			}
-		} else { // il CF inserito non è nel DD TODO: reindirizzamento dove???
+		} else { 
 			System.out.println("identificaRichiedente: il CF inserito non è nel DB");
 			response.sendRedirect("./richiestaResetView.jsp?notifica=CFnonPresente");
-			//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-			//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-			//nel caso in cui il valore corrisponda. 
+			//notifica già implementata
 			return;
 		}
 	}
@@ -190,9 +189,10 @@ public class GestioneResetPassword extends HttpServlet {
 			} else {
 				System.out.println("effettuaReset: codice fiscale ed indirizzo email non appartengono allo stesso account");
 				response.sendRedirect("./resetPasswordView.jsp?notifica=datiErrati");
-				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				//modificare il jsp per scegliere la notifica da mostrare nella pagina di errore laddove necessario
 				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-				//nel caso in cui il valore corrisponda. 
+				//nel caso in cui il valore corrisponda. Nel caso occorresse un esempio,
+				//ne ho già implementate in paginaErrore.jsp e richiestaResetView.jsp
 				return;
 			}
 		} else {

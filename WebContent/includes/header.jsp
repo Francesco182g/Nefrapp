@@ -14,6 +14,7 @@
 
 	<!-- session attribute -->
 	<c:set var="utente" value='${sessionScope["utente"]}' />
+	<c:set var="notifica" value="${param.notifica}"/>
 	<c:choose>
 		<c:when test="${not empty utente}">
 			<c:set var="nome" value="${sessionScope['utente'].nome}"></c:set>

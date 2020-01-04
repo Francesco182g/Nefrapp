@@ -25,7 +25,6 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="../includes/header.jsp" %>
-					<c:set var="notifica" value="${param.notifica}"/>
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
