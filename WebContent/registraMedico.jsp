@@ -47,7 +47,8 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Registra Medico</h1>
 							              </div>
-							              <form class="user" method="post"  action="./GestioneRegistrazione?operazione=registraMedico">
+							              <form class="user" method="post"  action="./GestioneRegistrazione">
+							              	<input type="hidden" id="operazione" name="operazione" value="registraMedico">
 											<input type="hidden" id="notifica" value="${requestScope.notifica}">
 											<div class="form-group row col-lg-12">
 							                Codice Fiscale:

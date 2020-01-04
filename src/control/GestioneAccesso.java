@@ -94,6 +94,7 @@ public class GestioneAccesso extends HttpServlet {
 		String password = request.getParameter("password");
 		Amministratore amministratore = null;
 		if (controllaParametri(codiceFiscale, password)) {
+			//ATTENZIONE: NON VA BENE COSÌ, BISOGNA HASHARE LA PASSWORD NEL FRONTEND. È ILLEGALE FARLO COSÌ.
 			password = CriptazioneUtility.criptaConMD5(password);
 			amministratore = AmministratoreModel.getAmministratoreByCFPassword(codiceFiscale, password);
 			if (amministratore != null) {

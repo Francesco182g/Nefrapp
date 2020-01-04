@@ -65,7 +65,7 @@ public class GestioneRegistrazione extends HttpServlet {
 								medici.add(medicoLoggato.getCodiceFiscale());
 								registraPaziente(request, response, medici);
 								System.out.println("lo facciamo sto redirect");
-								response.sendRedirect("/dashboard.jsp");
+								response.sendRedirect("./dashboard.jsp");
 								
 							}else { // solo aggiunta del cf del medico tra i seguiti (paziente già registrato)
 									String codiceFiscale = request.getParameter("codiceFiscale");
@@ -73,7 +73,7 @@ public class GestioneRegistrazione extends HttpServlet {
 										Paziente paziente = PazienteModel.getPazienteByCF(codiceFiscale);
 										paziente.addMedico(medicoLoggato.getCodiceFiscale());
 										PazienteModel.updatePaziente(paziente);
-										response.sendRedirect("/dashboard.jsp");
+										response.sendRedirect("./dashboard.jsp");
 									}else {
 										//TODO gestione errore nel caso in cui paziente non registrato
 										request.setAttribute("notifica","Il paziente non è stato registratro");
@@ -88,7 +88,7 @@ public class GestioneRegistrazione extends HttpServlet {
 		} catch(Exception e) {
 			e.printStackTrace();
 			request.setAttribute("notifica",e.getMessage());
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./paginaErrore.jsp");
 			requestDispatcher.forward(request,response);
 		}
 		

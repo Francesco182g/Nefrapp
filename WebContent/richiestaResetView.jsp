@@ -44,8 +44,9 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4">Richiedi il reset</h1>
 							              </div>
-							              <form class="user" method="post" action="./GestioneResetPassword?operazione=identificaRichiedente" > <!-- TODO controllo in js per il formato dell'email -->
+							              <form class="user" method="post" action="./GestioneResetPassword" > <!-- TODO controllo in js per il formato dell'email -->
 												<div class="form-group">
+												<input type=hidden name="operazione" value="identificaRichiedente">
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice Fiscale" required="required" min="6" max="50" maxlength="50">
 							                </div>
 							                
@@ -82,6 +83,5 @@
 	    </a>
 	</body>
 	<%@include file="./includes/scripts.jsp"%>
-	<script src="./js/jquery-confirm.js"></script>
 	<script src="./js/ParameterControl.js"></script>
 </html>

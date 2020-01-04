@@ -8,11 +8,12 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
 import utility.CreaBeanUtility;
+import utility.CriptazioneUtility;
 
 /**
  * 
  * @author Luca Esposito, Antonio Donnarumma.
- * Questa classe � un manager che si occupa di interagire con il database.
+ * Questa classe � un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti il medico.
  */
 
@@ -211,7 +212,8 @@ public class MedicoModel {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		BasicDBObject nuovoMedico = new BasicDBObject();
 		
-		nuovoMedico.append("$set", new Document().append("Password", nuovaPassword));
+		//ATTENZIONE: NON VA BENE COSÌ, BISOGNA HASHARE LA PASSWORD NEL FRONTEND. È ILLEGALE FARLO COSÌ.
+		nuovoMedico.append("$set", new Document().append("Password", CriptazioneUtility.criptaConMD5(nuovaPassword)));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", codiceFiscale);
 		
 		medici.updateOne(searchQuery, nuovoMedico);

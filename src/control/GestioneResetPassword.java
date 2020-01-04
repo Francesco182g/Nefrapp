@@ -19,8 +19,8 @@ import model.UtenteModel;
 import utility.InvioEmailUtility;
 
 /**
- * @author Davide Benedetto Strianese, Questa classe � una servlet che si occupa
- *         del reset della password di un medico
+ * @author Davide Benedetto Strianese, Questa classe è una servlet che si occupa
+ *         del reset della password 
  */
 @WebServlet("/GestioneResetPassword")
 public class GestioneResetPassword extends HttpServlet {
@@ -32,7 +32,7 @@ public class GestioneResetPassword extends HttpServlet {
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notifica", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(""); // TODO reindirizzamento
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp"); // TODO reindirizzamento
 																								// home
 				dispatcher.forward(request, response);
 				return;
@@ -44,12 +44,16 @@ public class GestioneResetPassword extends HttpServlet {
 			// reindirizza alla home
 			if (utente != null) {
 				request.setAttribute("notifica", "Non � possibile effettuare questa operazione se si � loggati");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect("./dashboard.jsp");
 				return;
 			}
 
 			String operazione = request.getParameter("operazione");
+			
+			if (operazione == null) {
+				response.sendRedirect("./dashboard.jsp");	
+				return;
+			}
 
 			// Viene scelta l'operaizione per richiedere il reset della password
 			if (operazione.equals("identificaRichiedente")) {
@@ -58,7 +62,7 @@ public class GestioneResetPassword extends HttpServlet {
 				return;
 			}
 
-			if (operazione.equals("richiesta")) {
+			else if (operazione.equals("richiesta")) {
 				richiediReset(request, response);
 				dispatcher.forward(request, response);
 				return;
@@ -73,13 +77,14 @@ public class GestioneResetPassword extends HttpServlet {
 
 			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./paginaErrore.jsp");
 				dispatcher.forward(request, response);
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("notifica", "Errore in Gestione reset password medico" + e.getMessage());
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
+			request.setAttribute("notifica", "Errore in Gestione reset password " + e.getMessage());
+			e.printStackTrace();
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./paginaErrore.jsp");
 			requestDispatcher.forward(request, response);
 		}
 
@@ -111,7 +116,7 @@ public class GestioneResetPassword extends HttpServlet {
 				// è un medico, manda la mail con il link per la modifica della password
 				String destinatario = utente.getEmail();
 				InvioEmailUtility.inviaEmail(destinatario);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
 				requestDispatcher.forward(request, response);
 
 			} else if (PazienteModel.getIdPazienteByCF(utente.getCodiceFiscale()) != null) {
@@ -120,15 +125,15 @@ public class GestioneResetPassword extends HttpServlet {
 				String destinatario = "cuccy15@hotmail.it"; // mail di prova
 				InvioEmailUtility.inviaEmail(destinatario);
 				// TODO: non fa il dispatch
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
 				requestDispatcher.forward(request, response);
 			}
 		} else { // il CF inserito non è nel DD TODO: reindirizzamento dove???
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./richiestaResetView.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/richiestaResetView.jsp");
 			requestDispatcher.forward(request, response);
 		}
 	}
-
+	
 	/*
 	 * Questo metodo non so se sia ancora utile. Potrebbe esserlo nel momento in cui
 	 * decidiamo di fare il check sull'identità del medico in due step. Si
@@ -143,7 +148,7 @@ public class GestioneResetPassword extends HttpServlet {
 			try {
 				request.setAttribute("notifica", "Richiesta reset password inviata");
 				InvioEmailUtility.inviaEmail(email);
-				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
 				return;
 
 			} catch (Exception e) {
@@ -160,24 +165,29 @@ public class GestioneResetPassword extends HttpServlet {
 
 	private void effettuaReset(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		
 		String email = request.getParameter("email");
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String password = request.getParameter("password");
 		String confermaPsw = request.getParameter("confermaPsw");
+		
+		System.out.println("email " + email);
+		System.out.println(codiceFiscale);
 
 		if (validaReset(email, codiceFiscale, password, confermaPsw)) {
 			Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
-
+			System.out.println(medico);
 			if (medico.getEmail().equals(email)) {
+				System.out.println("Email corrisponde");
 				MedicoModel.updatePasswordMedico(codiceFiscale, password);
 				request.setAttribute("notifica", "Reset password avvenuto con successo");
-				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
 				return;
 			} else {
 				request.setAttribute("notifica",
 						"Codice fiscale ed indirizzo email non appartengono allo stesso accounto. Riprova");
-				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+				dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
 				return;
 			}
 		} else {
