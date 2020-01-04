@@ -35,7 +35,7 @@
 
 					<div class="container login">
 						<c:if test="${notifica == 'datiLoginErrati'}">
-							<div class="alert alert-warning alert-dismissible fade show"
+							<div class="alert text-center alert-warning alert-dismissible fade show"
 								role="alert">
 								I dati da te inseriti non sono corretti!<br>
 								<button type="button" class="close" data-dismiss="alert"
@@ -102,6 +102,6 @@
 	</a>
 </body>
 <%@include file="./includes/scripts.jsp"%>
-<script src="./js/jquery-confirm.js"></script>
 <script src="./js/ParameterControl.js"></script>
+
 </html>

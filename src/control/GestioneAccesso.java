@@ -147,11 +147,18 @@ public class GestioneAccesso extends HttpServlet {
 					session.setAttribute("accessDone", true);
 				}
 				
-				else {
+				else if (utente == null){
 					session.setAttribute("accessDone", false);
 					System.out.println("loginUtente: la combinazione CF-password non è stata trovata");
 					response.sendRedirect("./login.jsp?notifica=datiLoginErrati");
 					//questa notifica è già stata implementata
+					return;
+				}
+				else if (paziente.getAttivo() == false){
+					session.setAttribute("accessDone", false);
+					System.out.println("loginUtente: l'account del paziente è disattivato");
+					response.sendRedirect("./login.jsp?notifica=accountDisattivo");
+					//TODO: notifica da implementare
 					return;
 				}
 			}
@@ -172,10 +179,7 @@ public class GestioneAccesso extends HttpServlet {
 		}
 		
 		else {
-			response.sendRedirect("./login.jsp?notifica=datiErrati");
-			//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-			//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-			//nel caso in cui il valore corrisponda. 
+			response.sendRedirect("./login.jsp?notifica=datiLoginErrati");
 			return;
 		}
 	}
