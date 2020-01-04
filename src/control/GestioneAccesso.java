@@ -103,8 +103,14 @@ public class GestioneAccesso extends HttpServlet {
 				session.setAttribute("utente", amministratore);
 				session.setAttribute("accessDone", true);
 				response.sendRedirect("dashboard.jsp");
-
 			} 
+			
+			else {
+				session.setAttribute("accessDone", false);
+				response.sendRedirect("loginAmministratore.jsp");
+				return;
+			}
+			
 		} else {
 			request.setAttribute("notifica","Codice fiscale o password non validi.");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/loginAmministratore.jsp");
@@ -147,33 +153,13 @@ public class GestioneAccesso extends HttpServlet {
 			if (utente != null) 
 			{
 				session.setAttribute("utente", utente);
-
-				if (ricordaUtente != null) {
-					Cookie[] cookies = request.getCookies();
-
-					if (cookies != null) {
-
-						for (Cookie cookie : cookies) {
-							if (cookie.getName().equals("pazienteID")) {
-								idPaziente = cookie.getValue();
-							}
-						}
-
-						pazienteID = new Cookie("pazienteID", idPaziente);
-						pazienteID.setMaxAge(50000);
-						response.addCookie(pazienteID);
-					}
-
-				}
 				response.sendRedirect("dashboard.jsp");
 				GestioneNotifica gn=new GestioneNotifica();
 				gn.doGet(request, response);
 				return;
 
 			}
-//			else {
-//				response.sendRedirect("login.jsp");
-//			}
+
 		}
 		
 		else {
