@@ -64,7 +64,7 @@
 					}, function(data) {
 						console.log("eliminazione effettuata")
 					}).fail(function() {
-						customAlert("si è verificato un errore nella rimozione degli allegati")
+						console.log("si è verificato un errore nella rimozione degli allegati")
 					})
 				})
 		});
@@ -120,7 +120,7 @@
 				}, function(data) {
 					console.log("eliminazione effettuata")
 				}).fail(function() {
-					customAlert("si è verificato un errore nella rimozione dell'allegato")
+					console.log("si è verificato un errore nella rimozione dell'allegato")
 				})
 			})
 		})
@@ -149,7 +149,7 @@
 									+ data.dataFineTerapia.year)
 
 				}).fail(function() {
-			customAlert("si è verificato un errore nella visualizzazione del piano terapeutico")
+			console.log("si è verificato un errore nella visualizzazione del piano terapeutico")
 		})
 		$.post("GestioneAnnunci", {
 			operazione : "visualizzaPersonali",
@@ -159,7 +159,7 @@
 			loadTabellaAnnunci(data)
 
 		}).fail(function() {
-			customAlert("si è verificato un errore nella visualizzazione degli annunci")
+			console.log("si è verificato un errore nella visualizzazione degli annunci")
 		})
 	}
 	/**
@@ -175,7 +175,7 @@
 
 			loadTabellaPazienti(data, false)
 		}).fail(function() {
-			customAlert("si è verificato nella visualizzazione dei pazienti seguiti")
+			console.log("si è verificato nella visualizzazione dei pazienti seguiti")
 		})
 		$.post("GestioneAnnunci", {
 			operazione : "visualizzaPersonali",
@@ -185,7 +185,7 @@
 			loadTabellaAnnunci(data)
 
 		}).fail(function() {
-			customAlert("si è verificato un errore nella visuallizzazione dei dati personali")
+			console.log("si è verificato un errore nella visuallizzazione dei dati personali")
 		})
 	}
 
@@ -238,7 +238,7 @@
 
 			});
 		}).fail(function() {
-			customAlert("si è verificato un errore nel caricamento dei dati dei medici e pazienti")
+			console.log("si è verificato un errore nel caricamento dei dati dei medici e pazienti")
 		});
 	}
 
@@ -254,7 +254,7 @@
 		}, function(data) {
 			location.reload();
 		}).fail(function() {
-			customAlert("si è verificato un errore nella rimozione dell'account del medico")
+			console.log("si è verificato un errore nella rimozione dell'account del medico")
 		});
 	}
 	/**
@@ -269,7 +269,7 @@
 		}, function(data) {
 			location.reload();
 		}).fail(function() {
-			customAlert("si è verificato un errore nella rimozione dell'account del paziente")
+			console.log("si è verificato un errore nella rimozione dell'account del paziente")
 		});
 	}
 	/**

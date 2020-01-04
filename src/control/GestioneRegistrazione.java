@@ -150,7 +150,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			
 			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
 				password = CriptazioneUtility.criptaConMD5(password);
-				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd-MM-yyyy")), true, medici);
+				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita, LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")), true, medici);
 				PazienteModel.addPaziente(paziente,password);
 			}else {
 				request.setAttribute("notifica","Uno o più parametri del paziente non sono validi.");

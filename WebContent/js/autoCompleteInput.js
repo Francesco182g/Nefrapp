@@ -27,7 +27,7 @@
   });
   
   function caricaMedico(){
-		
+		console.log("eseguoIlCaricamento")
 		var medico = JSON.parse(sessionStorage.getItem("modMedico"))
 		sessionStorage.setItem("modMedico","")
 		console.log(medico)
