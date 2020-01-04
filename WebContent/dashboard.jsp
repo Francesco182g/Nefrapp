@@ -40,7 +40,18 @@
 						</button>
 					</div>
 				</c:if>
-
+				
+				<c:if test="${notifica == 'resetSuccesso'}">
+					<div class="alert alert-primary fade show"
+						role="alert">
+						La tua password è stata reimpostata con successo!<br>
+						Puoi accedere con la tua nuova password cliccando <a href="./login.jsp"><strong>qui</strong></a>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:if>
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">

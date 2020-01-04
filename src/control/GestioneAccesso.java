@@ -76,7 +76,6 @@ public class GestioneAccesso extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-			request.setAttribute("notifica",e.getMessage());
 			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 			//già implementata
 			return;

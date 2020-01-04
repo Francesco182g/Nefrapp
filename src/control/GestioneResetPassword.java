@@ -53,9 +53,6 @@ public class GestioneResetPassword extends HttpServlet {
 				
 				if (!response.isCommitted()) {
 					response.sendRedirect("./dashboard.jsp?notifica=identificazioneSuccesso");
-					//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-					//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-					//nel caso in cui il valore corrisponda. 
 				}
 				return;
 			}
@@ -77,20 +74,17 @@ public class GestioneResetPassword extends HttpServlet {
 				if (!response.isCommitted()) {
 					response.sendRedirect("./dashboard.jsp?notifica=resetSuccesso");
 				}
-				//come sopra
 				return;
 			}
 
 			else {
 				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
-				//come sopra
 				return;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
-			//come sopra
 		}
 
 		return;
