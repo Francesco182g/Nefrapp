@@ -145,19 +145,17 @@
 	    <a class="scroll-to-top rounded" href="#page-top">
 	        <i class="fas fa-angle-up"></i>
 	    </a>
-	    <script>
-		    $(document).ready(function(){
-		      	$("#bottoneModifica").click(function(){
-		      		$("#diagnosi").prop("disabled", false)
-		      		$("#farmaci").prop("disabled", false)
-		      		$("#data").prop("disabled", false)
-		      		$('#bottoneModifica').prop("disabled", true)
-		      		$('#bottoneConferma').prop("disabled", false)
-		    	});
-		    });
-	    
-	    </script>
-	    
 	</body>
 	<%@include file="./includes/scripts.jsp"%>
+    <script>
+    $(document).ready(function(){
+      	$("#bottoneModifica").click(function(){
+      		$("#diagnosi").prop("disabled", false)
+      		$("#farmaci").prop("disabled", false)
+      		$("#data").prop("disabled", false)
+      		$('#bottoneModifica').prop("disabled", true)
+      		$('#bottoneConferma').prop("disabled", false)
+    	});
+    });
+   </script>
 </html>

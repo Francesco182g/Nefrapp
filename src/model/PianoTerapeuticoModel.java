@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Projections;
 
 import bean.PianoTerapeutico;
 import utility.CreaBeanUtility;
@@ -55,22 +58,27 @@ public class PianoTerapeuticoModel {
 	public static void updatePianoTerapeutico(PianoTerapeutico daAggiornare) {
 		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection()
 				.getCollection("PianoTerapeutico");
-		BasicDBObject nuovoPianoTerapeutico = new BasicDBObject();
-		nuovoPianoTerapeutico.append("$set", new Document().append("Diagnosi", daAggiornare.getDiagnosi()));
-		nuovoPianoTerapeutico.append("$set", new Document().append("Farmaco", daAggiornare.getFarmaco()));
-		nuovoPianoTerapeutico.append("$set", new Document().append("FineTerapia", daAggiornare.getDataFineTerapia()));
+		
+		FindIterable<Document> documents = pianoTerapeuticoDB.find(eq("PazienteCodiceFiscale", daAggiornare.getCodiceFiscalePaziente()));
+		Document d = documents.first();
+		
+		d.append("Diagnosi", daAggiornare.getDiagnosi())
+		.append("Farmaco", daAggiornare.getFarmaco())
+		.append("FineTerapia", daAggiornare.getDataFineTerapia())
+		.append("Visualizzato", false);
+		
 		BasicDBObject searchQuery = new BasicDBObject().append("PazienteCodiceFiscale",
 				daAggiornare.getCodiceFiscalePaziente());
-		pianoTerapeuticoDB.updateOne(searchQuery, nuovoPianoTerapeutico);
+		pianoTerapeuticoDB.replaceOne(searchQuery, d);
 	}
 	
 	/**
 	 * 
-	 * Questo metodo si occupa di controllare se il piano terapeutico di un paziente è stato visualizzato.
+	 * Questo metodo si occupa di controllare se il piano terapeutico di un paziente ï¿½ stato visualizzato.
 	 * 
 	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente.
 	 * 
-	 * @return oggetto di tipo <strong>Boolena</strong> che indica se è stato visualizzato (true) oppure no (false).
+	 * @return oggetto di tipo <strong>Boolena</strong> che indica se ï¿½ stato visualizzato (true) oppure no (false).
 	 * 
 	 * @precondition codiceFiscalePaziente != null.
 	 */

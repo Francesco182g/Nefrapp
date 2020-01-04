@@ -48,7 +48,7 @@ public class GestionePianoTerapeutico extends HttpServlet {
 
 			else if (operazione.equals("modifica")) {
 				modificaPiano(request,response);
-				response.sendRedirect(request.getContextPath() + "/listaPazientiView.jsp");
+				response.sendRedirect(request.getContextPath() + "/GestioneMedico?operazione=VisualizzaPazientiSeguiti");
 			}
 
 			else {
@@ -120,8 +120,6 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			// solo se l'utente è un paziente, la visualizzazione viene settata a false
 			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 				PianoTerapeuticoModel.setVisualizzatoPianoTerapeutico(codiceFiscalePaziente, true);
-			} else {
-				System.out.println("L'utente deve essere loggato");
 			}
 		}
 	}
@@ -143,21 +141,19 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			final String REGEX_DATA = "^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 			String dataFine = request.getParameter("data");
 			if (Pattern.matches(REGEX_DATA, dataFine)) {
-				System.out.println(dataFine);
 				String codiceFiscalePaziente = request.getParameter("CFPaziente");
 				String diagnosi = request.getParameter("diagnosi");
 				String farmaci = request.getParameter("farmaci");
 				LocalDate dataFineTerapia = LocalDate.parse(dataFine, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-				PianoTerapeuticoModel.updatePianoTerapeutico(
-						new PianoTerapeutico(codiceFiscalePaziente, diagnosi, farmaci, dataFineTerapia));
+				PianoTerapeuticoModel.updatePianoTerapeutico(new PianoTerapeutico(codiceFiscalePaziente, diagnosi, farmaci, dataFineTerapia));
 			} else {
 				request.setAttribute("notifica","Codice fiscale non valido.");
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); //TODO inserire jsp modifica piano terapeutico
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico"); 
 				requestDispatcher.forward(request,response);
 			}
 		} else {
 			request.setAttribute("notifica","Medico non loggato.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(""); //TODO inserire jsp modifica piano terapeutico
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico"); 
 			requestDispatcher.forward(request,response);
 		}
 	}
