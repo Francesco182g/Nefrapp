@@ -86,8 +86,8 @@
 	function customAlert(msg)
 	  {
 		  $.alert({
-			    title:msg,
-			    content: 'Questo box si chiudera automaticamente entro 6 secondi se non premi su ok',
+			    title:"",
+			    content: msg,
 			    type: 'red',
 			    typeAnimated: true,
 			    autoClose: 'ok|6000',

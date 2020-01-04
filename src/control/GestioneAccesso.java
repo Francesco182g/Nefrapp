@@ -101,12 +101,12 @@ public class GestioneAccesso extends HttpServlet {
 				session.setAttribute("isAmministratore", true);
 				session.setAttribute("utente", amministratore);
 				session.setAttribute("accessDone", true);
-				response.sendRedirect("dashboard.jsp");
+				response.sendRedirect("./dashboard.jsp");
 			} 
 			
 			else {
 				session.setAttribute("accessDone", false);
-				response.sendRedirect("loginAmministratore.jsp");
+				response.sendRedirect("./loginAmministratore.jsp");
 				return;
 			}
 			

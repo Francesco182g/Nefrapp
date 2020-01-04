@@ -1,6 +1,21 @@
 /**
  * @author Eugenio
  */
+var CFMsg = "Il formato del Codice Fiscale non è valido";
+var nomeMsg = "Il formato del nome non è valido";
+var cognomeMsg = "Il formato del cognome non è valido";
+var passwordMsg = "La password deve essere compresa tra 6 e 20 caratteri";
+var dataMsg = "Inserire la data in formato valido<br>es. 01/01/1970";
+var luogoNascitaMsg = "Il formato del luogo di nascita non è valido";
+var residenzaMsg = "Inserire l'indirizzo di residenza in formato valido<br>es. Via Roma, 23, Scafati, 80030, SA";
+var sessoMsg = "Errore nella selezione del sesso";
+var emailMsg = "L'indirizzo email inserito non è valido";
+var confermaPasswordMsg = "Le due password inserite non coincidono";
+var destinatarioMsg = "Selezionare un destinatario";
+var testoMsg = "Inserire un testo valido.<br><br>Il testo deve essere compreso tra 1 e 1000 caratteri di lunghezza";
+//l'ho chiamata genericamente intestazione perché questo messaggio è sia in annunci che in messaggi
+var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve essere compresa tra 1 e 75 caratteri di lunghezza";
+
 (function($) {
   "use strict"; // Start of use strict
   var sub = false
@@ -64,8 +79,8 @@
   function customAlert(msg)
   {
 	  $.alert({
-		    title:msg,
-		    content: 'Questo box si chiudera automaticamente entro 6 secondi se non premi su ok',
+		    title: "",
+		    content: msg,
 		    type: 'red',
 		    typeAnimated: true,
 		    autoClose: 'ok|6000',
@@ -130,70 +145,70 @@
 			{
 			if (registrato == "No" ||registrato==undefined){
 				if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
-					valido=[false,"formato codiceFiscale non valido"];
+					valido=[false, CFMsg];
 				else if (!expNome.test(nome)||nome.length<2||nome.length>30)
-					valido=[false,"formato nome non valido"];
+					valido=[false, nomeMsg];
 				else if (!expCognome.test(cognome)||cognome.length<2||cognome.length>30)
-					valido=[false,"formato cognome non valido"];
+					valido=[false, cognomeMsg];
 				else if (!expPassword.test(password)||password.length<6||password.length>20)
-					valido=[false,"formato password non valido"];
+					valido=[false, passwordMsg];
 				else if (!expDataDiNascita.test(dataDiNascita))
-					valido=[false,"formato data di nascita non valido"];
+					valido=[false, dataMsg];
 			else if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
-					valido=[false,"formato luogo di nascita non valido"];
+					valido=[false, luogoNascitaMsg];
 			else if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
-					valido=[false,"formato residenza non valido"];
+					valido=[false, residenzaMsg];
 		
 			else 	if(!expSesso.test(sesso)||sesso.length!=1)
-							valido=[false,"formato sesso non valido"];
+							valido=[false, sessoMsg];
 				
 						else if (confermaPsw != undefined)
 						{
 							if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-								valido=[false,"formato conferma password non valido"];
+								valido=[false, confermaPswMsg];
 						}
 						
 				else if (email.length != 0)
 					{
 						if (!expEmail.test(email))
-						valido=[false,"formato email non valido"];
+						valido=[false,emailMsg];
 					}
 				
 				}	
 				else
 					{
 					if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
-						valido=[false,"formato codiceFiscale non valido"];
+						valido=[false, CFMsg];
 					else if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
-							valido=[false,"formato luogo di nascita non valido"];
+							valido=[false,luogoNascitaMsg];
 					
 					}
 			}
 		else
 			{
 				if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
-					valido=[false,"formato codiceFiscale non valido"];
+					valido=[false,CFMsg];
 				else if (!expNome.test(nome)||nome.length<2||nome.length>30)
-					valido=[false,"formato nome non valido"];
+					valido=[false,nomeMsg];
 				else if (!expCognome.test(cognome)||cognome.length<2||cognome.length>30)
-					valido=[false,"formato cognome non valido"];
+					valido=[false,cognomeMsg];
 				else if (!expPassword.test(password)||password.length<6||password.length>20)
-					valido=[false,"formato password non valido"];
+					valido=[false,passwordMsg];
 				else if (!expSesso.test(sesso)||sesso.length!=1)
-					valido=[false,"formato sesso non valido"];
+					valido=[false,sessoMsg];
 				else if (!expEmail.test(email))
-						valido=[false,"formato email non valido"];
+						valido=[false,emailMsg];
 				else if (confermaPsw != undefined)
 				{
 					if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-						valido=[false,"formato conferma password non valido"];
+						valido=[false,confermaPasswordMsg];
 				}
 				else if (!expDataDiNascita.test(dataDiNascita))
-						valido=[false,"formato data di nascita non valido"];
+						valido=[false, dataMsg];
 				else if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
-						valido=[false,"formato luogo di nascita non valido"];
+						valido=[false,luogoNascitaMsg];
 				else if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
-						valido=[false,"formato residenza non valido"];
+						valido=[false,residenzaMsg];
 	
 			}
 		return valido;
@@ -345,32 +360,32 @@
 		var confermaPsw = $("#confermaPsw").val();
 		
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
-			valido=[false,"formato codiceFiscale non valido"];
+			valido=[false,CFMsg];
 		else if (!expNome.test(nome)||nome.length<2||nome.length>30)
-			valido=[false,"formato nome non valido"];
+			valido=[false,nomeMsg];
 		else if (!expCognome.test(cognome)||cognome.length<2||cognome.length>30)
-			valido=[false,"formato cognome non valido"];
+			valido=[false,cognomeMsg];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
-			valido=[false,"formato password non valido"];
+			valido=[false,passwordMsg];
 		else if (confermaPsw != undefined)
 			{
 				if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-					valido=[false,"formato conferma password non valido"];
+					valido=[false,confermaPasswordMsg];
 			}
 		else if (!expSesso.test(sesso)||sesso.length!=1)
-			valido=[false,"formato sesso non valido"];
+			valido=[false,sessoMsg];
 		else if (!expEmail.test(email))
-			valido=[false,"formato email non valido"];
+			valido=[false,emailMsg];
 		
 		if(dataDiNascita.length!=0)
 			if (!expDataDiNascita.test(dataDiNascita))
-				valido=[false,"formato data di nascita non valido"];
+				valido=[false,dataMsg];
 		else if (luogoDiNascita.length!=0)
 			if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
-				valido=[false,"formato luogo di nascita non valido"];
+				valido=[false,luogoNascitaMsg];
 		else if (residenza.length!=0)
 			if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
-				valido=[false,"formato residenza non valido"];
+				valido=[false,residenzaMsg];
 				
 		return valido;
 	}
@@ -387,9 +402,9 @@
 		var codiceFiscale = $("#codiceFiscale").val();
 		var password = $("#password").val();
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
-			valido=[false,"formato codiceFiscale non valido"];
+			valido=[false,CFMsg];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
-			valido=[false,"formato password non valido"];
+			valido=[false,passwordMsg];
 		return valido;
 	}
 	/**
@@ -465,13 +480,13 @@
 		var valido=[true];
 		
 		if (!expCodiceFiscale.test(codiceFiscale)||codiceFiscale.length!=16)
-			valido=[false,"formato codiceFiscale non valido"];
+			valido=[false,CFMsg];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
-			valido=[false,"formato password non valido"];
+			valido=[false,passwordMsg];
 		else if (!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-			valido=[false,"formato conferma password non valido"];
+			valido=[false,confermaPasswordMsg];
 		else if (!expEmail.test(email))
-			valido=[false,"formato email non valido"];
+			valido=[false,emailMsg];
 		
 		return valido
 		
@@ -485,7 +500,7 @@
 		var valido=[true];
 		
 		if (!expEmail.test(email))
-			valido=[false,"formato email non valido"];
+			valido=[false,emailMsg];
 		
 		return valido
 		
@@ -509,11 +524,11 @@
 			var fileExt = getFileExtension($('#file').val());
 					
 			if (selettore.length<=0)
-				valido=[false,"selezionare un destinatario"];
+				valido=[false,destinatarioMsg];
 			else if (testo.length<1||testo.length>1000)
-				valido=[false,"formato testo non valido"];
+				valido=[false,testoMsg];
 			else if (oggetto.length<1||oggetto.length>75)
-				valido=[false,"formato oggetto non valido"];
+				valido=[false,oggettoMsg];
 			
 			
 			return valido;
