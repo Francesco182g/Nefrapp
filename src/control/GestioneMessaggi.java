@@ -49,6 +49,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				caricaDestinatari(request, response);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./inserimentoMessaggioView.jsp");
 				requestDispatcher.forward(request, response);
+				return;
 			}
 			
 			else if (operazione.equals("caricaAllegato")) {
@@ -57,6 +58,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
 				response.getWriter().write(gg.toJson("success"));	
+				return;
 			}
 			
 			else if (operazione.equals("rimuoviAllegato")) {
@@ -65,6 +67,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
 				response.getWriter().write(gg.toJson("success"));	
+				return;
 			}
 			
 			else if (operazione.equals("rimuoviMessaggioIncompleto")) {
@@ -77,19 +80,20 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			
 			else if (operazione.equals("inviaMessaggio")) {
 				inviaComunicazione(request, operazione);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
-				requestDispatcher.forward(request, response);
-				// forward temporaneo alla dashboard, TODO bisogna decidere cosa fare
+				response.sendRedirect("./dashboard.jsp");
+				return;
 			}
 			else if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaListaMessaggi(request);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
 				requestDispatcher.forward(request, response);
+				return;
 			}
 			else if (operazione.equals("visualizzaMessaggio")) {
 				visualizzaMessaggio(request);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./messaggioView.jsp");
 				requestDispatcher.forward(request, response);
+				return;
 			}
 		} catch (Exception e) {
 			System.out.println("Errore durante il caricamento della pagina:");

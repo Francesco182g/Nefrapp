@@ -54,7 +54,7 @@ public class GestionePaziente extends HttpServlet {
 			}	
 	
 			String operazione = request.getParameter("operazione");
-			
+
 			if(operazione.equals("visualizzaProfilo"))
 			{
 				caricaMedici(request,response);
@@ -73,8 +73,7 @@ public class GestionePaziente extends HttpServlet {
 			{
 				modificaDatiPersonali(request, response);
 				caricaMedici(request,response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
-				requestDispatcher.forward(request, response);
+				response.sendRedirect("./profilo.jsp");	
 				
 			}
 			
@@ -90,14 +89,6 @@ public class GestionePaziente extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-	
-	/**
-	 * Metodo che preleva il paziente che richiede il cambio password lo inserisce nella richiesta
-	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
-	 */
-	private void richiediResetPassword(HttpServletRequest request, HttpServletResponse response) {
-		
 	}
 	
 	/**
@@ -161,6 +152,7 @@ public class GestionePaziente extends HttpServlet {
 				
 				
 			} else {
+				System.out.println("modificaDatiPersonali: Paziente non trovato");
 				request.setAttribute("notifica", "Non � stato trovato il paziente da aggiornare");
 			}
 		} else {

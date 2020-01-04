@@ -63,7 +63,7 @@
 							              <div class="text-center">
 							                <h1 class="h4 text-gray-900 mb-4"><%=intestazione %></h1>
 							              </div>
-							              <form class="user" method="post" action=<%=azione %>>
+							              <form id="modificaForm" class="user" method="post" action="${azione}">
 											
 											<input type="hidden" name="operazione" value="modifica">
 											<input type="hidden" name="tipoUtente" value="paziente">
@@ -151,7 +151,7 @@
 							                   <input type="password" class="form-control form-control-user" name="confermaPsw" id="confermaPsw" placeholder="Conferma Password" min="6" max="20" maxlength="20"> 
 							                </div>
 							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
-							                <button class="btn btn-primary btn-user btn-block" id="registrazioneButton">
+							                <button type="submit" class="btn btn-primary btn-user btn-block" id="registrazioneButton" form="modificaForm">
 							                  Modifica
 							                </button>
 							               </div>
