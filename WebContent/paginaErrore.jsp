@@ -25,7 +25,7 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="../includes/header.jsp" %>
-					
+					<c:set var="notifica" value="${param.notifica}"/>
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
@@ -33,7 +33,20 @@
           				<div class="text-center">
             				<div class="error mx-auto" data-text="500">500</div>
             					<p class="lead text-gray-800 mb-5">Page Not Found</p>
-            					<p class="text-gray-500 mb-0"><c:out value="${requestScope.notifica}"></c:out></p>
+            					<p class="text-gray-500 mb-0">
+            					<c:if test="${notifica == 'eccezione'}" >
+	            					ERR#1: servlet exception<br><br><br>
+	            					C'è stato un errore interno! Ci dispiace per il contrattempo!
+            					</c:if>
+            					<c:if test="${notifica == 'noOperazione'}" >
+	            					ERR#2: no operation selected<br><br><br>
+	            					C'è stato un errore interno! Ci dispiace per il contrattempo!
+            					</c:if>
+								<c:if test="${notifica == 'accessoNegato'}" >
+	            					ERR#3: access policy violation<br><br><br>
+	            					Ehi, tu! Sì, dico a te! Tu non puoi stare qui!
+            					</c:if>
+								</p>
             					<a href="dashboard.jsp">&larr; Torna alla dashboard</a>
           					</div>
 	                </div>

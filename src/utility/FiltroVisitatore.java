@@ -43,8 +43,7 @@ public class FiltroVisitatore implements Filter {
 			(session.getAttribute("isPaziente") == null && session.getAttribute("isMedico") == null && session.getAttribute("isAmministratore")==null) ||
 			session.getAttribute("utente") == null) {
 			
-			req.setAttribute("notifica", "Non hai il permesso di accedere a questa pagina! ");
-			res.sendRedirect("./paginaErrore.jsp");
+			res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");			
 			return;
 		}
 		chain.doFilter(request, response);

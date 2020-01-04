@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter(urlPatterns = { 
 		"/inserimentoAnnuncioView.jsp", "/listaPazientiView.jsp",  "/loginAmministratore.jsp", 
 		"/ModificaAccountMedicoView.jsp", "/registraMedico.jsp", "/registraPazienteMedico.jsp",
-		"/resetPasswordView.jsp"})
+		"/resetPasswordView.jsp", "/richiestaResetView.jsp" })
 //aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso ai pazienti
 public class FiltroPaziente implements Filter {
 	
@@ -43,8 +43,7 @@ public class FiltroPaziente implements Filter {
 			session.getAttribute("isAmministratore") == null &&
 			session.getAttribute("utente") != null) {
 			
-			req.setAttribute("notifica", "Non hai il permesso di accedere a questa pagina! ");
-			res.sendRedirect("./paginaErrore.jsp");
+			res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
 			return;
 		}
 		chain.doFilter(request, response);

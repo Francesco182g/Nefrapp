@@ -37,17 +37,7 @@ public class GestioneResetPassword extends HttpServlet {
 				return;
 			}
 
-			HttpSession session = request.getSession();
-			Utente utente = (Utente) session.getAttribute("utente");
-			// Controllo per verifica se c'� un utente in sessione, se � presente allora si
-			// reindirizza alla home
-			if (utente != null) {
-				response.sendRedirect("./paginaErrore.jsp?notifica=noUtente");
-				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-				//nel caso in cui il valore corrisponda. 
-				return;
-			}
+			//qui c'era un controllo per l'utente loggato ma non ce n'è più bisogno, lo fa il ServletFilter
 
 			String operazione = request.getParameter("operazione");
 			
@@ -71,21 +61,22 @@ public class GestioneResetPassword extends HttpServlet {
 				richiediReset(request, response);
 				
 				if (!response.isCommitted()) {
-					response.sendRedirect("./dashboard.jsp");
+					response.sendRedirect("./dashboard.jsp?notifica=richiestaSuccesso");	
 				}
+				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
+				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
+				//nel caso in cui il valore corrisponda. 
 				
 				return;
 			}
 
-			// Operaizone per effettuare il reset della password
+			// Operazione per effettuare il reset della password
 			else if (operazione.equals("reset")) {
 				effettuaReset(request, response);
 				if (!response.isCommitted()) {
 					response.sendRedirect("./dashboard.jsp?notifica=resetSuccesso");
 				}
-				//modificare per scegliere la notifica da mostrare nella pagina di errore laddove necessario
-				//basta fare il check jstl per il parametro passato nel redirect e mostrare una notifica solo
-				//nel caso in cui il valore corrisponda. 
+				//come sopra
 				return;
 			}
 
