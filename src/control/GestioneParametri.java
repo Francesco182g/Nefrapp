@@ -212,7 +212,7 @@ public class GestioneParametri extends HttpServlet {
 		String pazienteCF = request.getParameter("CFPaziente");
 		ArrayList<SchedaParametri> report = SchedaParametriModel.getReportByPaziente(pazienteCF, dataInizio, dataFine);
 		
-		String fileName = "ReportPaziente-"+ pazienteCF + "-" + dataFine.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		String fileName = "ReportPaziente-"+ pazienteCF + "-" + dataFine.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".xls";
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition", "attachment; filename="+ fileName);
 		try {
