@@ -1,7 +1,7 @@
 # Nefrapp
 
 TODO:
-- Inserire allegati in pagina di visualizzazione annunci per il paziente.
+- Creare una dashboard per i visitatori non autenticati.
 - Spostare l'hashing della password in frontend.
 
 Glossario delle nuove variabili di sessione:
