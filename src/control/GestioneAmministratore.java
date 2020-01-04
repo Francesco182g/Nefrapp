@@ -183,7 +183,7 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setCognome(cognome);
 						medico.setNome(nome);
 						if(!dataDiNascita.equals("")) {
-							medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
+							medico.setDataDiNascita(LocalDate.parse(dataDiNascita,DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 						}
 						medico.setEmail(email);
 						medico.setResidenza(residenza);

@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -34,6 +35,7 @@ public class GestioneMedico extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String operazione = request.getParameter("operazione");
+			System.out.println(operazione);
 			Amministratore amministratore = null;
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
 			if(medico == null) {
@@ -138,7 +140,7 @@ public class GestioneMedico extends HttpServlet {
 				medico.setLuogoDiNascita(luogoDiNascita);
 
 				if (!dataDiNascita.equals("")) {
-					medico.setDataDiNascita(LocalDate.parse(dataDiNascita));
+					medico.setDataDiNascita(LocalDate.parse(dataDiNascita,DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 				}
 				MedicoModel.updateMedico(medico);
 				password = CriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
@@ -175,28 +177,52 @@ public class GestioneMedico extends HttpServlet {
 		String expPassword = "^[a-zA-Z0-9]*$";
 
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
+		{
 			valido = false;
+			System.out.println("1");
+		}
+			
 		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30)
+		{
 			valido = false;
-		if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
+			System.out.println("2");
+		}	if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
 			valido = false;
 		if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20)
+		{
 			valido = false;
+			System.out.println("3");
+		}
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
+		{
 			valido = false;
-		if (!Pattern.matches(expEmail, email))
+			System.out.println("4");
+		}if (!Pattern.matches(expEmail, email))
+		{
 			valido = false;
-		if (!residenza.equals(""))
+			System.out.println("5");
+		}if (!residenza.equals(""))
 			if (!Pattern.matches(expResidenza, residenza))
+			{
 				valido = false;
-		if (!luogoDiNascita.equals(""))
+				System.out.println("6");
+			}if (!luogoDiNascita.equals(""))
 			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
+			{
 				valido = false;
+				System.out.println("7");
+			}
 		if (!dataDiNascita.equals(""))
 			if (!Pattern.matches(expDataDiNascita, dataDiNascita))
+			{
 				valido = false;
+				System.out.println("8");
+			}
 		if (!confermaPsw.equals(password))
+		{
 			valido = false;
+			System.out.println("9");
+		}
 
 		return valido;
 	}

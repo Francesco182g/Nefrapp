@@ -18,23 +18,7 @@
 
   
 
-   	 	<%String intestazione=""; %>
-   	 	<%String azione=""; %>
-   	 	<c:if test="${isAmministratore}">
-   	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Paziente";%>
-   	 	</c:if>
-   	 	<c:if test="${isPaziente}">
-   	 		<c:set var = "utente" value="${paziente}"></c:set>
-   	 		<c:set var ="azione" value="./GestionePaziente?operazione=modificaAccount"></c:set>
-   	 		<c:set var = "nome" value="${utente.nome}"></c:set>
-            <c:set var = "cognome" value="${utente.cognome}"></c:set>
-			<c:set var= "sesso" value="${utente.sesso}"></c:set>
-			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
-			<c:set var= "email" value="${utente.email}"></c:set>
-            <c:set var= "dataDiNascita" value="${utente.getDataFormattata()}"></c:set>
-            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
-            <c:set var= "residenza" value="${utente.residenza}"></c:set>
-   	 	</c:if>
+   	
    	 	
 	</head>
 
@@ -50,7 +34,22 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="./includes/header.jsp" %>
-	
+					 	<%String intestazione=""; %>
+   	 	<%String azione=""; %>
+   	 	<c:if test="${isAmministratore}">
+   	 		<%azione="./GestioneAmministratore"; intestazione="Modifica Paziente";%>
+   	 	</c:if>
+   	 	<c:if test="${isPaziente}">
+   	 		<c:set var ="azione" value="./GestionePaziente?operazione=modificaAccount"></c:set>
+   	 		<c:set var = "nome" value="${utente.nome}"></c:set>
+            <c:set var = "cognome" value="${utente.cognome}"></c:set>
+			<c:set var= "sesso" value="${utente.sesso}"></c:set>
+			<c:set var= "codiceFiscale" value="${utente.codiceFiscale}"></c:set>
+			<c:set var= "email" value="${utente.email}"></c:set>
+            <c:set var= "dataDiNascita" value="${utente.getDataFormattata()}"></c:set>
+            <c:set var= "luogoDiNascita" value="${utente.luogoDiNascita}"></c:set>
+            <c:set var= "residenza" value="${utente.residenza}"></c:set>
+   	 	</c:if>
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
@@ -83,7 +82,7 @@
 							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" value="${cognome}" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                </div>
-        							        <c:if test="${sesso eq 'M' }">
+        		0					        <c:if test="${sesso eq 'M' }">
 											<div class="form-group row">
 													<div class="col-lg-4 col-mb-12 col-sm-4">
 							                    	Sesso:
