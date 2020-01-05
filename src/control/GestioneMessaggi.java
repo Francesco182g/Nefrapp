@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.mongodb.MongoException;
 
 import bean.Messaggio;
 import bean.Utente;
@@ -85,9 +87,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				return;
 			}
 			else if (operazione.equals("visualizzaElencoMessaggio")) {
-				visualizzaListaMessaggi(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
-				requestDispatcher.forward(request, response);
+				visualizzaListaMessaggi(request, response);
+				if (!response.isCommitted()) {
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
+					requestDispatcher.forward(request, response);
+				}
 				return;
 			}
 			else if (operazione.equals("visualizzaMessaggio")) {
@@ -97,8 +101,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				return;
 			}
 		} catch (Exception e) {
-			System.out.println("Errore durante il caricamento della pagina:");
-			e.printStackTrace();
+			try {
+				response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return;
 	}
@@ -118,8 +125,9 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 * 
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
+	 * @throws IOException 
 	 */
-	private void visualizzaListaMessaggi(HttpServletRequest request) {
+	private void visualizzaListaMessaggi(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Utente utente = null;
 		HttpSession session = request.getSession();
 
@@ -130,11 +138,18 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			ArrayList<Utente> utentiCache = new ArrayList<>();
 			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
-			messaggi = MessaggioModel.getMessaggiByDestinatario(utente.getCodiceFiscale());
-			if (messaggi != null)
-				request.setAttribute("messaggio", messaggi);
-			else
+			try {
+				messaggi = MessaggioModel.getMessaggiByDestinatario(utente.getCodiceFiscale());
+			} catch (MongoException e) {
+				response.sendRedirect("./listaMessaggiView.jsp?notifica=erroreDb");
+				//TODO alert nella jsp
 				return;
+			}
+			request.setAttribute("messaggio", messaggi);
+			
+			if (messaggi.isEmpty()) {
+				return;
+			} 
 
 			// piccolo sistema di caching per minimizzare le query sui mittenti dei messaggi
 			// Se un paziente ha 200 messaggi da 5 medici si fanno 5 query e non 200.
