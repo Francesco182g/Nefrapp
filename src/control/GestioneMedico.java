@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import model.AnnuncioModel;
 import model.MedicoModel;
 import model.PazienteModel;
 import utility.CriptazioneUtility;
@@ -91,7 +92,17 @@ public class GestioneMedico extends HttpServlet {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
 				return;
-			} 
+			}
+			else if(operazione.equals("eliminaAnnuncio"))
+			{
+				String id = request.getParameter("identificatore");
+				AnnuncioModel.deleteAnnuncioById(id);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));
+				
+			}
 			else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");

@@ -156,7 +156,7 @@
 			tipo : "asincrona"
 		}, function(data) {
 
-			loadTabellaAnnunci(data)
+			loadTabellaAnnunci(data,false)
 
 		}).fail(function() {
 			console.log("si è verificato un errore nella visualizzazione degli annunci")
@@ -182,7 +182,25 @@
 			tipo : "asincrona"
 		}, function(data) {
 
-			loadTabellaAnnunci(data)
+			loadTabellaAnnunci(data,true)
+			$(".eliminaButtonAnnuncio").click(function() {
+				$("#eliminazione").children().remove()
+				var id = $(this).attr("id")
+				console.log(id)
+				console.log(data[id].idAnnuncio)
+				addConfermaEliminazione("annuncio")
+				$("#confermaEliminazione").click(function() {
+					$.post("GestioneMedico", {
+						operazione : "eliminaAnnuncio",
+						identificatore:data[id].idAnnuncio
+					}, function(data){
+						window.location.href = "dashboard.jsp"
+					}).fail(function(){
+						console.log("Si è verificato un errore nella gestioneMedico")
+					})
+				})
+
+			});
 
 		}).fail(function() {
 			console.log("si è verificato un errore nella visuallizzazione dei dati personali")
@@ -277,6 +295,7 @@
 	 */
 	function loadTabellaMedici(medici) {
 		var tabellaMedici = $("#tabellaMedici")
+		
 		var riga = ""
 		for (var i = 0; i < medici.length; i++) {
 			riga += "<li class='list-group-item mt-3'><div class='row table-responsive'><div class='col-12 col-sm-6 col-md-9 text-center text-sm-left'><table>"
@@ -302,18 +321,44 @@
 	/**
 	 * funzione che carica gli annunci nella tabella
 	 */
-	function loadTabellaAnnunci(annunci) {
+	function loadTabellaAnnunci(annunci,medico) {
 		var tabellaMedici = $("#tabellaAnnunci")
-
+		console.log(annunci)
 		var riga = ""
-		for (var i = 0; i < annunci.length; i++) {
-			riga += " <div class='card mt-3'><div class='card-header py-3'>"
-					+ "<h6 class='m-0 font-weight-bold text-primary'>"
-					+ annunci[i].titolo + "</h6></div>"
-					+ "<div class='card-body'><p>" + annunci[i].testo
-					+ "</p></div></div>"
-		}
+		var scarica = ""
+		if(medico)
+			{
+			for (var i = 0; i < annunci.length; i++) {
+				if(annunci[i].nomeAllegato !=null)
+					{
+						scarica+="<a href='GestioneAnnunci?operazione=generaDownload&id="+annunci[i].idAnnuncio+"' class='btn mr-sm-5 btn-info btn-icon-split'><span class='icon text-white-50'><i class='fas fa-download'></i></span><span class='text'>Scarica allegato</span></a>"
+					}
+				riga += " <div class='card mt-3'><div class='card-header py-3'><h6 class='m-0 font-weight-bold text-primary'>"+annunci[i].titolo + "</h6></div>"
+						+ "<div class='card-body'><p>" + annunci[i].testo+ "</p></div>"
+						+"<div class='col-12 mt-3 mb-3 d-flex justify-content-center'>"+scarica+"<button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
+					+ i
+					+ "' class='btn btn-danger btn-user eliminaButtonAnnuncio'>Elimina</button></div></div>"
+					scarica = ""
+			}
 
+			}
+		else
+			{
+			for (var i = 0; i < annunci.length; i++) {
+				if(annunci[i].nomeAllegato !=null)
+				{
+					scarica+="<a href='GestioneAnnunci?operazione=generaDownload&id="+annunci[i].idAnnuncio+"' class='btn mr-sm-5 btn-info btn-icon-split'><span class='icon text-white-50'><i class='fas fa-download'></i></span><span class='text'>Scarica allegato</span></a>"
+				}
+				riga += " <div class='card mt-3'><div class='card-header py-3'>"
+						+ "<h6 class='m-0 font-weight-bold text-primary'>"
+						+ annunci[i].titolo + "</h6></div>"
+						+ "<div class='card-body'><p>" + annunci[i].testo
+						+ "</p></div><div class='col-12 mt-3 mb-3 d-flex justify-content-center'>"+scarica+"</div></div>"
+						scarica = ""
+			}
+
+			}
+		
 		tabellaMedici.append(riga)
 
 	}
@@ -327,12 +372,12 @@
 				+ "<div class='modal-dialog' role='document'>"
 				+ "<div class='modal-content'>"
 				+ "<div class='modal-header'>"
-				+ "<h5 class='modal-title' id='exampleModalLabel'>Sicuro di voler eliminare il "
+				+ "<h5 class='modal-title' id='exampleModalLabel'>Sicuro di voler eliminare "
 				+ utente
 				+ "?</h5>"
 				+ "<button class='close' type='button' data-dismiss='modal'aria-label='Close'>"
 				+ "<span aria-hidden='true'>×</span></button>"
-				+ "</div><div class='modal-body'>Seleziona 'Elimina' qui sotto se sei pronto ad eliminare il "
+				+ "</div><div class='modal-body'>Seleziona 'Elimina' qui sotto se sei pronto ad eliminare  "
 				+ utente
 				+ ".</div>"
 				+ "<div class='modal-footer'><button class='btn btn-secondary' type='button' data-dismiss='modal'>Esci</button>"

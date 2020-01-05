@@ -119,5 +119,5 @@
 
 </body>
 <%@include file="./includes/scripts.jsp"%>
-<script type="text/javascript" src="./js/inserimentoControl.js"></script>
+<script type="text/javascript" src="./js/ParameterControl.js"></script>
 </html>
