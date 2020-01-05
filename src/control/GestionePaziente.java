@@ -37,14 +37,12 @@ public class GestionePaziente extends HttpServlet {
      */
     public GestionePaziente() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta!");
@@ -65,21 +63,27 @@ public class GestionePaziente extends HttpServlet {
 			else if(operazione.equals("disattivaAccount"))
 			{
 				disattivaAccount(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./login.jsp");
-				requestDispatcher.forward(request, response);
+				if (!response.isCommitted()) {
+					response.sendRedirect("./login.jsp?notifica=accountDisattivato");
+				}
 			}
 			
 			else if(operazione.equals("modificaAccount"))
 			{
 				modificaDatiPersonali(request, response);
 				caricaMedici(request,response);
-				response.sendRedirect("./profilo.jsp");	
-				
+				if (!response.isCommitted()) {
+					response.sendRedirect("./profilo.jsp?notifica=modificaEffettuata");	
+				}
+				return;
 			}
 			
 			} catch (Exception e) {
 				System.out.println("Errore durante il caricamento della pagina:");
 				e.printStackTrace();
+				if (!response.isCommitted()) {
+					response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");	
+				}
 			}
 	}
 
@@ -87,7 +91,6 @@ public class GestionePaziente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
@@ -153,7 +156,7 @@ public class GestionePaziente extends HttpServlet {
 				
 			} else {
 				System.out.println("modificaDatiPersonali: Paziente non trovato");
-				request.setAttribute("notifica", "Non � stato trovato il paziente da aggiornare");
+				request.setAttribute("notifica", "Non è stato trovato il paziente da aggiornare");
 			}
 		} else {
 			request.setAttribute("notifica", "Formato parametri non valido");

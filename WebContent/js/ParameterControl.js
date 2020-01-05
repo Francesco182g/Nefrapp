@@ -166,7 +166,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 						else if (confermaPsw != undefined)
 						{
 							if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-								valido=[false, confermaPswMsg];
+								valido=[false, confermaPasswordMsg];
 						}
 						
 				else if (email.length != 0)

@@ -47,7 +47,6 @@ public class GestioneParametri extends HttpServlet {
 				if (!response.isCommitted()) {
 					response.sendRedirect("./parametri?operazione=visualizzaScheda&notifica=schedaInserita");
 				}
-				//TODO: alert per notificare inserimento scheda
 				return;
 			}
 			//Download report

@@ -27,38 +27,50 @@
 			<!-- Main Content -->
 			<div id="content">
 				<%@include file="../includes/header.jsp"%>
-				
-				<c:if test="${notifica == 'identificazioneSuccesso'}">
-					<div class="alert alert-success fade show"
+
+				<!-- 			Avvisi di successo (scompaiono) -->
+				<c:if test="${notifica != null}">
+					<div class="alert alert-success alert-dismissible fade show"
 						role="alert">
-						La richiesta di reset password è stata inviata con successo!<br>
-						Se sei un medico, troverai il link per effettuare il reset nella tua casella di posta elettronica,<br>
-						se sei un paziente, sarai contattato dall'amministratore di Nefrapp per ricevere la tua nuova password.
+						<c:if test="${notifica == 'messaggioInviato'}">
+						Messaggio inviato con successo!
+						</c:if>
+						<c:if test="${notifica == 'annuncioInviato'}">
+						Annuncio inviato con successo!
+						</c:if>
 						<button type="button" class="close" data-dismiss="alert"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 				</c:if>
-					
-				
-				<c:if test="${notifica == 'resetSuccesso'}">
-					<div class="alert alert-primary fade show"
-						role="alert">
-						La tua password è stata reimpostata con successo!<br>
-						Puoi accedere con la tua nuova password cliccando <a href="./login.jsp"><strong>qui</strong></a>
+
+				<!-- 			Avvisi di servizio (non scompaiono) -->
+				<c:if test="${notifica != null}">
+					<div class="alert alert-primary fade show" role="alert">
+						<c:if test="${notifica == 'resetSuccesso'}">
+							La tua password è stata reimpostata con successo!<br>
+							Puoi accedere con la tua nuova password cliccando <a
+								href="./login.jsp"><strong>qui</strong></a>
+						</c:if>
+						<c:if test="${notifica == 'identificazioneSuccesso'}">
+							La richiesta di reset password è stata inviata con successo!<br>
+							Se sei un medico, troverai il link per effettuare il reset nella tua casella di posta elettronica,<br>
+							se sei un paziente, sarai contattato dall'amministratore di Nefrapp per ricevere la tua nuova password.
+						</c:if>
 						<button type="button" class="close" data-dismiss="alert"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 				</c:if>
+				
 				
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-							    <c:if test="${notifica == 'ModificaMedRiuscita'}">
-							    <div
+					<c:if test="${notifica == 'ModificaMedRiuscita'}">
+						<div
 							class="alert text-center alert-success alert-dismissible fade show"
 							role="alert">
 							L'account del medico è stato modificato con successo
@@ -67,10 +79,10 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-					
-				</c:if>
-							    <c:if test="${notifica == 'ModificaPazRiuscita'}">
-							    <div
+
+					</c:if>
+					<c:if test="${notifica == 'ModificaPazRiuscita'}">
+						<div
 							class="alert text-center alert-success alert-dismissible fade show"
 							role="alert">
 							L'account del paziente è stato modificato con successo
@@ -79,8 +91,8 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-					
-				</c:if>
+
+					</c:if>
 					<c:choose>
 
 						<c:when test="${isAmministratore==true && accessDone==true}">
@@ -174,7 +186,7 @@
 
 											<ul class="list-group pull-down pre-scrollable"
 												id="tabellaAnnunci">
-												
+
 											</ul>
 										</div>
 									</div>
