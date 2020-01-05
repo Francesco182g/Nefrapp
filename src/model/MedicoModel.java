@@ -235,8 +235,7 @@ public class MedicoModel {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		BasicDBObject nuovoMedico = new BasicDBObject();
 		
-		//ATTENZIONE: NON VA BENE COSÌ, BISOGNA HASHARE LA PASSWORD NEL FRONTEND. È ILLEGALE FARLO COSÌ.
-		nuovoMedico.append("$set", new Document().append("Password", CriptazioneUtility.criptaConMD5(nuovaPassword)));
+		nuovoMedico.append("$set", new Document().append("Password",nuovaPassword));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", codiceFiscale);
 		
 		medici.updateOne(searchQuery, nuovoMedico);

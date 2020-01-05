@@ -38,6 +38,40 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
+	                	<c:if test="${notifica == 'registazione'}">
+						<div
+							class="alert text-center alert-succes alert-dismissible fade show"
+							role="alert">
+							Il medico è stato registrato con successo!
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</c:if>
+						<c:if test="${notifica == 'ParamErr'}">
+						<div
+							class="alert text-center alert-warning alert-dismissible fade show"
+							role="alert">
+							Uno dei parametri non è corretto si prega di riattivare
+							javaScript per attivare i controlli<br>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</c:if>
+						<c:if test="${notifica == 'presente'}">
+						<div
+							class="alert text-center alert-warning alert-dismissible fade show"
+							role="alert">
+							Il medico che stai tentando di registrare è gia presente 
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</c:if>
 							    <div class="my-5">
 							      <div class="card-body p-0 d-flex justify-content-center">
 							        <!-- Nested Row within Card Body -->
@@ -49,7 +83,6 @@
 							              </div>
 							              <form class="user" method="post"  action="./GestioneRegistrazione">
 							              	<input type="hidden" id="operazione" name="operazione" value="registraMedico">
-											<input type="hidden" id="notifica" value="${requestScope.notifica}">
 											<div class="form-group row col-lg-12">
 							                Codice Fiscale:
 							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">

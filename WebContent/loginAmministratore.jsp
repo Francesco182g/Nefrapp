@@ -23,7 +23,7 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="./includes/header.jsp" %>
-					<c:if test="${accessDone == true}">
+					<c:if test="${not empty isAmministratore}">
 						<c:redirect url="./dashboard.jsp"></c:redirect>
 					</c:if>
 	
