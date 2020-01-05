@@ -96,9 +96,7 @@ public class GestioneRegistrazione extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("notifica", e.getMessage());
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./paginaErrore.jsp");
-			requestDispatcher.forward(request, response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 		}
 
 		return;
@@ -109,41 +107,35 @@ public class GestioneRegistrazione extends HttpServlet {
 		doGet(request, response);
 		return;
 	}
-
-	private void registraMedico(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String codiceFiscale = request.getParameter("codiceFiscale");
-		String nome = request.getParameter("nome");
-		String cognome = request.getParameter("cognome");
-		String sesso = request.getParameter("sesso");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String residenza = request.getParameter("residenza");
-		String luogoDiNascita = request.getParameter("luogoDiNascita");
-		String dataDiNascita = request.getParameter("dataDiNascita");
-
-		if (validazione(codiceFiscale, nome, cognome, sesso, email, password, residenza, luogoDiNascita,
-				dataDiNascita)) {
-			if (MedicoModel.getMedicoByCF(codiceFiscale) == null) {
-				Medico medico = new Medico(sesso, residenza, null, codiceFiscale, nome, cognome, email, luogoDiNascita);
-				if (!dataDiNascita.equals("")) {
-					medico.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+	
+	private void registraMedico(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		
+			String codiceFiscale = request.getParameter("codiceFiscale");
+			String nome = request.getParameter("nome");
+			String cognome = request.getParameter("cognome");
+			String sesso = request.getParameter("sesso");
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String residenza = request.getParameter("residenza");
+			String luogoDiNascita=request.getParameter("luogoDiNascita");
+			String dataDiNascita = request.getParameter("dataDiNascita");
+			
+			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
+				if(MedicoModel.getMedicoByCF(codiceFiscale)==null && PazienteModel.getPazienteByCF(codiceFiscale)==null) {
+					Medico medico = new Medico(sesso, residenza, null, codiceFiscale, nome, cognome, email,luogoDiNascita);
+					if(!dataDiNascita.equals("")) {
+						medico.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+					}
+					password = CriptazioneUtility.criptaConMD5(password);//serve a criptare la pasword in MD5 prima di registrarla nel db ps.non cancellare il commento quando spostate la classe
+					MedicoModel.addMedico(medico, password);
+					System.out.println("medico registrato");
+					response.sendRedirect("./registraMedico.jsp?notifica=registrato");
+				}else {
+					response.sendRedirect("./registraMedico.jsp?notifica=presente");
+					
 				}
-				password = CriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5 prima di
-																		// registrarla nel db ps.non cancellare il
-																		// commento quando spostate la classe
-				MedicoModel.addMedico(medico, password);
-				System.out.println("medico registrato");
-			} else {
-				request.setAttribute("notifica", "Medico già presente.");
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
-				requestDispatcher.forward(request, response);
-			}
-		} else {
-			request.setAttribute("notifica", "Uno o più parametri del medico non sono validi.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraMedico.jsp");
-			requestDispatcher.forward(request, response);
+			}else {
+				response.sendRedirect("./registraMedico.jsp?notifica=ParamErr");
 		}
 	}
 

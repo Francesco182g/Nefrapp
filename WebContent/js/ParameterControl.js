@@ -369,30 +369,27 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 			valido=[false,cognomeMsg];
 		else if (!expPassword.test(password)||password.length<6||password.length>20)
 			valido=[false,passwordMsg];
-		else if (confermaPsw != undefined)
-			{
-				if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
-					valido=[false,confermaPasswordMsg];
-			}
 		else if (!expSesso.test(sesso)||sesso.length!=1)
 			valido=[false,sessoMsg];
 		else if (!expEmail.test(email))
 			valido=[false,emailMsg];
 		
-		if(dataDiNascita.length!=0)
-			if (!expDataDiNascita.test(dataDiNascita))
+		else if (!expDataDiNascita.test(dataDiNascita))
 				valido=[false,dataMsg];
-		else if (luogoDiNascita.length!=0)
-			if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
+		else if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 5 || luogoDiNascita.length > 50)
 				valido=[false,luogoNascitaMsg];
-		else if (residenza.length!=0)
-			if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
+		else if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
 				valido=[false,residenzaMsg];
+		else if (confermaPsw != undefined)
+			{
+				if(!expPassword.test(confermaPsw)||confermaPsw.length<6||confermaPsw.length>20||confermaPsw!=password)
+					valido=[false,confermaPasswordMsg];
+			}
+	
 				
 		return valido;
 	}
-	
-	/**
+		/**
 	 * funzione che controlla tutti i campi della form se un campo non è valido restituisce un arrai il cui primo elemnto è un booleano
 	 * il secondo elemento indica quale campo non è valido e nel caso in cui tutti i campi siano validi viene restituito un 
 	 * array di un elemento che contiente un solo elemento che è vero inquanto tutti i campi sono giusti.

@@ -66,9 +66,7 @@ public class GestioneAmministratore extends HttpServlet {
 					}	
 				} catch (Exception e) {
 					e.printStackTrace();
-					request.setAttribute("notifica","Errore in gestione Amministratore. "+e.getMessage());
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-					requestDispatcher.forward(request,response);	
+					response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");	
 				}
 				
 	}

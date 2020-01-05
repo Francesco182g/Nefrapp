@@ -95,9 +95,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				return;
 			}
 			else if (operazione.equals("visualizzaMessaggio")) {
-				visualizzaMessaggio(request);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./messaggioView.jsp");
-				requestDispatcher.forward(request, response);
+				visualizzaMessaggio(request, response);
+				if (!response.isCommitted()) {
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("./messaggioView.jsp");
+					requestDispatcher.forward(request, response);
+				}
 				return;
 			}
 		} catch (Exception e) {
@@ -185,10 +187,18 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 * 
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
+	 * @throws IOException 
 	 */
-	private void visualizzaMessaggio(HttpServletRequest request) {
+	private void visualizzaMessaggio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String idMessaggio = request.getParameter("idMessaggio");
-		Messaggio messaggio = MessaggioModel.getMessaggioById(idMessaggio);
+		Messaggio messaggio;
+		try {
+			messaggio = MessaggioModel.getMessaggioById(idMessaggio);
+		} catch (MongoException e) {
+			response.sendRedirect("./listaMessaggiView.jsp?notifica=erroreDb");
+			//TODO alert nella jsp
+			return;
+		}
 		String nomeAllegato = messaggio.getNomeAllegato();
 		String corpoAllegato = messaggio.getCorpoAllegato();
 		Utente utente=new Utente();
