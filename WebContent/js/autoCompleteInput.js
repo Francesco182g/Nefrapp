@@ -66,7 +66,7 @@
 		$("#codiceFiscale").val(paziente.codiceFiscale);
 		if(paziente.dataDiNascita != undefined)
 		{
-			v$('#dataDiNascita').datepicker({ dateFormat: 'dd/mm/yyyy' });
+			$('#dataDiNascita').datepicker({ dateFormat: 'dd/mm/yyyy' });
 			$('#dataDiNascita').datepicker('setDate',Date(paziente.dataDiNascita));
 		}
 		$("#luogoDiNascita").val(paziente.luogoDiNascita);

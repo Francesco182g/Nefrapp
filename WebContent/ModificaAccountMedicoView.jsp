@@ -64,9 +64,12 @@
 
 
 				<!-- Begin Page Content -->
+
 				<div class="container-fluid">
 					<c:if test="${notifica == 'ParamErr'}">
-						<div class="alert alert-warning fade show" role="alert">
+						<div
+							class="alert text-center alert-warning alert-dismissible fade show"
+							role="alert">
 							Uno dei parametri non è corretto si prega di riattivare
 							javaScript per attivare i controlli<br>
 							<button type="button" class="close" data-dismiss="alert"
@@ -76,7 +79,9 @@
 						</div>
 					</c:if>
 					<c:if test="${notifica == 'PassErr'}">
-						<div class="alert alert-warning fade show" role="alert">
+						<div
+							class="alert text-center alert-warning alert-dismissible fade show"
+							role="alert">
 							Le password non corrispondono si prega di riattivare javaScript
 							per attivare i controlli<br>
 							<button type="button" class="close" data-dismiss="alert"
@@ -84,7 +89,9 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
+
 					</c:if>
+
 					<div class="my-5">
 						<div class="card-body p-0 d-flex justify-content-center">
 							<!-- Nested Row within Card Body -->

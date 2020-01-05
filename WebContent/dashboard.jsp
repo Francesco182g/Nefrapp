@@ -58,24 +58,28 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 							    <c:if test="${notifica == 'ModificaMedRiuscita'}">
-					<div class="alert alert-success fade show"
-						role="alert">
-						L'account del medico è stato modificato con successo<br>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
+							    <div
+							class="alert text-center alert-success alert-dismissible fade show"
+							role="alert">
+							L'account del medico è stato modificato con successo
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					
 				</c:if>
 							    <c:if test="${notifica == 'ModificaPazRiuscita'}">
-					<div class="alert alert-success fade show"
-						role="alert">
-						L'account del paziente è stato modificato con successo<br>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
+							    <div
+							class="alert text-center alert-success alert-dismissible fade show"
+							role="alert">
+							L'account del paziente è stato modificato con successo
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					
 				</c:if>
 					<c:choose>
 

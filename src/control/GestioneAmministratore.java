@@ -165,12 +165,15 @@ public class GestioneAmministratore extends HttpServlet {
 						password = CriptazioneUtility.criptaConMD5(password);
 						PazienteModel.changePassword(codiceFiscale, password);
 					} else {
-							response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=PassErr");
+						System.out.println("errore nella pass");	
+						response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=PassErr");
+							
 					}
 					PazienteModel.updatePaziente(paziente);
+					System.out.println("è andata tutto bene");
 					response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
 				} else {
-				
+					System.out.println("errori nei parametri");
 					response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=ParamErr");
 				}
 			}
@@ -195,6 +198,7 @@ public class GestioneAmministratore extends HttpServlet {
 						MedicoModel.updateMedico(medico);
 						response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
 					} else {
+						
 						response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=ParamErr");
 						
 					}
