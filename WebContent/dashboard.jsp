@@ -40,6 +40,7 @@
 						</button>
 					</div>
 				</c:if>
+					
 				
 				<c:if test="${notifica == 'resetSuccesso'}">
 					<div class="alert alert-primary fade show"
@@ -52,9 +53,20 @@
 						</button>
 					</div>
 				</c:if>
+				
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+							    <c:if test="${notifica == 'ModificaMedRiuscita'}">
+					<div class="alert alert-success fade show"
+						role="alert">
+						L'account del medico è stato modificato con successo<br>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:if>
 					<c:choose>
 
 						<c:when test="${isAmministratore==true && accessDone==true}">

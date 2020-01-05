@@ -53,7 +53,26 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
-							    
+							    <c:if test="${notifica == 'ParamErr'}">
+					<div class="alert alert-warning fade show"
+						role="alert">
+						Uno dei parametri non è corretto si prega di riattivare javaScript per attivare i controlli<br>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:if>
+									    <c:if test="${notifica == 'PassErr'}">
+					<div class="alert alert-warning fade show"
+						role="alert">
+						Le password non corrispondono si prega di riattivare javaScript per attivare i controlli<br>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:if>
 							    <div class="my-5">
 							      <div class="card-body p-0 d-flex justify-content-center">
 							        <!-- Nested Row within Card Body -->
@@ -187,8 +206,8 @@
 	</body>
 	<%@include file="./includes/scripts.jsp"%>
 		 	<script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
-   	 	<script src="./js/ParameterControl.js"></script>	
    	 	<script src="./js/dataPicker.js"></script>
+   	 	<script src="./js/ParameterControl.js"></script>	
    	 	<script src="./js/autoCompleteInput.js"></script>	
    	 	
 	

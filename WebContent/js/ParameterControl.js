@@ -19,8 +19,9 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 (function($) {
   "use strict"; // Start of use strict
   var sub = false
+  checkNotifica();
   $(document).ready(function(){
-	  checkNotifica();
+	
 	  var button1 = $("#registrazioneMedicoButton")
 	  var button2 = $("#accediAdminButton") 
 	  var button3 = $("#loginUtente")
@@ -413,6 +414,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 	 */
 	function checkNotifica(){
 		var notifica = $("#notifica").val()
+
 		if (notifica != undefined)
 			{
 			if(notifica.length!=0)

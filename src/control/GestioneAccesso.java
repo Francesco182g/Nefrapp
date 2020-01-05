@@ -23,7 +23,7 @@ import utility.CriptazioneUtility;
 /**
  * 
  * @author Eugenio Corbisiero, Davide Benedetto Strianese, Silvio Di Martino
- *         Questa classe � una servlet che si occupa della gestione dell'accesso
+ *         Questa classe è una servlet che si occupa della gestione dell'accesso
  *         al sistema
  *
  */
