@@ -325,27 +325,36 @@
 		var tabellaMedici = $("#tabellaAnnunci")
 		console.log(annunci)
 		var riga = ""
+		var scarica = ""
 		if(medico)
 			{
 			for (var i = 0; i < annunci.length; i++) {
-				riga += " <div class='card mt-3'><div class='card-header py-3'>"
-						+ "<h6 class='m-0 font-weight-bold text-primary'>"
-						+ annunci[i].titolo + "</h6></div>"
-						+ "<div class='card-body'><p>" + annunci[i].testo
-						+ "</p></div><div class='col-12 mt-3 mb-3 d-flex justify-content-center'><button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
+				if(annunci[i].nomeAllegato !=null)
+					{
+						scarica+="<a href='GestioneAnnunci?operazione=generaDownload&id="+annunci[i].idAnnuncio+"' class='btn mr-sm-5 btn-info btn-icon-split'><span class='icon text-white-50'><i class='fas fa-download'></i></span><span class='text'>Scarica allegato</span></a>"
+					}
+				riga += " <div class='card mt-3'><div class='card-header py-3'><h6 class='m-0 font-weight-bold text-primary'>"+annunci[i].titolo + "</h6></div>"
+						+ "<div class='card-body'><p>" + annunci[i].testo+ "</p></div>"
+						+"<div class='col-12 mt-3 mb-3 d-flex justify-content-center'>"+scarica+"<button type='button' data-toggle='modal' data-target='#eliminaModal' id = '"
 					+ i
 					+ "' class='btn btn-danger btn-user eliminaButtonAnnuncio'>Elimina</button></div></div>"
+					scarica = ""
 			}
 
 			}
 		else
 			{
 			for (var i = 0; i < annunci.length; i++) {
+				if(annunci[i].nomeAllegato !=null)
+				{
+					scarica+="<a href='GestioneAnnunci?operazione=generaDownload&id="+annunci[i].idAnnuncio+"' class='btn mr-sm-5 btn-info btn-icon-split'><span class='icon text-white-50'><i class='fas fa-download'></i></span><span class='text'>Scarica allegato</span></a>"
+				}
 				riga += " <div class='card mt-3'><div class='card-header py-3'>"
 						+ "<h6 class='m-0 font-weight-bold text-primary'>"
 						+ annunci[i].titolo + "</h6></div>"
 						+ "<div class='card-body'><p>" + annunci[i].testo
-						+ "</p></div></div>"
+						+ "</p></div><div class='col-12 mt-3 mb-3 d-flex justify-content-center'>"+scarica+"</div></div>"
+						scarica = ""
 			}
 
 			}
