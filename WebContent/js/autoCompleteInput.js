@@ -27,17 +27,17 @@
   });
   
   function caricaMedico(){
-		console.log("eseguoIlCaricamento")
+		
 		var medico = JSON.parse(sessionStorage.getItem("modMedico"))
 		sessionStorage.setItem("modMedico","")
-		console.log(medico)
+		
 		$("#nome").val(medico.nome);
 		$("#cognome").val(medico.cognome);
 		$("#codiceFiscale").val(medico.codiceFiscale);
 		if(medico.dataDiNascita != undefined)
 		{
-			var date  = medico.dataDiNascita.day+"/"+medico.dataDiNascita.month+"/"+medico.dataDiNascita.year
-			$("#dataDiNascita").val(date);
+			$('#dataDiNascita').datepicker({ dateFormat: 'dd/mm/yyyy' });
+			$('#dataDiNascita').datepicker('setDate',Date(medico.dataDiNascita));
 		}
 		$("#luogoDiNascita").val(medico.luogoDiNascita);
 		$("#residenza").val(medico.residenza);
@@ -57,17 +57,17 @@
 		
   }
   function caricaPaziente(){
-		console.log(sessionStorage.getItem("modPaziente"))
+		
 		var paziente = JSON.parse(sessionStorage.getItem("modPaziente"))
 		sessionStorage.setItem("modPaziente","")
-		console.log(paziente)
+		
 		$("#nome").val(paziente.nome);
 		$("#cognome").val(paziente.cognome);
 		$("#codiceFiscale").val(paziente.codiceFiscale);
 		if(paziente.dataDiNascita != undefined)
 		{
-			var date  = paziente.dataDiNascita.day+"/"+paziente.dataDiNascita.month+"/"+paziente.dataDiNascita.year
-			$("#dataDiNascita").val(date);
+			v$('#dataDiNascita').datepicker({ dateFormat: 'dd/mm/yyyy' });
+			$('#dataDiNascita').datepicker('setDate',Date(paziente.dataDiNascita));
 		}
 		$("#luogoDiNascita").val(paziente.luogoDiNascita);
 		console.log(paziente.residenza)

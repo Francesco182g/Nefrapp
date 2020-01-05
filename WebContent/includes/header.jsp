@@ -182,8 +182,7 @@
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">Cancel</button>
-					<form action="./GestioneAccesso" method="post">
-						<input type="hidden" name="operazione" value="logout">
+					<form action="./GestioneAccesso?operazione=logout" method="post">
 						<button class="btn btn-primary">Logout</button>
 					</form>
 				</div>

@@ -120,25 +120,6 @@
 						class="fas fa-fw fa-tachometer-alt"></i> <span>Registra
 							Medico</span></a></li>
 
-				<li class="nav-item"><a class="nav-link"
-					href="../parametri?operazione=visualizzaScheda"> <i
-						class="fas fa-fw fa-tachometer-alt"></i> <span>Modifica
-							account Medico</span></a></li>
-
-				<li class="nav-item"><a class="nav-link"
-					href="../parametri?operazione=visualizzaScheda"> <i
-						class="fas fa-fw fa-tachometer-alt"></i> <span>Rimuovi
-							Medico</span></a></li>
-
-				<li class="nav-item"><a class="nav-link"
-					href="../parametri?operazione=visualizzaScheda"> <i
-						class="fas fa-fw fa-tachometer-alt"></i> <span>Modifica
-							Password Paziente</span></a></li>
-
-				<li class="nav-item"><a class="nav-link"
-					href="../parametri?operazione=visualizzaScheda"> <i
-						class="fas fa-fw fa-tachometer-alt"></i> <span>Rimuovi
-							account Paziente</span></a></li>
 			</c:when>
 			<c:otherwise>
 			<li class="nav-item"><a class="nav-link"

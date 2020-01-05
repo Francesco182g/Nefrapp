@@ -7,6 +7,7 @@ import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import bean.Medico;
+import bean.Paziente;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
@@ -136,16 +137,8 @@ public class MedicoModel {
 		medici.updateOne(searchQuery, nuovoMedico);
 	}
 	*/
-	
-	/**
-	 * 
-	 * Questo metodo si occupa di modificare i dati di un medico.
-	 * 
-	 * @param daAggiornare oggetto di tipo <strong>Medico</strong> che include i nuovi dati del medico.
-	 * 
-	 * @precondition daAggiornare != null.
-	 */
-	public static void updateMedico(Medico daAggiornare) {
+	/*
+	 * public static void updateMedico(Medico daAggiornare) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		BasicDBObject nuovoMedico = new BasicDBObject();
 		nuovoMedico.append("$set", new Document().append("Nome", daAggiornare.getNome()));
@@ -157,6 +150,36 @@ public class MedicoModel {
 		nuovoMedico.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
 		medici.updateOne(searchQuery, nuovoMedico);
+	}
+	 */
+	/**
+	 * 
+	 * Questo metodo si occupa di modificare i dati di un medico.
+	 * 
+	 * @param daAggiornare oggetto di tipo <strong>Medico</strong> che include i nuovi dati del medico.
+	 * 
+	 * @precondition daAggiornare != null.
+	 */
+	public static void updateMedico(Medico daAggiornare) {
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+
+		
+		 Document query = new Document();
+	     query.append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+	     Document nuovoMedico = new Document();
+	     nuovoMedico.append("Nome", daAggiornare.getNome())
+        		.append("Cognome", daAggiornare.getCognome())
+    			.append("DataDiNascita", daAggiornare.getDataDiNascita())
+    			.append("Email", daAggiornare.getEmail())
+    			.append("Residenza", daAggiornare.getResidenza())
+    			.append("LuogoDiNascita", daAggiornare.getLuogoDiNascita())
+    			.append("Sesso", daAggiornare.getSesso());
+
+	 
+        Document update = new Document();
+        update.append("$set", nuovoMedico);
+        medici.updateOne(query, update);
+		
 	}
 	
 	

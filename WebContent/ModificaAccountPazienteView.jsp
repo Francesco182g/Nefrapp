@@ -53,6 +53,27 @@
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">
+	                <c:if test="${notifica == 'ParamErr'}">
+						<div class="alert alert-warning fade show" role="alert">
+							Uno dei parametri non è corretto si prega di riattivare
+							javaScript per attivare i controlli<br>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</c:if>
+					<c:if test="${notifica == 'PassErr'}">
+						<div class="alert alert-warning fade show" role="alert">
+							Le password non corrispondono si prega di riattivare javaScript
+							per attivare i controlli<br>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</c:if>
+					
 							   
 							    <div class="my-5">
 							      <div class="card-body p-0 d-flex justify-content-center">
@@ -82,7 +103,7 @@
 							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" value="${cognome}" required="required" min="2" max="30" maxlength="30">
 							                  </div>
 							                </div>
-        		0					        <c:if test="${sesso eq 'M' }">
+        							        <c:if test="${sesso eq 'M' }">
 											<div class="form-group row">
 													<div class="col-lg-4 col-mb-12 col-sm-4">
 							                    	Sesso:

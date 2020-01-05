@@ -51,8 +51,7 @@ public class GestioneAmministratore extends HttpServlet {
 					}
 					else if(operazione.equals("modifica")) {
 						modificaDatiPersonali(request, response, session);
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
-						requestDispatcher.forward(request,response);	
+							
 					}
 					else if(operazione.equals("caricaMedPaz")) {
 						Utente utente = (Utente) session.getAttribute("utente");
@@ -166,15 +165,13 @@ public class GestioneAmministratore extends HttpServlet {
 						password = CriptazioneUtility.criptaConMD5(password);
 						PazienteModel.changePassword(codiceFiscale, password);
 					} else {
-						request.setAttribute("notifica","Password non valide o non corrispondenti.");
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountPazienteView.jsp");
-						requestDispatcher.forward(request,response);
+							response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=PassErr");
 					}
 					PazienteModel.updatePaziente(paziente);
+					response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
 				} else {
-					request.setAttribute("notifica","Uno o più parametri del paziente non sono validi.");
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountPazienteView.jsp");
-					requestDispatcher.forward(request,response);
+				
+					response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=ParamErr");
 				}
 			}
 			else if(request.getParameter("tipoUtente").equals("medico")){
@@ -193,15 +190,13 @@ public class GestioneAmministratore extends HttpServlet {
 							password = CriptazioneUtility.criptaConMD5(password);
 							MedicoModel.updatePasswordMedico(codiceFiscale, password);
 						} else {
-							request.setAttribute("notifica","Password non valide o non corrispondenti.");
-							RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
-							requestDispatcher.forward(request,response);
+							response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=PassErr");
 						}
 						MedicoModel.updateMedico(medico);
+						response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
 					} else {
-						request.setAttribute("notifica","Uno o più parametri del medico non sono validi.");
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
-						requestDispatcher.forward(request,response);
+						response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=ParamErr");
+						
 					}
 			}
 		}

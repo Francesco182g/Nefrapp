@@ -62,7 +62,7 @@ public class GestioneMedico extends HttpServlet {
 			if (operazione.equals("modifica")) {
 				request.setAttribute("notifica", "Modifica effettuata con successo"); //Nel caso in cui la modifica non avviene con successo allora la stringa verr� cambiata
 				modificaAccount(request, response);
-				dispatcher.forward(request, response);
+				
 				return;
 
 			} 
@@ -150,13 +150,15 @@ public class GestioneMedico extends HttpServlet {
 
 				// TODO aggiorna dati del medico, anche la password
 				MedicoModel.updatePasswordMedico(medico.getCodiceFiscale(), password);
-				dispatcher = request.getRequestDispatcher("/dashboard.jsp"); //TODO reindirizzamento pagina modifica (chiedere admin) 
+				response.sendRedirect("/dashboard.jsp");
 			} else {
 				request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
+				requestDispatcher.forward(request,response);
 			}
 		} else {
 			request.setAttribute("notifica","Uno o pi� parametri del medico non sono validi.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ModificaAccountMedicoView.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./ModificaAccountMedicoView.jsp");
 			requestDispatcher.forward(request,response);
 		}
 	}
