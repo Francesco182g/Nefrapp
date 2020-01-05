@@ -80,7 +80,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			
 			else if (operazione.equals("inviaMessaggio")) {
 				inviaComunicazione(request, operazione);
-				response.sendRedirect("./dashboard.jsp");
+				response.sendRedirect("./dashboard.jsp?notifica=messaggioInviato");
+				//TODO: alert per notificare invio
 				return;
 			}
 			else if (operazione.equals("visualizzaElencoMessaggio")) {

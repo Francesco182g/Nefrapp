@@ -43,7 +43,6 @@ public class GestioneResetPassword extends HttpServlet {
 			
 			if (operazione == null) {
 				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
-				//come sopra
 				return;
 			}
 

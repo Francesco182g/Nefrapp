@@ -72,8 +72,8 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			
 			else if(operazione.equals("inviaAnnuncio")) {
 				inviaComunicazione(request, operazione);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");	
-				requestDispatcher.forward(request, response);
+				response.sendRedirect("./dashboard.jsp?notifica=annuncioInviato");	
+				//TODO: alert per notificare invio
 			}
 			
 			else if(operazione.equals("visualizza")) {

@@ -29,7 +29,7 @@
 				<%@include file="../includes/header.jsp"%>
 				
 				<c:if test="${notifica == 'identificazioneSuccesso'}">
-					<div class="alert alert-success alert-dismissible fade show"
+					<div class="alert alert-success fade show"
 						role="alert">
 						La richiesta di reset password è stata inviata con successo!<br>
 						Se sei un medico, troverai il link per effettuare il reset nella tua casella di posta elettronica,<br>

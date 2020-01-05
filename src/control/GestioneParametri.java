@@ -44,7 +44,10 @@ public class GestioneParametri extends HttpServlet {
 			
 			if(operazione.equals("inserisciScheda")) {
 				inserisciParametri(request,response);
-				response.sendRedirect(request.getContextPath() + "/parametri?operazione=visualizzaScheda");
+				if (!response.isCommitted()) {
+					response.sendRedirect("./parametri?operazione=visualizzaScheda&notifica=schedaInserita");
+				}
+				//TODO: alert per notificare inserimento scheda
 				return;
 			}
 			//Download report
@@ -62,9 +65,7 @@ public class GestioneParametri extends HttpServlet {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("notifica", "Errore in Gestione parametri. " + e.getMessage());
-			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request,response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 			return;
 		}
 		return;
@@ -163,6 +164,7 @@ public class GestioneParametri extends HttpServlet {
 			newCarico = Integer.parseInt(carico);
 		} catch (NumberFormatException n) {
 			System.out.println("InserisciParametri: Errore nel parsing dei dati passati");
+			response.sendRedirect("./inserimentoParametriView.jsp?notifica=schedaNonInserita");
 			return;
 		}
 
@@ -172,9 +174,8 @@ public class GestioneParametri extends HttpServlet {
 				newUf, newTempoSosta, newScarico, newCarico, LocalDate.now());
 			SchedaParametriModel.addSchedaParametri(daAggiungere);
 		}else {
-			request.setAttribute("notifica","Uno o più parametri non sono validi.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/inserimentoParametriView.jsp");
-			requestDispatcher.forward(request,response);
+			response.sendRedirect("./inserimentoParametriView.jsp?notifica=schedaNonInserita");
+			//TODO: alert di errore nel jsp
 		}
 	}
 
