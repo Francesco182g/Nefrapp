@@ -31,7 +31,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 	  var button7 = $("#inviaAnnuncio")
 	  var button8 = $("#registrazioneButton")
 	  var button9 = $("#inserimentoSchedaButton")
-	
+	  var button10 = $("#resetPasswordAmministratoreButton")
 	  
 	  $(document).submit(function(){
 				  return sub; 
@@ -75,6 +75,11 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 	  {
 		  console.log("tasto premuto7")
 		  inserimentoScheda();
+	  }
+	  else if(button10.length>0)
+	  {
+		  console.log("tasto premuto10")
+		  resetPasswordAmministratoreValidator();
 	  }
 	  
 	  
@@ -620,8 +625,48 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 				
 				return valido;
 			}
-		 
-
+			
+			 /**
+			   * Funzione che permette di validare la modifica della password dell'amministratore
+			   */
+			  function modificaPasswordAmministratoreValidator(){
+				  $("#resetPasswordAmministratoreButton").click(function(){
+						
+						
+						var valid = modificaPasswordCheck()
+						
+							if (!valid [0])
+								{
+									sub = false;
+									
+									customAlert(valid[1])
+								}
+							else
+								{
+									sub = true;
+									$(document).submit();
+								}
+							
+						});
+			  }
+			/**
+			 * Funzione che effettua la verifica dei campi di modifica password amministratore.
+			 */
+			function modificaPasswordCheck() {
+				var valido=[true];
+				var expPassword=RegExp("^[a-zA-Z0-9]*$");
+				var vecchiaPassword = $("#vecchiaPassword").val();
+				var nuovaPassword = $("#nuovaPassword").val();
+				var confermaPassword = $("#confermaPassword").val();
+				if (!expPassword.test(vecchiaPassword)||vecchiaPassword.length<6||vecchiaPassword.length>20)
+					valido=[false,passwordMsg];
+				else if (!expPassword.test(nuovaPassword)||nuovaPassword.length<6||nuovaPassword.length>20)
+					valido=[false,passwordMsg];
+				else if (!expPassword.test(confermaPassword)||confermaPassword.length<6||confermaPassword.length>20||confermaPassword!=nuovaPassword)
+					valido=[false,confermaPasswordMsg];
+				
+				return valido;
+			}
 	
 })(jQuery); // End of use strict
 

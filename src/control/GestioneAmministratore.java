@@ -125,6 +125,7 @@ public class GestioneAmministratore extends HttpServlet {
 					if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
 						nuovaPassword = CriptazioneUtility.criptaConMD5(nuovaPassword);
 						AmministratoreModel.updateAmministratore(amministratoreLoggato.getCodiceFiscale(),nuovaPassword);
+						response.sendRedirect("./dashboard.jsp?notifica=ModificaPasswordAmministratoreRiuscita");
 					} else {
 						request.setAttribute("notifica","Le password non corrispondono.");
 						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
