@@ -4,9 +4,9 @@
 <!-- Custom fonts for this template-->
 
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="d-none d-sm-block">
+<div class="nefrapp-sidebar d-none d-sm-block">
 	<!-- Sidebar -->
-	<ul
+	<ul 
 		class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 		id="accordionSidebar">
 

@@ -22,7 +22,7 @@
 		<%@include file="../includes/sidebar.jsp"%>
 
 		<!-- Content Wrapper -->
-		<div id="content-wrapper" class="d-flex flex-column">
+		<div id="content-wrapper" class="d-flex flex-column" style="display: inline-block">
 
 			<!-- Main Content -->
 			<div id="content">
@@ -30,30 +30,6 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<c:if test="${notifica == 'ModificaMedRiuscita'}">
-						<div
-							class="alert text-center alert-success alert-dismissible fade show"
-							role="alert">
-							L'account del medico è stato modificato con successo
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-
-					</c:if>
-					<c:if test="${notifica == 'ModificaPazRiuscita'}">
-						<div
-							class="alert text-center alert-success alert-dismissible fade show"
-							role="alert">
-							L'account del paziente è stato modificato con successo
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-
-					</c:if>
 					<c:choose>
 
 						<c:when test="${isAmministratore==true && accessDone==true}">
