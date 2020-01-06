@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -64,9 +65,8 @@ public class GestioneMedico extends HttpServlet {
 																						// avviene con successo allora
 																						// la stringa verr� cambiata
 				modificaAccount(request, response);
-
 				return;
-
+			
 			} else if (operazione.equals("VisualizzaPazientiSeguiti")) {
 				String tipo = request.getParameter("tipo");
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
@@ -83,12 +83,13 @@ public class GestioneMedico extends HttpServlet {
 					return;
 				}
 
-			} else if (operazione.equals("elimina")) {
-				MedicoModel.removeMedico(medico.getCodiceFiscale());
-				request.setAttribute("notifica", "Account eliminato con successo");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-				dispatcher.forward(request, response);
+			} else if (operazione.equals("eliminaAccount")) {
+				eliminaAccount(request,response);
+				if (!response.isCommitted()) {
+					response.sendRedirect("./login.jsp?notifica=accountDisattivato");//Lascio "Disattivato" perchè non so cosa va a cambiare
+				}
 				return;
+				
 			} else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
@@ -109,6 +110,24 @@ public class GestioneMedico extends HttpServlet {
 		return;
 	}
 
+	private void eliminaAccount(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session=request.getSession();
+		Medico medico = (Medico) session.getAttribute("utente");
+		if (medico!=null) {
+			if(PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale())!=null) {
+			//non è possibile effettuare l'eliminazione, notificare al medico che non può proseguire con l'opeazione fino a che
+			//segue dei pazienti.
+			}
+			else {
+				MedicoModel.removeMedico(medico.getCodiceFiscale());
+				request.setAttribute("notifica", "Account eliminato con successo");
+				session.removeAttribute("utente");
+				session.setAttribute("accessDone", false);
+			}
+ 
+		}
+		
+	}
 	private void modificaAccount(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

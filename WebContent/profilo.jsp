@@ -146,6 +146,9 @@
 												</c:if>
 											</c:forEach>
 										</h2>
+										<button type="button" class="btn btn-warning"
+											data-toggle="modal" data-target="#eliminaModal"
+											style="margin-left: 70%;">Elimina account</button>
 									</c:if>
 
 									<c:if test="${isPaziente}">
@@ -190,6 +193,31 @@
 					<form action="./GestionePaziente" method="get">
 						<input type="hidden" name="operazione" value="disattivaAccount">
 						<button class="btn btn-warning">Disattiva</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- elimina Modal-->
+	<div class="modal fade" id="eliminaModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Sei sicuro?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Seleziona "Elimina" qui sotto se sei
+					sicuro di voler eliminare il tuo account.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Annulla</button>
+					<form action="./GestioneMedico" method="get">
+						<input type="hidden" name="operazione" value="eliminaAccount">
+						<button class="btn btn-warning">Elimina</button>
 					</form>
 				</div>
 			</div>
