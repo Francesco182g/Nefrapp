@@ -23,9 +23,9 @@
 	            <!-- Main Content -->
 	            <div id="content">
 					<%@include file="./includes/header.jsp" %>
-					<c:if test="${not empty isAmministratore}">
-						<c:redirect url="./dashboard.jsp"></c:redirect>
-					</c:if>
+				<c:if test="${accessDone == true}">
+					<c:redirect url="./dashboard.jsp"></c:redirect>
+				</c:if>
 	
 	                <!-- Begin Page Content -->
 	                <div class="container-fluid">

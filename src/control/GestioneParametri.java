@@ -99,11 +99,11 @@ public class GestioneParametri extends HttpServlet {
 		utente = (Utente) session.getAttribute("utente");
 		
 		if (session.getAttribute("isPaziente")!= null && (boolean)session.getAttribute("isPaziente") == true){
-			scheda = SchedaParametriModel.getSchedaParametriByCF(utente.getCodiceFiscale());
+			scheda = SchedaParametriModel.getSchedeParametriByCF(utente.getCodiceFiscale());
 		}	
 		else if (session.getAttribute("isMedico") != null && (boolean)session.getAttribute("isMedico") == true) {
 			System.out.println(request.getParameter("CFPaziente"));
-			scheda = SchedaParametriModel.getSchedaParametriByCF(request.getParameter("CFPaziente"));
+			scheda = SchedaParametriModel.getSchedeParametriByCF(request.getParameter("CFPaziente"));
 		}
 		else {
 

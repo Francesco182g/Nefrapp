@@ -141,12 +141,10 @@
 
 
 <!-- monitoraggioParametriView -->
-<c:if test="${notifica != null}">
+<c:if test="${notifica == 'schedaInserita'}">
 	<div class="alert alert-success alert-dismissible fade show"
 		role="alert">
-		<c:if test="${notifica == 'schedaInserita'}">
 		Scheda parametri inserita con successo!
-		</c:if>
 		<button type="button" class="close" data-dismiss="alert"
 			aria-label="Close">
 			<span aria-hidden="true">&times;</span>
