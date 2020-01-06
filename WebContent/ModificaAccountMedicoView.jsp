@@ -82,9 +82,15 @@
 
 
 											<input type="hidden" id="notifica"
-												value="${requestScope.notifica}"> <input
+												value="${requestScope.notifica}"> 
+												<c:if test='${isAmministratore}'>
+																					<input
 												type="hidden" name="operazione" value="modifica"> <input
 												type="hidden" name="tipoUtente" value="medico">
+												<input
+												type="hidden" id="operatore" value="op">
+												</c:if>
+				
 											<div class="form-group row col-lg-12">
 												Codice Fiscale: <input type="text"
 													class="form-control form-control-user" name="codiceFiscale"

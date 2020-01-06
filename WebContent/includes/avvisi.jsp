@@ -99,6 +99,46 @@
 		</button>
 	</div>
 </c:if>
+<c:if test="${notifica == 'annuncioRimosso'}">
+	<div class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		Annuncio rimosso con successo!<br>
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
+<c:if test="${notifica == 'medicoRimosso'}">
+	<div class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		Medico rimosso con successo!<br>
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
+<c:if test="${notifica == 'pazienteRimosso'}">
+	<div class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		Paziente rimosso con successo!<br>
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
+<c:if test="${notifica == 'ModificaAdmnRiuscita'}">
+	<div class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		Password dell'amministratore modificata con successo!<br>
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
 <!-- dashboard -->
 
 
@@ -132,36 +172,6 @@
 </c:if>
 <!-- modificaAccountMedicoView -->
 
-
-
-<!-- modificaAccountPazienteView -->
-<c:if test="${notifica == 'ParamErr'}">
-	<div
-		class="alert text-center alert-warning alert-dismissible fade show"
-		role="alert">
-		Uno dei parametri non è corretto si prega di riattivare
-		javaScript per attivare i controlli<br>
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-</c:if>
-
-<c:if test="${notifica == 'PassErr'}">
-	<div
-		class="alert text-center alert-warning alert-dismissible fade show"
-		role="alert">
-		Le password non corrispondono si prega di riattivare javaScript
-		per attivare i controlli<br>
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-
-</c:if>
-<!-- modificaAccountPazienteView -->
 
 
 <!-- monitoraggioParametriView -->
