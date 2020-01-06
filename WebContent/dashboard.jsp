@@ -22,7 +22,7 @@
 		<%@include file="../includes/sidebar.jsp"%>
 
 		<!-- Content Wrapper -->
-		<div id="content-wrapper" class="d-flex flex-column">
+		<div id="content-wrapper" class="d-flex flex-column" style="display: inline-block">
 
 			<!-- Main Content -->
 			<div id="content">
