@@ -28,45 +28,6 @@
 			<div id="content">
 				<%@include file="../includes/header.jsp"%>
 
-				<!-- 			Avvisi di successo (scompaiono) -->
-				<c:if test="${notifica != null}">
-					<div class="alert alert-success alert-dismissible fade show"
-						role="alert">
-						<c:if test="${notifica == 'messaggioInviato'}">
-						Messaggio inviato con successo!
-						</c:if>
-						<c:if test="${notifica == 'annuncioInviato'}">
-						Annuncio inviato con successo!
-						</c:if>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				</c:if>
-
-				<!-- 			Avvisi di servizio (non scompaiono) -->
-				<c:if test="${notifica != null}">
-					<div class="alert alert-primary fade show" role="alert">
-						<c:if test="${notifica == 'resetSuccesso'}">
-							La tua password è stata reimpostata con successo!<br>
-							Puoi accedere con la tua nuova password cliccando <a
-								href="./login.jsp"><strong>qui</strong></a>
-						</c:if>
-						<c:if test="${notifica == 'identificazioneSuccesso'}">
-							La richiesta di reset password è stata inviata con successo!<br>
-							Se sei un medico, troverai il link per effettuare il reset nella tua casella di posta elettronica,<br>
-							se sei un paziente, sarai contattato dall'amministratore di Nefrapp per ricevere la tua nuova password.
-						</c:if>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				</c:if>
-				
-				
-
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<c:if test="${notifica == 'ModificaMedRiuscita'}">

@@ -14,17 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.mongodb.MongoException;
+
 import bean.Annuncio;
 import bean.Medico;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
+import model.MessaggioModel;
 import model.UtenteModel;
 import utility.CriptazioneUtility;
 
 /**
- * @author Davide Benedetto Strianese, Sara Questa classe � una servlet che si
- *         occupa della gestione degli annunci
+ * @author Davide Benedetto Strianese, Sara, Nico, Eugenio Questa classe è una
+ *         servlet che si occupa della gestione degli annunci
  */
 @WebServlet("/GestioneAnnunci")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
@@ -63,6 +66,15 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				response.getWriter().write(gg.toJson("success"));
 			}
 
+			else if (operazione.equals("rimuoviAnnuncio")) {
+				rimuoviAnnuncio(request);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				Gson gg = new Gson();
+				response.getWriter().write(gg.toJson("success"));
+
+			}
+
 			else if (operazione.equals("rimuoviAnnuncioIncompleto")) {
 				rimuoviIncompleta("annuncio", session);
 				response.setContentType("application/json");
@@ -74,7 +86,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			else if (operazione.equals("inviaAnnuncio")) {
 				inviaComunicazione(request, operazione);
 				response.sendRedirect("./dashboard.jsp?notifica=annuncioInviato");
-				// TODO: alert per notificare invio
 			}
 
 			else if (operazione.equals("visualizza")) {
@@ -98,20 +109,13 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 
 			else {
-				request.setAttribute("notifica", "Operazione scelta non valida");
-				RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
-				requestDispatcher.forward(request, response);
+				response.sendRedirect("./paginaErrore?notifica=noOperazione");
 			}
-
+		} catch (MongoException e) {
+			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
-			System.out.println("Errore durante il caricamento della pagina:");
 			e.printStackTrace();
-			/*
-			 * request.setAttribute("notifica", "Errore in Gestione annunci. " +
-			 * e.getMessage()); RequestDispatcher requestDispatcher =
-			 * getServletContext().getRequestDispatcher("/paginaErrore.jsp");
-			 * //requestDispatcher.forward(request, response); return;
-			 */
+			response.sendRedirect("./paginaErrore?notifica=eccezione");
 		}
 
 		return;
@@ -158,9 +162,14 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		}
 	}
 
+	protected void rimuoviAnnuncio(HttpServletRequest request) {
+		String id = (String) request.getParameter("id");
+		AnnuncioModel.deleteAnnuncioById(id);
+	}
+
 	/**
 	 * Metodo che prende l'annuncio e lo salva nella richiesta cos� da poter essere
-	 * visualizzato
+	 * visualizzato (probabilmente non servirà)
 	 * 
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
@@ -221,7 +230,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
-			
+
 			if (!annunci.isEmpty()) {
 				for (Annuncio a : annunci) {
 					if (a.getNomeAllegato() != "" && a.getNomeAllegato() != null) {
@@ -259,8 +268,9 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			ArrayList<String> cache = new ArrayList<>();
 			ArrayList<Utente> utentiCache = new ArrayList<>();
 			Utente utenteSelezionato = new Utente();
-			
-			// piccolo sistema di caching per minimizzare le query sui medici autori degli annunci
+
+			// piccolo sistema di caching per minimizzare le query sui medici autori degli
+			// annunci
 			// Se un paziente ha 200 annunci scritti da 5 medici si fanno 5 query e non 200.
 			for (Annuncio a : annunci) {
 				if (!cache.contains(a.getMedico())) {
@@ -292,7 +302,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				request.setAttribute("annunci", annunci);
 			}
 		}
-		
+
 		else {
 			return;
 		}

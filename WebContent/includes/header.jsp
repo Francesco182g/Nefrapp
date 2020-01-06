@@ -189,3 +189,7 @@
 			</div>
 		</div>
 	</div>
+	
+	<%@include file="../includes/avvisi.jsp"%>
+	
+					

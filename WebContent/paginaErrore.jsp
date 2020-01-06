@@ -35,15 +35,19 @@
             					<p class="text-gray-500 mb-0">
             					<c:if test="${notifica == 'eccezione'}" >
 	            					ERR#1: servlet exception<br><br><br>
-	            					C'è stato un errore interno! Ci dispiace per il contrattempo!
+	            					C'è stato un errore di sistema, ci dispiace per il contrattempo!
             					</c:if>
             					<c:if test="${notifica == 'noOperazione'}" >
 	            					ERR#2: no operation selected<br><br><br>
-	            					C'è stato un errore interno! Ci dispiace per il contrattempo!
+	            					C'è stato un errore di sistema, ci dispiace per il contrattempo!
             					</c:if>
 								<c:if test="${notifica == 'accessoNegato'}" >
 	            					ERR#3: access policy violation<br><br><br>
 	            					Ehi, tu! Sì, dico a te! Tu non puoi stare qui!
+            					</c:if>
+								<c:if test="${notifica == 'erroreDB'}" >
+	            					ERR#4: database unavailable<br><br><br>
+	            					Oh, no! È saltato il database! Ci stanno tracciando! Stacca stacca!
             					</c:if>
 								</p>
             					<a href="dashboard.jsp">&larr; Torna alla dashboard</a>

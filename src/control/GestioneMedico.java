@@ -24,8 +24,8 @@ import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 /**
- * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
- * Questa clase � una servlet che si occupa della gestione del medico
+ * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco Questa
+ *         clase � una servlet che si occupa della gestione del medico
  *
  */
 @WebServlet("/GestioneMedico")
@@ -33,26 +33,25 @@ public class GestioneMedico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String operazione = request.getParameter("operazione");
 			System.out.println(operazione);
 			Amministratore amministratore = null;
 			Medico medico = (Medico) request.getSession().getAttribute("utente");
-			if(medico == null) {
+			if (medico == null) {
 				amministratore = (Amministratore) request.getSession().getAttribute("utente");
 			}
-		
-			
-			if(medico == null && amministratore == null) {
+
+			if (medico == null && amministratore == null) {
 				request.setAttribute("notifica", "Non si hanno i permessi necessari");
 				dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
-			
-			if(operazione.equals("visualizzaProfilo"))
-			{
+
+			if (operazione.equals("visualizzaProfilo")) {
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
 				request.setAttribute("pazientiSeguiti", pazientiSeguiti);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./profilo.jsp");
@@ -61,68 +60,57 @@ public class GestioneMedico extends HttpServlet {
 			}
 
 			if (operazione.equals("modifica")) {
-				request.setAttribute("notifica", "Modifica effettuata con successo"); //Nel caso in cui la modifica non avviene con successo allora la stringa verr� cambiata
+				request.setAttribute("notifica", "Modifica effettuata con successo"); // Nel caso in cui la modifica non
+																						// avviene con successo allora
+																						// la stringa verr� cambiata
 				modificaAccount(request, response);
-				
+
 				return;
 
-			} 
-			else if (operazione.equals("VisualizzaPazientiSeguiti")) {
+			} else if (operazione.equals("VisualizzaPazientiSeguiti")) {
 				String tipo = request.getParameter("tipo");
 				ArrayList<Paziente> pazientiSeguiti = PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale());
-				if(tipo != null  && tipo.equals("asincrona"))
-				{
+				if (tipo != null && tipo.equals("asincrona")) {
 					response.setContentType("application/json");
 					response.setCharacterEncoding("UTF-8");
 					Gson gg = new Gson();
 					response.getWriter().write(gg.toJson(pazientiSeguiti));
-				}
-				else {
+				} else {
 					request.setAttribute("pazientiSeguiti", pazientiSeguiti);
-					dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento pazienti
+					dispatcher = getServletContext().getRequestDispatcher("/listaPazientiView.jsp"); // reindirizzamento
+																										// pazienti
 					dispatcher.forward(request, response);
 					return;
 				}
-				
 
-			} 
-			else if (operazione.equals("elimina")) {
+			} else if (operazione.equals("elimina")) {
 				MedicoModel.removeMedico(medico.getCodiceFiscale());
 				request.setAttribute("notifica", "Account eliminato con successo");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.forward(request, response);
 				return;
-			}
-			else if(operazione.equals("eliminaAnnuncio"))
-			{
-				String id = request.getParameter("identificatore");
-				AnnuncioModel.deleteAnnuncioById(id);
-				response.setContentType("application/json");
-				response.setCharacterEncoding("UTF-8");
-				Gson gg = new Gson();
-				response.getWriter().write(gg.toJson("success"));
-				
-			}
-			else {
+			} else {
 				request.setAttribute("notifica", "Operazione scelta non valida");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			request.setAttribute("notifica", "Errore in Gestione medico. " + e.getMessage());
 			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request,response);
+			dispatcher.forward(request, response);
 			return;
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 		return;
 	}
 
-	private void modificaAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void modificaAccount(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// TODO verificare i nomi dei parametri con la jsp
 		String codiceFiscale = request.getParameter("codiceFiscale");
@@ -151,13 +139,13 @@ public class GestioneMedico extends HttpServlet {
 				medico.setLuogoDiNascita(luogoDiNascita);
 
 				if (!dataDiNascita.equals("")) {
-					medico.setDataDiNascita(LocalDate.parse(dataDiNascita,DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+					medico.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 				}
 				MedicoModel.updateMedico(medico);
 				password = CriptazioneUtility.criptaConMD5(password);// serve a criptare la pasword in MD5
-																				// prima di registrarla nel db ps.non
-																				// cancellare il commento quando
-																				// spostate la classe
+																		// prima di registrarla nel db ps.non
+																		// cancellare il commento quando
+																		// spostate la classe
 
 				// TODO aggiorna dati del medico, anche la password
 				MedicoModel.updatePasswordMedico(medico.getCodiceFiscale(), password);
@@ -165,12 +153,12 @@ public class GestioneMedico extends HttpServlet {
 			} else {
 				request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
-				requestDispatcher.forward(request,response);
+				requestDispatcher.forward(request, response);
 			}
 		} else {
-			request.setAttribute("notifica","Uno o pi� parametri del medico non sono validi.");
+			request.setAttribute("notifica", "Uno o pi� parametri del medico non sono validi.");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./ModificaAccountMedicoView.jsp");
-			requestDispatcher.forward(request,response);
+			requestDispatcher.forward(request, response);
 		}
 	}
 
@@ -189,50 +177,45 @@ public class GestioneMedico extends HttpServlet {
 		String expDataDiNascita = "^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 		String expPassword = "^[a-zA-Z0-9]*$";
 
-		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
-		{
+		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16) {
 			valido = false;
 			System.out.println("1");
 		}
-			
-		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30)
-		{
+
+		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30) {
 			valido = false;
 			System.out.println("2");
-		}	if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
+		}
+		if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
 			valido = false;
-		if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20)
-		{
+		if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20) {
 			valido = false;
 			System.out.println("3");
 		}
-		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
-		{
+		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1) {
 			valido = false;
 			System.out.println("4");
-		}if (!Pattern.matches(expEmail, email))
-		{
+		}
+		if (!Pattern.matches(expEmail, email)) {
 			valido = false;
 			System.out.println("5");
-		}if (!residenza.equals(""))
-			if (!Pattern.matches(expResidenza, residenza))
-			{
+		}
+		if (!residenza.equals(""))
+			if (!Pattern.matches(expResidenza, residenza)) {
 				valido = false;
 				System.out.println("6");
-			}if (!luogoDiNascita.equals(""))
-			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
-			{
+			}
+		if (!luogoDiNascita.equals(""))
+			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita)) {
 				valido = false;
 				System.out.println("7");
 			}
 		if (!dataDiNascita.equals(""))
-			if (!Pattern.matches(expDataDiNascita, dataDiNascita))
-			{
+			if (!Pattern.matches(expDataDiNascita, dataDiNascita)) {
 				valido = false;
 				System.out.println("8");
 			}
-		if (!confermaPsw.equals(password))
-		{
+		if (!confermaPsw.equals(password)) {
 			valido = false;
 			System.out.println("9");
 		}

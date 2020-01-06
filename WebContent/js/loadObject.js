@@ -186,13 +186,11 @@
 			$(".eliminaButtonAnnuncio").click(function() {
 				$("#eliminazione").children().remove()
 				var id = $(this).attr("id")
-				console.log(id)
-				console.log(data[id].idAnnuncio)
 				addConfermaEliminazione("annuncio")
 				$("#confermaEliminazione").click(function() {
-					$.post("GestioneMedico", {
-						operazione : "eliminaAnnuncio",
-						identificatore:data[id].idAnnuncio
+					$.post("GestioneAnnunci", {
+						operazione : "rimuoviAnnuncio",
+						id : data[id].idAnnuncio
 					}, function(data){
 						window.location.href = "dashboard.jsp"
 					}).fail(function(){

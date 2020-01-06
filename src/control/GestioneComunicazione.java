@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import com.mongodb.MongoException;
 
 import bean.Annuncio;
 import bean.AnnuncioCompleto;
@@ -40,11 +41,10 @@ import utility.CriptazioneUtility;
  */
 @WebServlet("/comunicazione")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
-maxFileSize = 15728640, // 15MB
-maxRequestSize = 15728640) // 15MB
+		maxFileSize = 15728640, // 15MB
+		maxRequestSize = 15728640) // 15MB
 public class GestioneComunicazione extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RequestDispatcher dispatcher;
 
 	public GestioneComunicazione() {
 		super();
@@ -54,18 +54,14 @@ public class GestioneComunicazione extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				request.setAttribute("notification", "Errore generato dalla richiesta!");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp"); // TODO
-																											// reindirizzamento
-				// home
-				dispatcher.forward(request, response);
+				response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 				return;
 			}
-
+			
+		} catch (MongoException e) {
+			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
-			request.setAttribute("notifica", "Errore in Gestione Comunicazione. " + e.getMessage());
-			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 			e.printStackTrace();
 		}
 
@@ -80,7 +76,8 @@ public class GestioneComunicazione extends HttpServlet {
 	/**
 	 * Metodo che carica i destinatari ammessi per inviare messaggi e annunci
 	 * 
-	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 * @param request richiesta utilizzata per ottenere parametri e settare
+	 *                attributi
 	 * @throws ServletException
 	 * @throws IOException
 	 */
@@ -108,61 +105,56 @@ public class GestioneComunicazione extends HttpServlet {
 			request.setAttribute("pazientiSeguiti", pazientiSeguiti);
 		}
 
-		else {
-			System.out.println("L'utente deve essere loggato");
-		}
+		return;
 	}
 
 	/**
-	 * Metodo che prende mittente, destinatari, oggetto e testo della
-	 * comunicazione e la salva nel database
+	 * Metodo che prende mittente, destinatari, oggetto e testo della comunicazione
+	 * e la salva nel database
 	 * 
-	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
-	 * @param operazione, stringa usata per distinguere l'inserimento di un annuncio dall'inserimento di un messaggio
+	 * @param request     richiesta utilizzata per ottenere parametri e settare
+	 *                    attributi
+	 * @param operazione, stringa usata per distinguere l'inserimento di un annuncio
+	 *                    dall'inserimento di un messaggio
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	protected void inviaComunicazione(HttpServletRequest request, String operazione)
 			throws IOException, ServletException {
-		
+
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
-		if (session.getAttribute("accessDone") != null && (boolean) session.getAttribute("accessDone") == true) {
-			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
-				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
-			} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
-				destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
-			}
-			String CFMittente = utente.getCodiceFiscale();
-			String oggetto = request.getParameter("oggetto");
-			String testo = request.getParameter("testo");
-			HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
-			for (String temp : destinatari) {
-				destinatariView.put(temp, false);
-			}
 
-			String id = (String) session.getAttribute("id");
+		if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
+			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
+		} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
+			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
+		}
+		String CFMittente = utente.getCodiceFiscale();
+		String oggetto = request.getParameter("oggetto");
+		String testo = request.getParameter("testo");
+		HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
+		for (String temp : destinatari) {
+			destinatariView.put(temp, false);
+		}
+		String id = (String) session.getAttribute("id");
 
-			if (controllaParametri(CFMittente, oggetto, testo)) {
-				if (operazione.equals("inviaMessaggio")) {
-					if (id != null) {
-						MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null,
-								destinatariView);
-					} else {
-						MessaggioModel.addMessaggio(new MessaggioCompleto(CFMittente, oggetto, testo, null, null,
-								ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
-					}
-				} else if (operazione.equals("inviaAnnuncio")) {
-					if (id != null) {
-						AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
-					} else {
-						AnnuncioModel.addAnnuncio(new AnnuncioCompleto(CFMittente, oggetto, testo, null, null,
-								ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
-					}
+		if (controllaParametri(CFMittente, oggetto, testo)) {
+			if (operazione.equals("inviaMessaggio")) {
+				if (id != null) {
+					MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
+				} else {
+					MessaggioModel.addMessaggio(new MessaggioCompleto(CFMittente, oggetto, testo, null, null,
+							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
 				}
-			} else {
-				System.out.println("L'utente deve essere loggato");
+			} else if (operazione.equals("inviaAnnuncio")) {
+				if (id != null) {
+					AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
+				} else {
+					AnnuncioModel.addAnnuncio(new AnnuncioCompleto(CFMittente, oggetto, testo, null, null,
+							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
+				}
 			}
 		}
 
@@ -188,15 +180,17 @@ public class GestioneComunicazione extends HttpServlet {
 				try {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
-					
-					if (tipo!= null && tipo.equals("messaggio")) {
-						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
+
+					if (tipo != null && tipo.equals("messaggio")) {
+						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile,
+								ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
 						id = MessaggioModel.addMessaggio(messaggio);
-					} else if (tipo!= null && tipo.equals("annuncio")) {
-						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile, ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
+					} else if (tipo != null && tipo.equals("annuncio")) {
+						annuncio = new AnnuncioCompleto(null, null, null, allegato, nomeFile,
+								ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
 						id = AnnuncioModel.addAnnuncio(annuncio);
 					}
-					
+
 				} catch (Exception e) {
 					System.out.println("caricaAllegato: errore nel caricamento del file");
 					e.printStackTrace();
@@ -218,43 +212,46 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 		}
 	}
-	
+
 	protected void rimuoviAllegato(String tipo, HttpSession session) {
 
-		String id = (String)session.getAttribute("id");
-		
-		if (tipo!= null && id!=null && tipo.equals("messaggio")) {
+		String id = (String) session.getAttribute("id");
+
+		if (tipo != null && id != null && tipo.equals("messaggio")) {
 			MessaggioModel.deleteMessaggioById(id);
-		} else if (tipo!= null && id!=null && tipo.equals("annuncio")) {
+		} else if (tipo != null && id != null && tipo.equals("annuncio")) {
 			AnnuncioModel.deleteAnnuncioById(id);
 		}
-		
+
 		session.removeAttribute("allegato");
 		session.removeAttribute("nomeFile");
 		session.removeAttribute("id");
 	}
-	
-	
-	/**Questo metodo rimuove una comunicazione incompleta nel caso in cui l'utente esca dalla pagina di invio.
-	 * @param tipo, stringa contenente il tipo di comunicazione da eliminare
-	 * @param session, HttpSession da cui eliminare gli attributi relativi all'allegato
+
+	/**
+	 * Questo metodo rimuove una comunicazione incompleta nel caso in cui l'utente
+	 * esca dalla pagina di invio.
+	 * 
+	 * @param tipo,    stringa contenente il tipo di comunicazione da eliminare
+	 * @param session, HttpSession da cui eliminare gli attributi relativi
+	 *                 all'allegato
 	 */
 	protected void rimuoviIncompleta(String tipo, HttpSession session) {
 		ArrayList<Messaggio> messaggi;
 		ArrayList<Annuncio> annunci;
-		
-		if (tipo!= null && tipo.equals("messaggio")) {
+
+		if (tipo != null && tipo.equals("messaggio")) {
 			messaggi = MessaggioModel.getMessaggiByDestinatario(null);
 			for (Messaggio m : messaggi) {
 				MessaggioModel.deleteMessaggioById(m.getIdMessaggio());
 			}
-		} else if (tipo!= null && tipo.equals("annuncio")) {
+		} else if (tipo != null && tipo.equals("annuncio")) {
 			annunci = AnnuncioModel.getAnnunciByCFMedico(null);
 			for (Annuncio a : annunci) {
 				AnnuncioModel.deleteAnnuncioById(a.getIdAnnuncio());
 			}
 		}
-		
+
 		session.removeAttribute("allegato");
 		session.removeAttribute("nomeFile");
 		session.removeAttribute("id");

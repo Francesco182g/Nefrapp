@@ -67,19 +67,6 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<c:if test="${notifica != null}">
-						<div
-							class="alert text-center alert-success alert-dismissible fade show"
-							role="alert">
-							<c:if test="${notifica == 'modificaEffettuata'}">
-							Le modifiche sono state effettuate con successo!<br>
-							</c:if>
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-					</c:if>
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-4 text-gray-800">Profilo personale</h1>

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,12 +38,13 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	}
 
 	/**
+	 * @throws IOException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			
+
 			HttpSession session = request.getSession();
 			String operazione = request.getParameter("operazione");
 			if (operazione.equals("caricaDestinatariMessaggio")) {
@@ -53,48 +53,45 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				requestDispatcher.forward(request, response);
 				return;
 			}
-			
+
 			else if (operazione.equals("caricaAllegato")) {
 				caricaAllegato(request, "messaggio", session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
-				response.getWriter().write(gg.toJson("success"));	
+				response.getWriter().write(gg.toJson("success"));
 				return;
 			}
-			
+
 			else if (operazione.equals("rimuoviAllegato")) {
 				rimuoviAllegato("messaggio", session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
-				response.getWriter().write(gg.toJson("success"));	
+				response.getWriter().write(gg.toJson("success"));
 				return;
 			}
-			
+
 			else if (operazione.equals("rimuoviMessaggioIncompleto")) {
 				rimuoviIncompleta("messaggio", session);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				Gson gg = new Gson();
-				response.getWriter().write(gg.toJson("success"));	
+				response.getWriter().write(gg.toJson("success"));
 			}
-			
+
 			else if (operazione.equals("inviaMessaggio")) {
 				inviaComunicazione(request, operazione);
 				response.sendRedirect("./dashboard.jsp?notifica=messaggioInviato");
-				//TODO: alert per notificare invio
 				return;
-			}
-			else if (operazione.equals("visualizzaElencoMessaggio")) {
+			} else if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaListaMessaggi(request, response);
 				if (!response.isCommitted()) {
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
 					requestDispatcher.forward(request, response);
 				}
 				return;
-			}
-			else if (operazione.equals("visualizzaMessaggio")) {
+			} else if (operazione.equals("visualizzaMessaggio")) {
 				visualizzaMessaggio(request, response);
 				if (!response.isCommitted()) {
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("./messaggioView.jsp");
@@ -102,23 +99,24 @@ public class GestioneMessaggi extends GestioneComunicazione {
 				}
 				return;
 			}
+		} catch (MongoException e) {
+			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
-			try {
-				response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 		}
 		return;
 	}
 
 	/**
-	 * @throws ServletException
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		doGet(request, response);
+		try {
+			doGet(request, response);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -127,7 +125,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 * 
 	 * @param request richiesta utilizzata per ottenere parametri e settare
 	 *                attributi
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private void visualizzaListaMessaggi(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Utente utente = null;
@@ -140,18 +138,13 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			ArrayList<Utente> utentiCache = new ArrayList<>();
 			Utente utenteSelezionato = new Utente();
 			ArrayList<Messaggio> messaggi = new ArrayList<Messaggio>();
-			try {
-				messaggi = MessaggioModel.getMessaggiByDestinatario(utente.getCodiceFiscale());
-			} catch (MongoException e) {
-				response.sendRedirect("./listaMessaggiView.jsp?notifica=erroreDb");
-				//TODO alert nella jsp
-				return;
-			}
+
+			messaggi = MessaggioModel.getMessaggiByDestinatario(utente.getCodiceFiscale());
 			request.setAttribute("messaggio", messaggi);
-			
+
 			if (messaggi.isEmpty()) {
 				return;
-			} 
+			}
 
 			// piccolo sistema di caching per minimizzare le query sui mittenti dei messaggi
 			// Se un paziente ha 200 messaggi da 5 medici si fanno 5 query e non 200.
@@ -179,7 +172,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			System.out.println("L'utente deve essere loggato");
 		}
 	}
-	
+
 	/**
 	 * Metodo che prende l'id di un messaggio dalla request e lo usa
 	 * per prendere il messaggio corrispondente dal database, decriptarne l'allegato
@@ -192,13 +185,8 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	private void visualizzaMessaggio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String idMessaggio = request.getParameter("idMessaggio");
 		Messaggio messaggio;
-		try {
-			messaggio = MessaggioModel.getMessaggioById(idMessaggio);
-		} catch (MongoException e) {
-			response.sendRedirect("./listaMessaggiView.jsp?notifica=erroreDb");
-			//TODO alert nella jsp
-			return;
-		}
+		messaggio = MessaggioModel.getMessaggioById(idMessaggio);
+		
 		String nomeAllegato = messaggio.getNomeAllegato();
 		String corpoAllegato = messaggio.getCorpoAllegato();
 		Utente utente=new Utente();

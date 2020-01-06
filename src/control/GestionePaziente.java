@@ -42,7 +42,7 @@ public class GestionePaziente extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta!");
@@ -79,7 +79,6 @@ public class GestionePaziente extends HttpServlet {
 			}
 			
 			} catch (Exception e) {
-				System.out.println("Errore durante il caricamento della pagina:");
 				e.printStackTrace();
 				if (!response.isCommitted()) {
 					response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");	
@@ -90,7 +89,7 @@ public class GestionePaziente extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doGet(request, response);
 	}
 	
@@ -102,11 +101,11 @@ public class GestionePaziente extends HttpServlet {
 		Paziente paziente = null;
 		HttpSession session = request.getSession();
 		paziente = (Paziente) session.getAttribute("utente");
-		
-		if(paziente!=null){
+
+		if (paziente != null) {
 			paziente.setAttivo(false);
 			PazienteModel.updatePaziente(paziente);
-			}
+		}
 		
 		session.removeAttribute("utente");
 		session.setAttribute("accessDone", false);

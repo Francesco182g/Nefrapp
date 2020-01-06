@@ -6,11 +6,12 @@ import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.mongodb.MongoException;
 
 import bean.Amministratore;
 import bean.Paziente;
@@ -60,7 +61,6 @@ public class GestioneAccesso extends HttpServlet {
 				}
 
 				else if (operazione.equals("loginAdmin")) {
-					// Aggiungere un try-catch per catturare IOException
 					loginAmministratore(request, response, session);
 					if (!response.isCommitted()) {
 						response.sendRedirect("./dashboard.jsp");
@@ -68,16 +68,16 @@ public class GestioneAccesso extends HttpServlet {
 				}
 
 				else {
-					// Aggiungere un try-catch per catturare IOException
 					loginUtente(request, response, session);
 					if (!response.isCommitted()) {
 						response.sendRedirect("./dashboard.jsp");
 					}
 				}
 			}
+		} catch (MongoException e) {
+			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
 			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
-			return;
 		}
 		return;
 	}
@@ -150,14 +150,12 @@ public class GestioneAccesso extends HttpServlet {
 					session.setAttribute("accessDone", false);
 					System.out.println("loginUtente: la combinazione CF-password non è stata trovata");
 					response.sendRedirect("./login.jsp?notifica=datiLoginErrati");
-					//questa notifica è già stata implementata
 					return;
 				}
 				else if (paziente.getAttivo() == false){
 					session.setAttribute("accessDone", false);
 					System.out.println("loginUtente: l'account del paziente è disattivato");
 					response.sendRedirect("./login.jsp?notifica=accountDisattivo");
-					//TODO: notifica da implementare
 					return;
 				}
 			}

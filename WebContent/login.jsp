@@ -34,26 +34,7 @@
 
 
 					<div class="container login">
-						<c:if test="${notifica == 'datiLoginErrati'}">
-							<div class="alert text-center alert-warning alert-dismissible fade show"
-								role="alert">
-								I dati da te inseriti non sono corretti!<br>
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						</c:if>
-						<c:if test="${notifica == 'accountDisattivato'}">
-							<div class="alert text-center alert-success alert-dismissible fade show"
-								role="alert">
-								Il tuo account è stato disattivato!<br>
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						</c:if>
+						
 						<div class="my-5">
 							<div class="card-body p-0 d-flex justify-content-center">
 								<!-- Nested Row within Card Body -->
