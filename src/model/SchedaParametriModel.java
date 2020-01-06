@@ -5,6 +5,9 @@ import static com.mongodb.client.model.Filters.eq;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.bson.Document;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
@@ -14,7 +17,7 @@ import utility.CreaBeanUtility;
 /**
  * 
  * @author NefrappTeam.
- * Questa classe è un manager che si occupa di interagire con il database.
+ * Questa classe ï¿½ un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti la scheda dei parametri.
  */
 public class SchedaParametriModel {
@@ -28,15 +31,16 @@ public class SchedaParametriModel {
 	 * 
 	 * @precodition codiceFiscalePaziente != null.
 	 */
-	public static ArrayList<SchedaParametri> getSchedaParametriByCF(String codiceFiscalePaziente) {
+	public static ArrayList<SchedaParametri> getSchedeParametriByCF(String codiceFiscalePaziente) {
 		MongoCollection<Document> schedeParametriDB = DriverConnection.getConnection().getCollection("SchedaParametri");
 		ArrayList<SchedaParametri> schedeParametri= new ArrayList<SchedaParametri>();
-		MongoCursor<Document> documenti = schedeParametriDB.find(eq("PazienteCodiceFiscale", codiceFiscalePaziente)).iterator();
+		FindIterable<Document> it  = schedeParametriDB.find(eq("PazienteCodiceFiscale", codiceFiscalePaziente))
+				.sort(new BasicDBObject("Data", -1));
 		
-		while(documenti.hasNext()) {
-			schedeParametri.add(CreaBeanUtility.daDocumentASchedaParametri(documenti.next()));
+		for(Document doc : it) {
+			schedeParametri.add(CreaBeanUtility.daDocumentASchedaParametri(doc));
 		}
-		documenti.close();
+		
 		return schedeParametri;
 	}
 

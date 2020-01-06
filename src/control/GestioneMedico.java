@@ -130,8 +130,8 @@ public class GestioneMedico extends HttpServlet {
 	}
 	private void modificaAccount(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// TODO verificare i nomi dei parametri con la jsp
+		HttpSession session = request.getSession();
+		
 		String codiceFiscale = request.getParameter("codiceFiscale");
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
@@ -146,7 +146,8 @@ public class GestioneMedico extends HttpServlet {
 		if (validazione(codiceFiscale, nome, cognome, sesso, email, residenza, luogoDiNascita, dataDiNascita, password,
 				confermaPsw)) {
 
-			Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
+			//Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
+			Medico medico = (Medico) session.getAttribute("utente");
 
 			if (medico != null) {
 
@@ -156,6 +157,7 @@ public class GestioneMedico extends HttpServlet {
 				medico.setEmail(email);
 				medico.setResidenza(residenza);
 				medico.setLuogoDiNascita(luogoDiNascita);
+				
 
 				if (!dataDiNascita.equals("")) {
 					medico.setDataDiNascita(LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -168,7 +170,11 @@ public class GestioneMedico extends HttpServlet {
 
 				// TODO aggiorna dati del medico, anche la password
 				MedicoModel.updatePasswordMedico(medico.getCodiceFiscale(), password);
-				response.sendRedirect("/dashboard.jsp");
+				session.setAttribute("medico", medico);
+
+				response.sendRedirect("./profilo.jsp?notifica=modificaEffettuata");
+				
+				
 			} else {
 				request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");

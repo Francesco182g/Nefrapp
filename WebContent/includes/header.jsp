@@ -39,13 +39,89 @@
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-		<!-- Sidebar Toggle (Topbar) -->
-		<button id="sidebarToggleTop"
-			class="btn btn-link d-md-none rounded-circle mr-3">
+		<!-- Dropdown Toggle (Topbar) -->
+
+	<div class="dropdown d-md-none" id="mobileMenu">
+		<button class="btn d-md-none dropdown-toggle" aria-expanded="false"
+			type="button" id="dropdownMenuButton" data-toggle="dropdown">
 			<i class="fa fa-bars"></i>
 		</button>
+		
+		<div class="dropdown-menu d-md-none" aria-labelledby="dropdownMenuButton">
+			<c:choose>
+				<c:when test='${isPaziente==true && accessDone==true}'>
+					<div class="sidebar-heading">Area Personale</div>
+					
+					<a class="dropdown-item"
+						href="./GestionePaziente?operazione=visualizzaProfilo">
+						Dati Anagrafici</a>
 
-		<!-- Topbar Navbar -->
+					<div class="sidebar-heading">Area Medica</div>
+
+					<a class="dropdown-item"
+						href="./inserimentoParametriView.jsp">
+						Inserimento Scheda Parametri</a>
+
+					<a class="dropdown-item"
+						href="./parametri?operazione=visualizzaScheda"> 
+						Visualizza Schede Parametri</a>
+
+					<a class="dropdown-item"
+						href='./piano?operazione=visualizza&CFPaziente=${sessionScope["utente"].codiceFiscale}'>
+						Visualizza Piano Terapeutico
+					</a>
+
+					<div class="sidebar-heading">Area Comunicazioni</div>
+
+					<a class="dropdown-item"
+						href="./messaggio?operazione=caricaDestinatariMessaggio"> 
+						Invia Messaggio</a>
+
+					<a class="dropdown-item"
+						href="./messaggio?operazione=visualizzaElencoMessaggio">
+						Leggi Messaggi</a>
+
+					<a class="dropdown-item"
+						href="./annuncio?operazione=visualizzaPersonali"> 
+						Leggi Annunci</a>
+				</c:when>
+				
+				<c:when test='${isMedico==true && accessDone==true}'>
+					<div class="sidebar-heading">Area Personale</div>
+					
+					<a class="dropdown-item"
+						href="./GestioneMedico?operazione=visualizzaProfilo">Dati Anagrafici
+					</a>
+					
+					<div class="sidebar-heading">Area Medica</div>
+					
+					<a class="dropdown-item"
+						href="./GestioneMedico?operazione=VisualizzaPazientiSeguiti">
+						Visualizza Lista Pazienti</a>
+	
+					<a class="dropdown-item"
+						href="./registraPazienteMedico.jsp"> Registra paziente
+					</a>
+					
+					<div class="sidebar-heading">Area Comunicazioni</div>
+					
+					<a class="dropdown-item"
+						href="./messaggio?operazione=caricaDestinatariMessaggio"> Invia Messaggio
+					</a>
+					
+					<a class="dropdown-item"
+						href="./messaggio?operazione=visualizzaElencoMessaggio"> 
+						Leggi Messaggio</a>
+	
+					<a class="dropdown-item"
+						href="./annuncio?operazione=caricaDestinatariAnnuncio">
+						Pubblica Annuncio</a>
+				</c:when>
+			</c:choose>
+		</div>
+	</div>
+
+	<!-- Topbar Navbar -->
 		<ul class="navbar-nav ml-auto">
 			<c:choose>
 				<c:when test="${accessDone}">
