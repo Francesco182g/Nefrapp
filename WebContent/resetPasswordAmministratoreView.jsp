@@ -46,7 +46,7 @@
 								<div class="col-sm-12">
 									<div class="card o-hidden border-0 shadow-sm p-5">
 										<div class="text-center">
-											<h1 class="h4 text-gray-900 mb-4">Modifica Password</h1>
+											<h1 class="h4 text-gray-900 mb-4">Modifica Password</h1> 
 										</div>
 
 										<form class="user" id="medico" method="post" action="./GestioneAmministratore">

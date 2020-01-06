@@ -600,7 +600,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 				console.log(expPeso.test(peso))
 				
 				if (!expPeso.test(peso)||peso>150||peso<30)
-					valido=[false,"formato peso non valido"];
+					valido=[false,"formato peso non valido"]; 
 				
 				else if (!expPaMax.test(pamax)||pamax<79||pamax>221)
 					valido=[false,"formato pressione massima non valido"];

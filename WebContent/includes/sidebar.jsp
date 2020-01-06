@@ -127,7 +127,7 @@
 							Medico</span></a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="./resetPasswordAmministratoreView.jsp"> <i
-						class="fas fa-fw fa-tachometer-alt"></i> <span>Modifica Password</span></a></li>
+						class="fas fa-fw fa-tachometer-alt"></i> <span>Modifica Password</span></a></li> 
 			</c:when>
 			<c:otherwise>
 				<li class="nav-item"><a class="nav-link" href="login.jsp">
