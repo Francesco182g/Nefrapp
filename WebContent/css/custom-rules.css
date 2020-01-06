@@ -7,16 +7,26 @@
 	color: white;
 	transition: 0.2s;
 	-webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 /* regola per la sidebar */
-/* .nefrapp-sidebar { */
-/* 	position: fixed;  */
-/* 	z-index: 999; */
-/* } */
+.nefrapp-sidebar {
+	position: fixed;
+	z-index: 999;
+}
 
+/* padding per evitare l'addossamento di corpo e sidebar */
+@media only screen and (min-width: 970px) {
+	#content {
+		padding-left: 16.7%;
+	}
+}
+
+#content {
+	min-height: 500px;
+}

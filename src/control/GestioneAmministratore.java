@@ -169,7 +169,6 @@ public class GestioneAmministratore extends HttpServlet {
 							
 					}
 					PazienteModel.updatePaziente(paziente);
-					System.out.println("è andata tutto bene");
 					response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
 				} else {
 					System.out.println("errori nei parametri");
