@@ -19,7 +19,7 @@ import static com.mongodb.client.model.Filters.*;
 /**
  * 
  * @author Antonio Donnarumma, Luca Esposito.
- * Questa classe è un manager che si occupa di interagire con il database.
+ * Questa classe ï¿½ un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti il paziente.
  */
 
@@ -96,7 +96,9 @@ public class PazienteModel {
 				.append("Sesso", daAggiungere.getSesso())
 				.append("Residenza", daAggiungere.getResidenza())
 				.append("LuogoDiNascita", daAggiungere.getLuogoDiNascita())
-				.append("Email", daAggiungere.getEmail());
+				.append("Email", daAggiungere.getEmail())
+				.append("Attivo", daAggiungere.getAttivo())
+				.append("Medici", daAggiungere.getMedici());
 		paziente.insertOne(doc);	
 	}
 		

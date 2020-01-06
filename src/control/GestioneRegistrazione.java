@@ -73,8 +73,8 @@ public class GestioneRegistrazione extends HttpServlet {
 						ArrayList<String> medici = new ArrayList<String>();
 						medici.add(medicoLoggato.getCodiceFiscale());
 						registraPaziente(request, response, medici);
-						System.out.println("lo facciamo sto redirect");
-						response.sendRedirect("./dashboard.jsp");
+						response.sendRedirect("./dashboard.jsp?regPazOk");
+						//TODO: alert di successo
 
 					} else { // solo aggiunta del cf del medico tra i seguiti (paziente già registrato)
 						String codiceFiscale = request.getParameter("codiceFiscale");

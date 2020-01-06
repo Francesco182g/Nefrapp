@@ -20,10 +20,7 @@
 			<div class="sidebar-brand-text mx-3">
 				Nefrapp <sup>10</sup>
 			</div>
-		</a>
-
-		<!-- Divider -->
-		<hr class="sidebar-divider my-0">
+		</a> <br><br>
 
 		<!-- Nav Item - Dashboard -->
 
@@ -31,12 +28,6 @@
 		<c:choose>
 			<c:when test='${isPaziente==true && accessDone==true}'>
 
-				<li class="nav-item"><form action="./GestioneAccesso"
-						method="post">
-						<input type="hidden" name="operazione" value="logout">
-						<button class="btn btn-primary">Logout immediato (temp.
-							per testing)</button>
-					</form></li>
 				<div class="sidebar-heading">Area Personale</div>
 				<li class="nav-item"><a class="nav-link"
 					href="./GestionePaziente?operazione=visualizzaProfilo"> <i
@@ -75,12 +66,6 @@
 
 			<c:when test='${isMedico==true && accessDone==true}'>
 
-				<li class="nav-item"><form action="./GestioneAccesso"
-						method="post">
-						<input type="hidden" name="operazione" value="logout">
-						<button class="btn btn-primary">Logout immediato (temp.
-							per testing)</button>
-					</form></li>
 				<div class="sidebar-heading">Area Personale</div>
 				<li class="nav-item"><a class="nav-link"
 					href="./GestioneMedico?operazione=visualizzaProfilo"> <i
@@ -114,12 +99,6 @@
 
 			</c:when>
 			<c:when test='${isAmministratore==true && accessDone==true}'>
-				<li class="nav-item"><form action="./GestioneAccesso"
-						method="post">
-						<input type="hidden" name="operazione" value="logout">
-						<button class="btn btn-primary">Logout immediato (temp.
-							per testing)</button>
-					</form></li>
 
 				<li class="nav-item"><a class="nav-link"
 					href="./registraMedico.jsp"> <i

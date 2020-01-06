@@ -23,7 +23,7 @@
 	        <div id="content-wrapper" class="d-flex flex-column">
 	
 	            <!-- Main Content -->
-	            <div id="content">
+	            <div id="content-stretched">
 					<%@include file="../includes/header.jsp" %>
 	
 	                <!-- Begin Page Content -->

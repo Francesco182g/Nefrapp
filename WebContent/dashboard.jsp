@@ -36,7 +36,7 @@
 							<div id="admin"></div>
 							<div class="row">
 								<div class="col-sm-6 mt-3 ">
-									<div class="card ">
+									<div class="card dashcard">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">Medici</h6>
 										</div>
@@ -54,7 +54,7 @@
 
 								</div>
 								<div class="col-sm-6 mt-3">
-									<div class="card">
+									<div class="card dashcard">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">Pazienti</h6>
 										</div>
@@ -72,7 +72,7 @@
 							<div id="paziente"></div>
 							<div class="row">
 								<div class="col-sm-8 mt-3 ">
-									<div class="card ">
+									<div class="card dashcard">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">Piano
 												Terapeutico</h6>
@@ -115,7 +115,7 @@
 
 								</div>
 								<div class="col-sm-4 mt-3">
-									<div class="card">
+									<div class="card dashcard">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
 										</div>
@@ -134,8 +134,8 @@
 						<c:when test="${isMedico==true && accessDone==true}">
 							<div id="medico"></div>
 							<div class="row">
-								<div class="col-sm-8 mt-3 ">
-									<div class="card ">
+								<div class="col-sm-8 mt-3 p-0">
+									<div class="card dashcard">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">Pazienti
 												seguiti</h6>
@@ -151,7 +151,7 @@
 
 								</div>
 								<div class="col-sm-4 mt-3">
-									<div class="card">
+									<div class="card dashcard">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">Annunci</h6>
 										</div>
