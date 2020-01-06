@@ -192,7 +192,7 @@
 						operazione : "rimuoviAnnuncio",
 						id : data[id].idAnnuncio
 					}, function(data){
-						window.location.href = "dashboard.jsp"
+						window.location.href ="dashboard.jsp?notifica=annuncioRimosso"
 					}).fail(function(){
 						console.log("Si è verificato un errore nella gestioneMedico")
 					})
@@ -268,7 +268,7 @@
 			codiceFiscale : cf,
 			tipo : "medico"
 		}, function(data) {
-			location.reload();
+			window.location.href ="dashboard.jsp?notifica=medicoRimosso"
 		}).fail(function() {
 			console.log("si è verificato un errore nella rimozione dell'account del medico")
 		});
@@ -283,7 +283,7 @@
 			codiceFiscale : cf,
 			tipo : "paziente"
 		}, function(data) {
-			location.reload();
+			window.location.href ="dashboard.jsp?notifica=pazienteRimosso"
 		}).fail(function() {
 			console.log("si è verificato un errore nella rimozione dell'account del paziente")
 		});

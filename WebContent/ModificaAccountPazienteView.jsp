@@ -72,11 +72,13 @@
 										</div>
 										<form id="modificaForm" class="user" method="post"
 											action="${azione}">
-
+											<c:if test='${isAmministratore}'>
+													
+												<input type="hidden" name="tipoUtente" value="paziente">
+												<input	type="hidden" id="operatore" value="op">
+												</c:if>
 									
-											<input type="hidden" name="tipoUtente" value="paziente">
-											<input type="hidden" id="notifica"
-												value="${requestScope.notifica}">
+											
 											<div class="form-group row col-lg-12">
 												Codice Fiscale: <input type="text"
 													class="form-control form-control-user" name="codiceFiscale"

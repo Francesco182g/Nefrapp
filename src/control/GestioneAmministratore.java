@@ -125,16 +125,12 @@ public class GestioneAmministratore extends HttpServlet {
 					if(vecchiaPassword.equals(password) && nuovaPassword.equals(confermaPassword)) {
 						nuovaPassword = CriptazioneUtility.criptaConMD5(nuovaPassword);
 						AmministratoreModel.updateAmministratore(amministratoreLoggato.getCodiceFiscale(),nuovaPassword);
-						response.sendRedirect("./dashboard.jsp?notifica=ModificaPasswordAmministratoreRiuscita");  
+						response.sendRedirect("./dashboard.jsp?notifica=ModificaAdmnRiuscita");  
 					} else {
-						request.setAttribute("notifica","Le password non corrispondono.");
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
-						requestDispatcher.forward(request,response);
+						response.sendRedirect("./resetPasswordAmministratoreView.jsp?notifica=PassErr");
 					}
 				} else {
-					request.setAttribute("notifica","Password non valida.");
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard.jsp");
-					requestDispatcher.forward(request,response);
+					response.sendRedirect("./resetPasswordAmministratoreView.jsp?notifica=PassErr");
 				}
 			}
 		}
@@ -160,17 +156,25 @@ public class GestioneAmministratore extends HttpServlet {
 					paziente.setResidenza(residenza);
 					paziente.setLuogoDiNascita(luogoDiNascita);
 					paziente.setSesso(sesso);
-					if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
-						password = CriptazioneUtility.criptaConMD5(password);
-						PazienteModel.changePassword(codiceFiscale, password);
-					} else {
-						System.out.println("errore nella pass");	
-						response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=PassErr");
-							
+					if(!password.equals("") || !confermaPassword.equals("")) {
+						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
+							password = CriptazioneUtility.criptaConMD5(password);
+							PazienteModel.updatePaziente(paziente);
+							System.out.println("è andata tutto bene");
+							PazienteModel.changePassword(codiceFiscale, password);
+							response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
+
+						} else {
+							System.out.println("errore nella pass");	
+							response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=PassErr");
+								
+						}
+					}else {
+						PazienteModel.updatePaziente(paziente);
+						System.out.println("è andata tutto bene");
+						response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
 					}
-					PazienteModel.updatePaziente(paziente);
-					System.out.println("è andata tutto bene");
-					response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
+					
 				} else {
 					System.out.println("errori nei parametri");
 					response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=ParamErr");
@@ -188,16 +192,27 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setResidenza(residenza);
 						medico.setLuogoDiNascita(luogoDiNascita);
 						medico.setSesso(sesso);
-						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
-							password = CriptazioneUtility.criptaConMD5(password);
-							MedicoModel.updatePasswordMedico(codiceFiscale, password);
-						} else {
-							response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=PassErr");
+						System.out.println("la pass è :"+password);
+						System.out.println("la confermapass è :"+confermaPassword);
+
+						if(!password.equals("") || !confermaPassword.equals(""))
+						{
+							if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
+								password = CriptazioneUtility.criptaConMD5(password);
+								MedicoModel.updateMedico(medico);								
+								MedicoModel.updatePasswordMedico(codiceFiscale, password);
+								response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
+							} else {
+								response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=PassErr");
+							}
 						}
-						MedicoModel.updateMedico(medico);
-						response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
-					} else {
+						else
+						{
+							MedicoModel.updateMedico(medico);
+							response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
+						}
 						
+					} else {
 						response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=ParamErr");
 						
 					}
