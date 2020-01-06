@@ -29,6 +29,30 @@
 
 
 <!-- dashboard -->
+<c:if test="${notifica == 'ModificaMedRiuscita'}">
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		L'account del medico è stato modificato con successo
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
+
+<c:if test="${notifica == 'ModificaPazRiuscita'}">
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		L'account del paziente è stato modificato con successo
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
+
 <c:if test="${notifica == 'messaggioInviato'}">
 	<div class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">

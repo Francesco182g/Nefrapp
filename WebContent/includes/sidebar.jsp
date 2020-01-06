@@ -6,7 +6,7 @@
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="d-none d-sm-block">
 	<!-- Sidebar -->
-	<ul
+	<ul style= "position:fixed; z-index:999"
 		class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 		id="accordionSidebar">
 

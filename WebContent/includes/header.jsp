@@ -3,15 +3,6 @@
 
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-	<link href="./css/jquery-confirm.css" rel="stylesheet" type="text/css" />
-	<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-<link href="./css/sb-admin-2.min.css" rel="stylesheet">
-
-
 	<!-- session attribute -->
 	<c:set var="utente" value='${sessionScope["utente"]}' />
 	<c:set var="notifica" value="${param.notifica}"/>
@@ -39,10 +30,9 @@
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-		<!-- Dropdown Toggle (Topbar) -->
-
+		<!-- Dropdown Toggle (Hamburger) -->
 	<div class="dropdown d-md-none" id="mobileMenu">
-		<button class="btn d-md-none dropdown-toggle" aria-expanded="false"
+		<button class="d-md-none dropdown-toggle" aria-expanded="false"
 			type="button" id="dropdownMenuButton" data-toggle="dropdown">
 			<i class="fa fa-bars"></i>
 		</button>
@@ -117,7 +107,28 @@
 						href="./annuncio?operazione=caricaDestinatariAnnuncio">
 						Pubblica Annuncio</a>
 				</c:when>
+
+				<c:when test='${isAmministratore==true && accessDone==true}'>
+					<a class="dropdown-item" href="./registraMedico.jsp"> Registra
+						Medico</a>
+
+					<a class="dropdown-item"
+						href="./resetPasswordAmministratoreView.jsp"> Modifica
+						Password</a>
+				</c:when>
+
+				<c:otherwise>
+					<a class="nav-link" href="login.jsp"> Login </a>
+				</c:otherwise>
+				
 			</c:choose>
+			
+			<div class="sidebar-heading">Extra</div>
+
+			<a class="dropdown-item" href="#"> Conosci il prodotto</a> 
+			
+			<a class="dropdown-item" href="./team.jsp"> Conosci il team! </a>
+		
 		</div>
 	</div>
 
