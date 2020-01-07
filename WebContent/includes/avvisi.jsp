@@ -5,7 +5,8 @@
 
 <!-- login -->
 <c:if test="${notifica == 'datiLoginErrati'}">
-	<div class="alert text-center alert-warning alert-dismissible fade show"
+	<div
+		class="alert text-center alert-warning alert-dismissible fade show"
 		role="alert">
 		I dati da te inseriti non sono corretti!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -15,7 +16,8 @@
 	</div>
 </c:if>
 <c:if test="${notifica == 'accountDisattivato'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Il tuo account è stato disattivato!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -54,7 +56,8 @@
 </c:if>
 
 <c:if test="${notifica == 'messaggioInviato'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Messaggio inviato con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -65,7 +68,8 @@
 </c:if>
 
 <c:if test="${notifica == 'annuncioInviato'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Annuncio inviato con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -100,7 +104,8 @@
 	</div>
 </c:if>
 <c:if test="${notifica == 'annuncioRimosso'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Annuncio rimosso con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -110,7 +115,8 @@
 	</div>
 </c:if>
 <c:if test="${notifica == 'medicoRimosso'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Medico rimosso con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -120,7 +126,8 @@
 	</div>
 </c:if>
 <c:if test="${notifica == 'pazienteRimosso'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Paziente rimosso con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -130,7 +137,8 @@
 	</div>
 </c:if>
 <c:if test="${notifica == 'ModificaAdmnRiuscita'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
 		role="alert">
 		Password dell'amministratore modificata con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
@@ -148,8 +156,8 @@
 	<div
 		class="alert text-center alert-warning alert-dismissible fade show"
 		role="alert">
-		Uno dei parametri non è corretto si prega di riattivare
-		javaScript per attivare i controlli<br>
+		Uno dei parametri non è corretto si prega di riattivare javaScript per
+		attivare i controlli<br>
 		<button type="button" class="close" data-dismiss="alert"
 			aria-label="Close">
 			<span aria-hidden="true">&times;</span>
@@ -161,8 +169,8 @@
 	<div
 		class="alert text-center alert-warning alert-dismissible fade show"
 		role="alert">
-		Le password non corrispondono si prega di riattivare javaScript
-		per attivare i controlli<br>
+		Le password non corrispondono si prega di riattivare javaScript per
+		attivare i controlli<br>
 		<button type="button" class="close" data-dismiss="alert"
 			aria-label="Close">
 			<span aria-hidden="true">&times;</span>
@@ -190,8 +198,10 @@
 
 <!-- profilo -->
 <c:if test="${notifica == 'modificaEffettuata'}">
-	<div class="alert text-center alert-success alert-dismissible fade show"
-		role="alert">Le modifiche sono state effettuate con successo!<br>
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		Le modifiche sono state effettuate con successo!<br>
 		<button type="button" class="close" data-dismiss="alert"
 			aria-label="Close">
 			<span aria-hidden="true">&times;</span>
@@ -199,3 +209,30 @@
 	</div>
 </c:if>
 <!-- profilo -->
+
+<!-- registraAccountMedicoView -->
+<c:if test="${notifica == 'registrato'}">
+	<div
+		class="alert text-center alert-success alert-dismissible fade show"
+		role="alert">
+		Il medico è stato registrato con successo !
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+</c:if>
+<c:if test="${notifica == 'presente'}">
+	<div
+		class="alert text-center alert-warning alert-dismissible fade show"
+		role="alert">
+		Il medico che stai tentando di registrare è gia presente
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</c:if>
+<!-- modificaAccountMedicoView -->
+

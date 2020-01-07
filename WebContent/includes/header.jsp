@@ -207,7 +207,7 @@
 						aria-expanded="false"> <span
 							class="mr-2 d-none d-lg-inline text-gray-600 small">${nome}
 								${cognome}</span> <img class="img-profile rounded-circle"
-							src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+							src="./img/userIcon.png">
 					</a> <!-- Including servlet --> <!-- Dropdown - User Information, azioni che potrebbe fare l'utente -->
 						<div
 							class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
