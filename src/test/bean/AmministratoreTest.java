@@ -19,62 +19,62 @@ class AmministratoreTest {
 		
 		@Test
 		void testGetCodiceFiscale() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "nico.sansone@live.it");
-			assertEquals("SNSNCL92D19I483U", amministratore.getCodiceFiscale());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
+			assertEquals("FLPBRZ62F17F876F", amministratore.getCodiceFiscale());
 		}
 		
 		@Test
 		void testGetNome() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "nico.sansone@live.it");
-			assertEquals("Nicola", amministratore.getNome());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
+			assertEquals("Filippo", amministratore.getNome());
 		}
 		
 		@Test
 		void testGetCognome() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "nico.sansone@live.it");
-			assertEquals("Sansone", amministratore.getCognome());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
+			assertEquals("Carbosiero", amministratore.getCognome());
 		}
 		
 		@Test
 		void testGetEmail() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "nico.sansone@live.it");
-			assertEquals("nico.sansone@live.it", amministratore.getEmail());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
+			assertEquals("f.carbosiero@live.it", amministratore.getEmail());
 		}
 
 		//Test per i metodi di set
 		
 		@Test
 		void testSetCodiceFiscale() {
-			Amministratore amministratore = new Amministratore("", "Nicola", "Sansone", "nico.sansone@live.it");
-			amministratore.setCodiceFiscale("SNSNCL92D19I483U");
-			assertEquals("SNSNCL92D19I483U", amministratore.getCodiceFiscale());
+			Amministratore amministratore = new Amministratore("", "Filippo", "Carbosiero", "f.carbosiero@live.it");
+			amministratore.setCodiceFiscale("FLPBRZ62F17F876F");
+			assertEquals("FLPBRZ62F17F876F", amministratore.getCodiceFiscale());
 		}
 
 		@Test
 		void testSetNome() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "", "Sansone", "nico.sansone@live.it");
-			amministratore.setNome("Nicola");
-			assertEquals("Nicola", amministratore.getNome());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "", "Carbosiero", "f.carbosiero@live.it");
+			amministratore.setNome("Filippo");
+			assertEquals("Filippo", amministratore.getNome());
 		}
 
 		@Test
 		void testSetCognome() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "", "nico.sansone@live.it");
-			amministratore.setCognome("Sansone");
-			assertEquals("Sansone", amministratore.getCognome());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "", "f.carbosiero@live.it");
+			amministratore.setCognome("Carbosiero");
+			assertEquals("Carbosiero", amministratore.getCognome());
 		}
 
 		@Test
 		void testSetEmail() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "");
-			amministratore.setEmail("nico.sansone@live.it");
-			assertEquals("nico.sansone@live.it", amministratore.getEmail());
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "");
+			amministratore.setEmail("f.carbosiero@live.it");
+			assertEquals("f.carbosiero@live.it", amministratore.getEmail());
 		}
 		
 		//Test per il toString
 		@Test
 		void testToString() {
-			Amministratore amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "");
+			Amministratore amministratore = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
 			String toStringBean = amministratore.toString();
 			String toStringTest = "bean.Amministratore [codiceFiscale=" + amministratore.getCodiceFiscale() + 
 									", nome=" + amministratore.getNome() + 
