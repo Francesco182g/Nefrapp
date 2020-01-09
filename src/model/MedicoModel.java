@@ -162,12 +162,12 @@ public class MedicoModel {
 	 */
 	public static void updateMedico(Medico daAggiornare) {
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
-
-		
-		 Document query = new Document();
-	     query.append("CodiceFiscale", daAggiornare.getCodiceFiscale());
-	     Document nuovoMedico = new Document();
-	     nuovoMedico.append("Nome", daAggiornare.getNome())
+		Document query = new Document();
+	    
+		query.append("CodiceFiscale", daAggiornare.getCodiceFiscale());
+	    
+		Document nuovoMedico = new Document();
+	    nuovoMedico.append("Nome", daAggiornare.getNome())
         		.append("Cognome", daAggiornare.getCognome())
     			.append("DataDiNascita", daAggiornare.getDataDiNascita())
     			.append("Email", daAggiornare.getEmail())
@@ -179,9 +179,7 @@ public class MedicoModel {
         Document update = new Document();
         update.append("$set", nuovoMedico);
         medici.updateOne(query, update);
-		
 	}
-	
 	
 	/**
 	 * 

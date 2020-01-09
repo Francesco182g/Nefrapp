@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import bean.Medico;
 
 class MedicoTest {
-	private final LocalDate dataNascitaMedico = LocalDate.parse("1967-07-11");
-	private final LocalDate dataNull = null;
-	private final String residenzaMedico = "Via Roma, 22, Scafati, 80030, NA";
+	private static final LocalDate dataNascitaMedico = LocalDate.parse("1967-07-11");
+	private static final LocalDate dataNull = null;
+	private static final String residenzaMedico = "Via Roma, 22, Scafati, 80030, NA";
 
 	@Test
 	void testMedicoCostruttoreVuoto() {
