@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.mock.web.MockHttpSession;
+
 import com.google.gson.Gson;
 
 import bean.Amministratore;
@@ -37,7 +39,7 @@ public class GestioneAmministratore extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
 				
 				try {
@@ -55,6 +57,7 @@ public class GestioneAmministratore extends HttpServlet {
 					}
 					else if(operazione.equals("caricaMedPaz")) {
 						Utente utente = (Utente) session.getAttribute("utente");
+						
 						if (utente!=null && utente instanceof Amministratore)
 						{
 							scaricaDatiPazienteMedico(request,response);
@@ -91,7 +94,7 @@ public class GestioneAmministratore extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
@@ -160,24 +163,20 @@ public class GestioneAmministratore extends HttpServlet {
 						if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
 							password = CriptazioneUtility.criptaConMD5(password);
 							PazienteModel.updatePaziente(paziente);
-							System.out.println("è andata tutto bene");
 							PazienteModel.changePassword(codiceFiscale, password);
 							response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
 
 						} else {
-							System.out.println("errore nella pass");	
 							response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=PassErr");
 								
 						}
 					}else {
 						PazienteModel.updatePaziente(paziente);
-						System.out.println("è andata tutto bene");
 						response.sendRedirect("./dashboard.jsp?notifica=ModificaPazRiuscita");
 					}
 					
 
 				} else {
-					System.out.println("errori nei parametri");
 					response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=ParamErr");
 				}
 			}
@@ -193,9 +192,7 @@ public class GestioneAmministratore extends HttpServlet {
 						medico.setResidenza(residenza);
 						medico.setLuogoDiNascita(luogoDiNascita);
 						medico.setSesso(sesso);
-						System.out.println("la pass è :"+password);
-						System.out.println("la confermapass è :"+confermaPassword);
-
+					
 						if(!password.equals("") || !confermaPassword.equals(""))
 						{
 							if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
@@ -231,51 +228,42 @@ public class GestioneAmministratore extends HttpServlet {
 		String expResidenza= "^[A-Za-z ']{2,}[, ]+[0-9]{1,4}[, ]+[A-Za-z ']{2,}[, ]+[0-9]{5}[, ]+[A-Za-z]{2}$";
 		String expLuogoDiNascita= "^[A-Z][a-zA-Z ']*$";
 		String expDataDiNascita="^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
-		
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16)
 		{
 			valido = false;
-			System.out.println("codiceFiscale");
 		}
 			
 		if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30)
 		{
 			valido = false;
-			System.out.println("nome");
 		}
 		if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
 		{
 			valido = false;
-			System.out.println("cognome");
 		}
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
 		{
 			valido = false;
-			System.out.println("sesso");
 		}
 		if(!email.equals(""))
 			if (!Pattern.matches(expEmail, email))
 			{
 				valido = false;
-				System.out.println("email");
 			}
 		if(!residenza.equals(""))
 			if(!Pattern.matches(expResidenza, residenza))
 			{
 				valido = false;
-				System.out.println("residenza");
 			}
 		if(!luogoDiNascita.equals(""))
-			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
+			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 5|| luogoDiNascita.length() > 50)
 			{
 				valido = false;
-				System.out.println("luogo di nascita");
 			}
 		if(!dataDiNascita.equals(""))
 			if(!Pattern.matches(expDataDiNascita, dataDiNascita))
 			{
 				valido = false;
-				System.out.println("data di nascita");
 			}
 		return valido;
 	}

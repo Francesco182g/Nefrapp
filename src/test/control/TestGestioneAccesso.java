@@ -35,7 +35,7 @@ class TestGestioneAccesso {
 
 		MongoCollection<Document> paziente1 = DriverConnection.getConnection().getCollection("Paziente");
 		String password2 = CriptazioneUtility.criptaConMD5("Fiori5678");
-		Document doc2 = new Document("CodiceFiscale", "BNCLRD67A01F205").append("Password", password2).append("Attivo", true);
+		Document doc2 = new Document("CodiceFiscale", "BNCLRD67A01F205I").append("Password", password2).append("Attivo", true);
 		paziente1.insertOne(doc2);
 		
 		String password3 = CriptazioneUtility.criptaConMD5("password");
@@ -47,7 +47,7 @@ class TestGestioneAccesso {
 	static void tearDownAfterClass() throws Exception {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
 		BasicDBObject document = new BasicDBObject();
-		document.put("CodiceFiscale", "BNCLRD67A01F205");
+		document.put("CodiceFiscale", "BNCLRD67A01F205I");
 		pazienti.deleteOne(document);
 		BasicDBObject document2 = new BasicDBObject();
 		document2.put("CodiceFiscale", "CFFSRA90A50A091Q");
@@ -208,7 +208,7 @@ class TestGestioneAccesso {
 	@Test
 	void TC_GP_1_4_LoginPaziente() throws ServletException, IOException {
 		request.setParameter("operazione", "login");
-		request.setParameter("codiceFiscale", "BNCDNC67A01F205I");
+		request.setParameter("codiceFiscale", "BNCDNC67A02F205I");
 		request.setParameter("password", "Fiori5678");
 		servlet.doGet(request, response);
 		  
