@@ -33,13 +33,13 @@ public class GestioneAccesso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 		return;
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
 		// ok)
 		try {
@@ -57,7 +57,7 @@ public class GestioneAccesso extends HttpServlet {
 
 				if (operazione.equals("logout")) {
 					logout(request);
-					response.sendRedirect("dashboard.jsp");
+					response.sendRedirect("./dashboard.jsp");
 				}
 
 				else if (operazione.equals("loginAdmin")) {
@@ -77,6 +77,7 @@ public class GestioneAccesso extends HttpServlet {
 		} catch (MongoException e) {
 			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 		}
 		return;
