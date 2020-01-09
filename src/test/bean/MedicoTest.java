@@ -22,34 +22,6 @@ class MedicoTest {
 	//Test per i metodi di get
 	
 	@Test
-	void testGetCodiceFiscale() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-									"GRMBNN67L11B519R", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
-		assertEquals("GRMBNN67L11B519R", medico.getCodiceFiscale());
-	}
-		
-	@Test
-	void testGetNome() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"GRMBNN67L11B519R", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
-		assertEquals("Geremia", medico.getNome());
-	}
-		
-	@Test
-	void testGetCognome() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"GRMBNN67L11B519R", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
-		assertEquals("Bernini", medico.getCognome());
-	}
-		
-	@Test
-	void testGetEmail() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"GRMBNN67L11B519R", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
-		assertEquals("G.Bernini67@gmail.com", medico.getEmail());
-	}
-		
-	@Test
 	void testGetSesso() {
 		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
 				"GRMBNN67L11B519R", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
@@ -86,38 +58,6 @@ class MedicoTest {
 		
 	//Test per i metodi di set
 		
-	@Test
-	void testSetCodiceFiscale() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
-		medico.setCodiceFiscale("GRMBNN67L11B519R");
-		assertEquals("GRMBNN67L11B519R", medico.getCodiceFiscale());
-	}
-
-	@Test
-	void testSetNome() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"GRMBNN67L11B519R", "", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
-		medico.setNome("Geremia");
-		assertEquals("Geremia", medico.getNome());
-	}
-
-	@Test
-	void testSetCognome() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"GRMBNN67L11B519R", "Geremia", "", "G.Bernini67@gmail.com", "Campobasso");
-		medico.setCognome("Bernini");
-		assertEquals("Bernini", medico.getCognome());
-	}
-
-	@Test
-	void testSetEmail() {
-		Medico medico = new Medico("M", residenzaMedico, dataNascitaMedico, 
-				"GRMBNN67L11B519R", "Geremia", "Bernini", "", "Campobasso");
-		medico.setEmail("G.Bernini67@gmail.com");
-		assertEquals("G.Bernini67@gmail.com", medico.getEmail());
-	}
-
 	@Test
 	void testSetSesso() {
 		Medico medico = new Medico("", residenzaMedico, dataNascitaMedico, 

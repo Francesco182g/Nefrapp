@@ -23,30 +23,6 @@ class PazienteTest {
 	}
 	
 	//Test per i metodi di get
-	
-	@Test
-	void testGetCodiceFiscale() {
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "Robert", "Downey", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		assertEquals("DWNRRT85E18I483W", paziente.getCodiceFiscale());
-	}
-		
-	@Test
-	void testGetNome() {
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "Robert", "Downey", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		assertEquals("Robert", paziente.getNome());
-	}
-		
-	@Test
-	void testGetCognome() {
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "Robert", "Downey", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		assertEquals("Downey", paziente.getCognome());
-	}
-		
-	@Test
-	void testGetEmail() {
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "Robert", "Downey", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		assertEquals("iron.man@live.it", paziente.getEmail());
-	}
 		
 	@Test
 	void testGetSesso() {
@@ -80,36 +56,6 @@ class PazienteTest {
 	}
 		
 	//Test per i metodi di set
-		
-	@Test
-	void testSetCodiceFiscale() {
-
-		Paziente paziente = new Paziente("M", "", "Robert", "Downey", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		paziente.setCodiceFiscale("DWNRRT85E18I483W");
-		assertEquals("DWNRRT85E18I483W", paziente.getCodiceFiscale());
-	}
-
-	@Test
-	void testSetNome() {
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "", "Downey", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		paziente.setNome("Robert");
-		assertEquals("Robert", paziente.getNome());
-	}
-
-	@Test
-	void testSetCognome() {
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "Robert", "", "iron.man@live.it", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		paziente.setCognome("Downey");
-		assertEquals("Downey", paziente.getCognome());
-	}
-
-	@Test
-	void testSetEmail() {
-
-		Paziente paziente = new Paziente("M", "DWNRRT85E18I483W", "Robert", "Downey", "", residenzaPaziente, "Milano", dataNascitaPaziente, true, medici);
-		paziente.setEmail("iron.man@live.it");
-		assertEquals("iron.man@live.it", paziente.getEmail());
-	}
 
 	@Test
 	void testSetSesso() {
