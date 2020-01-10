@@ -173,10 +173,7 @@ public class GestionePaziente extends HttpServlet {
 		paziente = (Paziente) session.getAttribute("utente");
 		
 		if(paziente!=null){
-			ArrayList<Medico> mediciCuranti = new ArrayList<>();
-			for (String cf : paziente.getMedici()) {
-				mediciCuranti.add(MedicoModel.getMedicoByCF(cf));
-				}
+			ArrayList<Medico> mediciCuranti = MedicoModel.getMediciByPazienteSeguito(paziente);
 			request.setAttribute("mediciCuranti", mediciCuranti);
 			}
 		

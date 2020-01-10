@@ -185,12 +185,12 @@ public class MedicoModel {
 	 * 
 	 * Questo metodo si occupa di ricercare e restituire tutti i medici che seguono un determinato paziente.
 	 * 
-	 * @param codiciFiscaliMedici array contenente i codici fiscali dei medici che seguono il paziente
+	 * @param mediciPaziente paziente da cui ottenere i codici fiscali dei medici che lo seguono.
 	 * 
 	 * @return oggetti medico richiesti
 	 */
-	public static ArrayList<Medico> getMediciByPazienteSeguito(ArrayList<String> codiciFiscaliMedici) {
-		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+	public static ArrayList<Medico> getMediciByPazienteSeguito(Paziente mediciPaziente) {
+		ArrayList<String> codiciFiscaliMedici = mediciPaziente.getMedici();
 		ArrayList<Medico> datimedici = new ArrayList<Medico>();
 		for(String codiceFiscale: codiciFiscaliMedici) {
 			datimedici.add(getMedicoByCF(codiceFiscale));
