@@ -107,9 +107,10 @@ public class MessaggioCompleto implements Messaggio {
 	public String getIdMessaggio() {
 		return this.idMessaggio;
 	}
-	public void setDestinatariView(HashMap<String , Boolean > destinatariView) {
+	/* PROBABILMENTE INUTILE
+	 * public void setDestinatariView(HashMap<String , Boolean > destinatariView) {
 		destinatariView.putAll(destinatariView);
-	}
+	}*/
 	
 	public HashMap<String,Boolean> getDestinatariView() {
 		return this.destinatariView;
@@ -117,7 +118,14 @@ public class MessaggioCompleto implements Messaggio {
 	
 	@Override
 	public String toString() {
-		return "Messaggio [mittente=" + codiceFiscaleMittente +  ", oggetto=" + oggetto + 
-				", testo=" + testo + ", data=" + data + ", visualizzato=" + visualizzato + "]";
+		DateTimeFormatter formatOra = DateTimeFormatter.ofPattern("HH:mm");
+		DateTimeFormatter formatData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return "bean.MessaggioCompleto [idMessaggio=" + idMessaggio 
+		+ ", codiceFiscaleMittente=" + codiceFiscaleMittente + ", oggetto="
+		+ oggetto + ", testo=" + testo + ", corpo allegato="
+		+ corpoAllegato + ", nome allegato=" + nomeAllegato
+		+ ", data=" + data + ", data formattata=" + data.format(formatData)
+		+ ", ora formattata=" + data.format(formatOra) + ", visualizzato="
+		+ visualizzato + ", destinatari=" + destinatariView.toString() + "]";
 	}
 }
