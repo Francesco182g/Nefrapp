@@ -69,6 +69,6 @@ public class PianoTerapeutico {
 	}
 	@Override
 	public String toString() {
-		return "PianoTerapeutico [codiceFiscalePaziente=" + codiceFiscalePaziente + ", diagnosi=" + diagnosi + ", farmaco=" + farmaco + ", dataFineTerapia=" + dataFineTerapia + "]";
+		return "PianoTerapeutico [codiceFiscalePaziente=" + codiceFiscalePaziente + ", diagnosi=" + diagnosi + ", farmaco=" + farmaco + ", dataFineTerapia=" + dataFineTerapia + ", visualizzato=" + visualizzato+"]";
 	}
 }
