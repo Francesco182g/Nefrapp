@@ -2,76 +2,39 @@ package test.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
-
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockHttpSession;
 
 import org.bson.Document;
-import com.google.gson.Gson;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import bean.Amministratore;
-import bean.Utente;
-import control.GestioneAccesso;
-import control.GestioneAmministratore;
 import model.AmministratoreModel;
 import model.DriverConnection;
-import model.MedicoModel;
-import model.PazienteModel;
+
 import utility.CriptazioneUtility;
 
-
 class AmministratoreModelTest {
-	private GestioneAmministratore servlet;
-	private MockHttpServletRequest request;
-	private MockHttpServletResponse response;
-	private static Utente admin;
-	private MockHttpSession session;
 	private String password = CriptazioneUtility.criptaConMD5("Pippo1234");
 
-	
-	
 	@BeforeAll
-	void setUpBeforeClass() throws Exception {
-		admin = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
-		servlet = new GestioneAmministratore();
-		request = new MockHttpServletRequest();
-		response = new MockHttpServletResponse();
-		session  = new  MockHttpSession();
-		session.setAttribute("utente", admin);
-		request.setSession(session);
+	static void setUpBeforeClass() throws Exception {
+		String password1 = CriptazioneUtility.criptaConMD5("Pippo1234");
+		Amministratore admin = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
 		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
-		Document doc = new Document("CodiceFiscale", "FLPBRZ61A45F234F").append("Password", password);
+		Document doc = new Document("CodiceFiscale", "FLPBRZ61A45F234F").append("Password", password1);
 		amministratore.insertOne(doc);
 	}
 
 	@AfterAll
-	void tearDownAfterClass() throws Exception {
-		session.invalidate();
+	static void tearDownAfterClass() throws Exception {
 		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
 		BasicDBObject document = new BasicDBObject();
 		document.put("CodiceFiscale", "FLPBRZ61A45F234F");
 		amministratore.deleteOne(document);	
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
 	}
 
 	@Test
@@ -95,7 +58,7 @@ class AmministratoreModelTest {
 		
 	}
 
-
+	
 	@Test
 	void testGetPassword() {
 		String passwordTest = AmministratoreModel.getPassword("FLPBRZ62F17F876F");
