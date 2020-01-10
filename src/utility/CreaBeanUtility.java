@@ -132,6 +132,7 @@ public class CreaBeanUtility {
 		Date temp = datiPiano.getDate("FineTerapia");
 		LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		piano.setDataFineTerapia(data);
+		piano.setVisualizzato(datiPiano.getBoolean("Visualizzato"));
 
 		return piano;
 	}

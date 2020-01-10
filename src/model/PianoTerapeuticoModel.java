@@ -14,6 +14,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 
+import bean.Medico;
 import bean.PianoTerapeutico;
 import utility.CreaBeanUtility;
 
@@ -23,6 +24,17 @@ import utility.CreaBeanUtility;
  * Questa classe si occupa di contattare il database ed effettuare tutte le operazioni CRUD relative ai piani terapeutici
  */
 public class PianoTerapeuticoModel {
+	
+	public static void addPianoTerapeutico(PianoTerapeutico daAggiungere) {
+		MongoCollection<Document> pianoTerapeutico = DriverConnection.getConnection().getCollection("PianoTerapeutico");
+		
+		Document doc = new Document("PazienteCodiceFiscale", daAggiungere.getCodiceFiscalePaziente())
+				.append("Diagnosi", daAggiungere.getDiagnosi())
+				.append("Farmaco",daAggiungere.getFarmaco())
+				.append("FineTerapia", daAggiungere.getDataFineTerapia())
+				.append("Visualizzato", daAggiungere.getVisualizzato());
+		pianoTerapeutico.insertOne(doc);	
+	}
 
 	/**
 	 * Questo metodo si occupa di ricercare il piano terapeutico di un paziente tramite il suo codice fiscale.
@@ -83,7 +95,7 @@ public class PianoTerapeuticoModel {
 	 * @precondition codiceFiscalePaziente != null.
 	 */
 	public static boolean isPianoTerapeuticoVisualizzato(String codiceFiscalePaziente) {
-		MongoCollection<Document> annunciDB = DriverConnection.getConnection().getCollection("Annuncio");
+		MongoCollection<Document> annunciDB = DriverConnection.getConnection().getCollection("PianoTerapeutico");
 		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 		obj.add(new BasicDBObject("PazienteCodiceFiscale", codiceFiscalePaziente));
 		obj.add(new BasicDBObject("Visualizzato", false));
