@@ -7,14 +7,13 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import bean.Medico;
 import bean.Paziente;
 
 class PazienteTest {
 
-	private final LocalDate dataNascitaPaziente = LocalDate.parse("1967-07-11");
-	private final String residenzaPaziente = "Via Roma, 22, Scafati, 80030, NA";
-	private final ArrayList<String> medici = new ArrayList<>();
+	private static final LocalDate dataNascitaPaziente = LocalDate.parse("1967-07-11");
+	private static final String residenzaPaziente = "Via Roma, 22, Scafati, 80030, NA";
+	private static final ArrayList<String> medici = new ArrayList<>();
 
 	@Test
 	void testPazienteCostruttoreVuoto() {
@@ -122,9 +121,6 @@ class PazienteTest {
 		assertEquals(medici, paziente.getMedici());
 	}
 	
-	
-
-
 	//Test per il toString
 	@Test
 	void testToString() {
