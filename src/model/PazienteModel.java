@@ -18,7 +18,7 @@ import static com.mongodb.client.model.Filters.*;
 
 /**
  * 
- * @author Antonio Donnarumma, Luca Esposito.
+ * @author Antonio Donnarumma, Luca Esposito, Silvio Di Martino
  * Questa classe � un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti il paziente.
  */
@@ -195,26 +195,6 @@ public class PazienteModel {
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare);
 		pazienti.updateOne(searchQuery, nuovoPaziente);
 	}
-	
-	/**
-	 * Query che aggiorna il paziente
-	 * @param daAggiornare paziente
-	 */
-//	public static void updatePaziente(Paziente daAggiornare) {
-//		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
-//		BasicDBObject nuovoPaziente = new BasicDBObject();
-//		nuovoPaziente.append("$set", new Document().append("Nome", daAggiornare.getNome()));
-//		nuovoPaziente.append("$set", new Document().append("Cognome", daAggiornare.getCognome()));
-//		nuovoPaziente.append("$set", new Document().append("DataDiNascita", daAggiornare.getDataDiNascita()));
-//		nuovoPaziente.append("$set", new Document().append("Email", daAggiornare.getEmail()));
-//		nuovoPaziente.append("$set", new Document().append("Residenza", daAggiornare.getResidenza()));
-//		nuovoPaziente.append("$set", new Document().append("LuogoDiNascita", daAggiornare.getLuogoDiNascita()));
-//		nuovoPaziente.append("$set", new Document().append("Sesso", daAggiornare.getSesso()));
-//		nuovoPaziente.append("$set", new Document().append("Medici", daAggiornare.getMedici()));
-//		nuovoPaziente.append("$set", new Document().append("Attivo", daAggiornare.getAttivo()));
-//		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", daAggiornare.getCodiceFiscale());
-//		pazienti.updateOne(searchQuery, nuovoPaziente);
-//	} 
 	
 	/**
 	 * 
