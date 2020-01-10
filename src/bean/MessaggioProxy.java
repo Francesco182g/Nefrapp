@@ -42,10 +42,9 @@ public class MessaggioProxy implements Messaggio {
 		return destinatariView;
 	}
 
-	/*PROBABILMENTE INUTILE
-	 * public void setDestinatariView(HashMap<String, Boolean> destinatariView) {
+	public void setDestinatariView(HashMap<String, Boolean> destinatariView) {
 		this.destinatariView.putAll(destinatariView);
-	}*/
+	}
 
 	public String getOggetto() {
 		return oggetto;

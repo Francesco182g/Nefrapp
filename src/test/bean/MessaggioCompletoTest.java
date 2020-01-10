@@ -209,7 +209,7 @@ class MessaggioCompletoTest {
 		assertEquals("0123", MessaggioCompleto.getIdMessaggio());
 	}
 
-	/*
+	
 	@Test
 	void testSetDestinatariView() {
 		destinatariView.putIfAbsent("CRRSRA90A50A091Q", false);
@@ -219,7 +219,7 @@ class MessaggioCompletoTest {
 		MessaggioCompleto.setDestinatariView(destinatariView);
 		assertEquals(destinatariView, MessaggioCompleto.getDestinatariView());
 
-	}*/
+	}
 
 	// Test per il toString
 	@Test

@@ -46,7 +46,7 @@ public interface Messaggio {
 	
 	public String getIdMessaggio();
 	
-	//public void setDestinatariView(HashMap<String , Boolean> destinatariView );
+	public void setDestinatariView(HashMap<String , Boolean> destinatariView );
 	
 	public HashMap<String,Boolean> getDestinatariView();
 	
