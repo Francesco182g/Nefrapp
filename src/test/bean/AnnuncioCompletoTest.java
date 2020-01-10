@@ -21,7 +21,7 @@ public class AnnuncioCompletoTest {
 				AnnuncioCompleto annuncio=new AnnuncioCompleto();
 				assertNotNull(annuncio);
 			}
-						
+						 
 	// Test per i metodi di get
 			
 			@Test
