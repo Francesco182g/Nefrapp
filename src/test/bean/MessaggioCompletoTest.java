@@ -73,7 +73,6 @@ class MessaggioCompletoTest {
 
 	@Test
 	void testGetOraFormattata() {
-		HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
 		MessaggioCompleto MessaggioCompleto = new MessaggioCompleto("ABCD1111DFS12", "visita",
 				"Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”",
 				"codiceallegato", "ilpazienteirriverente.pdf", ZonedDateTime.now(ZoneId.of("Europe/Rome")),
@@ -212,10 +211,10 @@ class MessaggioCompletoTest {
 	
 	@Test
 	void testSetDestinatariView() {
-		destinatariView.putIfAbsent("CRRSRA90A50A091Q", false);
 		MessaggioCompleto MessaggioCompleto = new MessaggioCompleto("ABCD1111DFS12", "visita",
 				"Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”",
-				"codiceallegato", "ilpazienteirriverente.pdf", ZonedDateTime.now(ZoneId.of("Europe/Rome")),null );
+				"codiceallegato", "ilpazienteirriverente.pdf", ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatariView );
+		destinatariView.putIfAbsent("CRRSRA90A50A091Q", false);
 		MessaggioCompleto.setDestinatariView(destinatariView);
 		assertEquals(destinatariView, MessaggioCompleto.getDestinatariView());
 
