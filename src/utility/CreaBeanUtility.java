@@ -157,15 +157,16 @@ public class CreaBeanUtility {
 		
 		//caricamento dell'hashmap dall'array di documenti nel database
 		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
-		if (destinatario != null) {
-			ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
-			if (campo != null) {
-				for (Document d : campo) {
-					destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
-				}
+		ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
+		if (campo != null) {
+			for (Document d : campo) {
+				System.out.println(d.getString("CFDestinatario"));
+				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
-			messaggio.setDestinatariView(destinatariView);
-			
+		}
+		messaggio.setDestinatariView(destinatariView);
+		
+		if (destinatario != null) {
 			//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
 			messaggio.setVisualizzato(destinatariView.get(destinatario));
 		}
@@ -188,7 +189,7 @@ public class CreaBeanUtility {
 		
 		//caricamento dell'hashmap dall'array di documenti nel database
 		HashMap <String, Boolean> pazientiView = new HashMap <String, Boolean>();
-		ArrayList<Document> campo = (ArrayList<Document>)datiAnnuncio.get("DestinatariView");
+		ArrayList<Document> campo = (ArrayList<Document>)datiAnnuncio.get("PazientiView");
 		
 		if (campo != null) {
 			for (Document d : campo) {
@@ -213,18 +214,18 @@ public class CreaBeanUtility {
 		
 		//caricamento dell'hashmap dall'array di documenti nel database
 		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
-		if (destinatario!=null) {
-			ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
-			
-			if (campo != null) {
-				for (Document d : campo) {
-					destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
-				}
+	
+		ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
+		
+		if (campo != null) {
+			for (Document d : campo) {
+				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
+		}
+		
+		messaggio.setDestinatariView(destinatariView);
 			
-			messaggio.setDestinatariView(destinatariView);
-			
-			
+		if (destinatario!=null) {
 			//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
 			messaggio.setVisualizzato(destinatariView.get(destinatario));
 		}

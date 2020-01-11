@@ -107,7 +107,7 @@ public class AnnuncioCompleto implements Annuncio{
 	}
 
 	public void setPazientiView(HashMap<String, Boolean> pazientiView) {
-		pazientiView.putAll(pazientiView);
+		this.pazientiView.putAll(pazientiView);
 	}
 
 	public HashMap<String, Boolean> getPazientiView() {

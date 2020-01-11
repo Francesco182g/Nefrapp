@@ -5,6 +5,9 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +18,15 @@ import model.AnnuncioModel;
 
 public class AnnuncioModelTest {
 	private static HashMap<String, Boolean> destinatari;
-	private static final String idAnnuncio="1234";
-	private static final String medico="DCPLRD71M12C129X";
+	private static String idAnnuncio = "";
+	private static final String medico="GRMBNN67L11B516R";
 	private static final String titolo="Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.";
 	private static final String testo="Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.";
 	private static final String corpoAllegato="codiceallegato";
 	private static final String nomeAllegato="dialisi-peritoneale.pdf";
-	private static final String codiceFiscalePaziente="DWNRRT85E18I483W";
+	private static final String codiceFiscalePaziente="BNCLRD67A01F205I";
+	//serve che questo paziente non sia nel database per rendere attendibile il test di counNonLetti
+	
 	private static ZonedDateTime data=null;
 		
 	@BeforeEach
@@ -30,8 +35,7 @@ public class AnnuncioModelTest {
 		destinatari = new HashMap<String, Boolean>();
 		destinatari.put(codiceFiscalePaziente, false);
 		AnnuncioCompleto annuncio=new AnnuncioCompleto(medico,titolo,testo,corpoAllegato,nomeAllegato,data,destinatari);
-		annuncio.setIdAnnuncio(idAnnuncio);
-		AnnuncioModel.addAnnuncio(annuncio);
+		idAnnuncio = AnnuncioModel.addAnnuncio(annuncio);
 	}
 
 	@AfterEach
@@ -78,17 +82,43 @@ public class AnnuncioModelTest {
 	
 	@Test
 	void testGetAnnuncioByCFPaziente() {
-		//ArrayList<Annuncio> annunci=AnnuncioModel.getAnnunciByCFMedico(codiceFiscalePaziente);
+		ArrayList<Annuncio> annunci=AnnuncioModel.getAnnunciByCFMedico(codiceFiscalePaziente);
+		boolean destinatarioGiusto = true;
 		
+		for (Annuncio a : annunci) {
+			if (!a.getPazientiView().containsKey(codiceFiscalePaziente)) {
+				destinatarioGiusto = false;
+			}
+		}
+		
+		assertTrue(destinatarioGiusto);
 	}
 	
 	@Test
 	void testCountAnnunciNonLetti() {
+		int nonLetti = AnnuncioModel.countAnnunciNonLetti(codiceFiscalePaziente);
 		
+		assertEquals(nonLetti, 1);
 	}
 	
 	@Test
 	void testSetVisualizzato() {
+		AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, codiceFiscalePaziente, true);
 		
+		boolean visualizzato = false;
+		Annuncio annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
+		System.out.println("pazientiview" + annuncio.getPazientiView());
+		Iterator<Entry<String, Boolean>> it = annuncio.getPazientiView().entrySet().iterator();
+		Entry<String, Boolean> temp; 
+				
+		while (it.hasNext()) {
+			temp = it.next();
+			if (temp.getKey().equals(codiceFiscalePaziente)) {
+				visualizzato = temp.getValue();
+				break;
+			}
+		}
+		
+		assertEquals(true, visualizzato);
 	}
 }

@@ -254,8 +254,8 @@ public class AnnuncioModel {
 		MongoCollection<Document> annunciDB= DriverConnection.getConnection().getCollection("Annuncio");
 		Document updateQuery = new Document();
 		Document query = new Document(new BasicDBObject("_id", new ObjectId(idAnnuncio)))
-				.append("DestinatariView.CFDestinatario", CFPaziente);
-		updateQuery.put("DestinatariView.$.Visualizzazione", visualizzato);
+				.append("PazientiView.CFDestinatario", CFPaziente);
+		updateQuery.put("PazientiView.$.Visualizzazione", visualizzato);
 		annunciDB.updateOne(query, new Document("$set", updateQuery));
 	}
 	
