@@ -107,8 +107,9 @@ public class MessaggioCompleto implements Messaggio {
 	public String getIdMessaggio() {
 		return this.idMessaggio;
 	}
+	
 	public void setDestinatariView(HashMap<String , Boolean > destinatariView) {
-		destinatariView.putAll(destinatariView);
+		this.destinatariView.putAll(destinatariView);
 	}
 	
 	public HashMap<String,Boolean> getDestinatariView() {
