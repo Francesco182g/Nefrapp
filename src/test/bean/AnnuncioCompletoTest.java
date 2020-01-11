@@ -207,12 +207,10 @@ public class AnnuncioCompletoTest {
 						"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
 						"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 				String toStringBean= annuncio.toString();
-				String toStringTest= "bean.Annuncio [idAnnuncio=" + annuncio.getIdAnnuncio()
-				+ ", medico=" + annuncio.getMedico() + ", titolo="
-				+ annuncio.getTitolo() + ", testo=" + annuncio.getTesto() + ", allegato="
-				+ annuncio.getCorpoAllegato() + ", nomeAllegato=" + annuncio.getNomeAllegato()
-				+ ", data=" + annuncio.getData() + ", visualizzato="
-				+ annuncio.getVisualizzato() + "]";
+				String toStringTest= "Annuncio [idAnnuncio=" + annuncio.getIdAnnuncio() + ", medico=" + annuncio.getMedico() 
+						+ ", pazienti=" + annuncio.getPazientiView() + ", titolo=" + annuncio.getTitolo() + ", testo=" 
+						+ annuncio.getTesto() + ", allegato=" + annuncio.getNomeAllegato() + ", data=" + annuncio.getData() 
+						+ ", visualizzato=" + annuncio.getVisualizzato() + "]";
 				assertEquals(toStringBean, toStringTest);
 			}
 }

@@ -116,7 +116,7 @@ public class AnnuncioCompleto implements Annuncio{
 
 	@Override
 	public String toString() {
-		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + ", titolo="
-				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato=" + "]";
+		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + pazientiView + ", titolo="
+				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato=" + visualizzato + "]";
 	}
 }
