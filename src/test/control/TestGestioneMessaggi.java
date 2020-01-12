@@ -180,59 +180,59 @@ class TestGestioneMessaggi {
 		assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
 	}
 	
-//	@Test
-//	void TC_GM_8_3_InvioMessaggi() throws ServletException, IOException {
-//		
-//		request.getSession().setAttribute("utente", medico);
-//		request.getSession().setAttribute("isMedico", true);
-//
-//		final String fileName = "test.txt";
-//		final byte[] content = "Hallo Word".getBytes();
-//		MockMultipartFile mockMultipartFile = new MockMultipartFile("content", fileName, "image/jpeg", content);
-//		
-//		request.addFile(mockMultipartFile);
-//		
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", testo);
-//		request.setParameter("selectPaziente", CfPaziente);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);		 
-//		
-//		if (request.getAttribute("erroreCaricamento") != null) {
-//			assertEquals(request.getAttribute("erroreCaricamento"), true);
-//		} else {
-//			fail("il caricamento è andato a buon fine");
-//		}
-//		  
-//	}
-//	
-//	@Test
-//	void TC_GM_8_4_InvioMessaggi() throws ServletException, IOException {
-//		request.getSession().setAttribute("utente", medico);
-//		request.getSession().setAttribute("isMedico", true);
-//
-//		Part dimensioneErrata = null;
-//		//request.addPart(dimensioneErrata);
-//		//TODO caricare file nel part
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", testo);
-//		request.setParameter("selectPaziente", CfPaziente);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);		 
-//		
-//		if (request.getAttribute("erroreCaricamento") != null) {
-//			assertEquals(request.getAttribute("erroreCaricamento"), true);
-//		} else {
-//			fail("il caricamento è andato a buon fine");
-//		}
-//		  
-//	}
+	@Test
+	void TC_GM_8_3_InvioMessaggi() throws ServletException, IOException {
+		
+		request.getSession().setAttribute("utente", medico);
+		request.getSession().setAttribute("isMedico", true);
+
+		final String fileName = "test.txt";
+		final byte[] content = "Hallo Word".getBytes();
+		MockMultipartFile mockMultipartFile = new MockMultipartFile("content", fileName, "image/jpeg", content);
+		
+		request.addFile(mockMultipartFile);
+		
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", testo);
+		request.setParameter("selectPaziente", CfPaziente);
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);		 
+		
+		if (request.getAttribute("erroreCaricamento") != null) {
+			assertEquals(request.getAttribute("erroreCaricamento"), true);
+		} else {
+			fail("il caricamento è andato a buon fine");
+		}
+		  
+	}
+	
+	@Test
+	void TC_GM_8_4_InvioMessaggi() throws ServletException, IOException {
+		request.getSession().setAttribute("utente", medico);
+		request.getSession().setAttribute("isMedico", true);
+
+		Part dimensioneErrata = null;
+		//request.addPart(dimensioneErrata);
+		//TODO caricare file nel part
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", testo);
+		request.setParameter("selectPaziente", CfPaziente);
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);		 
+		
+		if (request.getAttribute("erroreCaricamento") != null) {
+			assertEquals(request.getAttribute("erroreCaricamento"), true);
+		} else {
+			fail("il caricamento è andato a buon fine");
+		}
+		  
+	}
 //	
 //	@Test
 //	void TC_GM_8_5_InvioMessaggi() throws Exception {
@@ -308,56 +308,56 @@ class TestGestioneMessaggi {
 		assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
 	}
 	
-//	@Test
-//	void TC_GP_9_3_InvioMessaggi() throws ServletException, IOException {
-//		
-//		request.getSession().setAttribute("utente", paziente);
-//		request.getSession().setAttribute("isPaziente", true);
-//
-//		Part estensioneErrata = null;
-//		//TODO caricare file nel part
-//		//request.addPart(estensioneErrata);
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", testo);
-//		request.setParameter("selectMedico", CfMedico);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);		 
-//		
-//		if (request.getAttribute("erroreCaricamento") != null) {
-//			assertEquals(request.getAttribute("erroreCaricamento"), true);
-//		} else {
-//			fail("il caricamento è andato a buon fine");
-//		}
-//		  
-//	}
-//	
-//	@Test
-//	void TC_GP_9_4_InvioMessaggi() throws ServletException, IOException {
-//		request.getSession().setAttribute("utente", paziente);
-//		request.getSession().setAttribute("isPaziente", true);
-//
-//		Part dimensioneErrata = null;
-//		//request.addPart(dimensioneErrata);
-//		//TODO caricare file nel part
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", testo);
-//		request.setParameter("selectMedico", CfMedico);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);		 
-//		
-//		if (request.getAttribute("erroreCaricamento") != null) {
-//			assertEquals(request.getAttribute("erroreCaricamento"), true);
-//		} else {
-//			fail("il caricamento è andato a buon fine");
-//		}
-//		  
-//	}
+	@Test
+	void TC_GP_9_3_InvioMessaggi() throws ServletException, IOException {
+		
+		request.getSession().setAttribute("utente", paziente);
+		request.getSession().setAttribute("isPaziente", true);
+
+		Part estensioneErrata = null;
+		//TODO caricare file nel part
+		//request.addPart(estensioneErrata);
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", testo);
+		request.setParameter("selectMedico", CfMedico);
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);		 
+		
+		if (request.getAttribute("erroreCaricamento") != null) {
+			assertEquals(request.getAttribute("erroreCaricamento"), true);
+		} else {
+			fail("il caricamento è andato a buon fine");
+		}
+		  
+	}
+	
+	@Test
+	void TC_GP_9_4_InvioMessaggi() throws ServletException, IOException {
+		request.getSession().setAttribute("utente", paziente);
+		request.getSession().setAttribute("isPaziente", true);
+
+		Part dimensioneErrata = null;
+		//request.addPart(dimensioneErrata);
+		//TODO caricare file nel part
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", testo);
+		request.setParameter("selectMedico", CfMedico);
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);		 
+		
+		if (request.getAttribute("erroreCaricamento") != null) {
+			assertEquals(request.getAttribute("erroreCaricamento"), true);
+		} else {
+			fail("il caricamento è andato a buon fine");
+		}
+		  
+	}
 //	
 //	@Test
 //	void TC_GP_9_5_InvioMessaggi() throws ServletException, IOException {
