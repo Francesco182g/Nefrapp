@@ -153,7 +153,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 					else if (!expDataDiNascita.test(dataDiNascita))
 						valido = [ false, dataMsg ];
 					else if (!expLuogoDiNascita.test(luogoDiNascita)
-							|| luogoDiNascita.length < 5
+							|| luogoDiNascita.length < 3
 							|| luogoDiNascita.length > 50)
 						valido = [ false, luogoNascitaMsg ];
 					else if (!expResidenza.test(residenza)
@@ -181,7 +181,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 							|| codiceFiscale.length != 16)
 						valido = [ false, CFMsg ];
 					else if (!expLuogoDiNascita.test(luogoDiNascita)
-							|| luogoDiNascita.length < 5
+							|| luogoDiNascita.length < 3
 							|| luogoDiNascita.length > 50)
 						valido = [ false, luogoNascitaMsg ];
 
@@ -206,7 +206,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 				else if (!expDataDiNascita.test(dataDiNascita))
 					valido = [ false, dataMsg ];
 				else if (!expLuogoDiNascita.test(luogoDiNascita)
-						|| luogoDiNascita.length < 5
+						|| luogoDiNascita.length < 3
 						|| luogoDiNascita.length > 50)
 					valido = [ false, luogoNascitaMsg ];
 				else if (!expResidenza.test(residenza) || residenza.length < 5
@@ -236,7 +236,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 				else if (!expDataDiNascita.test(dataDiNascita))
 					valido = [ false, dataMsg ];
 				else if (!expLuogoDiNascita.test(luogoDiNascita)
-						|| luogoDiNascita.length < 5
+						|| luogoDiNascita.length < 3
 						|| luogoDiNascita.length > 50)
 					valido = [ false, luogoNascitaMsg ];
 				else if (!expResidenza.test(residenza) || residenza.length < 5
@@ -247,11 +247,10 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 					valido = [ false, sessoMsg ];
 				else if (password.length > 0) {
 					if (!expPassword.test(password) || password.length < 6
-							|| password.length > 20)
-						{
+							|| password.length > 20) {
 						valido = [ false, passwordMsg ];
-						}
-						
+					}
+
 					else if (!expPassword.test(confermaPsw)
 							|| confermaPsw.length < 6
 							|| confermaPsw.length > 20
@@ -281,7 +280,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 				else if (!expDataDiNascita.test(dataDiNascita))
 					valido = [ false, dataMsg ];
 				else if (!expLuogoDiNascita.test(luogoDiNascita)
-						|| luogoDiNascita.length < 5
+						|| luogoDiNascita.length < 3
 						|| luogoDiNascita.length > 50)
 					valido = [ false, luogoNascitaMsg ];
 				else if (!expResidenza.test(residenza) || residenza.length < 5
@@ -460,12 +459,19 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 		else if (!expResidenza.test(residenza) || residenza.length < 5
 				|| residenza.length > 50)
 			valido = [ false, residenzaMsg ];
+		else if (!expDataDiNascita.test(dataDiNascita))
+			valido = [ false, dataMsg ];
+		else if (!expLuogoDiNascita.test(luogoDiNascita)
+				|| luogoDiNascita.length < 3 || luogoDiNascita.length > 50)
+			valido = [ false, luogoNascitaMsg ];
+		else if (!expResidenza.test(residenza) || residenza.length < 5
+				|| residenza.length > 50)
+			valido = [ false, residenzaMsg ];
 		else if (confermaPsw != undefined) {
 			if (!expPassword.test(confermaPsw) || confermaPsw.length < 6
 					|| confermaPsw.length > 20 || confermaPsw != password)
 				valido = [ false, confermaPasswordMsg ];
 		}
-
 		return valido;
 	}
 	/**
