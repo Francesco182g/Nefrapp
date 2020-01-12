@@ -126,7 +126,7 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio))).first();
 		if (messaggioDoc != null) {
-			Messaggio messaggio = CreaBeanUtility.daDocumentAMessaggio(messaggioDoc, null);
+			Messaggio messaggio = CreaBeanUtility.daDocumentAMessaggio(messaggioDoc);
 			//valuta se mettere metodo overloaded per evitare il parametro null
 			return messaggio;
 		}

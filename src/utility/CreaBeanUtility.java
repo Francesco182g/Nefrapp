@@ -139,10 +139,10 @@ public class CreaBeanUtility {
 	
 	/**
 	 * Metodo che converte il documento inviato in un Messaggio
-	 * @param datiSchedaParametri documento che continee i dati della scheda
-	 * @return schedaParametri convertito dal documento
+	 * @param datiMessaggio documento che continee i dati del messaggio
+	 * @return messaggio convertito dal documento
 	 */
-	public static Messaggio daDocumentAMessaggio(Document datiMessaggio, String destinatario) {
+	public static Messaggio daDocumentAMessaggio(Document datiMessaggio) {
 		Messaggio messaggio = new MessaggioCompleto();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
@@ -157,7 +157,7 @@ public class CreaBeanUtility {
 		
 		//caricamento dell'hashmap dall'array di documenti nel database
 		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
-		if (destinatario != null) {
+		
 			ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
 			if (campo != null) {
 				for (Document d : campo) {
@@ -165,10 +165,11 @@ public class CreaBeanUtility {
 				}
 			}
 			messaggio.setDestinatariView(destinatariView);
-			
+			System.out.println(messaggio.getDestinatariView());
+			System.out.println(destinatariView.toString());
 			//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
-			messaggio.setVisualizzato(destinatariView.get(destinatario));
-		}
+			//messaggio.setVisualizzato(destinatariView.get(destinatario));
+		
 		
 		return messaggio;
 	}
