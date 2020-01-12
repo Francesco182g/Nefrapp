@@ -232,7 +232,14 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 		}
 	}
-
+	/**
+	 * Questo metodo rimuove una comunicazione incompleta nel caso in cui l'utente
+	 * decida volontariamente di cancellare un allegato gia' caricato
+	 * 
+	 * @param tipo,    stringa contenente il tipo di comunicazione da eliminare
+	 * @param session, HttpSession da cui eliminare gli attributi relativi
+	 *                 all'allegato
+	 */
 	protected void rimuoviAllegato(String tipo, HttpSession session) {
 
 		String id = (String) session.getAttribute("id");

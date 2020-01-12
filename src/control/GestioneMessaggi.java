@@ -151,6 +151,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			if (messaggi.isEmpty()) {
 				return;
 			}
+			
 
 			// piccolo sistema di caching per minimizzare le query sui mittenti dei messaggi
 			// Se un paziente ha 200 messaggi da 5 medici si fanno 5 query e non 200.

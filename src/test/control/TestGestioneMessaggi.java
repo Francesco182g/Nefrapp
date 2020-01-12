@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import org.bson.Document;
+import org.bson.internal.Base64;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
@@ -37,6 +39,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
@@ -48,6 +51,7 @@ import bean.MessaggioProxy;
 import bean.Paziente;
 import control.GestioneMessaggi;
 import model.DriverConnection;
+import model.MessaggioModel;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
@@ -70,16 +74,19 @@ class TestGestioneMessaggi {
 	private GestioneMessaggi servlet;
 	
 	
-	private MockMultipartHttpServletRequest request;
+	private MockHttpServletRequest request;
 	private MockHttpServletResponse response;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		ArrayList<String> campoMedici = new ArrayList<>();
+		campoMedici.add(CfMedico);
 		String password1 = CriptazioneUtility.criptaConMD5("Fiori5678");
-		Document doc1 = new Document("CodiceFiscale", CfPaziente).append("Password", password1).append("Attivo", true);
+		Document doc1 = new Document("CodiceFiscale", CfPaziente).append("Password", password1).append("Attivo", true).append("Medici", campoMedici);;
 		pazienti.insertOne(doc1);
 		paziente = CreaBeanUtility.daDocumentAPaziente(doc1);
+		paziente.setMedici(campoMedici);
 		
 		
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
@@ -190,7 +197,6 @@ class TestGestioneMessaggi {
 		final byte[] content = "Hallo Word".getBytes();
 		MockMultipartFile mockMultipartFile = new MockMultipartFile("content", fileName, "image/jpeg", content);
 		
-		request.addFile(mockMultipartFile);
 		
 		request.setParameter("operazione", "caricaAllegato");
 		servlet.doPost(request, response);
@@ -408,6 +414,9 @@ class TestGestioneMessaggi {
 				secondoMessaggio.getData(), secondoMessaggio.getDestinatariView());
 		primo.setIdMessaggio(daPazAMed.getIdMessaggio());
 		secondo.setIdMessaggio(secondoMessaggio.getIdMessaggio());
+		//a questo punto non ha ancora settato la visualizzazione
+		primo.setVisualizzato(null);
+		secondo.setVisualizzato(null);
 		//l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
 		//perché nel mostrare la lista il model sceglie prima i messaggi più recenti
 		messaggi.add(secondo);
@@ -450,17 +459,85 @@ class TestGestioneMessaggi {
 				secondoMessaggio.getData(), secondoMessaggio.getDestinatariView());
 		primo.setIdMessaggio(daMedAPaz.getIdMessaggio());
 		secondo.setIdMessaggio(secondoMessaggio.getIdMessaggio());
+		//a questo punto non ha ancora settato la visualizzazione
+		primo.setVisualizzato(null);
+		secondo.setVisualizzato(null);
 		//l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
 		//perché nel mostrare la lista il model sceglie prima i messaggi più recenti
 		messaggi.add(secondo);
 		messaggi.add(primo);		
-		
+				
 		request.setParameter("operazione", "visualizzaElencoMessaggio");
 		servlet.doGet(request, response);
 
 		assertEquals(messaggi.toString(), request.getAttribute("messaggio").toString());
 	}
 	
+	@Test
+	void testCaricaDestinatariPerPaziente() throws ServletException, IOException {
+		ArrayList <Medico> medici = new ArrayList<Medico>();
+		medici.add(medico);
+		
+		request.getSession().setAttribute("utente", paziente);
+		request.getSession().setAttribute("isPaziente", true);
+		request.getSession().setAttribute("accessDone", true);
+		
+		request.setParameter("operazione", "caricaDestinatariMessaggio");
+		servlet.doGet(request, response);
+
+		assertEquals(medici.toString(), request.getAttribute("mediciCuranti").toString());
+	}
+	
+	@Test
+	void testCaricaDestinatariPerMedico() throws ServletException, IOException {
+		ArrayList <Paziente> pazienti = new ArrayList<Paziente>();
+		pazienti.add(paziente);
+		
+		request.getSession().setAttribute("utente", medico);
+		request.getSession().setAttribute("isMedico", true);
+		request.getSession().setAttribute("accessDone", true);
+		
+		request.setParameter("operazione", "caricaDestinatariMessaggio");
+		servlet.doGet(request, response);
+		
+		System.out.println(request.getAttribute("pazientiSeguiti").toString());
+
+		assertEquals(pazienti.toString(), request.getAttribute("pazientiSeguiti").toString());
+	}
+	
+	@Test
+	void testRimuoviAllegato() throws ServletException, IOException {
+		request.getSession().setAttribute("utente", medico);
+		request.getSession().setAttribute("isMedico", true);
+		request.getSession().setAttribute("accessDone", true);
+		request.getSession().setAttribute("id", daPazAMed.getIdMessaggio());
+
+		request.setParameter("operazione", "rimuoviAllegato");
+		servlet.doGet(request, response);
+		
+		assertNull(MessaggioModel.getMessaggioById(daPazAMed.getIdMessaggio()));
+	}
+	
+	@Test
+	void testRimuoviIncompleta() throws ServletException, IOException {
+		
+		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
+		request.getSession().setAttribute("utente", paziente);
+		request.getSession().setAttribute("isPaziente", true);
+		request.getSession().setAttribute("accessDone", true);
+		request.getSession().setAttribute("id", daMedAPaz.getIdMessaggio());
+
+		//inserisco un messaggio senza destinatari, condizione di rimozione
+		Document d = messaggi.find(eq("_id", new ObjectId(daMedAPaz.getIdMessaggio()))).projection(Projections.exclude("_id")).
+				first().append("DestinatariView", null);
+		messaggi.insertOne(d);
+		ObjectId id = (ObjectId)d.get("_id");
+		
+		request.setParameter("operazione", "rimuoviMessaggioIncompleto");
+		servlet.doGet(request, response);
+		
+		assertNull(MessaggioModel.getMessaggioById(id.toString()));
+	}
 	
 
 	//metodo di servizio
