@@ -84,7 +84,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			}
 
 			else if (operazione.equals("inviaAnnuncio")) {
-				inviaComunicazione(request, operazione);
+				inviaComunicazione(request, response, operazione);
 				response.sendRedirect("./dashboard.jsp?notifica=annuncioInviato");
 			}
 

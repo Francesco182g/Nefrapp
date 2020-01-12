@@ -29,6 +29,9 @@ public class AnnuncioModelTest {
 	
 	private static ZonedDateTime data=null;
 		
+	//TODO: non usare i metodi del model ma direttamente le query Mongo
+	//poi anche add e delete andrebbero testati in qualche modo
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		data=ZonedDateTime.now(ZoneId.of("Europe/Rome"));
