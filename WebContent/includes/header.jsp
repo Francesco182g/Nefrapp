@@ -167,7 +167,7 @@
 							</a>
 							<c:choose>
 								<c:when test="${isPaziente}">
-									<a class="dropdown-item d-flex align-items-center" href="./annuncio?operazione=">
+									<a class="dropdown-item d-flex align-items-center" href="./annuncio?operazione=visualizzaPersonali">
 										<div class="mr-3">
 											<div class="icon-circle bg-success">
 												<i class="fas fa-donate text-white"></i>

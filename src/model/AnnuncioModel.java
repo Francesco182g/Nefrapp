@@ -126,16 +126,17 @@ public class AnnuncioModel {
 	 * @param data
 	 * @param destinatariView
 	 */
-	public static void updateAnnuncio (String id, String codiceFiscaleMedico, String titolo,
-			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
-			HashMap<String, Boolean> destinatariView) {
+	public static void updateAnnuncio (Annuncio daAggiornare) {
+		if (daAggiornare.getIdAnnuncio() == null || daAggiornare.getIdAnnuncio() == "") {
+			System.out.println("updateAnnuncio: l'annuncio che stai cercando di aggiornare non ha un id valido");
+		}
 		
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
 		BasicDBObject searchQuery = new BasicDBObject();
-		searchQuery.append("_id", new ObjectId(id));
+		searchQuery.append("_id", new ObjectId(daAggiornare.getIdAnnuncio()));
 		
 		ArrayList<Document> dView = new ArrayList<Document>();
-		Iterator<Entry<String, Boolean>> it = destinatariView.entrySet().iterator();
+		Iterator<Entry<String, Boolean>> it = daAggiornare.getPazientiView().entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, Boolean> pair = (Map.Entry<String, Boolean>) it.next();
 			Document coppia = new Document();
@@ -143,26 +144,26 @@ public class AnnuncioModel {
 			dView.add(coppia);
 		}
 		
-		FindIterable<Document> documents = annunci.find(eq("_id", new ObjectId(id))).projection(Projections.exclude("Allegato"));
+		FindIterable<Document> documents = annunci.find(eq("_id", new ObjectId(daAggiornare.getIdAnnuncio()))).projection(Projections.exclude("Allegato"));
 		Document d = documents.first();
 		
-		if (codiceFiscaleMedico!=null) {
-			d.append("MedicoCodiceFiscale", codiceFiscaleMedico);
+		if (daAggiornare.getMedico()!=null) {
+			d.append("MedicoCodiceFiscale", daAggiornare.getMedico());
 		}
-		if (titolo!=null) {
-			d.append("Titolo", titolo);
+		if (daAggiornare.getTitolo()!=null) {
+			d.append("Titolo", daAggiornare.getTitolo());
 		}
-		if (testo!=null) {
-			d.append("Testo", testo);
+		if (daAggiornare.getTesto()!=null) {
+			d.append("Testo", daAggiornare.getTesto());
 		}
-		if (corpoAllegato!=null && nomeAllegato!=null) {
-			Document allegato = new Document("NomeAllegato", nomeAllegato).append("CorpoAllegato", corpoAllegato);
+		if (daAggiornare.getCorpoAllegato()!=null && daAggiornare.getNomeAllegato()!=null) {
+			Document allegato = new Document("NomeAllegato", daAggiornare.getNomeAllegato()).append("CorpoAllegato", daAggiornare.getCorpoAllegato());
 			d.append("Allegato", allegato);
 		}
-		if (data!=null) {
-			d.append("Data", data.toLocalDate());
+		if (daAggiornare.getData()!=null) {
+			d.append("Data", daAggiornare.getData().toLocalDate());
 		}
-		if (destinatariView!=null) {
+		if (daAggiornare.getPazientiView()!=null) {
 			d.append("PazientiView", dView);
 		}
 		

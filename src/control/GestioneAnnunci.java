@@ -261,6 +261,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				for (Annuncio a : annunci) {
 					if (a.getNomeAllegato() != "" && a.getNomeAllegato() != null) {
 						a.setNomeAllegato(CriptazioneUtility.decodificaStringa(a.getNomeAllegato(), false));
+						AnnuncioModel.setVisualizzatoAnnuncio(a.getIdAnnuncio(), paziente.getCodiceFiscale(), true);
 					}
 				}
 			}

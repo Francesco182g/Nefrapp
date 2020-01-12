@@ -106,7 +106,7 @@ public class MessaggioModel {
 				sort(new BasicDBObject("Data", -1)).projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "DestinatariView"));
 		
 		for (Document doc : it) {
-			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc, CFDestinatario));
+			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
 		}
 		
 		return messaggi;
@@ -126,7 +126,7 @@ public class MessaggioModel {
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		Document messaggioDoc = messaggi.find(eq("_id", new ObjectId(idMessaggio))).first();
 		if (messaggioDoc != null) {
-			Messaggio messaggio = CreaBeanUtility.daDocumentAMessaggio(messaggioDoc, null);
+			Messaggio messaggio = CreaBeanUtility.daDocumentAMessaggio(messaggioDoc);
 			//valuta se mettere metodo overloaded per evitare il parametro null
 			return messaggio;
 		}
@@ -147,16 +147,18 @@ public class MessaggioModel {
 	 * @param data
 	 * @param destinatariView
 	 */
-	public static void updateMessaggio (String id, String codiceFiscaleMittente, String oggetto,
-			String testo, String corpoAllegato, String nomeAllegato, ZonedDateTime data,
-			HashMap<String, Boolean> destinatariView) {
+	public static void updateMessaggio (Messaggio daAggiornare) {
+		
+		if (daAggiornare.getIdMessaggio() == null || daAggiornare.getIdMessaggio() == "") {
+			System.out.println("updateAnnuncio: il messaggio che stai cercando di aggiornare non ha un id valido");
+		}
 		
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");
 		BasicDBObject searchQuery = new BasicDBObject();
-		searchQuery.append("_id", new ObjectId(id));
+		searchQuery.append("_id", new ObjectId(daAggiornare.getIdMessaggio()));
 		
 		ArrayList<Document> dView = new ArrayList<Document>();
-		Iterator<Entry<String, Boolean>> it = destinatariView.entrySet().iterator();
+		Iterator<Entry<String, Boolean>> it = daAggiornare.getDestinatariView().entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, Boolean> pair = (Map.Entry<String, Boolean>) it.next();
 			Document coppia = new Document();
@@ -164,26 +166,26 @@ public class MessaggioModel {
 			dView.add(coppia);
 		}
 		
-		FindIterable<Document> documents = messaggi.find(eq("_id", new ObjectId(id))).projection(Projections.exclude("Allegato"));
+		FindIterable<Document> documents = messaggi.find(eq("_id", new ObjectId(daAggiornare.getIdMessaggio()))).projection(Projections.exclude("Allegato"));
 		Document d = documents.first();
 		
-		if (codiceFiscaleMittente!=null) {
-			d.append("MittenteCodiceFiscale", codiceFiscaleMittente);
+		if (daAggiornare.getCodiceFiscaleMittente()!=null) {
+			d.append("MittenteCodiceFiscale", daAggiornare.getCodiceFiscaleMittente());
 		}
-		if (oggetto!=null) {
-			d.append("Oggetto", oggetto);
+		if (daAggiornare.getOggetto()!=null) {
+			d.append("Oggetto", daAggiornare.getOggetto());
 		}
-		if (testo!=null) {
-			d.append("Testo", testo);
+		if (daAggiornare.getTesto()!=null) {
+			d.append("Testo", daAggiornare.getTesto());
 		}
-		if (corpoAllegato!=null && nomeAllegato!=null) {
-			Document allegato = new Document("NomeAllegato", nomeAllegato).append("CorpoAllegato", corpoAllegato);
+		if (daAggiornare.getCorpoAllegato()!=null && daAggiornare.getNomeAllegato()!=null) {
+			Document allegato = new Document("NomeAllegato", daAggiornare.getNomeAllegato()).append("CorpoAllegato", daAggiornare.getCorpoAllegato());
 			d.append("Allegato", allegato);
 		}
-		if (data!=null) {
-			d.append("Data", data.toLocalDate());
+		if (daAggiornare.getData()!=null) {
+			d.append("Data", daAggiornare.getData().toLocalDate());
 		}
-		if (destinatariView!=null) {
+		if (daAggiornare.getDestinatariView()!=null) {
 			d.append("DestinatariView", dView);
 		}
 		
