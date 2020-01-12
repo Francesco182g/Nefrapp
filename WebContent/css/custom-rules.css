@@ -15,13 +15,13 @@
 }
 
 /* regola per la sidebar */
-.nefrapp-sidebar {
+/*.nefrapp-sidebar {
 	position: fixed;
 	z-index: 999;
-}
+}*/
 
 /* padding per evitare l'addossamento di corpo e sidebar */
-@media only screen and (min-width: 970px) {
+/*@media only screen and (min-width: 970px) {
 	#content {
 		padding-left: 16.7%;
 	}
@@ -33,4 +33,4 @@
 
 .dashcard {
 	min-height : 100%;
-}
+}*/

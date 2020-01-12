@@ -123,8 +123,9 @@
 	
 	            </div>
 	            <!-- End of Main Content -->
+	            <%@include file="../includes/footer.jsp" %>	
 	           </div>
-				<%@include file="../includes/footer.jsp" %>	
+				
 	        
 	        <!-- End of Content Wrapper -->
 	

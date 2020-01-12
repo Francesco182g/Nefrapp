@@ -29,6 +29,7 @@ public class GestioneRegistrazione extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	
 	/*
 	 * @precondition La richiesta deve essere sincrona codiceFiscale != null &&
 	 * codiceFiscale.matches(
@@ -44,7 +45,7 @@ public class GestioneRegistrazione extends HttpServlet {
 	 * 
 	 * @postcondition L'utente � stato registrato nel sistema
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		try {
@@ -73,7 +74,7 @@ public class GestioneRegistrazione extends HttpServlet {
 						ArrayList<String> medici = new ArrayList<String>();
 						medici.add(medicoLoggato.getCodiceFiscale());
 						registraPaziente(request, response, medici);
-						response.sendRedirect("./dashboard.jsp?regPazOk");
+						
 						//TODO: alert di successo
 
 					} else { // solo aggiunta del cf del medico tra i seguiti (paziente già registrato)
@@ -161,6 +162,7 @@ public class GestioneRegistrazione extends HttpServlet {
 				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita,
 						LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")), true, medici);
 				PazienteModel.addPaziente(paziente, password);
+				response.sendRedirect("./dashboard.jsp?regPazOk");
 			} else {
 				request.setAttribute("notifica", "Uno o più parametri del paziente non sono validi.");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/registraPazienteMedico.jsp");

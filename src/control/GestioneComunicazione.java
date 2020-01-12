@@ -119,18 +119,19 @@ public class GestioneComunicazione extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void inviaComunicazione(HttpServletRequest request, String operazione)
+	protected void inviaComunicazione(HttpServletRequest request, HttpServletResponse response, String operazione)
 			throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
-
+		
 		if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
 		} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
 			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
 		}
+		
 		String CFMittente = utente.getCodiceFiscale();
 		String oggetto = request.getParameter("oggetto");
 		String testo = request.getParameter("testo");
@@ -156,6 +157,9 @@ public class GestioneComunicazione extends HttpServlet {
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
 				}
 			}
+		} else {
+			response.sendRedirect("./dashboard.jsp?notifica=comunicazioneNonInviata");
+			return;
 		}
 
 		session.removeAttribute("allegato");
@@ -163,7 +167,7 @@ public class GestioneComunicazione extends HttpServlet {
 		session.removeAttribute("id");
 	}
 
-	protected void caricaAllegato(HttpServletRequest request, String tipo, HttpSession session) {
+	public void caricaAllegato(HttpServletRequest request, String tipo, HttpSession session) {
 		String allegato = null;
 		String nomeFile = null;
 		String id = null;
@@ -173,6 +177,11 @@ public class GestioneComunicazione extends HttpServlet {
 
 		try {
 			Part filePart = request.getPart("file");
+			if (filePart == null) {
+				request.setAttribute("erroreCaricamento", true);
+				return;
+			}
+			
 			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$",
 					"$1");
 			if (filePart != null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
@@ -180,7 +189,7 @@ public class GestioneComunicazione extends HttpServlet {
 				try {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
-
+					
 					if (tipo != null && tipo.equals("messaggio")) {
 						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile,
 								ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
@@ -193,21 +202,28 @@ public class GestioneComunicazione extends HttpServlet {
 
 				} catch (Exception e) {
 					System.out.println("caricaAllegato: errore nel caricamento del file");
+					request.setAttribute("erroreCaricamento", true);
 					e.printStackTrace();
+					return;
 				} finally {
 					if (fileStream != null) {
 						fileStream.close();
 					}
 				}
+			} else {
+				request.setAttribute("erroreCaricamento", true);
+				return;
 			}
 		} catch (Exception e) {
 			System.out.println("caricaAllegato: errore nel caricamento dell'allegato");
 			e.printStackTrace();
+			request.setAttribute("erroreCaricamento", true);
+			return;
 		} finally {
 			session.setAttribute("id", id);
 			session.setAttribute("nomeFile", nomeFile);
 			session.setAttribute("allegato", allegato);
-			if (nomeFile.equals("form-data; name=\"file\"; filename=\"\"")) {
+			if (nomeFile != null && nomeFile.equals("form-data; name=\"file\"; filename=\"\"")) {
 				nomeFile = null;
 			}
 		}

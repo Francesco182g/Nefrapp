@@ -18,23 +18,26 @@ import model.DriverConnection;
 import utility.CriptazioneUtility;
 
 class AmministratoreModelTest {
-	private String password = CriptazioneUtility.criptaConMD5("Pippo1234");
+	private static String password = CriptazioneUtility.criptaConMD5("Pippo1234");
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		String password1 = CriptazioneUtility.criptaConMD5("Pippo1234");
-		Amministratore admin = new Amministratore("FLPBRZ62F17F876F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
-		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
-		Document doc = new Document("CodiceFiscale", "FLPBRZ61A45F234F").append("Password", password1);
-		amministratore.insertOne(doc);
+		MongoCollection<Document> admin = DriverConnection.getConnection().getCollection("Amministratore");
+		
+		Document doc = new Document("CodiceFiscale", "FLPBRZ62F17F876F")
+				.append("Nome", "Filippo")
+				.append("Cognome", "Carbosiero")
+				.append("Password",password)
+				.append("Email", "f.carbosiero@live.it");
+		admin.insertOne(doc);	
 	}
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		MongoCollection<Document> amministratore = DriverConnection.getConnection().getCollection("Amministratore");
+		MongoCollection<Document> admin = DriverConnection.getConnection().getCollection("Amministratore");
 		BasicDBObject document = new BasicDBObject();
-		document.put("CodiceFiscale", "FLPBRZ61A45F234F");
-		amministratore.deleteOne(document);	
+		document.put("CodiceFiscale", "FLPBRZ62F17F876F");
+		admin.deleteOne(document);
 	}
 
 	@Test

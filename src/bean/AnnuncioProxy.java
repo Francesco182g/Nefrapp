@@ -133,8 +133,8 @@ public class AnnuncioProxy implements Annuncio {
 
 	@Override
 	public String toString() {
-		return "MessaggioProxy [idMessaggio=" + idAnnuncio + ", medico=" + medico
-				+ ", titolo=" + titolo + ", data=" + data + ", visualizzato=" + visualizzato
+		return "AnnuncioProxy [idAnnuncio=" + idAnnuncio + ", medico=" + medico
+				+ ", titolo=" + titolo + ", testo=" + testo + ", data=" + data + ", visualizzato=" + visualizzato
 				+ ", pazientiView=" + pazientiView + "]";
 	}
 }

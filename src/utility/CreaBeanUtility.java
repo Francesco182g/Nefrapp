@@ -1,4 +1,5 @@
 package utility;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -23,22 +24,22 @@ import bean.SchedaParametri;
 
 /**
  * 
- * @author Antonio
- * Questa classe contiene tutt i metodi di conversione dei documenti in bean
+ * @author Antonio Questa classe contiene tutt i metodi di conversione dei
+ *         documenti in bean
  * 
  */
-
 
 public class CreaBeanUtility {
 
 	/**
 	 * Metodo che converte il documento inviato in paziente
+	 * 
 	 * @param datiPaziente documento che continee i dati del paziente
 	 * @return paziente convertito dal documento
 	 */
 	public static Paziente daDocumentAPaziente(Document datiPaziente) {
 		Paziente paziente = new Paziente();
-		
+
 		paziente.setCodiceFiscale(datiPaziente.getString("CodiceFiscale"));
 		paziente.setNome(datiPaziente.getString("Nome"));
 		paziente.setCognome(datiPaziente.getString("Cognome"));
@@ -49,16 +50,16 @@ public class CreaBeanUtility {
 		paziente.setAttivo(datiPaziente.getBoolean("Attivo"));
 		paziente.setMedici((ArrayList<String>) datiPaziente.get("Medici"));
 		Date temp = datiPaziente.getDate("DataDiNascita");
-		if(temp != null)
-		{
+		if (temp != null) {
 			LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			paziente.setDataDiNascita(data);
 		}
 		return paziente;
 	}
-	
+
 	/**
 	 * Metodo che converte il documento inviato in medico
+	 * 
 	 * @param datiMedico documento che continee i dati del medico
 	 * @return medico convertito dal documento
 	 */
@@ -68,21 +69,21 @@ public class CreaBeanUtility {
 		medico.setNome(datiMedico.getString("Nome"));
 		medico.setCognome(datiMedico.getString("Cognome"));
 		medico.setSesso(datiMedico.getString("Sesso"));
-		Date temp=datiMedico.getDate("DataDiNascita");
-		if(temp != null)
-		{
-			LocalDate data=temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		Date temp = datiMedico.getDate("DataDiNascita");
+		if (temp != null) {
+			LocalDate data = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			medico.setDataDiNascita(data);
 		}
 		medico.setEmail(datiMedico.getString("Email"));
 		medico.setResidenza(datiMedico.getString("Residenza"));
 		medico.setLuogoDiNascita(datiMedico.getString("LuogoDiNascita"));
-		
+
 		return medico;
 	}
-	
+
 	/**
 	 * Metodo che converte il documento inviato in amministratore
+	 * 
 	 * @param datiAmministratore documento che continee i dati dell' amministratore
 	 * @return amministratore convertito dal documento
 	 */
@@ -92,17 +93,18 @@ public class CreaBeanUtility {
 		amministratore.setNome(datiAmministratore.getString("Nome"));
 		amministratore.setCognome(datiAmministratore.getString("Cognome"));
 		amministratore.setEmail(datiAmministratore.getString("Email"));
-		
+
 		return amministratore;
 	}
 
 	/**
 	 * Metodo che converte il documento inviato in una SchedaParametri
+	 * 
 	 * @param datiSchedaParametri documento che continee i dati della scheda
 	 * @return schedaParametri convertito dal documento
 	 */
 	public static SchedaParametri daDocumentASchedaParametri(Document datiSchedaParametri) {
-		SchedaParametri schedaParametri= new SchedaParametri();
+		SchedaParametri schedaParametri = new SchedaParametri();
 		schedaParametri.setPazienteCodiceFiscale(datiSchedaParametri.getString("PazienteCodiceFiscale"));
 		schedaParametri.setPeso(new BigDecimal(String.valueOf(datiSchedaParametri.get("Peso"))));
 		schedaParametri.setPaMin(datiSchedaParametri.getInteger("PaMin"));
@@ -118,14 +120,15 @@ public class CreaBeanUtility {
 
 		return schedaParametri;
 	}
-	
+
 	/**
 	 * Metodo che converte il documento inviato in un PianoTerapeutico
+	 * 
 	 * @param datiSchedaParametri documento che continee i dati della scheda
 	 * @return schedaParametri convertito dal documento
 	 */
 	public static PianoTerapeutico daDocumentAPianoTerapeutico(Document datiPiano) {
-		PianoTerapeutico piano= new PianoTerapeutico();
+		PianoTerapeutico piano = new PianoTerapeutico();
 		piano.setCodiceFiscalePaziente(datiPiano.getString("PazienteCodiceFiscale"));
 		piano.setDiagnosi(datiPiano.getString("Diagnosi"));
 		piano.setFarmaco(datiPiano.getString("Farmaco"));
@@ -136,9 +139,10 @@ public class CreaBeanUtility {
 
 		return piano;
 	}
-	
+
 	/**
 	 * Metodo che converte il documento inviato in un Messaggio
+	 * 
 	 * @param datiMessaggio documento che continee i dati del messaggio
 	 * @return messaggio convertito dal documento
 	 */
@@ -147,37 +151,38 @@ public class CreaBeanUtility {
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
 		messaggio.setTesto(datiMessaggio.getString("Testo"));
-		Document allegato = (Document)datiMessaggio.get("Allegato");
+		Document allegato = (Document) datiMessaggio.get("Allegato");
 		messaggio.setNomeAllegato(allegato.getString("NomeAllegato"));
-		messaggio.setCorpoAllegato(allegato.getString("CorpoAllegato"));	
+		messaggio.setCorpoAllegato(allegato.getString("CorpoAllegato"));
 		Date temp = datiMessaggio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
 		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
-		
-		//caricamento dell'hashmap dall'array di documenti nel database
-		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
-		
-			ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
-			if (campo != null) {
-				for (Document d : campo) {
-					destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
-				}
+
+		// caricamento dell'hashmap dall'array di documenti nel database
+		HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>) datiMessaggio.get("DestinatariView");
+
+		if (campo != null) {
+			for (Document d : campo) {
+				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
-			messaggio.setDestinatariView(destinatariView);
-			System.out.println(messaggio.getDestinatariView());
-			System.out.println(destinatariView.toString());
-			//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
-			//messaggio.setVisualizzato(destinatariView.get(destinatario));
-		
-		
+		}
+		messaggio.setDestinatariView(destinatariView);
+
+		/*if (destinatario != null) {
+			// settaggio del vero valore di visualizzazione presente in db usando il CF del
+			// destinatario come key
+			messaggio.setVisualizzato(destinatariView.get(destinatario));
+		}*/
+
 		return messaggio;
 	}
-	
+
 	public static Annuncio daDocumentAAnnuncio(Document datiAnnuncio) {
 		Annuncio annuncio = new AnnuncioCompleto();
 		annuncio.setMedico(datiAnnuncio.getString("MedicoCodiceFiscale"));
-		Document allegato = (Document)datiAnnuncio.get("Allegato");
+		Document allegato = (Document) datiAnnuncio.get("Allegato");
 		annuncio.setNomeAllegato(allegato.getString("NomeAllegato"));
 		annuncio.setCorpoAllegato(allegato.getString("CorpoAllegato"));
 		annuncio.setTitolo(datiAnnuncio.getString("Titolo"));
@@ -186,19 +191,19 @@ public class CreaBeanUtility {
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		annuncio.setData(data);
 		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
-		
-		//caricamento dell'hashmap dall'array di documenti nel database
-		HashMap <String, Boolean> pazientiView = new HashMap <String, Boolean>();
-		ArrayList<Document> campo = (ArrayList<Document>)datiAnnuncio.get("DestinatariView");
-		
+
+		// caricamento dell'hashmap dall'array di documenti nel database
+		HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>) datiAnnuncio.get("PazientiView");
+
 		if (campo != null) {
 			for (Document d : campo) {
 				pazientiView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
 		}
-		
+
 		annuncio.setPazientiView(pazientiView);
-		
+
 		return annuncio;
 	}
 
@@ -206,37 +211,38 @@ public class CreaBeanUtility {
 		Messaggio messaggio = new MessaggioProxy();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
-	
+
 		Date temp = datiMessaggio.getDate("Data");
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		messaggio.setData(data);
 		messaggio.setIdMessaggio(datiMessaggio.getObjectId("_id").toString());
-		
-		//caricamento dell'hashmap dall'array di documenti nel database
-		HashMap <String, Boolean> destinatariView = new HashMap <String, Boolean>();
-		if (destinatario!=null) {
-			ArrayList<Document> campo = (ArrayList<Document>)datiMessaggio.get("DestinatariView");
-			
-			if (campo != null) {
-				for (Document d : campo) {
-					destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
-				}
+
+		// caricamento dell'hashmap dall'array di documenti nel database
+		HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
+
+		ArrayList<Document> campo = (ArrayList<Document>) datiMessaggio.get("DestinatariView");
+
+		if (campo != null) {
+			for (Document d : campo) {
+				destinatariView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
-			
-			messaggio.setDestinatariView(destinatariView);
-			
-			
-			//settaggio del vero valore di visualizzazione presente in db usando il CF del destinatario come key
+		}
+
+		messaggio.setDestinatariView(destinatariView);
+
+		if (destinatario != null) {
+			// settaggio del vero valore di visualizzazione presente in db usando il CF del
+			// destinatario come key
 			messaggio.setVisualizzato(destinatariView.get(destinatario));
 		}
-		
+
 		return messaggio;
 	}
 
 	public static Annuncio daDocumentAAnnuncioProxy(Document datiAnnuncio) {
 		Annuncio annuncio = new AnnuncioProxy();
 		annuncio.setMedico(datiAnnuncio.getString("MedicoCodiceFiscale"));
-		Document allegato = (Document)datiAnnuncio.get("Allegato");
+		Document allegato = (Document) datiAnnuncio.get("Allegato");
 		annuncio.setNomeAllegato(allegato.getString("NomeAllegato"));
 		annuncio.setTitolo(datiAnnuncio.getString("Titolo"));
 		annuncio.setTesto(datiAnnuncio.getString("Testo"));
@@ -244,19 +250,19 @@ public class CreaBeanUtility {
 		ZonedDateTime data = temp.toInstant().atZone(ZoneId.of("Europe/Rome"));
 		annuncio.setData(data);
 		annuncio.setIdAnnuncio(datiAnnuncio.get("_id").toString());
-		
-		//caricamento dell'hashmap dall'array di documenti nel database
-		HashMap <String, Boolean> pazientiView = new HashMap <String, Boolean>();
-		ArrayList<Document> campo = (ArrayList<Document>)datiAnnuncio.get("DestinatariView");
-		
+
+		// caricamento dell'hashmap dall'array di documenti nel database
+		HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>();
+		ArrayList<Document> campo = (ArrayList<Document>) datiAnnuncio.get("DestinatariView");
+
 		if (campo != null) {
 			for (Document d : campo) {
 				pazientiView.put(d.getString("CFDestinatario"), d.getBoolean("Visualizzazione"));
 			}
 		}
-		
+
 		annuncio.setPazientiView(pazientiView);
-		
+
 		return annuncio;
 	}
 }

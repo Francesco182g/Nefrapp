@@ -107,7 +107,7 @@ public class AnnuncioCompleto implements Annuncio{
 	}
 
 	public void setPazientiView(HashMap<String, Boolean> pazientiView) {
-		pazientiView.putAll(pazientiView);
+		this.pazientiView.putAll(pazientiView);
 	}
 
 	public HashMap<String, Boolean> getPazientiView() {
@@ -116,7 +116,7 @@ public class AnnuncioCompleto implements Annuncio{
 
 	@Override
 	public String toString() {
-		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + ", titolo="
-				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato=" + "]";
+		return "Annuncio [idAnnuncio=" + idAnnuncio + ", medico=" + medico + ", pazienti=" + pazientiView + ", titolo="
+				+ titolo + ", testo=" + testo + ", allegato=" + nomeAllegato + ", data=" + data + ", visualizzato=" + visualizzato + "]";
 	}
 }

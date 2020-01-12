@@ -42,7 +42,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
 
 			HttpSession session = request.getSession();
@@ -81,16 +81,21 @@ public class GestioneMessaggi extends GestioneComunicazione {
 			}
 
 			else if (operazione.equals("inviaMessaggio")) {
-				inviaComunicazione(request, operazione);
-				response.sendRedirect("./dashboard.jsp?notifica=messaggioInviato");
+				inviaComunicazione(request, response, operazione);
+				if (!response.isCommitted()) {
+					response.sendRedirect("./dashboard.jsp?notifica=messaggioInviato");
+				}
 				return;
-			} else if (operazione.equals("visualizzaElencoMessaggio")) {
+			} 
+			
+			else if (operazione.equals("visualizzaElencoMessaggio")) {
 				visualizzaListaMessaggi(request, response);
 				if (!response.isCommitted()) {
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("./listaMessaggiView.jsp");
 					requestDispatcher.forward(request, response);
 				}
 				return;
+			
 			} else if (operazione.equals("visualizzaMessaggio")) {
 				visualizzaMessaggio(request, response);
 				if (!response.isCommitted()) {
@@ -102,6 +107,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		} catch (MongoException e) {
 			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 		}
 		return;
@@ -111,7 +117,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			doGet(request, response);
 		} catch (IOException e) {
@@ -194,6 +200,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 		
 		if (messaggio != null) {
 			MessaggioModel.setVisualizzatoMessaggio(idMessaggio, utente.getCodiceFiscale(),true);
+			messaggio.setVisualizzato(true);
 			if (nomeAllegato!=null && corpoAllegato!=null) {
 				messaggio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(corpoAllegato, true));
 				nomeAllegato = CriptazioneUtility.decodificaStringa(nomeAllegato, false);

@@ -47,7 +47,7 @@
 												<c:when test='${isMedico}'>
 													<select name="selectPaziente" id="selectPaziente" title="Scegli destinatari:" multiple
 														data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
-														class="selectpicker bootstrap-select w-100">
+														class="selectpicker bootstrap-select w-100 d-none">
 														<option value="" disabled>Scegli destinatari:</option>
 														<c:set var="pazienti" value='${requestScope["pazientiSeguiti"]}' /> <!-- TODO da fare nella servlet -->
 														<c:forEach items="${pazienti}" var="item">
