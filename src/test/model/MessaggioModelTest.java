@@ -11,8 +11,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import bean.Annuncio;
 import bean.Messaggio;
 import bean.MessaggioCompleto;
+import model.AnnuncioModel;
 import model.MessaggioModel;
 
 
@@ -78,6 +80,20 @@ public class MessaggioModelTest {
 	void testGetMessaggiByDestinatario() {
 		ArrayList<Messaggio> messaggiDaTestare = MessaggioModel.getMessaggiByDestinatario(CFDestinatario);
 		assertNotNull(messaggiDaTestare);
+	}
+	
+	@Test
+	void testUpdateMessaggio() {
+		Messaggio daAggiornare=MessaggioModel.getMessaggioById(id);
+		assertNotNull(daAggiornare);
+		daAggiornare.setOggetto("Nuovo annuncio");
+		daAggiornare.setTesto("Nuove medicine in commercio");
+		MessaggioModel.updateMessaggio(daAggiornare);
+		
+		daAggiornare=MessaggioModel.getMessaggioById(id);
+		assertNotNull(daAggiornare);
+		assertEquals(daAggiornare.getOggetto(),"Nuovo annuncio");
+		assertEquals(daAggiornare.getTesto(),"Nuove medicine in commercio");
 	}
 
 	@Test
