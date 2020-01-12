@@ -186,7 +186,7 @@ public class GestioneAnnunciTest {
 		servlet.doPost(request, response);
 		
 		request.setParameter("oggetto", titolo);
-		request.setParameter("testo", testo);
+		request.setParameter("testo", testo); 
 		request.setParameter("operazione", "inviaAnnuncio");
 		servlet.doPost(request, response);
 		if (request.getAttribute("erroreCaricamento") != null) {
