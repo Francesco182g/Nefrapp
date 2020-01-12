@@ -106,7 +106,7 @@ public class MessaggioModel {
 				sort(new BasicDBObject("Data", -1)).projection(Projections.include("MittenteCodiceFiscale", "Oggetto", "Data", "DestinatariView"));
 		
 		for (Document doc : it) {
-			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc, CFDestinatario));
+			messaggi.add(CreaBeanUtility.daDocumentAMessaggioProxy(doc));
 		}
 		
 		return messaggi;

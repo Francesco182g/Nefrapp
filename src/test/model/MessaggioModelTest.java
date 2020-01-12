@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,8 @@ import model.MessaggioModel;
 
 
 public class MessaggioModelTest {
-	private final static String CFMittente="ABCDEF12G34H567I";
+	private final static String CFDestinatario="BNCLRD67A01F205I";
+	private final static String CFMittente="GRMBNN67L11B516R";
 	private final static String oggetto="visita";
 	private final static String testo="Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”";
 	private final static String corpoAllegato="codiceAllegato";
@@ -25,13 +27,20 @@ public class MessaggioModelTest {
 	private final static HashMap<String,Boolean> destinatariView=new HashMap<String,Boolean>();
 	private final static DateTimeFormatter formatOra = DateTimeFormatter.ofPattern("HH:mm");
 	private final static DateTimeFormatter formatData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	MessaggioCompleto messaggio=new MessaggioCompleto(CFMittente, oggetto, testo,corpoAllegato,nomeAllegato,data, destinatariView);
+	static MessaggioCompleto messaggio=new MessaggioCompleto(CFMittente, oggetto, testo,corpoAllegato,nomeAllegato,data, destinatariView);
 	String id="";
+	
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+		destinatariView.put(CFDestinatario, false);
+		messaggio.setDestinatariView(destinatariView);
+	}
 	
 	@BeforeEach
 	void setUp() {
-		destinatariView.put("CRRSRA90A50A091Q", false);
+		messaggio.setVisualizzato(null);
 		id=MessaggioModel.addMessaggio(messaggio);
+		messaggio.setIdMessaggio(id);
 	}
 	
 	@AfterEach
@@ -55,7 +64,6 @@ public class MessaggioModelTest {
 		assertEquals(messaggioDaTestare.getOggetto(),oggetto);
 		assertEquals(messaggioDaTestare.getOraFormattata(),data.format(formatOra));
 		assertEquals(messaggioDaTestare.getTesto(), testo);
-	//	assertEquals(messaggioDaAggiungere, messaggioDaTestare); non funge perchè non ha l'id il messaggio da testare
 		MessaggioModel.deleteMessaggioById(idDaTestare);
 	}
 
@@ -68,7 +76,7 @@ public class MessaggioModelTest {
 
 	@Test
 	void testGetMessaggiByDestinatario() {
-		ArrayList<Messaggio> messaggiDaTestare = MessaggioModel.getMessaggiByDestinatario("CRRSRA90A50A091Q");
+		ArrayList<Messaggio> messaggiDaTestare = MessaggioModel.getMessaggiByDestinatario(CFDestinatario);
 		assertNotNull(messaggiDaTestare);
 	}
 
@@ -76,7 +84,7 @@ public class MessaggioModelTest {
 	void testGetMessaggioById() {
 		MessaggioCompleto messaggioDaTestare= (MessaggioCompleto) MessaggioModel.getMessaggioById(id);
 		assertNotNull(messaggioDaTestare);
-		//Bisogna testare tutti i campi?
+
 		assertEquals(messaggioDaTestare.getCodiceFiscaleMittente(),messaggio.getCodiceFiscaleMittente());
 		assertEquals(messaggioDaTestare.getCorpoAllegato(),messaggio.getCorpoAllegato());
 		assertEquals(messaggioDaTestare.getData(), messaggio.getData());
@@ -86,29 +94,24 @@ public class MessaggioModelTest {
 		assertEquals(messaggioDaTestare.getOggetto(),messaggio.getOggetto());
 		assertEquals(messaggioDaTestare.getOraFormattata(),messaggio.getOraFormattata());
 		assertEquals(messaggioDaTestare.getTesto(), messaggio.getTesto());
-		//Non sarà mai uguale perchè quando creiamo il bean prendendo il documento dal db, non settiamo mai l'id.
-//		assertEquals(messaggioDaTestare.getVisualizzato(), messaggio.getVisualizzato());
-//		assertEquals(messaggioDaTestare, messaggio); 
+		System.out.println(messaggioDaTestare.getVisualizzato() + " " + messaggio.getVisualizzato());
+		assertEquals(messaggioDaTestare.getVisualizzato(), messaggio.getVisualizzato());
+		assertEquals(messaggioDaTestare.toString(), messaggio.toString()); 
 	}
-	
-	/*Adesso l'ho notato per la prima volta: ma quand'è che viene effettivamente usato? Metodo da rimuovere?*/
-	/*@Test
-	void testUpdateMessaggio() { 
-	}*/
 
 	@Test
 	void testSetVisualizzatoMessaggio() {
-		MessaggioModel.setVisualizzatoMessaggio(id, "CRRSRA90A50A091Q", true);
+		MessaggioModel.setVisualizzatoMessaggio(id, CFDestinatario, true);
 		MessaggioCompleto messaggioDaTestare= (MessaggioCompleto) MessaggioModel.getMessaggioById(id);
 		HashMap<String,Boolean> destinatariDaTestare=messaggioDaTestare.getDestinatariView();
-		assertEquals(destinatariDaTestare.get("CRRSRA90A50A091Q"),true);
-		MessaggioModel.setVisualizzatoMessaggio(id, "CRRSRA90A50A091Q", false);
+		assertEquals(destinatariDaTestare.get(CFDestinatario),true);
+		MessaggioModel.setVisualizzatoMessaggio(id, CFDestinatario, false);
 		
 	}
 
 	@Test
 	void testCountMessaggiNonLetti() {
-		int n=MessaggioModel.countMessaggiNonLetti("CRRSRA90A50A091Q");
+		int n=MessaggioModel.countMessaggiNonLetti(CFDestinatario);
 		assertEquals(1,n);
 	}
 }

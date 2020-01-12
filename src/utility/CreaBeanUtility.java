@@ -170,12 +170,6 @@ public class CreaBeanUtility {
 		}
 		messaggio.setDestinatariView(destinatariView);
 
-		/*if (destinatario != null) {
-			// settaggio del vero valore di visualizzazione presente in db usando il CF del
-			// destinatario come key
-			messaggio.setVisualizzato(destinatariView.get(destinatario));
-		}*/
-
 		return messaggio;
 	}
 
@@ -207,7 +201,7 @@ public class CreaBeanUtility {
 		return annuncio;
 	}
 
-	public static Messaggio daDocumentAMessaggioProxy(Document datiMessaggio, String destinatario) {
+	public static Messaggio daDocumentAMessaggioProxy(Document datiMessaggio) {
 		Messaggio messaggio = new MessaggioProxy();
 		messaggio.setCodiceFiscaleMittente(datiMessaggio.getString("MittenteCodiceFiscale"));
 		messaggio.setOggetto(datiMessaggio.getString("Oggetto"));
@@ -229,12 +223,6 @@ public class CreaBeanUtility {
 		}
 
 		messaggio.setDestinatariView(destinatariView);
-
-		if (destinatario != null) {
-			// settaggio del vero valore di visualizzazione presente in db usando il CF del
-			// destinatario come key
-			messaggio.setVisualizzato(destinatariView.get(destinatario));
-		}
 
 		return messaggio;
 	}
