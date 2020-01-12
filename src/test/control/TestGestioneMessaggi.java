@@ -72,8 +72,6 @@ class TestGestioneMessaggi {
 	//TODO: mettere allegato (in forma accettabile) nel part
 
 	private GestioneMessaggi servlet;
-	
-	
 	private MockHttpServletRequest request;
 	private MockHttpServletResponse response;
 
@@ -114,7 +112,7 @@ class TestGestioneMessaggi {
 	@BeforeEach
 	void setUp() throws Exception {
 		servlet = new GestioneMessaggi();
-		request = new MockMultipartHttpServletRequest();
+		request = new MockHttpServletRequest();
 		response = new MockHttpServletResponse();
 		
 		daPazAMed = costruisciMessaggio(paziente.getCodiceFiscale(), medico.getCodiceFiscale());

@@ -284,7 +284,7 @@ public class GestioneComunicazione extends HttpServlet {
 		session.removeAttribute("id");
 	}
 
-	public boolean controllaParametri(String codiceFiscale, String oggetto, String testo) {
+	protected boolean controllaParametri(String codiceFiscale, String oggetto, String testo) {
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 
 		if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16) {
@@ -298,7 +298,7 @@ public class GestioneComunicazione extends HttpServlet {
 		return true;
 	}
 
-	private boolean controllaFile(String nomeFile, long dimensioneFile) {
+	public boolean controllaFile(String nomeFile, long dimensioneFile) {
 		String estensione = "";
 
 		if (dimensioneFile == 0) {

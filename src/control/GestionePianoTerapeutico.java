@@ -29,17 +29,24 @@ import model.PianoTerapeuticoModel;
 public class GestionePianoTerapeutico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
+	final String REGEX_DATA = "^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
+	final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 
 			String operazione = request.getParameter("operazione");
 			String tipo = request.getParameter("tipo");
+			
+			if (operazione == null) {
+				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
+				return;
+			}
 
 			if (operazione.equals("visualizza")) {
 				visualizzaPiano(request, response, tipo);
-				if (!(tipo != null && tipo.equals("asincrona"))) {
+				if (!(tipo != null && tipo.equals("asincrona")) && !response.isCommitted()) {
 					dispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico.jsp");
 					dispatcher.forward(request, response);
 				}
@@ -48,26 +55,25 @@ public class GestionePianoTerapeutico extends HttpServlet {
 
 			else if (operazione.equals("modifica")) {
 				modificaPiano(request,response);
-				response.sendRedirect(request.getContextPath() + "/GestioneMedico?operazione=VisualizzaPazientiSeguiti");
+				if (!response.isCommitted()) {
+					response.sendRedirect(request.getContextPath() + "/GestioneMedico?operazione=VisualizzaPazientiSeguiti");
+				}
 			}
 
 			else {
-				request.setAttribute("notifica", "Operazione scelta non valida");
-				dispatcher = getServletContext().getRequestDispatcher("/paginaErrore.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
+				return;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("notifica", "Errore in Gestione piano terapeutico. " + e.getMessage());
-			dispatcher = request.getRequestDispatcher("/paginaErrore.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
 			return;
 		}
 		return;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 		return;
@@ -97,8 +103,6 @@ public class GestionePianoTerapeutico extends HttpServlet {
 		} else {
 			codiceFiscalePaziente = request.getParameter("CFPaziente");
 		}
-		final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
-
 		if (codiceFiscalePaziente != null && Pattern.matches(REGEX_CF, codiceFiscalePaziente)) {
 			pianoTerapeutico = PianoTerapeuticoModel.getPianoTerapeuticoByPaziente(codiceFiscalePaziente);
 			if (tipo != null && tipo.equals("asincrona")) {
@@ -113,7 +117,8 @@ public class GestionePianoTerapeutico extends HttpServlet {
 			}
 
 		} else {
-			System.out.println("visualizzaPiano: errore nel CF passato");
+			response.sendRedirect("./paginaErrore.jsp?notifica=cfNonValido");
+			return;
 		}
 
 		if (utente != null) {
@@ -138,23 +143,20 @@ public class GestionePianoTerapeutico extends HttpServlet {
 		Medico medico = (Medico) request.getSession().getAttribute("utente");
 
 		if (medico != null) {
-			final String REGEX_DATA = "^(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$";
 			String dataFine = request.getParameter("data");
-			if (Pattern.matches(REGEX_DATA, dataFine)) {
-				String codiceFiscalePaziente = request.getParameter("CFPaziente");
+			String codiceFiscalePaziente = request.getParameter("CFPaziente");
+			if (Pattern.matches(REGEX_DATA, dataFine) && Pattern.matches(REGEX_CF, codiceFiscalePaziente)) {
 				String diagnosi = request.getParameter("diagnosi");
 				String farmaci = request.getParameter("farmaci");
 				LocalDate dataFineTerapia = LocalDate.parse(dataFine, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				PianoTerapeuticoModel.updatePianoTerapeutico(new PianoTerapeutico(codiceFiscalePaziente, diagnosi, farmaci, dataFineTerapia));
 			} else {
-				request.setAttribute("notifica","Codice fiscale non valido.");
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico"); 
-				requestDispatcher.forward(request,response);
+				response.sendRedirect("./paginaErrore.jsp?notifica=datiNonValidi");
+				return;
 			}
 		} else {
-			request.setAttribute("notifica","Medico non loggato.");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/visualizzaPianoTerapeutico"); 
-			requestDispatcher.forward(request,response);
+			response.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
+			return;
 		}
 	}
 }
