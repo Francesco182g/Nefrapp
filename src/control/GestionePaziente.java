@@ -42,7 +42,7 @@ public class GestionePaziente extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
 			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 				request.setAttribute("notification", "Errore generato dalla richiesta!");
@@ -116,8 +116,9 @@ public class GestionePaziente extends HttpServlet {
 	/**
 	 * Metodo che aggiorna i dati personali di un paziente
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
+	 * @throws IOException 
 	 */	
-	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response) {
+	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		
 		String codiceFiscale = request.getParameter("codiceFiscale");
@@ -158,7 +159,7 @@ public class GestionePaziente extends HttpServlet {
 				request.setAttribute("notifica", "Non è stato trovato il paziente da aggiornare");
 			}
 		} else {
-			request.setAttribute("notifica", "Formato parametri non valido");
+			response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=ParamErr");
 		}
 	}
 		
@@ -212,7 +213,7 @@ public class GestionePaziente extends HttpServlet {
 			if (!Pattern.matches(expResidenza, residenza))
 				valido = false;
 		if (!luogoDiNascita.equals(""))
-			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
+			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita) || luogoDiNascita.length() < 5|| luogoDiNascita.length() > 50)
 				valido = false;
 		if (!dataDiNascita.equals(""))
 			if (!Pattern.matches(expDataDiNascita, dataDiNascita))

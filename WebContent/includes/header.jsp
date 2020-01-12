@@ -29,9 +29,13 @@
 	<!-- Topbar -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+		<!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
 
 		<!-- Dropdown Toggle (Hamburger) -->
-	<div class="dropdown d-md-none" id="mobileMenu">
+	<!-- <div class="dropdown d-md-none" id="mobileMenu">
 		<button class="d-md-none dropdown-toggle" aria-expanded="false"
 			type="button" id="dropdownMenuButton" data-toggle="dropdown">
 			<i class="fa fa-bars"></i>
@@ -130,10 +134,11 @@
 			<a class="dropdown-item" href="./team.jsp"> Conosci il team! </a>
 		
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Topbar Navbar -->
 		<ul class="navbar-nav ml-auto">
+		
 			<c:choose>
 				<c:when test="${accessDone}">
 					<!-- Nav Item - Campanellina -->
@@ -276,6 +281,7 @@
 			</div>
 		</div>
 	</div>
+	
 	
 	<%@include file="../includes/avvisi.jsp"%>
 	
