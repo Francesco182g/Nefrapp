@@ -24,8 +24,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
+import org.springframework.mock.web.MockServletContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -41,7 +51,9 @@ import model.DriverConnection;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
-class TestGestioneMessaggi {
+@WebAppConfiguration
+
+class TestGestioneMessaggi {	
 	private static Paziente paziente;
 	private static Medico medico;
 	private static Messaggio daPazAMed;
@@ -148,25 +160,25 @@ class TestGestioneMessaggi {
 		assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
 	}
 
-//	@Test
-//	void TC_GM_8_2_InvioMessaggi() throws ServletException, IOException {
-//		request.getSession().setAttribute("utente", medico);
-//		request.getSession().setAttribute("isMedico", true);
-//
-//		//request.addPart(allegato);
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" + 
-//				"Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n" + 
-//				"");
-//		request.setParameter("selectPaziente", CfPaziente);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);
-//		  
-//		assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
-//	}
+	@Test
+	void TC_GM_8_2_InvioMessaggi() throws ServletException, IOException {
+		request.getSession().setAttribute("utente", medico);
+		request.getSession().setAttribute("isMedico", true);
+
+		//request.addPart(allegato);
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" + 
+				"Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n" + 
+				"");
+		request.setParameter("selectPaziente", CfPaziente);
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);
+		  
+		assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
+	}
 	
 //	@Test
 //	void TC_GM_8_3_InvioMessaggi() throws ServletException, IOException {
@@ -222,35 +234,40 @@ class TestGestioneMessaggi {
 //		  
 //	}
 //	
-	@Test
-	void TC_GM_8_5_InvioMessaggi() throws ServletException, IOException {
-		request.getSession().setAttribute("utente", medico);
-		request.getSession().setAttribute("isMedico", true);
+//	@Test
+//	void TC_GM_8_5_InvioMessaggi() throws Exception {
+//		request.getSession().setAttribute("utente", medico);
+//		request.getSession().setAttribute("isMedico", true);
 //		
 //		final String fileName = "test.jpg";
 //		final byte[] content = "Hallo Wordsdkjnfkdsjfndskjfsndkjsndkfjdnfkdsjnf".getBytes();
 //		MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileName, "image/jpeg", content);
 //		
+//		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(WebApplicationContextUtils.
+//				getWebApplicationContext(new MockServletContext(""))).build();
+//        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
+//                        .file(mockMultipartFile)
+//                        .param("some-random", "4"));
 //		
 //		request.addFile(mockMultipartFile);
 //		if (request.getPart("file") == null)
 //			System.out.println("nullo");
-		
-		request.setParameter("operazione", "caricaAllegato");
-		servlet.doPost(request, response);
-		
-		request.setParameter("oggetto", oggetto);
-		request.setParameter("testo", testo);
-		request.setParameter("selectPaziente", CfPaziente);
-		request.setParameter("operazione", "inviaMessaggio");
-		servlet.doPost(request, response);
-		 
-		if (request.getAttribute("erroreCaricamento") == null) {
-			assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
-		} else {
-			fail("caricamento file non riuscito");
-		}
-	}
+//		
+//		request.setParameter("operazione", "caricaAllegato");
+//		servlet.doPost(request, response);
+//		
+//		request.setParameter("oggetto", oggetto);
+//		request.setParameter("testo", testo);
+//		request.setParameter("selectPaziente", CfPaziente);
+//		request.setParameter("operazione", "inviaMessaggio");
+//		servlet.doPost(request, response);
+//		 
+//		if (request.getAttribute("erroreCaricamento") == null) {
+//			assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
+//		} else {
+//			fail("caricamento file non riuscito");
+//		}
+//	}
 	
 	
 	@Test
