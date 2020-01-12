@@ -135,22 +135,18 @@ public class MessaggioModel {
 	
 	
 	/**
-	 * Questo metodo si occupa di individuare un messaggio nel database tramite il suo id e lo aggiorna con i dati passati,
-	 * ignorando i campi null. Se si vuole aggiornare solo alcuni campi, si passi null negli altri.
+	 * Questo metodo si occupa di individuare un messaggio nel database tramite il suo id e lo aggiorna con i dati passati in un bean,
+	 * ignorando i campi null. L'id del bean deve essere valido.
 	 * 
-	 * @param id oggetto di tipo <strong>String</strong> che rappresenta l'id del messaggio.
-	 * @param codiceFiscaleMittente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del mittente.
-	 * @param oggetto
-	 * @param testo oggetto di tipo <strong>String</strong> che rappresenta il testo del messaggio.
-	 * @param corpoAllegato
-	 * @param nomeAllegato
-	 * @param data
-	 * @param destinatariView
+	 * @param daAggiornare, oggetto di tipo <strong>Messaggio</strong> 
+	 * 
+	 * @preconditions daAggiornare != null && daAggiornare.id != null && daAggiornare.id != ""
 	 */
 	public static void updateMessaggio (Messaggio daAggiornare) {
 		
 		if (daAggiornare.getIdMessaggio() == null || daAggiornare.getIdMessaggio() == "") {
 			System.out.println("updateAnnuncio: il messaggio che stai cercando di aggiornare non ha un id valido");
+			return;
 		}
 		
 		MongoCollection<Document> messaggi = DriverConnection.getConnection().getCollection("Messaggio");

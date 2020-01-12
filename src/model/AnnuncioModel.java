@@ -114,21 +114,17 @@ public class AnnuncioModel {
 	}
 	
 	/**
-	 * Metodo che individua un annuncio nel database per id e lo aggiorna con i dati passati,
-	 * ignorando i campi null. Se si vuole aggiornare solo alcuni campi, si passi null negli altri.
+	 * Questo metodo si occupa di individuare un annuncio nel database tramite il suo id e lo aggiorna con i dati passati in un bean,
+	 * ignorando i campi null. L'id del bean deve essere valido.
 	 * 
-	 * @param id
-	 * @param codiceFiscaleMedico
-	 * @param oggetto
-	 * @param testo
-	 * @param corpoAllegato
-	 * @param nomeAllegato
-	 * @param data
-	 * @param destinatariView
+	 * @param daAggiornare, oggetto di tipo <strong>Annuncio</strong> 
+	 * 
+	 * @preconditions daAggiornare != null && daAggiornare.id != null && daAggiornare.id != ""
 	 */
 	public static void updateAnnuncio (Annuncio daAggiornare) {
-		if (daAggiornare.getIdAnnuncio() == null || daAggiornare.getIdAnnuncio() == "") {
+		if (daAggiornare == null || daAggiornare.getIdAnnuncio() == null || daAggiornare.getIdAnnuncio() == "") {
 			System.out.println("updateAnnuncio: l'annuncio che stai cercando di aggiornare non ha un id valido");
+			return;
 		}
 		
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
