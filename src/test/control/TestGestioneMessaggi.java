@@ -57,6 +57,11 @@ import utility.CriptazioneUtility;
 
 @WebAppConfiguration
 
+
+//NB: mancano casi di test sull'inserimento di allegati.
+//L'unico modo che ho trovato per simulare l'inserimento di un file in un multipart form richiede una configurazione Spring completa.
+//L'inserimento di allegati sarà testato in testing di sistema.
+
 class TestGestioneMessaggi {	
 	private static Paziente paziente;
 	private static Medico medico;
@@ -186,16 +191,11 @@ class TestGestioneMessaggi {
 	}
 	
 	@Test
-	void TC_GM_8_3_InvioMessaggi() throws ServletException, IOException {
-		
+	void TC_GM_8_5_InvioMessaggi() throws ServletException, IOException {
 		request.getSession().setAttribute("utente", medico);
 		request.getSession().setAttribute("isMedico", true);
 
-		final String fileName = "test.txt";
-		final byte[] content = "Hallo Word".getBytes();
-		MockMultipartFile mockMultipartFile = new MockMultipartFile("content", fileName, "image/jpeg", content);
-		
-		
+		//request.addPart(allegato);
 		request.setParameter("operazione", "caricaAllegato");
 		servlet.doPost(request, response);
 		
@@ -203,75 +203,10 @@ class TestGestioneMessaggi {
 		request.setParameter("testo", testo);
 		request.setParameter("selectPaziente", CfPaziente);
 		request.setParameter("operazione", "inviaMessaggio");
-		servlet.doPost(request, response);		 
-		
-		if (request.getAttribute("erroreCaricamento") != null) {
-			assertEquals(request.getAttribute("erroreCaricamento"), true);
-		} else {
-			fail("il caricamento è andato a buon fine");
-		}
-		  
-	}
-	
-	@Test
-	void TC_GM_8_4_InvioMessaggi() throws ServletException, IOException {
-		request.getSession().setAttribute("utente", medico);
-		request.getSession().setAttribute("isMedico", true);
-
-		Part dimensioneErrata = null;
-		//request.addPart(dimensioneErrata);
-		//TODO caricare file nel part
-		request.setParameter("operazione", "caricaAllegato");
 		servlet.doPost(request, response);
-		
-		request.setParameter("oggetto", oggetto);
-		request.setParameter("testo", testo);
-		request.setParameter("selectPaziente", CfPaziente);
-		request.setParameter("operazione", "inviaMessaggio");
-		servlet.doPost(request, response);		 
-		
-		if (request.getAttribute("erroreCaricamento") != null) {
-			assertEquals(request.getAttribute("erroreCaricamento"), true);
-		} else {
-			fail("il caricamento è andato a buon fine");
-		}
 		  
+		assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
 	}
-//	
-//	@Test
-//	void TC_GM_8_5_InvioMessaggi() throws Exception {
-//		request.getSession().setAttribute("utente", medico);
-//		request.getSession().setAttribute("isMedico", true);
-//		
-//		final String fileName = "test.jpg";
-//		final byte[] content = "Hallo Wordsdkjnfkdsjfndskjfsndkjsndkfjdnfkdsjnf".getBytes();
-//		MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileName, "image/jpeg", content);
-//		
-//		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(WebApplicationContextUtils.
-//				getWebApplicationContext(new MockServletContext(""))).build();
-//        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
-//                        .file(mockMultipartFile)
-//                        .param("some-random", "4"));
-//		
-//		request.addFile(mockMultipartFile);
-//		if (request.getPart("file") == null)
-//			System.out.println("nullo");
-//		
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", testo);
-//		request.setParameter("selectPaziente", CfPaziente);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);
-//		 
-//		if (request.getAttribute("erroreCaricamento") == null) {
-//			assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
-//		} else {
-//			fail("caricamento file non riuscito");
-//		}
-//	}
 	
 	
 	@Test
@@ -313,14 +248,11 @@ class TestGestioneMessaggi {
 	}
 	
 	@Test
-	void TC_GP_9_3_InvioMessaggi() throws ServletException, IOException {
-		
+	void TC_GM_9_5_InvioMessaggi() throws ServletException, IOException {
 		request.getSession().setAttribute("utente", paziente);
 		request.getSession().setAttribute("isPaziente", true);
 
-		Part estensioneErrata = null;
-		//TODO caricare file nel part
-		//request.addPart(estensioneErrata);
+		//request.addPart(allegato);
 		request.setParameter("operazione", "caricaAllegato");
 		servlet.doPost(request, response);
 		
@@ -328,59 +260,12 @@ class TestGestioneMessaggi {
 		request.setParameter("testo", testo);
 		request.setParameter("selectMedico", CfMedico);
 		request.setParameter("operazione", "inviaMessaggio");
-		servlet.doPost(request, response);		 
-		
-		if (request.getAttribute("erroreCaricamento") != null) {
-			assertEquals(request.getAttribute("erroreCaricamento"), true);
-		} else {
-			fail("il caricamento è andato a buon fine");
-		}
-		  
-	}
-	
-	@Test
-	void TC_GP_9_4_InvioMessaggi() throws ServletException, IOException {
-		request.getSession().setAttribute("utente", paziente);
-		request.getSession().setAttribute("isPaziente", true);
-
-		Part dimensioneErrata = null;
-		//request.addPart(dimensioneErrata);
-		//TODO caricare file nel part
-		request.setParameter("operazione", "caricaAllegato");
 		servlet.doPost(request, response);
-		
-		request.setParameter("oggetto", oggetto);
-		request.setParameter("testo", testo);
-		request.setParameter("selectMedico", CfMedico);
-		request.setParameter("operazione", "inviaMessaggio");
-		servlet.doPost(request, response);		 
-		
-		if (request.getAttribute("erroreCaricamento") != null) {
-			assertEquals(request.getAttribute("erroreCaricamento"), true);
-		} else {
-			fail("il caricamento è andato a buon fine");
-		}
 		  
+		assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
 	}
-//	
-//	@Test
-//	void TC_GP_9_5_InvioMessaggi() throws ServletException, IOException {
-//		request.getSession().setAttribute("utente", paziente);
-//		request.getSession().setAttribute("isPaziente", true);
-//
-//		//request.addPart(allegato);
-//		request.setParameter("operazione", "caricaAllegato");
-//		servlet.doPost(request, response);
-//		
-//		request.setParameter("oggetto", oggetto);
-//		request.setParameter("testo", testo);
-//		request.setParameter("selectPaziente", CfPaziente);
-//		request.setParameter("operazione", "inviaMessaggio");
-//		servlet.doPost(request, response);
-//		  
-//		assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
-//	}
 	
+
 	@Test
 	void TC_GM_7_RicezioneSingoloMessaggio() throws ServletException, IOException {
 		request.getSession().setAttribute("utente", medico);

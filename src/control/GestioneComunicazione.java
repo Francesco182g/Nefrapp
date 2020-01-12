@@ -52,25 +52,12 @@ public class GestioneComunicazione extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-				response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
-				return;
-			}
-			
-		} catch (MongoException e) {
-			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
-		} catch (Exception e) {
-			response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
-			e.printStackTrace();
-		}
-
 		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		return;
 	}
 
 	/**
