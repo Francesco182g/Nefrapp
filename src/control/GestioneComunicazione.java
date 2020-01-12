@@ -144,14 +144,18 @@ public class GestioneComunicazione extends HttpServlet {
 		if (controllaParametri(CFMittente, oggetto, testo)) {
 			if (operazione.equals("inviaMessaggio")) {
 				if (id != null) {
-					MessaggioModel.updateMessaggio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
+					Messaggio daAggiornare = new MessaggioCompleto(CFMittente, oggetto, testo, null, null, null, destinatariView);
+					daAggiornare.setIdMessaggio(id);
+					MessaggioModel.updateMessaggio(daAggiornare);
 				} else {
 					MessaggioModel.addMessaggio(new MessaggioCompleto(CFMittente, oggetto, testo, null, null,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));
 				}
 			} else if (operazione.equals("inviaAnnuncio")) {
 				if (id != null) {
-					AnnuncioModel.updateAnnuncio(id, CFMittente, oggetto, testo, null, null, null, destinatariView);
+					Annuncio daAggiornare = new AnnuncioCompleto(CFMittente, oggetto, testo, null, null, null, destinatariView);
+					daAggiornare.setIdAnnuncio(id);
+					AnnuncioModel.updateAnnuncio(daAggiornare);
 				} else {
 					AnnuncioModel.addAnnuncio(new AnnuncioCompleto(CFMittente, oggetto, testo, null, null,
 							ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatariView));

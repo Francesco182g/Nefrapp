@@ -66,7 +66,7 @@ public class AnnuncioModelTest {
 		assertNotNull(daAggiornare);
 		daAggiornare.setTitolo("Nuovo annuncio");
 		daAggiornare.setTesto("Nuove medicine in commercio");
-		AnnuncioModel.updateAnnuncio(daAggiornare.getIdAnnuncio(), daAggiornare.getMedico(), daAggiornare.getTitolo(), daAggiornare.getTesto(), daAggiornare.getCorpoAllegato(), daAggiornare.getNomeAllegato(), daAggiornare.getData(), daAggiornare.getPazientiView());
+		AnnuncioModel.updateAnnuncio(daAggiornare);
 		daAggiornare=AnnuncioModel.getAnnuncioById(idAnnuncio);
 		assertNotNull(daAggiornare);
 		assertEquals(daAggiornare.getTitolo(),"Nuovo annuncio");
