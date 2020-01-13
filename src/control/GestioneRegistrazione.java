@@ -199,13 +199,13 @@ public class GestioneRegistrazione extends HttpServlet {
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
 			valido = false;
 		if (!email.equals(""))
-			if (!Pattern.matches(expEmail, email))
+			if (!Pattern.matches(expEmail, email)||email.length()<5 ||email.length()>50)
 				valido = false;
 		if (!residenza.equals(""))
-			if (!Pattern.matches(expResidenza, residenza))
+			if (!Pattern.matches(expResidenza, residenza)||residenza.length()<5||residenza.length()>50)
 				valido = false;
 		if (!luogoDiNascita.equals(""))
-			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita))
+			if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 3|| luogoDiNascita.length() > 50)
 				valido = false;
 		if (!dataDiNascita.equals(""))
 			if (!Pattern.matches(expDataDiNascita, dataDiNascita))
