@@ -241,7 +241,7 @@ public class CreaBeanUtility {
 
 		// caricamento dell'hashmap dall'array di documenti nel database
 		HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>();
-		ArrayList<Document> campo = (ArrayList<Document>) datiAnnuncio.get("DestinatariView");
+		ArrayList<Document> campo = (ArrayList<Document>) datiAnnuncio.get("PazientiView");
 
 		if (campo != null) {
 			for (Document d : campo) {

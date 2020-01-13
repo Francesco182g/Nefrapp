@@ -42,6 +42,11 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		try {
 			String operazione = request.getParameter("operazione");
 			HttpSession session = request.getSession();
+			
+			if (operazione == null) {
+				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
+				return;
+			}
 
 			if (operazione.equals("caricaDestinatariAnnuncio")) {
 				caricaDestinatari(request, response);
@@ -88,12 +93,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 				response.sendRedirect("./dashboard.jsp?notifica=annuncioInviato");
 			}
 
-			else if (operazione.equals("visualizza")) {
-				visualizzaAnnuncio(request, response);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("./annuncioView.jsp");
-				requestDispatcher.forward(request, response);
-			}
-
 			else if (operazione.equals("visualizzaPersonali")) {
 				String tipo = request.getParameter("tipo");
 				visualizzaAnnunciPersonali(request, response, tipo);
@@ -110,12 +109,15 @@ public class GestioneAnnunci extends GestioneComunicazione {
 
 			else {
 				response.sendRedirect("./paginaErrore?notifica=noOperazione");
+				return;
 			}
 		} catch (MongoException e) {
 			response.sendRedirect("./paginaErrore.jsp?notifica=erroreDb");
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("./paginaErrore?notifica=eccezione");
+			if (!response.isCommitted()) {
+				response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
+			}
 		}
 
 		return;
@@ -168,43 +170,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
 	}
 
 	/**
-	 * Metodo che prende l'annuncio e lo salva nella richiesta cos� da poter essere
-	 * visualizzato (probabilmente non servirà)
-	 * 
-	 * @param request richiesta utilizzata per ottenere parametri e settare
-	 *                attributi
-	 */
-	private void visualizzaAnnuncio(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		Utente utente = (Utente) session.getAttribute("utente");
-
-		if (utente != null) {
-			String idAnnuncio = request.getParameter("idAnnuncio");
-			Annuncio annuncio = AnnuncioModel.getAnnuncioById(idAnnuncio);
-			// solo se l'utente è un paziente, la visualizzazione viene settata a false
-			if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
-				AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, utente.getCodiceFiscale(), true);
-
-				if (annuncio != null) {
-					AnnuncioModel.setVisualizzatoAnnuncio(idAnnuncio, utente.getCodiceFiscale(), true);
-					annuncio.setCorpoAllegato(CriptazioneUtility.decodificaStringa(annuncio.getCorpoAllegato(), true));
-					String nomeAllegato = CriptazioneUtility.decodificaStringa(annuncio.getNomeAllegato(), false);
-					annuncio.setNomeAllegato(nomeAllegato);
-				}
-			} else {
-				System.out.println("L'utente deve essere loggato");
-			}
-			request.setAttribute("annuncio", annuncio);
-
-		}
-		/*
-		 * else { request.setAttribute("notifica", "Operazione non consentita");
-		 * RequestDispatcher requestDispatcher =
-		 * getServletContext().getRequestDispatcher("/paginaErrore"); return; }
-		 */
-	}
-
-	/**
 	 * Metodo che prende gli annunci personali di un medico o di un paziente e li
 	 * mostra in una lista
 	 * 
@@ -230,6 +195,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 			Medico medico = (Medico) session.getAttribute("utente");
 			ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
 			annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
+			System.out.println(annunci);
 
 			if (!annunci.isEmpty()) {
 				for (Annuncio a : annunci) {

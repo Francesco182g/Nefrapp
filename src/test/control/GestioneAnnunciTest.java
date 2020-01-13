@@ -148,7 +148,7 @@ public class GestioneAnnunciTest {
 	@Test
 	void testAnnuncioSenzaOperazione() throws ServletException, IOException {
 		servlet.doGet(request, response);
-		assertEquals("./paginaErrore.jsp?notifica=eccezione", response.getRedirectedUrl());
+		assertEquals("./paginaErrore.jsp?notifica=noOperazione", response.getRedirectedUrl());
 	}
 	
 	@Test
@@ -156,9 +156,10 @@ public class GestioneAnnunciTest {
 		request.getSession().setAttribute("utente", medico);
 		request.getSession().setAttribute("isMedico", true);
 		request.setParameter("operazione", "caricaAllegato");
+		request.setParameter("selectPaziente", CFPaziente1);
 		servlet.doPost(request, response);
 		
-		request.setParameter("oggetto", "Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.");
+		request.setParameter("oggetto", "Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat and blabla and blablabla.");
 		request.setParameter("testo", testo);
 		request.setParameter("operazione", "inviaAnnuncio");
 		servlet.doPost(request, response);
@@ -170,6 +171,7 @@ public class GestioneAnnunciTest {
 		request.getSession().setAttribute("utente", medico);
 		request.getSession().setAttribute("isMedico", true);
 		request.setParameter("operazione", "caricaAllegato");
+		request.setParameter("selectPaziente", CFPaziente1);
 		servlet.doPost(request, response);
 		
 		request.setParameter("oggetto", titolo);
@@ -246,7 +248,7 @@ public class GestioneAnnunciTest {
 		
 		ArrayList<AnnuncioProxy> annunciP = new ArrayList<>();
 		
-		Annuncio secondoAnnuncio=new AnnuncioCompleto(CFMedico,titolo,testo,null,null,ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatari);
+		Annuncio secondoAnnuncio=new AnnuncioCompleto(CFMedico,titolo,testo,null,null,ZonedDateTime.now(ZoneId.of("Europe/Rome")), annuncio.getPazientiView());
 		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Document> destinatariView = new ArrayList<Document>();
 		Iterator it = secondoAnnuncio.getPazientiView().entrySet().iterator();
@@ -266,6 +268,7 @@ public class GestioneAnnunciTest {
 		
 		Document allegato = new Document("NomeAllegato", secondoAnnuncio.getNomeAllegato()).append("CorpoAllegato",
 				secondoAnnuncio.getCorpoAllegato());
+		
 
 		Document doc = new Document("MedicoCodiceFiscale", secondoAnnuncio.getMedico())
 				.append("Titolo", secondoAnnuncio.getTitolo()).append("Testo", secondoAnnuncio.getTesto())
@@ -287,6 +290,7 @@ public class GestioneAnnunciTest {
 		secondo.setVisualizzato(null);
 		//l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
 		//perché nel mostrare la lista il model sceglie prima i messaggi più recenti
+		
 		annunciP.add(secondo);
 		annunciP.add(primo);		
 				
