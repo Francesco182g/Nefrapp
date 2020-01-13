@@ -42,19 +42,11 @@ public class AnnuncioProxy implements Annuncio {
 	}
 
 	public HashMap<String, Boolean> getPazientiView() {
-		if (buffer == null) {
-			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
-		}
-		
-		return buffer.getPazientiView();
+		return this.pazientiView;
 	}
 
 	public void setPazientiView( HashMap<String, Boolean> pazientiView) {
-		if (buffer == null) {
-			buffer = AnnuncioModel.getAnnuncioById(idAnnuncio);
-		}
-		
-		buffer.setPazientiView(pazientiView);
+		this.pazientiView = pazientiView;
 	}
 
 	public String getTitolo() {
