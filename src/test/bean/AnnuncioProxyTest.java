@@ -82,7 +82,7 @@ public class AnnuncioProxyTest {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
 				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-		annuncioProxy.setCorpoAllegato("codiceAllegato");
+		annuncioProxy.setIdAnnuncio(idAnnuncio);
 		assertEquals("codiceAllegato",annuncioProxy.getCorpoAllegato());
 	}
 	
@@ -152,7 +152,7 @@ public class AnnuncioProxyTest {
 	void testSetPazientiView() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),null);
+				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setPazientiView(destinatari);
 		assertEquals(destinatari,annuncioProxy.getPazientiView());
 	}
@@ -180,6 +180,7 @@ public class AnnuncioProxyTest {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
 				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+		annuncioProxy.setIdAnnuncio(idAnnuncio);
 		annuncioProxy.setCorpoAllegato("codiceAllegato");
 		assertEquals("codiceAllegato",annuncioProxy.getCorpoAllegato());
 	}
