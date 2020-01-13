@@ -30,6 +30,7 @@ public class AnnuncioCompleto implements Annuncio{
 		this.setNomeAllegato(nomeAllegato);
 		this.data = data;
 		this.pazientiView.putAll(pazientiView);
+		this.visualizzato = false;
 	}
 
 	public String getMedico() {

@@ -105,7 +105,7 @@ class PianoTerapeuticoTest {
 		String toStringTest = "PianoTerapeutico [codiceFiscalePaziente=" + piano.getCodiceFiscalePaziente() + 
 								", diagnosi=" + piano.getDiagnosi() + 
 								", farmaco=" + piano.getFarmaco() +
-								", dataFineTerapia=" + piano.getDataFineTerapia() + "]";
+								", dataFineTerapia=" + piano.getDataFineTerapia() + ", visualizzato="+piano.getVisualizzato()+"]";
 		assertEquals(toStringBean, toStringTest);
 	}
 }
