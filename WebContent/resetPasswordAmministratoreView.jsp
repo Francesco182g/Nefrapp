@@ -34,7 +34,7 @@
 			<!-- Main Content -->
 			<div id="content">
 				<%@include file="./includes/header.jsp"%>
-					
+
 
 				<!-- Begin Page Content -->
 
@@ -46,34 +46,35 @@
 								<div class="col-sm-12">
 									<div class="card o-hidden border-0 shadow-sm p-5">
 										<div class="text-center">
-											<h1 class="h4 text-gray-900 mb-4">Modifica Password</h1> 
+											<h1 class="h4 text-gray-900 mb-4">Modifica Password</h1>
 										</div>
 
-										<form class="user" id="medico" method="post" action="./GestioneAmministratore">
+										<form class="user" id="medico" method="post"
+											action="./GestioneAmministratore">
 
 
 											<input type="hidden" id="notifica"
 												value="${requestScope.notifica}"> <input
 												type="hidden" name="operazione" value="modifica"> <input
 												type="hidden" name="tipoUtente" value="amministratore">
-											
+
 											<div class="form-group row col-lg-12">
 												Vecchia Password: <input type="password"
-													class="form-control form-control-user" name="vecchiaPassword"
-													id="vecchiaPassword" placeholder="Vecchia Password" required="required" min="6" max="20"
-													maxlength="20">
+													class="form-control form-control-user"
+													name="vecchiaPassword" id="vecchiaPassword"
+													placeholder="Vecchia Password" required="required">
 											</div>
 											<div class="form-group row col-lg-12">
 												Nuova Password: <input type="password"
 													class="form-control form-control-user" name="nuovaPassword"
-													id="nuovaPassword" placeholder="Nuova Password" required="required" min="6" max="20"
-													maxlength="20">
+													id="nuovaPassword" placeholder="Nuova Password"
+													required="required">
 											</div>
 											<div class="form-group row col-lg-12">
 												Conferma Password: <input type="password"
-													class="form-control form-control-user" name="confermaPassword"
-													id="confermaPassword" placeholder="Conferma Password" required="required" min="6"
-													max="20" maxlength="20">
+													class="form-control form-control-user"
+													name="confermaPassword" id="confermaPassword"
+													placeholder="Conferma Password" required="required">
 											</div>
 											<div class="col-sm-5 sm-12"
 												style="margin-left: auto; margin-right: auto; display: block; margin-top: 22%; margin-bottom: 0%">

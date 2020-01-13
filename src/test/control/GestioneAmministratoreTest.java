@@ -31,7 +31,7 @@ import model.MedicoModel;
 import model.PazienteModel;
 import utility.CriptazioneUtility;
 
-class TestGestioneAmministratore {
+class GestioneAmministratoreTest {
 	private GestioneAmministratore servlet;
 	private MockHttpServletRequest request;
 	private MockHttpServletResponse response;
@@ -67,7 +67,7 @@ class TestGestioneAmministratore {
 		
 		MongoCollection<Document> medico = DriverConnection.getConnection().getCollection("Medico");
 		String password = CriptazioneUtility.criptaConMD5("Quadri1234");
-		Document doc = new Document("CodiceFiscale", "GRMBNN67L11B516R").append("Password", password);
+		Document doc = new Document("CodiceFiscale", "GRMBNN67L11B516R").append("Password", password).append("Email", "g.brazof@gmail.com");
 		medico.insertOne(doc);
 
 		MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
@@ -696,7 +696,7 @@ class TestGestioneAmministratore {
 		assertEquals("./dashboard.jsp?notifica=ModificaPazRiuscita",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_1_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_1_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -715,7 +715,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_2_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_2_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -734,7 +734,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_3_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_3_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -753,7 +753,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_4_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_4_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -772,7 +772,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_5_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_5_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -791,7 +791,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_6_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_6_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -810,7 +810,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_7_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_7_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -829,7 +829,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_8_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_8_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -848,7 +848,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_9_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_9_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -867,7 +867,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_10_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_10_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -886,7 +886,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_11_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_11_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -905,7 +905,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_12_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_12_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -924,7 +924,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_13_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_13_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -943,7 +943,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_14_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_14_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -962,7 +962,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_15_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_15_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -981,7 +981,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_16_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_16_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1000,7 +1000,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_17_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_17_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1019,7 +1019,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_18_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_18_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1038,7 +1038,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_19_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_19_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1057,7 +1057,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_20_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_20_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1076,7 +1076,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=ParamErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_21_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_21_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1095,7 +1095,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=PassErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_22_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_22_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1114,7 +1114,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=PassErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_23_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_23_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1133,7 +1133,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=PassErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_24_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_24_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");
@@ -1152,7 +1152,7 @@ class TestGestioneAmministratore {
 		assertEquals("./ModificaAccountMedicoView.jsp?notifica=PassErr",response.getRedirectedUrl());
 	}
 	@Test
-	void TC_GA_8_25_ModificaAccountPaziente() throws ServletException, IOException {
+	void TC_GA_8_25_ModificaAccountMedico() throws ServletException, IOException {
 		request.setParameter("operazione", "modifica");
 		request.setParameter("codiceFiscale","GRMBNN67L11B516R");
 		request.setParameter("tipoUtente", "medico");

@@ -62,7 +62,7 @@ import utility.CriptazioneUtility;
 //L'unico modo che ho trovato per simulare l'inserimento di un file in un multipart form richiede una configurazione Spring completa.
 //L'inserimento di allegati sarà testato in testing di sistema.
 
-class TestGestioneMessaggi {	
+class GestioneMessaggiTest {	
 	private static Paziente paziente;
 	private static Medico medico;
 	private static Messaggio daPazAMed;

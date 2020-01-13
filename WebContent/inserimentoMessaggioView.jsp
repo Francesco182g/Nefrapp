@@ -92,7 +92,7 @@
 								<p style="text-align: center">Testo:</p>
 							</div>
 							<div class="col-lg-12 col-mb-12 col-sm-12 mb-12 mb-sm-12 row">
-								<textarea name="testo" maxlength="1000" id="testo"
+								<textarea name="testo"  id="testo"
 									class="form-control " placeholder="" required="required"
 									style="resize: none; height: 180px"></textarea>
 							</div>

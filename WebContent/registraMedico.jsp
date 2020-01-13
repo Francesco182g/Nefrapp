@@ -52,16 +52,16 @@
 							              	<input type="hidden" id="operazione" name="operazione" value="registraMedico">
 											<div class="form-group row col-lg-12">
 							                Codice Fiscale:
-							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
+							                  <input type="text" class="form-control form-control-user" name="codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required">
 							                </div>
 							                <div class="form-group row">
 							                  <div class="col-sm-6 mb-3 mb-sm-0">
 							                  Nome:
-							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Nome" required="required" min="2" max="30" maxlength="30">
+							                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Nome" required="required" >
 							                  </div>
 							                  <div class="col-sm-6">
 							                  Cognome:
-							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" placeholder="Cognome" required="required" min="2" max="30" maxlength="30">
+							                    <input type="text" class="form-control form-control-user" name="cognome" id="cognome" placeholder="Cognome" required="required">
 							                  </div>
 							                </div>
 											<div class="form-group row">
@@ -82,19 +82,19 @@
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Luogo di Nascita:
-							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita" placeholder="Luogo di nascita" min="5" max="50" maxlength="50">
+							                  <input type="text" class="form-control form-control-user" name="luogoDiNascita" id="luogoDiNascita" placeholder="Luogo di nascita">
 							                </div>
 							                <div class="form-group row col-lg-12">
                   							Residenza:
-							                  <input type="text" class="form-control form-control-user" id="residenza" name="residenza" placeholder="Es. Via Roma, 23, Scafati, 80030, SA" min="5" max="50" maxlength="50" >
+							                  <input type="text" class="form-control form-control-user" id="residenza" name="residenza" placeholder="Es. Via Roma, 23, Scafati, 80030, SA" >
 							                </div>
                   							<div class="form-group row col-lg-12">
                   							Email:
-							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" min="6" max="50" maxlength="50">
+							                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" required="required" >
 							                </div>
 							                <div class="form-group row col-lg-12">
 							                Password:
-							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required" min="6" max="20" maxlength="20"> 
+							                   <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required="required"> 
 							                </div>
 							                <div class="col-sm-5 sm-12" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">
 							                <button class="btn btn-primary btn-user btn-block" id="registrazioneMedicoButton">

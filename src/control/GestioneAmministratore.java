@@ -182,7 +182,7 @@ public class GestioneAmministratore extends HttpServlet {
 			}
 			else if(request.getParameter("tipoUtente").equals("medico")){
 				Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
-					if(validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita)) {
+					if(validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita)&&!MedicoModel.checkEmail(email)) {
 						medico.setCognome(cognome);
 						medico.setNome(nome);
 						if(!dataDiNascita.equals("")) {
@@ -246,17 +246,17 @@ public class GestioneAmministratore extends HttpServlet {
 			valido = false;
 		}
 		if(!email.equals(""))
-			if (!Pattern.matches(expEmail, email))
+			if (!Pattern.matches(expEmail, email)||email.length()<5 ||email.length()>50)
 			{
 				valido = false;
 			}
 		if(!residenza.equals(""))
-			if(!Pattern.matches(expResidenza, residenza))
+			if(!Pattern.matches(expResidenza, residenza)||residenza.length()<5||residenza.length()>50)
 			{
 				valido = false;
 			}
 		if(!luogoDiNascita.equals(""))
-			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 5|| luogoDiNascita.length() > 50)
+			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 3|| luogoDiNascita.length() > 50)
 			{
 				valido = false;
 			}

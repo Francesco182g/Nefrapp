@@ -20,7 +20,7 @@ import control.GestioneAccesso;
 import model.DriverConnection;
 import utility.CriptazioneUtility;
 
-class TestGestioneAccesso {
+class GestioneAccessoTest {
 
 	private GestioneAccesso servlet;
 	private MockHttpServletRequest request;

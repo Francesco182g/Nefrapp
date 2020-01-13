@@ -47,10 +47,10 @@
 							                <div class="form-group">
 							                <input type="hidden" name="operazione" value="loginAdmin">
 							                <input type="hidden" id="notifica" value="${sessionScope.notifica}"> 
-							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" maxlength="16" min="16" max="16">
+							                  <input type="text" class="form-control form-control-user" name = "codiceFiscale" id="codiceFiscale" placeholder="Codice fiscale" required="required" >
 							                </div>
 							                <div class="form-group">
-							                   <input type="password" class="form-control form-control-user" name= "password"  id="password" placeholder="Password" required="required" min="6" max="20" maxlength="20"> 
+							                   <input type="password" class="form-control form-control-user" name= "password"  id="password" placeholder="Password" required="required" > 
 							                </div>
 							                <button  class="btn btn-primary btn-user btn-block" id="accediAdminButton">
 							                  Accedi

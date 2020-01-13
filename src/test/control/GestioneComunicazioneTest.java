@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import control.GestioneComunicazione;
 
-class TestGestioneComunicazione {
+class GestioneComunicazioneTest {
 	
 	private GestioneComunicazione servlet;
 	

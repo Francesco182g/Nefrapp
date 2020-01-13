@@ -100,14 +100,13 @@
 												<div class="col-sm-6 mb-3 mb-sm-0">
 													Nome: <input type="text"
 														class="form-control form-control-user" name="nome"
-														id="nome" value="${nome}" required="required" min="2"
-														max="30" maxlength="30">
+														id="nome" value="${nome}" required="required" >
 												</div>
 												<div class="col-sm-6">
 													Cognome: <input type="text"
 														class="form-control form-control-user" name="cognome"
 														id="cognome" value="${cognome}" required="required"
-														min="2" max="30" maxlength="30">
+														>
 												</div>
 											</div>
 											<c:if test="${sesso eq 'M' }">
@@ -169,26 +168,22 @@
 											<div class="form-group row col-lg-12">
 												Residenza: <input type="text"
 													class="form-control form-control-user" name="residenza"
-													id="residenza" value="${residenza}" min="5" max="50"
-													maxlength="50">
+													id="residenza" value="${residenza}">
 											</div>
 											<div class="form-group row col-lg-12">
 												Email: <input type="email"
 													class="form-control form-control-user" id="email"
-													name="email" placeholder="Email" value="${email}" min="6"
-													max="50" maxlength="50">
+													name="email" placeholder="Email" value="${email}">
 											</div>
 											<div class="form-group row col-lg-12">
 												Password: <input type="password"
 													class="form-control form-control-user" name="password"
-													id="password" placeholder="Password" min="6" max="20"
-													maxlength="20">
+													id="password" placeholder="Password">
 											</div>
 											<div class="form-group row col-lg-12">
 												Conferma Password: <input type="password"
 													class="form-control form-control-user" name="confermaPsw"
-													id="confermaPsw" placeholder="Conferma Password" min="6"
-													max="20" maxlength="20">
+													id="confermaPsw" placeholder="Conferma Password" >
 											</div>
 											<div class="col-sm-5 sm-12"
 												style="margin-left: auto; margin-right: auto; display: block; margin-top: 22%; margin-bottom: 0%">

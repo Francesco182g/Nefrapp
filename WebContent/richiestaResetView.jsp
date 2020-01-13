@@ -64,8 +64,7 @@
 														value="identificaRichiedente"> <input type="text"
 														class="form-control form-control-user"
 														name="codiceFiscale" id="codiceFiscale"
-														placeholder="Codice Fiscale" required="required" min="6"
-														max="50" maxlength="50">
+														placeholder="Codice Fiscale" required="required" >
 												</div>
 
 												<div class="mt-6 p-6">

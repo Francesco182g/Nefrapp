@@ -237,5 +237,28 @@ public class MedicoModel {
 		BasicDBObject searchQuery = new BasicDBObject().append("CodiceFiscale", codiceFiscale);
 		
 		medici.updateOne(searchQuery, nuovoMedico);
-	}	
+	}
+	/**
+	 * Questo metodi si occupa di verificare che la mail che inserisce il medico non sia già presente 
+	 * @param email è la mail che inserisce il medico o l'amministratore 
+	 * @return boolean che è true se la mail è presente false altrimenti
+	 */
+	public static boolean checkEmail(String email)
+	{
+		
+		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+		Document datiMedico = medici.find(eq("Email", email)).first();
+		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		Document datiPaziente = pazienti.find(eq("Email", email)).first();
+		
+		if(datiMedico == null && datiPaziente == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
 }

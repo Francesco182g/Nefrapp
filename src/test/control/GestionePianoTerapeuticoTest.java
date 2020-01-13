@@ -31,7 +31,7 @@ import model.PianoTerapeuticoModel;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
-class TestGestionePianoTerapeutico {
+class GestionePianoTerapeuticoTest {
 	private static Paziente paziente;
 	private static Medico medico;
 	private static String CfPaziente = "BNCLRD67A01F205I";

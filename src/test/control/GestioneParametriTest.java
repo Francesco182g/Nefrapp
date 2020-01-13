@@ -30,7 +30,7 @@ import model.DriverConnection;
 import model.SchedaParametriModel;
 import utility.CriptazioneUtility;
 
-class TestGestioneParametri {
+class GestioneParametriTest {
 	private GestioneParametri servlet;
 	private MockHttpServletRequest request;
 	private MockHttpServletResponse response;
