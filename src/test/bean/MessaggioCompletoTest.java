@@ -87,7 +87,9 @@ class MessaggioCompletoTest {
 				"Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”",
 				"codiceallegato", "ilpazienteirriverente.pdf", ZonedDateTime.now(ZoneId.of("Europe/Rome")),
 				destinatariView);
-		assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")), MessaggioCompleto.getData());
+		//confrontare direttamente con ZonedDateTime.now() sarebbe rischioso, perche' capita che scatti un nuovo secondo tra una lettura e l'altra
+		assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(DateTimeFormatter.ofPattern("mm:HH")), 
+				MessaggioCompleto.getData().format(DateTimeFormatter.ofPattern("mm:HH")));
 	}
 
 	@Test
