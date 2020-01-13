@@ -206,7 +206,7 @@ public class GestionePaziente extends HttpServlet {
 		if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
 			valido = false;
 		if (email.length()!=0) {
-			if(!Pattern.matches(expEmail, email))
+			if (!Pattern.matches(expEmail, email)||email.length()<5 ||email.length()>50)
 				valido = false;
 			}
 		if (!residenza.equals(""))
