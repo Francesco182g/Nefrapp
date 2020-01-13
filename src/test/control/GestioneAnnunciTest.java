@@ -60,10 +60,14 @@ public class GestioneAnnunciTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+		ArrayList<String> campoMedici = new ArrayList<>();
+		campoMedici.add(CFMedico);
 		String password1 = CriptazioneUtility.criptaConMD5("Fiori5678");
-		Document doc1 = new Document("CodiceFiscale", CFPaziente1).append("Password", password1).append("Attivo", true);
+		Document doc1 = new Document("CodiceFiscale", CFPaziente1).append("Password", password1).append("Attivo", true).append("Medici", campoMedici);;
 		pazienti.insertOne(doc1);
 		paziente = CreaBeanUtility.daDocumentAPaziente(doc1);
+		paziente.setMedici(campoMedici);
+		
 		
 		MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 		String password2 = CriptazioneUtility.criptaConMD5("Quadri1234");
