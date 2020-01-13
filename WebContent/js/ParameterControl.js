@@ -154,7 +154,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 						valido = [ false, dataMsg ];
 					else if (!expLuogoDiNascita.test(luogoDiNascita)
 							|| luogoDiNascita.length < 3
-							|| luogoDiNascita.length > 50)
+							|| luogoDiNascita.length > 30)
 						valido = [ false, luogoNascitaMsg ];
 					else if (!expResidenza.test(residenza)
 							|| residenza.length < 5 || residenza.length > 50)
@@ -207,7 +207,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 					valido = [ false, dataMsg ];
 				else if (!expLuogoDiNascita.test(luogoDiNascita)
 						|| luogoDiNascita.length < 3
-						|| luogoDiNascita.length > 50)
+						|| luogoDiNascita.length > 30)
 					valido = [ false, luogoNascitaMsg ];
 				else if (!expResidenza.test(residenza) || residenza.length < 5
 						|| residenza.length > 50)
@@ -237,7 +237,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 					valido = [ false, dataMsg ];
 				else if (!expLuogoDiNascita.test(luogoDiNascita)
 						|| luogoDiNascita.length < 3
-						|| luogoDiNascita.length > 50)
+						|| luogoDiNascita.length > 30)
 					valido = [ false, luogoNascitaMsg ];
 				else if (!expResidenza.test(residenza) || residenza.length < 5
 						|| residenza.length > 50)
@@ -281,7 +281,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 					valido = [ false, dataMsg ];
 				else if (!expLuogoDiNascita.test(luogoDiNascita)
 						|| luogoDiNascita.length < 3
-						|| luogoDiNascita.length > 50)
+						|| luogoDiNascita.length > 30)
 					valido = [ false, luogoNascitaMsg ];
 				else if (!expResidenza.test(residenza) || residenza.length < 5
 						|| residenza.length > 50)
@@ -454,7 +454,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 			if (!expDataDiNascita.test(dataDiNascita)|| dataDiNascita.length!=10)
 				valido=[false,"formato data di nascita non valido"];
 		else if (luogoDiNascita.length!=0)
-			if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 3 || luogoDiNascita.length > 50)
+			if (!expLuogoDiNascita.test(luogoDiNascita) || luogoDiNascita.length < 3 || luogoDiNascita.length > 30)
 				valido=[false,"formato luogo di nascita non valido"];
 		else if (residenza.length!=0)
 			if (!expResidenza.test(residenza) || residenza.length<5 || residenza.length>50)
