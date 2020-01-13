@@ -35,6 +35,8 @@ import bean.Annuncio;
 import bean.AnnuncioCompleto;
 import bean.AnnuncioProxy;
 import bean.Medico;
+import bean.Messaggio;
+import bean.MessaggioProxy;
 import bean.Paziente;
 import control.GestioneAnnunci;
 import control.GestioneMessaggi;
@@ -242,10 +244,10 @@ public class GestioneAnnunciTest {
 		request.getSession().setAttribute("isPaziente", true);
 		request.getSession().setAttribute("accessDone", true);
 		
-		ArrayList<AnnuncioProxy> annunci=new ArrayList<>();
+		ArrayList<AnnuncioProxy> annunciP = new ArrayList<>();
 		
 		Annuncio secondoAnnuncio=new AnnuncioCompleto(CFMedico,titolo,testo,null,null,ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatari);
-		MongoCollection<Document> annunciDue = DriverConnection.getConnection().getCollection("Annuncio");
+		MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
 		ArrayList<Document> destinatariView = new ArrayList<Document>();
 		Iterator it = secondoAnnuncio.getPazientiView().entrySet().iterator();
 		
@@ -269,21 +271,29 @@ public class GestioneAnnunciTest {
 				.append("Titolo", secondoAnnuncio.getTitolo()).append("Testo", secondoAnnuncio.getTesto())
 				.append("Allegato", allegato).append("Data", secondoAnnuncio.getData().toInstant())
 				.append("PazientiView", destinatariView);
-		annunciDue.insertOne(doc);
+		annunci.insertOne(doc);
 		
 		ObjectId idObj = (ObjectId)doc.get("_id");
 		secondoAnnuncio.setIdAnnuncio(idObj.toString());
 		
-		AnnuncioProxy primo=new AnnuncioProxy(annuncio.getMedico(),annuncio.getTitolo(),annuncio.getTesto(),annuncio.getNomeAllegato(),annuncio.getData(),annuncio.getPazientiView());
-		AnnuncioProxy secondo=new AnnuncioProxy(secondoAnnuncio.getMedico(),secondoAnnuncio.getTitolo(),secondoAnnuncio.getTesto(),secondoAnnuncio.getNomeAllegato(),secondoAnnuncio.getData(),secondoAnnuncio.getPazientiView());
+		AnnuncioProxy primo = new AnnuncioProxy(annuncio.getMedico(), annuncio.getTitolo(),annuncio.getTesto(),annuncio.getNomeAllegato(),
+				annuncio.getData(), annuncio.getPazientiView());
+		AnnuncioProxy secondo = new AnnuncioProxy(secondoAnnuncio.getMedico(), secondoAnnuncio.getTitolo(),secondoAnnuncio.getTesto(),secondoAnnuncio.getNomeAllegato(),
+				secondoAnnuncio.getData(), secondoAnnuncio.getPazientiView());
+		primo.setIdAnnuncio(annuncio.getIdAnnuncio());
+		secondo.setIdAnnuncio(secondoAnnuncio.getIdAnnuncio());
+		//a questo punto non ha ancora settato la visualizzazione
 		primo.setVisualizzato(null);
 		secondo.setVisualizzato(null);
-		annunci.add(secondo);
-		annunci.add(primo);
+		//l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
+		//perché nel mostrare la lista il model sceglie prima i messaggi più recenti
+		annunciP.add(secondo);
+		annunciP.add(primo);		
+				
 		request.setParameter("operazione", "visualizzaPersonali");
 		servlet.doGet(request, response);
 
-		assertEquals(annunci.toString(), request.getAttribute("annuncio").toString());
+		assertEquals(annunciP.toString(), request.getAttribute("annuncio").toString());
 	}
 	
 	@Test
