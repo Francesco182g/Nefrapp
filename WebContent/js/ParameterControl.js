@@ -560,7 +560,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 		else if (!expPassword.test(confermaPsw) || confermaPsw.length < 6
 				|| confermaPsw.length > 20 || confermaPsw != password)
 			valido = [ false, confermaPasswordMsg ];
-		else if (!expEmail.test(email))
+		else if (!expEmail.test(email) || email.length > 50 || email.length < 6)
 			valido = [ false, emailMsg ];
 
 		return valido
