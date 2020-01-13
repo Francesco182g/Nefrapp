@@ -293,7 +293,7 @@ public class GestioneAnnunciTest {
 		request.setParameter("operazione", "visualizzaPersonali");
 		servlet.doGet(request, response);
 
-		assertEquals(annunciP.toString(), request.getAttribute("annuncio").toString());
+		assertEquals(annunciP.toString(), request.getAttribute("annunci").toString());
 	}
 	
 	@Test
