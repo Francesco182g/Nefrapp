@@ -8,8 +8,11 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import org.bson.internal.Base64;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bean.Annuncio;
@@ -20,17 +23,20 @@ import model.AnnuncioModel;
 public class AnnuncioProxyTest {
 	static private HashMap<String, Boolean> destinatari = new HashMap<String, Boolean>();
 	static String idAnnuncio= new String();
+	static String corpoAllegato = Base64.encode("codiceallegato".getBytes());
+	static String nomeAllegato = Base64.encode("dialisi-peritoneale.pdf".getBytes());
 	
-	@BeforeAll
-	static void setUp() {
+	@BeforeEach
+	void setUp() {
 		Annuncio annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
-				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.", corpoAllegato,
+				nomeAllegato, ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		idAnnuncio=AnnuncioModel.addAnnuncio(annuncio);
+		destinatari.put(null, false);
 	}
 	
-	@AfterAll
-	static void tearDown() {
+	@AfterEach
+	void tearDown() {
 		AnnuncioModel.deleteAnnuncioById(idAnnuncio);
 	}
 	
@@ -49,7 +55,7 @@ public class AnnuncioProxyTest {
 	void testGetMedico() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		assertEquals("DCPLRD71M12C129X",annuncioProxy.getMedico());
 	}
 	
@@ -57,15 +63,16 @@ public class AnnuncioProxyTest {
 	void testGetPazientiView() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-		assertEquals(destinatari,annuncioProxy.getPazientiView());
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+		annuncioProxy.setIdAnnuncio(idAnnuncio);
+		assertEquals(destinatari, annuncioProxy.getPazientiView());
 	}
 	
 	@Test
 	void testGetTitolo() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		assertEquals("Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",annuncioProxy.getTitolo());
 	}
 	
@@ -73,7 +80,7 @@ public class AnnuncioProxyTest {
 	void testGetTesto() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		assertEquals("Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",annuncioProxy.getTesto());
 	}
 	
@@ -81,24 +88,24 @@ public class AnnuncioProxyTest {
 	void testGetCorpoAllegato() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setIdAnnuncio(idAnnuncio);
-		assertEquals("codiceAllegato",annuncioProxy.getCorpoAllegato());
+		assertEquals(corpoAllegato, annuncioProxy.getCorpoAllegato());
 	}
 	
 	@Test
 	void testGetNomeAllegato() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-		assertEquals("dialisi-peritoneale.pdf",annuncioProxy.getNomeAllegato());
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+		assertEquals(nomeAllegato,annuncioProxy.getNomeAllegato());
 	}
 	
 	@Test
 	void testGetData() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")),annuncioProxy.getData());
 	}
 	
@@ -106,7 +113,7 @@ public class AnnuncioProxyTest {
 	void testGetOraFormattata() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
 		assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(format),annuncioProxy.getOraFormattata());
 	}
@@ -115,7 +122,7 @@ public class AnnuncioProxyTest {
 	void testGetDataFormattata() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(format),annuncioProxy.getDataFormattata());
 	}
@@ -124,7 +131,7 @@ public class AnnuncioProxyTest {
 	void testGetVisualizzato() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		assertEquals(false,annuncioProxy.getVisualizzato());
 	}
 	
@@ -132,7 +139,7 @@ public class AnnuncioProxyTest {
 	void testGetIdAnnuncio() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setIdAnnuncio("1234");
 		assertEquals("1234",annuncioProxy.getIdAnnuncio());
 	}
@@ -143,7 +150,7 @@ public class AnnuncioProxyTest {
 	void testSetMedico() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setMedico("DCPLRD71M12C129X");
 		assertEquals("DCPLRD71M12C129X",annuncioProxy.getMedico());
 	}
@@ -152,8 +159,8 @@ public class AnnuncioProxyTest {
 	void testSetPazientiView() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-		annuncioProxy.setPazientiView(destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+		annuncioProxy.setIdAnnuncio(idAnnuncio);
 		assertEquals(destinatari,annuncioProxy.getPazientiView());
 	}
 	
@@ -161,7 +168,7 @@ public class AnnuncioProxyTest {
 	void testSetTitolo() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setTitolo("Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.");
 		assertEquals("Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",annuncioProxy.getTitolo());
 	}
@@ -170,7 +177,7 @@ public class AnnuncioProxyTest {
 	void testSetTesto() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setTesto("Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.");
 		assertEquals("Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",annuncioProxy.getTesto());
 	}
@@ -179,7 +186,7 @@ public class AnnuncioProxyTest {
 	void testSetCorpoAllegato() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setIdAnnuncio(idAnnuncio);
 		annuncioProxy.setCorpoAllegato("codiceAllegato");
 		assertEquals("codiceAllegato",annuncioProxy.getCorpoAllegato());
@@ -190,15 +197,15 @@ public class AnnuncioProxyTest {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
 				"",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-		annuncioProxy.setNomeAllegato("dialisi-peritoneale.pdf");
-		assertEquals("dialisi-peritoneale.pdf",annuncioProxy.getNomeAllegato());
+		annuncioProxy.setNomeAllegato(nomeAllegato);
+		assertEquals(nomeAllegato,annuncioProxy.getNomeAllegato());
 	}
 	
 	@Test
 	void testSetData() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",null,destinatari);
+				nomeAllegato,null,destinatari);
 		annuncioProxy.setData(ZonedDateTime.now(ZoneId.of("Europe/Rome")));
 		assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")),annuncioProxy.getData());
 	}
@@ -207,7 +214,7 @@ public class AnnuncioProxyTest {
 	void testSetVisualizzato() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setVisualizzato(true);
 		assertEquals(true,annuncioProxy.getVisualizzato());
 	}
@@ -216,17 +223,17 @@ public class AnnuncioProxyTest {
 	void testSetIdAnnuncio() {
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
 		annuncioProxy.setIdAnnuncio("1234");
 		assertEquals("1234",annuncioProxy.getIdAnnuncio());
 	}
 	
-	// Test per il toString
 	@Test
 	void testToString() { 
 		AnnuncioProxy annuncioProxy=new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
 				"Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
-				"dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+				nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
+		annuncioProxy.setIdAnnuncio(idAnnuncio);
 		String toStringBean=annuncioProxy.toString();
 		String toStringTest= "AnnuncioProxy [idAnnuncio=" + annuncioProxy.getIdAnnuncio() + ", medico=" + annuncioProxy.getMedico()
 				+ ", titolo=" + annuncioProxy.getTitolo() + ", testo=" + annuncioProxy.getTesto() + ", data=" + annuncioProxy.getData() 
