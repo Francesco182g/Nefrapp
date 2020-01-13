@@ -113,6 +113,7 @@ public class GestioneResetPassword extends HttpServlet {
 				System.out.println("è un medico");
 				// è un medico, manda la mail con il link per la modifica della password
 				String destinatario = utente.getEmail();
+				System.out.println(destinatario);
 				InvioEmailUtility.inviaEmail(destinatario);
 				return;
 

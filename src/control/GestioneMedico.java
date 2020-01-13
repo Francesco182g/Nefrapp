@@ -114,7 +114,8 @@ public class GestioneMedico extends HttpServlet {
 		HttpSession session=request.getSession();
 		Medico medico = (Medico) session.getAttribute("utente");
 		if (medico!=null) {
-			if(PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale())!=null) {
+			
+			if(PazienteModel.getPazientiSeguiti(medico.getCodiceFiscale()).size() != 0) {	
 			//non è possibile effettuare l'eliminazione, notificare al medico che non può proseguire con l'opeazione fino a che
 			//segue dei pazienti.
 			}

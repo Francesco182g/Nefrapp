@@ -18,7 +18,6 @@ public class InvioEmailUtility {
 	public static final String PASSWORD = "ForseIlProgettoNonFallisce1289!?#";
 	
 	public static void inviaEmail(String destinatario) throws Exception{
-		System.out.println("Preparazione email da inviare");
 		
 		Properties properties = new Properties();
 		
@@ -37,7 +36,6 @@ public class InvioEmailUtility {
 		Message messaggio = preparaMessaggio(sessione, MITTENTE, destinatario);
 		
 		Transport.send(messaggio);
-		System.out.println("Messaggio inviato con successo");
 	}
 	
 	private static Message preparaMessaggio(Session sessione, String mittente, String destinatario) {

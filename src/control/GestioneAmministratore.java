@@ -256,7 +256,7 @@ public class GestioneAmministratore extends HttpServlet {
 				valido = false;
 			}
 		if(!luogoDiNascita.equals(""))
-			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 3|| luogoDiNascita.length() > 50)
+			if(!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 3|| luogoDiNascita.length() > 30)
 			{
 				valido = false;
 			}
