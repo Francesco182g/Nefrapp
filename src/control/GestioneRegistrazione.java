@@ -123,7 +123,7 @@ public class GestioneRegistrazione extends HttpServlet {
 			String luogoDiNascita=request.getParameter("luogoDiNascita");
 			String dataDiNascita = request.getParameter("dataDiNascita");
 			
-			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)) {
+			if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)&&!MedicoModel.checkEmail(email)) {
 				if(MedicoModel.getMedicoByCF(codiceFiscale)==null && PazienteModel.getPazienteByCF(codiceFiscale)==null) {
 					Medico medico = new Medico(sesso, residenza, null, codiceFiscale, nome, cognome, email,luogoDiNascita);
 					if(!dataDiNascita.equals("")) {
