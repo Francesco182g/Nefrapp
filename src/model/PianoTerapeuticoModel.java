@@ -135,4 +135,13 @@ public class PianoTerapeuticoModel {
 			    new BasicDBObject("$set", new BasicDBObject("Visualizzato", visualizzato)));
 		
 	}
+	
+	public static void removePianoTerapeutico(String codiceFiscalePaziente) {
+		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection().getCollection("PianoTerapeutico");
+		BasicDBObject document = new BasicDBObject();
+		document.put("PazienteCodiceFiscale", codiceFiscalePaziente);
+		pianoTerapeuticoDB.deleteOne(document);
+		
+	}
+	
 }

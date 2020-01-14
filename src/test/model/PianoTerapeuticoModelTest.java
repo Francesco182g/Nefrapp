@@ -34,10 +34,7 @@ class PianoTerapeuticoModelTest {
 	
 	@AfterEach
 	void tearDown() {
-		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("PianoTerapeutico");
-		BasicDBObject document = new BasicDBObject();
-		document.put("PazienteCodiceFiscale", CODICE_FISCALE_PAZIENTE);
-		pazienti.deleteOne(document);
+		PianoTerapeuticoModel.removePianoTerapeutico(CODICE_FISCALE_PAZIENTE);
 	}
 	
 	@Test
