@@ -117,9 +117,9 @@
 	</c:choose>
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">Extra</div>
-	<li class="nav-item"><a class="nav-link" href="#"> <i
+	<!--  <li class="nav-item"><a class="nav-link" href="#"> <i
 			class="fas fa-fw fa-tachometer-alt"></i> <span>Conosci il
-				prodotto</span></a></li>
+				prodotto</span></a></li>-->
 	<li class="nav-item"><a class="nav-link" href="./team.jsp"> <i
 			class="fas fa-fw fa-tachometer-alt"></i> <span>Conosci il
 				team!</span>

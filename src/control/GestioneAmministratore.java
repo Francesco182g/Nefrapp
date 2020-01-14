@@ -26,6 +26,7 @@ import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
+import model.PianoTerapeuticoModel;
 import utility.CriptazioneUtility;
 
 /**
@@ -111,6 +112,7 @@ public class GestioneAmministratore extends HttpServlet {
 		}
 		else if(tipo.equals("paziente")) {
 			PazienteModel.removePaziente(codiceFiscale);
+			PianoTerapeuticoModel.removePianoTerapeutico(codiceFiscale);
 		}
 	}
 	

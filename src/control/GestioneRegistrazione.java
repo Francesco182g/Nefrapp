@@ -15,8 +15,10 @@ import javax.servlet.http.HttpSession;
 import bean.Amministratore;
 import bean.Medico;
 import bean.Paziente;
+import bean.PianoTerapeutico;
 import model.MedicoModel;
 import model.PazienteModel;
+import model.PianoTerapeuticoModel;
 import utility.CriptazioneUtility;
 
 /**
@@ -162,6 +164,7 @@ public class GestioneRegistrazione extends HttpServlet {
 				paziente = new Paziente(sesso, codiceFiscale, nome, cognome, email, residenza, luogoDiNascita,
 						LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy")), true, medici);
 				PazienteModel.addPaziente(paziente, password);
+				PianoTerapeuticoModel.addPianoTerapeutico(new PianoTerapeutico(codiceFiscale, "", "", LocalDate.parse(dataDiNascita, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
 				response.sendRedirect("./dashboard.jsp?regPazOk");
 			} else {
 				request.setAttribute("notifica", "Uno o più parametri del paziente non sono validi.");
