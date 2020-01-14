@@ -9,11 +9,12 @@
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
 		href="./dashboard.jsp">
-		<div class="sidebar-brand-icon rotate-n-15">
-			<i class="fas fa-laugh-wink"></i>
-		</div>
+
+			<!-- <i class="fas fa-laugh-wink"></i> -->
+			<img alt="" src="img/nefrapplogo.png" style="height: 60px; width: 60px">
+		
 		<div class="sidebar-brand-text mx-3">
-			Nefrapp <sup>10</sup>
+			Nefrapp
 		</div>
 	</a>
 	<br>
