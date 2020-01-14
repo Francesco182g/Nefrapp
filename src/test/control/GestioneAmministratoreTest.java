@@ -874,7 +874,7 @@ class GestioneAmministratoreTest {
 		request.setParameter("nome", "Gianni");
 		request.setParameter("cognome","Brazof");
 		request.setParameter("sesso","M");
-		request.setParameter("dataDiNascita","10/10");
+		request.setParameter("dataDiNascita","10/lu/1952");
 		request.setParameter("luogoDiNascita","Milano");
 		request.setParameter("email","b.gianni@gmail.com");
 		request.setParameter("residenza","Via Rafastia, 22, Salerno, 84132, SA");
