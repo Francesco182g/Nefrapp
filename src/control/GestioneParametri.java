@@ -177,7 +177,19 @@ public class GestioneParametri extends HttpServlet {
 			//TODO: alert di errore nel jsp
 		}
 	}
-
+/**
+ * Metodo per controllare la conformità dei campi con le regex.
+ * @param cf
+ * @param newPeso
+ * @param newPaMin
+ * @param newPaMax
+ * @param newScaricoIniziale
+ * @param newUf
+ * @param newTempoSosta
+ * @param newScarico
+ * @param newCarico
+ * @return
+ */
 	private boolean sonoValidi(String cf, BigDecimal newPeso, int newPaMin, int newPaMax, int newScaricoIniziale, int newUf,
 			int newTempoSosta, int newScarico, int newCarico) {
 		

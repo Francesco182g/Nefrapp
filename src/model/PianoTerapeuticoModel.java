@@ -24,7 +24,14 @@ import utility.CreaBeanUtility;
  * Questa classe si occupa di contattare il database ed effettuare tutte le operazioni CRUD relative ai piani terapeutici
  */
 public class PianoTerapeuticoModel {
-	
+	/**
+	 * 
+	 * Questo metodo consente di aggiungere un piano terapeutico al database.
+	 * 
+	 * @param daAggiungere oggetto di tipo <strong>PianoTerapeutico</strong> che rappresenta il piano terapeutico da aggiungere.
+	 * 
+	 * @precondition daAggiungere != null.
+	 */
 	public static void addPianoTerapeutico(PianoTerapeutico daAggiungere) {
 		MongoCollection<Document> pianoTerapeutico = DriverConnection.getConnection().getCollection("PianoTerapeutico");
 		
@@ -136,6 +143,14 @@ public class PianoTerapeuticoModel {
 		
 	}
 	
+	/**
+	 * 
+	 * Questo metodo consente di rimuovere un piano terapeutico al database.
+	 * 
+	 * @param codiceFiscalePaziente oggetto di tipo <strong>String</strong> che rappresenta il codice fiscale del paziente al quale è collegato il piano terapeutico da rimuovere.
+	 * 
+	 * @precondition codiceFiscalePaziente != null.
+	 */
 	public static void removePianoTerapeutico(String codiceFiscalePaziente) {
 		MongoCollection<Document> pianoTerapeuticoDB = DriverConnection.getConnection().getCollection("PianoTerapeutico");
 		BasicDBObject document = new BasicDBObject();

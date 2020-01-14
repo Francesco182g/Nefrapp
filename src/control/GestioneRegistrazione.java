@@ -110,7 +110,13 @@ public class GestioneRegistrazione extends HttpServlet {
 		doGet(request, response);
 		return;
 	}
-	
+	/**
+	 * Metodo che inserisce un Medico nel database. I dati della registrazione sono contenuti nella request.
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void registraMedico(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		
 			String codiceFiscale = request.getParameter("codiceFiscale");
@@ -141,7 +147,13 @@ public class GestioneRegistrazione extends HttpServlet {
 				response.sendRedirect("./registraMedico.jsp?notifica=ParamErr");
 		}
 	}
-
+	/**
+	 * Metodo che inserisce un Paziente nel database. I dati della registrazione sono contenuti nella request.
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void registraPaziente(HttpServletRequest request, HttpServletResponse response, ArrayList<String> medici)
 			throws ServletException, IOException {
 		// TODO gestione della data
@@ -177,7 +189,19 @@ public class GestioneRegistrazione extends HttpServlet {
 			requestDispatcher.forward(request, response);
 		}
 	}
-
+/**
+ * Metodo per controllare la conformità dei campi con le regex.
+ * @param codiceFiscale
+ * @param nome
+ * @param cognome
+ * @param sesso
+ * @param email
+ * @param password
+ * @param residenza
+ * @param luogoDiNascita
+ * @param dataDiNascita
+ * @return
+ */
 	private boolean validazione(String codiceFiscale, String nome, String cognome, String sesso, String email,
 			String password, String residenza, String luogoDiNascita, String dataDiNascita) {
 		boolean valido = true;

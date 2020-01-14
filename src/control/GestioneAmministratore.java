@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.mock.web.MockHttpSession;
 
 import com.google.gson.Gson;
 
@@ -115,7 +114,14 @@ public class GestioneAmministratore extends HttpServlet {
 			PianoTerapeuticoModel.removePianoTerapeutico(codiceFiscale);
 		}
 	}
-	
+	/**
+	 * Metodo che modifica i dati personali di un utente Paziente
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 		String codiceFiscale = request.getParameter("codiceFiscale");		
 		if(request.getParameter("tipoUtente").equals("amministratore")) {
@@ -219,7 +225,18 @@ public class GestioneAmministratore extends HttpServlet {
 			}
 		}
 	}
-	
+	/**
+	 * Metodo per controllare la conformità dei campi con le regex.
+	 * @param codiceFiscale
+	 * @param nome
+	 * @param cognome
+	 * @param sesso
+	 * @param email
+	 * @param residenza
+	 * @param luogoDiNascita
+	 * @param dataDiNascita
+	 * @return
+	 */
 	private boolean validazione(String codiceFiscale, String nome, String cognome,String sesso, String email,String residenza,String luogoDiNascita,String dataDiNascita) {
 		boolean valido = true;
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
@@ -269,7 +286,13 @@ public class GestioneAmministratore extends HttpServlet {
 			}
 		return valido;
 	}
-	
+	/**
+	 * Metodo per controllare la conformità dei campi con le regex.
+	 * @param vecchiaPassword
+	 * @param nuovaPassword
+	 * @param confermaPassword
+	 * @return
+	 */
 	private boolean validaPassword(String vecchiaPassword,String nuovaPassword,String confermaPassword) {
 		boolean valido = true;
 		String expPassword = "^[a-zA-Z0-9]*$";

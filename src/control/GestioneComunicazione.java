@@ -112,13 +112,13 @@ public class GestioneComunicazione extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("utente");
 		ArrayList<String> destinatari = null;
-		
+
 		if (session.getAttribute("isPaziente") != null && (boolean) session.getAttribute("isPaziente") == true) {
 			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectMedico")));
 		} else if (session.getAttribute("isMedico") != null && (boolean) session.getAttribute("isMedico") == true) {
 			destinatari = new ArrayList<String>(Arrays.asList(request.getParameterValues("selectPaziente")));
 		}
-		
+
 		String CFMittente = utente.getCodiceFiscale();
 		String oggetto = request.getParameter("oggetto");
 		String testo = request.getParameter("testo");
@@ -131,7 +131,8 @@ public class GestioneComunicazione extends HttpServlet {
 		if (controllaParametri(CFMittente, oggetto, testo)) {
 			if (operazione.equals("inviaMessaggio")) {
 				if (id != null) {
-					Messaggio daAggiornare = new MessaggioCompleto(CFMittente, oggetto, testo, null, null, null, destinatariView);
+					Messaggio daAggiornare = new MessaggioCompleto(CFMittente, oggetto, testo, null, null, null,
+							destinatariView);
 					daAggiornare.setIdMessaggio(id);
 					MessaggioModel.updateMessaggio(daAggiornare);
 				} else {
@@ -140,7 +141,8 @@ public class GestioneComunicazione extends HttpServlet {
 				}
 			} else if (operazione.equals("inviaAnnuncio")) {
 				if (id != null) {
-					Annuncio daAggiornare = new AnnuncioCompleto(CFMittente, oggetto, testo, null, null, null, destinatariView);
+					Annuncio daAggiornare = new AnnuncioCompleto(CFMittente, oggetto, testo, null, null, null,
+							destinatariView);
 					daAggiornare.setIdAnnuncio(id);
 					AnnuncioModel.updateAnnuncio(daAggiornare);
 				} else {
@@ -158,6 +160,13 @@ public class GestioneComunicazione extends HttpServlet {
 		session.removeAttribute("id");
 	}
 
+	/**
+	 * Metodo che si occupa del caricamento dell file allegato nel database.
+	 * 
+	 * @param request
+	 * @param tipo
+	 * @param session
+	 */
 	public void caricaAllegato(HttpServletRequest request, String tipo, HttpSession session) {
 		String allegato = null;
 		String nomeFile = null;
@@ -172,7 +181,7 @@ public class GestioneComunicazione extends HttpServlet {
 				request.setAttribute("erroreCaricamento", true);
 				return;
 			}
-			
+
 			nomeFile = filePart.getHeader("Content-Disposition").replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$",
 					"$1");
 			if (filePart != null && filePart.getSize() > 0 && controllaFile(nomeFile, filePart.getSize())) {
@@ -180,7 +189,7 @@ public class GestioneComunicazione extends HttpServlet {
 				try {
 					allegato = CriptazioneUtility.codificaStream(fileStream);
 					nomeFile = CriptazioneUtility.codificaStringa(nomeFile);
-					
+
 					if (tipo != null && tipo.equals("messaggio")) {
 						messaggio = new MessaggioCompleto(null, null, null, allegato, nomeFile,
 								ZonedDateTime.now(ZoneId.of("Europe/Rome")), new HashMap<String, Boolean>());
@@ -219,6 +228,7 @@ public class GestioneComunicazione extends HttpServlet {
 			}
 		}
 	}
+
 	/**
 	 * Questo metodo rimuove una comunicazione incompleta nel caso in cui l'utente
 	 * decida volontariamente di cancellare un allegato gia' caricato
@@ -271,6 +281,14 @@ public class GestioneComunicazione extends HttpServlet {
 		session.removeAttribute("id");
 	}
 
+	/**
+	 * Metodo che controlla la conformità dei campi con le regex
+	 * 
+	 * @param codiceFiscale
+	 * @param oggetto
+	 * @param testo
+	 * @return
+	 */
 	protected boolean controllaParametri(String codiceFiscale, String oggetto, String testo) {
 		String expCodiceFiscale = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 
@@ -285,6 +303,14 @@ public class GestioneComunicazione extends HttpServlet {
 		return true;
 	}
 
+	/**
+	 * Metodo che effettua i controlli sui campi del file. Restituisce true se il
+	 * controllo è andato a buon fine, false altrimenti
+	 * 
+	 * @param nomeFile
+	 * @param dimensioneFile
+	 * @return
+	 */
 	public boolean controllaFile(String nomeFile, long dimensioneFile) {
 		String estensione = "";
 

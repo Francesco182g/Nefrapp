@@ -113,7 +113,6 @@ public class GestioneResetPassword extends HttpServlet {
 				System.out.println("è un medico");
 				// è un medico, manda la mail con il link per la modifica della password
 				String destinatario = utente.getEmail();
-				System.out.println(destinatario);
 				InvioEmailUtility.inviaEmail(destinatario);
 				return;
 
@@ -161,6 +160,13 @@ public class GestioneResetPassword extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Metodo che effettua il reset della password per un Medico.
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void effettuaReset(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -196,7 +202,11 @@ public class GestioneResetPassword extends HttpServlet {
 			return;
 		}
 	}
-
+/**
+ * Metodo che controlla la conformità della email con la regex.
+ * @param email
+ * @return
+ */
 	private boolean validaMail(String email) {
 
 		final String expEmail = "^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
@@ -206,7 +216,14 @@ public class GestioneResetPassword extends HttpServlet {
 
 		return false;
 	}
-
+/**
+ * Metodo che controlla al conformità dei campi con le regex.
+ * @param email
+ * @param codiceFiscale
+ * @param password
+ * @param confermaPsw
+ * @return
+ */
 	private boolean validaReset(String email, String codiceFiscale, String password, String confermaPsw) {
 		boolean valido = true;
 

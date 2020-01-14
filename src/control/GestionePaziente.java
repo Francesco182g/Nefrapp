@@ -114,7 +114,7 @@ public class GestionePaziente extends HttpServlet {
 	}
 	
 	/**
-	 * Metodo che aggiorna i dati personali di un paziente
+	 * Metodo che modifica i dati personali di un utente Paziente
 	 * @param request richiesta utilizzata per ottenere parametri e settare attributi
 	 * @throws IOException 
 	 */	
@@ -179,7 +179,20 @@ public class GestionePaziente extends HttpServlet {
 			}
 		
 	}
-	
+	/**
+	 * Metodo per controllare la conformità dei campi con le regex.
+	 * @param codiceFiscale
+	 * @param nome
+	 * @param cognome
+	 * @param sesso
+	 * @param email
+	 * @param residenza
+	 * @param luogoDiNascita
+	 * @param dataDiNascita
+	 * @param password
+	 * @param confermaPsw
+	 * @return
+	 */
 	private boolean validazione(String codiceFiscale, String nome, String cognome, String sesso, String email,
 			String residenza, String luogoDiNascita, String dataDiNascita, String password, String confermaPsw) {
 

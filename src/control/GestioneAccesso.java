@@ -125,6 +125,17 @@ public class GestioneAccesso extends HttpServlet {
 			return;
 		}
 	}
+	/**
+	 * Metodo che permette di effettuare la login all'utente
+	 * 
+	 * @param request  la richiesta al server
+	 * @param response la risposta del server
+	 * @param session  la sessione in cui deve essere salvato l'utente se
+	 *                 avviene con successo la login
+	 * @throws IOException lancia un eccezione se si verifica un errore di input /
+	 *                     output
+	 * @throws ServletException 
+	 */
 
 	private void loginUtente(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws IOException, ServletException {
@@ -183,7 +194,7 @@ public class GestioneAccesso extends HttpServlet {
 	}
 
 	/**
-	 * Funzione che permette di effettuare il logout
+	 * Metodo che permette di effettuare il logout
 	 * 
 	 * @param request è il client in cui risiede la sessione che deve essere
 	 *                invalidata
@@ -196,7 +207,7 @@ public class GestioneAccesso extends HttpServlet {
 	}
 
 	/**
-	 * Funzione che controlla i parametri codice fiscale e password dell'
+	 * Metodo che controlla i parametri codice fiscale e password dell'
 	 * amministratore e dell'utente
 	 * 
 	 * @param codiceFiscale indica il codice fiscale dell' amministratore o

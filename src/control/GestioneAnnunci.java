@@ -21,7 +21,6 @@ import bean.Medico;
 import bean.Paziente;
 import bean.Utente;
 import model.AnnuncioModel;
-import model.MessaggioModel;
 import model.UtenteModel;
 import utility.CriptazioneUtility;
 
@@ -37,12 +36,11 @@ public class GestioneAnnunci extends GestioneComunicazione {
 	private static final long serialVersionUID = 1L;
 	// private RequestDispatcher dispatcher;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String operazione = request.getParameter("operazione");
 			HttpSession session = request.getSession();
-			
+
 			if (operazione == null) {
 				response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
 				return;
@@ -123,8 +121,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		return;
 	}
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 		return;
 	}
@@ -164,6 +161,12 @@ public class GestioneAnnunci extends GestioneComunicazione {
 		}
 	}
 
+	/**
+	 * Metodo che rimuove un annuncio dal database. L'id dell'annuncio è contenuto
+	 * nella request.
+	 * 
+	 * @param request
+	 */
 	protected void rimuoviAnnuncio(HttpServletRequest request) {
 		String id = (String) request.getParameter("id");
 		AnnuncioModel.deleteAnnuncioById(id);
@@ -231,7 +234,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
 					}
 				}
 			}
-			
+
 			ArrayList<String> cache = new ArrayList<>();
 			ArrayList<Utente> utentiCache = new ArrayList<>();
 			Utente utenteSelezionato = new Utente();
