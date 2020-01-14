@@ -10,121 +10,123 @@ import java.time.format.DateTimeFormatter;
  * Questa classe rappresenta la scheda parametri
  */
 public class SchedaParametri {
-	private String pazienteCodiceFiscale;
-	private BigDecimal peso;
-	private int paMin;
-	private int paMax;
-	private int scaricoIniziale;
-	private int UF;
-	private int tempoSosta;
-	private int carico; 
-	private int scarico;
-	private LocalDate data;	
-	
-	public SchedaParametri() {}
-	
-	public SchedaParametri(String pazienteCodiceFiscale, BigDecimal peso, int paMin, int paMax, int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, LocalDate data) {
-		this.pazienteCodiceFiscale = pazienteCodiceFiscale;
-		this.peso = peso;
-		this.paMin = paMin;
-		this.paMax = paMax;
-		this.scaricoIniziale = scaricoIniziale;
-		this.UF = UF;
-		this.tempoSosta = tempoSosta;
-		this.carico = carico;
-		this.scarico = scarico;
-		this.data = data;
-	}
+  private String pazienteCodiceFiscale;
+  private BigDecimal peso;
+  private int paMin;
+  private int paMax;
+  private int scaricoIniziale;
+  private int UF;
+  private int tempoSosta;
+  private int carico; 
+  private int scarico;
+  private LocalDate data;	
 
-	public String getPazienteCodiceFiscale() {
-		return pazienteCodiceFiscale;
-	}
+  public SchedaParametri() {}
 
-	public void setPazienteCodiceFiscale(String pazienteCodiceFiscale) {
-		this.pazienteCodiceFiscale= pazienteCodiceFiscale;
-	}
+  public SchedaParametri(String pazienteCodiceFiscale, BigDecimal peso, int paMin, int paMax, 
+      int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, LocalDate data) {
+    this.pazienteCodiceFiscale = pazienteCodiceFiscale;
+    this.peso = peso;
+    this.paMin = paMin;
+    this.paMax = paMax;
+    this.scaricoIniziale = scaricoIniziale;
+    this.UF = UF;
+    this.tempoSosta = tempoSosta;
+    this.carico = carico;
+    this.scarico = scarico;
+    this.data = data;
+  }
 
-	public BigDecimal getPeso() {
-		return peso;
-	}
+  public String getPazienteCodiceFiscale() {
+    return pazienteCodiceFiscale;
+  }
 
-	public void setPeso(BigDecimal peso) {
-		this.peso = peso;
-	}
+  public void setPazienteCodiceFiscale(String pazienteCodiceFiscale) {
+    this.pazienteCodiceFiscale = pazienteCodiceFiscale;
+  }
 
-	public int getPaMin() {
-		return paMin;
-	}
+  public BigDecimal getPeso() {
+    return peso;
+  }
 
-	public void setPaMin(int paMin) {
-		this.paMin = paMin;
-	}
+  public void setPeso(BigDecimal peso) {
+    this.peso = peso;
+  }
 
-	public int getPaMax() {
-		return paMax;
-	}
+  public int getPaMin() {
+    return paMin;
+  }
 
-	public void setPaMax(int paMax) {
-		this.paMax = paMax;
-	}
+  public void setPaMin(int paMin) {
+    this.paMin = paMin;
+  }
 
-	public int getScaricoIniziale() {
-		return scaricoIniziale;
-	}
+  public int getPaMax() {
+    return paMax;
+  }
 
-	public void setScaricoIniziale(int scaricoIniziale) {
-		this.scaricoIniziale = scaricoIniziale;
-	}
+  public void setPaMax(int paMax) {
+    this.paMax = paMax;
+  }
 
-	public int getUF() {
-		return UF;
-	}
+  public int getScaricoIniziale() {
+    return scaricoIniziale;
+  }
 
-	public void setUF(int uF) {
-		UF = uF;
-	}
+  public void setScaricoIniziale(int scaricoIniziale) {
+    this.scaricoIniziale = scaricoIniziale;
+  }
 
-	public int getTempoSosta() {
-		return tempoSosta;
-	}
+  public int getUF() {
+    return UF;
+  }
 
-	public void setTempoSosta(int tempoSosta) {
-		this.tempoSosta = tempoSosta;
-	}
+  public void setUF(int uF) {
+    UF = uF;
+  }
 
-	public int getCarico() {
-		return carico;
-	}
+  public int getTempoSosta() {
+    return tempoSosta;
+  }
 
-	public void setCarico(int carico) {
-		this.carico = carico;
-	}
+  public void setTempoSosta(int tempoSosta) {
+    this.tempoSosta = tempoSosta;
+  }
 
-	public int getScarico() {
-		return scarico;
-	}
+  public int getCarico() {
+    return carico;
+  }
 
-	public void setScarico(int scarico) {
-		this.scarico = scarico;
-	}
+  public void setCarico(int carico) {
+    this.carico = carico;
+  }
 
-	public LocalDate getData() {
-		return data;
-	}
-	
-	public String getDataFormattata() {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return data.format(format);
-	}
+  public int getScarico() {
+    return scarico;
+  }
 
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
+  public void setScarico(int scarico) {
+    this.scarico = scarico;
+  }
 
-	@Override
-	public String toString() {
-		return "SchedaParametri [codiceFiscalePaziente=" + pazienteCodiceFiscale+ ", peso=" + peso + ", paMin=" + paMin
-				+ ", paMax=" + paMax + ", scaricoIniziale=" + scaricoIniziale + ", UF=" + UF + ", tempoSosta="
-				+ tempoSosta + ", carico=" + carico + ", scarico=" + scarico + ", ora=" + ", data=" + data + "]";
-	}
+  public LocalDate getData() {
+    return data;
+  }
+
+  public String getDataFormattata() {
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    return data.format(format);
+  }
+
+  public void setData(LocalDate data) {
+    this.data = data;
+  }
+
+  @Override
+  public String toString() {
+    return "SchedaParametri [codiceFiscalePaziente=" + pazienteCodiceFiscale + ", peso=" + peso 
+        + ", paMin=" + paMin + ", paMax=" + paMax + ", scaricoIniziale=" + scaricoIniziale 
+        + ", UF=" + UF + ", tempoSosta=" + tempoSosta + ", carico=" + carico + ", scarico=" 
+        + scarico + ", ora=" + ", data=" + data + "]";
+  }
 }

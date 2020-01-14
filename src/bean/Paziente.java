@@ -10,87 +10,89 @@ import java.util.ArrayList;
  * Questa classe rappresenta il paziente
  */
 public class Paziente extends Utente{
-	private String sesso;
-	private String residenza;
-	private String luogoDiNascita;
-	private LocalDate dataDiNascita;
-	private Boolean attivo;
-	private ArrayList<String> medici;
+  private String sesso;
+  private String residenza;
+  private String luogoDiNascita;
+  private LocalDate dataDiNascita;
+  private Boolean attivo;
+  private ArrayList<String> medici;
 
-	public Paziente() {}
+  public Paziente() {}
 
-	public Paziente(String sesso, String codiceFiscale, String nome, String cognome, String email, String residenza, String luogoDiNascita, LocalDate dataDiNascita, Boolean attivo, ArrayList<String> medici) {
-		super(codiceFiscale, nome, cognome,email);
-		this.sesso = sesso;
-		this.residenza = residenza;
-		this.luogoDiNascita=luogoDiNascita;
-		this.dataDiNascita = dataDiNascita;
-		this.attivo = attivo;
-		this.medici = medici;
-	}
-	
-	public String getSesso() {
-		return sesso;
-	}
+  public Paziente(String sesso, String codiceFiscale, String nome, String cognome, 
+      String email, String residenza, String luogoDiNascita, LocalDate dataDiNascita, 
+      Boolean attivo, ArrayList<String> medici) {
+    super(codiceFiscale, nome, cognome,email);
+    this.sesso = sesso;
+    this.residenza = residenza;
+    this.luogoDiNascita = luogoDiNascita;
+    this.dataDiNascita = dataDiNascita;
+    this.attivo = attivo;
+    this.medici = medici;
+  }
 
-	public void setSesso(String sesso) {
-		this.sesso = sesso;
-	}
+  public String getSesso() {
+    return sesso;
+  }
 
-	public String getResidenza() {
-		return residenza;
-	}
+  public void setSesso(String sesso) {
+    this.sesso = sesso;
+  }
 
-	public void setResidenza(String residenza) {
-		this.residenza = residenza;
-	}
-	
-	public String getLuogoDiNascita() {
-		return luogoDiNascita;
-	}
-	
-	public void setLuogoDiNascita(String luogoDiNascita) {
-		this.luogoDiNascita=luogoDiNascita;
-	}
+  public String getResidenza() {
+    return residenza;
+  }
 
-	public LocalDate getDataDiNascita() {
-		return dataDiNascita;
-	}
-	
-	public String getDataFormattata() {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return dataDiNascita.format(format);
-	}
+  public void setResidenza(String residenza) {
+    this.residenza = residenza;
+  }
 
-	public void setDataDiNascita(LocalDate dataDiNascita) {
-		this.dataDiNascita = dataDiNascita;
-	}
+  public String getLuogoDiNascita() {
+    return luogoDiNascita;
+  }
 
-	public Boolean getAttivo() {
-		return attivo;
-	}
+  public void setLuogoDiNascita(String luogoDiNascita) {
+    this.luogoDiNascita = luogoDiNascita;
+  }
 
-	public void setAttivo(Boolean attivo) {
-		this.attivo = attivo;
-	}
+  public LocalDate getDataDiNascita() {
+    return dataDiNascita;
+  }
 
-	public ArrayList<String> getMedici() {
-		return medici;
-	}
+  public String getDataFormattata() {
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    return dataDiNascita.format(format);
+  }
 
-	public void setMedici(ArrayList<String> medici) {
-		this.medici = medici;
-	}
+  public void setDataDiNascita(LocalDate dataDiNascita) {
+    this.dataDiNascita = dataDiNascita;
+  }
 
-	public void addMedico(String medicoCodiceFiscale) {
-		this.medici.add(medicoCodiceFiscale);
-	}
+  public Boolean getAttivo() {
+    return attivo;
+  }
 
-	@Override
-	public String toString() {
-		return "Paziente [sesso=" + sesso + ", email=" + getEmail() + ", residenza=" + residenza + ", luogoDiNascita="
-				+ luogoDiNascita + ", dataDiNascita=" + dataDiNascita + ", attivo=" + attivo + ", medici=" + medici
-				+ ", codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome() + ", cognome="
-				+ getCognome() + "]";
-	}
+  public void setAttivo(Boolean attivo) {
+    this.attivo = attivo;
+  }
+
+  public ArrayList<String> getMedici() {
+    return medici;
+  }
+
+  public void setMedici(ArrayList<String> medici) {
+    this.medici = medici;
+  }
+
+  public void addMedico(String medicoCodiceFiscale) {
+    this.medici.add(medicoCodiceFiscale);
+  }
+
+  @Override
+  public String toString() {
+    return "Paziente [sesso=" + sesso + ", email=" + getEmail() + ", residenza=" + residenza 
+        + ", luogoDiNascita=" + luogoDiNascita + ", dataDiNascita=" + dataDiNascita + ", "
+        + "attivo=" + attivo + ", medici=" + medici + ", codiceFiscale=" + getCodiceFiscale()
+        + ", nome=" + getNome() + ", cognome=" + getCognome() + "]";
+  }
 }

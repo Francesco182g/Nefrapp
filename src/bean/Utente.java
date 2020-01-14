@@ -6,55 +6,56 @@ package bean;
  * Questa classe rappresenta l'utnte generico del sito
  */
 public class Utente {
-	private String codiceFiscale;
-	private String nome;
-	private String cognome;
-	private String email;
-	
-	public Utente() {}
-	
-	public Utente(String codiceFiscale, String nome, String cognome,String email) {
-		this.codiceFiscale = codiceFiscale;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.email = email;
-		
-	}
+  private String codiceFiscale;
+  private String nome;
+  private String cognome;
+  private String email;
 
-	public String getCodiceFiscale() {
-		return codiceFiscale;
-	}
+  public Utente() {}
 
-	public void setCodiceFiscale(String codiceFiscale) {
-		this.codiceFiscale = codiceFiscale;
-	}
+  public Utente(String codiceFiscale, String nome, String cognome,String email) {
+    this.codiceFiscale = codiceFiscale;
+    this.nome = nome;
+    this.cognome = cognome;
+    this.email = email;
 
-	public String getNome() {
-		return nome;
-	}
+  }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+  public String getCodiceFiscale() {
+    return codiceFiscale;
+  }
 
-	public String getCognome() {
-		return cognome;
-	}
+  public void setCodiceFiscale(String codiceFiscale) {
+    this.codiceFiscale = codiceFiscale;
+  }
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+  public String getNome() {
+    return nome;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  public String getCognome() {
+    return cognome;
+  }
 
-	@Override
-	public String toString() {
-		return getClass().getName()+" [codiceFiscale=" + codiceFiscale + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email + "]";
-	}
+  public void setCognome(String cognome) {
+    this.cognome = cognome;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getName() + " [codiceFiscale=" + codiceFiscale + ", nome=" 
+        + nome + ", cognome=" + cognome + ", email=" + email + "]";
+  }
 }

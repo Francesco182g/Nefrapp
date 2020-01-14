@@ -12,134 +12,135 @@ import model.MessaggioModel;
  * Implementazione concreta lightweight di un Messaggio (proxy design pattern)
  */
 public class MessaggioProxy implements Messaggio {
-	private Messaggio buffer = null;
-	private String idMessaggio;
-	private String codiceFiscaleMittente;
-	private String oggetto;
-	private ZonedDateTime data;
-	private Boolean visualizzato;
-	private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
-	
-	public MessaggioProxy() {}
+  private Messaggio buffer = null;
+  private String idMessaggio;
+  private String codiceFiscaleMittente;
+  private String oggetto;
+  private ZonedDateTime data;
+  private Boolean visualizzato;
+  private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
 
-	public MessaggioProxy(String codiceFiscaleMittente, String oggetto, ZonedDateTime data, HashMap<String, Boolean> destinatariView) {
-		this.codiceFiscaleMittente = codiceFiscaleMittente;
-		this.oggetto = oggetto;
-		this.data = data;
-		this.visualizzato = false;
-		this.destinatariView.putAll(destinatariView);
-	}
+  public MessaggioProxy() {}
 
-	public String getCodiceFiscaleMittente() {
-		return codiceFiscaleMittente;
-	}
+  public MessaggioProxy(String codiceFiscaleMittente, String oggetto, 
+      ZonedDateTime data, HashMap<String, Boolean> destinatariView) {
+    this.codiceFiscaleMittente = codiceFiscaleMittente;
+    this.oggetto = oggetto;
+    this.data = data;
+    this.visualizzato = false;
+    this.destinatariView.putAll(destinatariView);
+  }
 
-	public void setCodiceFiscaleMittente(String codiceFiscaleMittente) {
-		this.codiceFiscaleMittente = codiceFiscaleMittente;
-	}
+  public String getCodiceFiscaleMittente() {
+    return codiceFiscaleMittente;
+  }
 
-	public HashMap<String, Boolean> getDestinatariView() {
-		return destinatariView;
-	}
+  public void setCodiceFiscaleMittente(String codiceFiscaleMittente) {
+    this.codiceFiscaleMittente = codiceFiscaleMittente;
+  }
 
-	public void setDestinatariView(HashMap<String, Boolean> destinatariView) {
-		this.destinatariView.putAll(destinatariView);
-	}
+  public HashMap<String, Boolean> getDestinatariView() {
+    return destinatariView;
+  }
 
-	public String getOggetto() {
-		return oggetto;
-	}
+  public void setDestinatariView(HashMap<String, Boolean> destinatariView) {
+    this.destinatariView.putAll(destinatariView);
+  }
 
-	public void setOggetto(String oggetto) {
-		this.oggetto = oggetto;
-	}
+  public String getOggetto() {
+    return oggetto;
+  }
 
-	public String getTesto() {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		return buffer.getTesto();	
-	}
+  public void setOggetto(String oggetto) {
+    this.oggetto = oggetto;
+  }
 
-	public void setTesto(String testo) {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		buffer.setTesto(testo);
-	}
+  public String getTesto() {
+    if (buffer == null) {
+      buffer = MessaggioModel.getMessaggioById(idMessaggio);
+    }
 
-	public String getCorpoAllegato() {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		return buffer.getCorpoAllegato();
-	}
+    return buffer.getTesto();	
+  }
 
-	public void setCorpoAllegato(String corpoAllegato) {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		buffer.setCorpoAllegato(corpoAllegato);
-	}
+  public void setTesto(String testo) {
+    if (buffer == null) {
+      buffer = MessaggioModel.getMessaggioById(idMessaggio);
+    }
 
-	public String getNomeAllegato() {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		return buffer.getNomeAllegato();	
-	}
+    buffer.setTesto(testo);
+  }
 
-	public void setNomeAllegato(String nomeAllegato) {
-		if (buffer == null) {
-			buffer = MessaggioModel.getMessaggioById(idMessaggio);
-		}
-		
-		buffer.setNomeAllegato(nomeAllegato);	
-	}
+  public String getCorpoAllegato() {
+    if (buffer == null) {
+      buffer = MessaggioModel.getMessaggioById(idMessaggio);
+    }
 
-	public String getOraFormattata() {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
-		return data.format(format);
-	}
+    return buffer.getCorpoAllegato();
+  }
 
-	public ZonedDateTime getData() {
-		return data;
-	}
+  public void setCorpoAllegato(String corpoAllegato) {
+    if (buffer == null) {
+      buffer = MessaggioModel.getMessaggioById(idMessaggio);
+    }
 
-	public String getDataFormattata() {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return data.format(format);
-	}
+    buffer.setCorpoAllegato(corpoAllegato);
+  }
 
-	public void setData(ZonedDateTime data) {
-		this.data = data;
-	}
+  public String getNomeAllegato() {
+    if (buffer == null) {
+      buffer = MessaggioModel.getMessaggioById(idMessaggio);
+    }
 
-	public void setVisualizzato(Boolean visualizzato) {
-		this.visualizzato = visualizzato;
-	}
+    return buffer.getNomeAllegato();	
+  }
 
-	public Boolean getVisualizzato() {
-		return this.visualizzato;
-	}
+  public void setNomeAllegato(String nomeAllegato) {
+    if (buffer == null) {
+      buffer = MessaggioModel.getMessaggioById(idMessaggio);
+    }
 
-	public void setIdMessaggio(String idMessaggio) {
-		this.idMessaggio = idMessaggio;
-	}
+    buffer.setNomeAllegato(nomeAllegato);	
+  }
 
-	public String getIdMessaggio() {
-		return this.idMessaggio;
-	}
+  public String getOraFormattata() {
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+    return data.format(format);
+  }
 
-	@Override
-	public String toString() {
-		return "MessaggioProxy [idMessaggio=" + idMessaggio + ", codiceFiscaleMittente=" + codiceFiscaleMittente
-				+ ", oggetto=" + oggetto + ", data=" + data + ", visualizzato=" + visualizzato
-				+ ", destinatariView=" + destinatariView + "]";
-	}
+  public ZonedDateTime getData() {
+    return data;
+  }
+
+  public String getDataFormattata() {
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    return data.format(format);
+  }
+
+  public void setData(ZonedDateTime data) {
+    this.data = data;
+  }
+
+  public void setVisualizzato(Boolean visualizzato) {
+    this.visualizzato = visualizzato;
+  }
+
+  public Boolean getVisualizzato() {
+    return this.visualizzato;
+  }
+
+  public void setIdMessaggio(String idMessaggio) {
+    this.idMessaggio = idMessaggio;
+  }
+
+  public String getIdMessaggio() {
+    return this.idMessaggio;
+  }
+
+  @Override
+  public String toString() {
+    return "MessaggioProxy [idMessaggio=" + idMessaggio + ", codiceFiscaleMittente=" 
+        + codiceFiscaleMittente + ", oggetto=" + oggetto + ", data=" + data + ", "
+        + "visualizzato=" + visualizzato + ", destinatariView=" + destinatariView + "]";
+  }
 }
