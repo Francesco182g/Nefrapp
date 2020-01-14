@@ -73,8 +73,6 @@ class GestioneMessaggiTest {
 	private String testo = "Gentile signor Alfredo,\n" + 
 			"Le comunico che a causa di impegni personali non potrò riceverla domani; \n" + 
 			"le invio in allegato una tabella con i giorni e gli orari a cui possiamo rimandare l’appuntamento.";
-	private Part allegato;
-	//TODO: mettere allegato (in forma accettabile) nel part
 
 	private GestioneMessaggi servlet;
 	private MockHttpServletRequest request;
@@ -195,7 +193,23 @@ class GestioneMessaggiTest {
 		request.getSession().setAttribute("utente", medico);
 		request.getSession().setAttribute("isMedico", true);
 
-		//request.addPart(allegato);
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", testo);
+		request.setParameter("selectPaziente", "");
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);
+		  
+		assertEquals("./dashboard.jsp?notifica=messaggioInviato", response.getRedirectedUrl());
+	}
+	
+	@Test
+	void TC_GM_8_6_InvioMessaggi() throws ServletException, IOException {
+		request.getSession().setAttribute("utente", medico);
+		request.getSession().setAttribute("isMedico", true);
+
 		request.setParameter("operazione", "caricaAllegato");
 		servlet.doPost(request, response);
 		
@@ -248,7 +262,27 @@ class GestioneMessaggiTest {
 	}
 	
 	@Test
-	void TC_GM_9_5_InvioMessaggi() throws ServletException, IOException {
+	void TC_GP_9_5_InvioMessaggi() throws ServletException, IOException {
+		request.getSession().setAttribute("utente", paziente);
+		request.getSession().setAttribute("isPaziente", true);
+
+		//request.addPart(allegato);
+		request.setParameter("operazione", "caricaAllegato");
+		servlet.doPost(request, response);
+		
+		request.setParameter("oggetto", oggetto);
+		request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" + 
+				"Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n" + 
+				"");
+		request.setParameter("selectMedico", "");
+		request.setParameter("operazione", "inviaMessaggio");
+		servlet.doPost(request, response);
+		  
+		assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
+	}
+	
+	@Test
+	void TC_GM_9_6_InvioMessaggi() throws ServletException, IOException {
 		request.getSession().setAttribute("utente", paziente);
 		request.getSession().setAttribute("isPaziente", true);
 
