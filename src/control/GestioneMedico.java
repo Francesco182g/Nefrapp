@@ -151,6 +151,11 @@ public class GestioneMedico extends HttpServlet {
 			Medico medico = (Medico) session.getAttribute("utente");
 
 			if (medico != null) {
+				
+				if((!email.equals(medico.getEmail())) && (MedicoModel.getMedicoByEmail(email) != null /*TODO || PazienteModel.getPazientebyEmail(email) */)) {
+					response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=EmailGi‡InUso");
+					return;
+				}
 
 				medico.setNome(nome);
 				medico.setCognome(cognome);
@@ -169,7 +174,7 @@ public class GestioneMedico extends HttpServlet {
 																		// cancellare il commento quando
 																		// spostate la classe
 
-				// TODO aggiorna dati del medico, anche la password
+				
 				MedicoModel.updatePasswordMedico(medico.getCodiceFiscale(), password);
 				session.setAttribute("medico", medico);
 

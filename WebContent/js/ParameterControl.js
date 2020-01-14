@@ -201,7 +201,7 @@ var oggettoMsg = "Inserire un'intestazione valida.<br><br>L'intestazione deve es
 					valido = [ false, passwordMsg ];
 				else if (!expSesso.test(sesso) || sesso.length != 1)
 					valido = [ false, sessoMsg ];
-				else if (!expEmail.test(email))
+				else if (!expEmail.test(email) || email.length < 5 || email.length > 50)
 					valido = [ false, emailMsg ];
 				else if (!expDataDiNascita.test(dataDiNascita) || dataDiNascita.length!=10)
 					valido = [ false, dataMsg ];
