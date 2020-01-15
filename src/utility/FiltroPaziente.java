@@ -21,34 +21,40 @@ import javax.servlet.http.HttpSession;
  * @author nico
  */
 @WebFilter(urlPatterns = { 
-		"/inserimentoAnnuncioView.jsp", "/listaPazientiView.jsp",  "/loginAmministratore.jsp", 
-		"/ModificaAccountMedicoView.jsp", "/registraMedico.jsp", "/registraPazienteMedico.jsp",
-		"/resetPasswordView.jsp", "/richiestaResetView.jsp" })
-//aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso ai pazienti
+    "/inserimentoAnnuncioView.jsp", "/listaPazientiView.jsp",  "/loginAmministratore.jsp", 
+    "/ModificaAccountMedicoView.jsp", "/registraMedico.jsp", "/registraPazienteMedico.jsp",
+    "/resetPasswordView.jsp", "/richiestaResetView.jsp" })
+
+//aggiornare i jsp e le servlet in questa annotazione in caso servisse 
+//garantire/negare l'accesso ai pazienti
 public class FiltroPaziente implements Filter {
-	
-    public FiltroPaziente() {}
-	RequestDispatcher dispatcher;
 
-	public void destroy() {}
+  public FiltroPaziente() {
+  }
+  
+  RequestDispatcher dispatcher;
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse res = (HttpServletResponse)response;
-		HttpSession session = req.getSession();
-		
-		if (session.getAttribute("accessDone") != null && 
-			session.getAttribute("isMedico") == null && 
-			session.getAttribute("isPaziente") != null && 
-			session.getAttribute("isAmministratore") == null &&
-			session.getAttribute("utente") != null) {
-			
-			res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
-			return;
-		}
-		chain.doFilter(request, response);
-	}
+  public void destroy() {
+  }
 
-	public void init(FilterConfig fConfig) throws ServletException {}
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
+      throws IOException, ServletException {
+    HttpServletRequest req = (HttpServletRequest)request;
+    HttpServletResponse res = (HttpServletResponse)response;
+    HttpSession session = req.getSession();
+
+    if (session.getAttribute("accessDone") != null 
+        && session.getAttribute("isMedico") == null 
+        && session.getAttribute("isPaziente") != null 
+        && session.getAttribute("isAmministratore") == null 
+        && session.getAttribute("utente") != null) {
+
+      res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
+      return;
+    }
+    chain.doFilter(request, response);
+  }
+
+  public void init(FilterConfig fConfig) throws ServletException {}
 
 }

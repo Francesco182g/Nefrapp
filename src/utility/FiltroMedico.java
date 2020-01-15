@@ -15,40 +15,46 @@ import javax.servlet.http.HttpSession;
 
 
 
-/**Servlet filter che effettua il redirect ad una pagina di errore nel caso in cui un medico
- * cercasse di fare accesso a una risorsa a lui non disponibile
+/**
+ * Servlet filter che effettua il redirect ad una pagina di errore nel caso in cui un medico
+ * cercasse di fare accesso a una risorsa a lui non disponibile.
  * 
  * @author nico
  */
 @WebFilter(urlPatterns = { 
-		"/inserimentoParametriView.jsp", "/resetPasswordView.jsp", "/richiestaResetView.jsp", 
-		"/annunci.jsp", "/listaMediciView.jsp", "/loginAmministratore.jsp", 
-		"/ModificaAccountPazienteView.jsp", "/registraMedico.jsp"})
-//aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso ai medici
+    "/inserimentoParametriView.jsp", "/resetPasswordView.jsp", "/richiestaResetView.jsp", 
+    "/annunci.jsp", "/listaMediciView.jsp", "/loginAmministratore.jsp", 
+    "/ModificaAccountPazienteView.jsp", "/registraMedico.jsp"})
+
+//aggiornare i jsp e le servlet in questa annotazione in caso 
+//servisse garantire/negare l'accesso ai medici
 public class FiltroMedico implements Filter {
-	
-    public FiltroMedico() {}
-	RequestDispatcher dispatcher;
 
-	public void destroy() {}
+  public FiltroMedico() {
+  }
+  
+  RequestDispatcher dispatcher;
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse res = (HttpServletResponse)response;
-		HttpSession session = req.getSession();
-		
-		if (session.getAttribute("accessDone") != null && 
-			session.getAttribute("isMedico") != null && 
-			session.getAttribute("isPaziente") == null && 
-			session.getAttribute("isAmministratore") == null &&
-			session.getAttribute("utente") != null) {
+  public void destroy() {}
 
-			res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
-			return;
-		}
-		chain.doFilter(request, response);
-	}
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
+      throws IOException, ServletException {
+    HttpServletRequest req = (HttpServletRequest)request;
+    HttpServletResponse res = (HttpServletResponse)response;
+    HttpSession session = req.getSession();
 
-	public void init(FilterConfig fConfig) throws ServletException {}
+    if (session.getAttribute("accessDone") != null 
+        &&  session.getAttribute("isMedico") != null 
+        &&  session.getAttribute("isPaziente") == null 
+        && session.getAttribute("isAmministratore") == null 
+        && session.getAttribute("utente") != null) {
+
+      res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
+      return;
+    }
+    chain.doFilter(request, response);
+  }
+
+  public void init(FilterConfig fConfig) throws ServletException {}
 
 }

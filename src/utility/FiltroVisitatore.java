@@ -15,40 +15,50 @@ import javax.servlet.http.HttpSession;
 
 
 
-/**Servlet filter che effettua il redirect ad una pagina di errore nel caso in cui un utente non registrato
+/**
+ * Servlet filter che effettua il redirect ad una pagina di errore 
+ * nel caso in cui un utente non registrato.
  * cercasse di fare accesso a una risorsa protetta
  * 
  * @author nico
  */
 @WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAmministratore", 
-		"/GestioneAnnunci", "/annuncio", "/GestioneMedico", "/GestioneRegistrazione", "/GestionePaziente",
-		"/inserimentoMessaggioView.jsp", "/annuncioView.jsp", "/inserimentoAnnuncioView.jsp", "/inserimentoParametriView.jsp",
-		"/annunci.jsp", "/listaMediciView.jsp", "/listaMessaggiView.jsp", "/listaPazientiView.jsp", "/messaggioView.jsp",
-		"/ModificaAccountMedicoView.jsp", "/ModificaAccountPazienteView.jsp", "/monitoraggioParametriView.jsp", "/profilo.jsp",
-		"/registraMedico.jsp", "/registraPazienteMedico.jsp", "/visualizzaPianoTerapeutico.jsp"})
-//aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare l'accesso a visitatori non loggati
+    "/GestioneAnnunci", "/annuncio", "/GestioneMedico", "/GestioneRegistrazione", "/GestionePaziente",
+    "/inserimentoMessaggioView.jsp", "/annuncioView.jsp", "/inserimentoAnnuncioView.jsp", "/inserimentoParametriView.jsp",
+    "/annunci.jsp", "/listaMediciView.jsp", "/listaMessaggiView.jsp", "/listaPazientiView.jsp", "/messaggioView.jsp",
+    "/ModificaAccountMedicoView.jsp", "/ModificaAccountPazienteView.jsp", "/monitoraggioParametriView.jsp", "/profilo.jsp",
+    "/registraMedico.jsp", "/registraPazienteMedico.jsp", "/visualizzaPianoTerapeutico.jsp"})
+
+//aggiornare i jsp e le servlet in questa annotazione in caso servisse garantire/negare
+//l'accesso a visitatori non loggati
 public class FiltroVisitatore implements Filter {
-	
-    public FiltroVisitatore() {}
-	RequestDispatcher dispatcher;
 
-	public void destroy() {}
+  public FiltroVisitatore() {
+  }
+  
+  RequestDispatcher dispatcher;
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse res = (HttpServletResponse)response;
-		HttpSession session = req.getSession();
-		
-		if (session.getAttribute("accessDone") == null ||
-			(session.getAttribute("isPaziente") == null && session.getAttribute("isMedico") == null && session.getAttribute("isAmministratore")==null) ||
-			session.getAttribute("utente") == null) {
-			
-			res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");			
-			return;
-		}
-		chain.doFilter(request, response);
-	}
+  public void destroy() {
+  }
 
-	public void init(FilterConfig fConfig) throws ServletException {}
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
+      throws IOException, ServletException {
+    HttpServletRequest req = (HttpServletRequest)request;
+    HttpServletResponse res = (HttpServletResponse)response;
+    HttpSession session = req.getSession();
+
+    if (session.getAttribute("accessDone") == null 
+        || (session.getAttribute("isPaziente") == null 
+        && session.getAttribute("isMedico") == null 
+        && session.getAttribute("isAmministratore") == null) 
+        || session.getAttribute("utente") == null) {
+
+      res.sendRedirect("./paginaErrore.jsp?notifica=accessoNegato");
+      return;
+    }
+    chain.doFilter(request, response);
+  }
+
+  public void init(FilterConfig fConfig) throws ServletException {}
 
 }

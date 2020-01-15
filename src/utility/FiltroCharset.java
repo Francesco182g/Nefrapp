@@ -12,32 +12,32 @@ import javax.servlet.annotation.WebFilter;
 
 /**
  * Questa classe è un Filter che forza l'encoding UTF-8 in entrata e uscita dal
- * Container
+ * Container.
  * 
  * @author nico
  *
  */
 @WebFilter(urlPatterns = { "/messaggio", "/parametri", "/piano", "/comunicazione", "/GestioneAccesso", "/annuncio",
-		"/GestioneAmministratore", "/GestioneAnnunci", "/GestioneMedico", "/GestioneRegistrazione" })
+    "/GestioneAmministratore", "/GestioneAnnunci", "/GestioneMedico", "/GestioneRegistrazione" })
 public class FiltroCharset implements Filter {
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
-			throws IOException, ServletException {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		next.doFilter(request, response);
-	}
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
+      throws IOException, ServletException {
+    request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html; charset=UTF-8");
+    response.setCharacterEncoding("UTF-8");
+    next.doFilter(request, response);
+  }
 
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
+  @Override
+  public void destroy() {
+    // TODO Auto-generated method stub
 
-	}
+  }
 
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
+  @Override
+  public void init(FilterConfig arg0) throws ServletException {
+    // TODO Auto-generated method stub
 
-	}
+  }
 }
