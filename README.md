@@ -11,11 +11,11 @@ L'installazione del sistema è disponibile qui: [Nefrapp Manuale di Installazion
 La guida all'uso del sistema è disponibile qui: [Nefrapp Manuale Utente](https://github.com/Francesco182g/Nefrapp/blob/master/Documentazione%20di%20Progetto/Nefrapp_MU_Vers.0.2.pdf)
 
 
-## Authors
+## Autori
 
 Visualizza la lista dei [contributors](https://github.com/Francesco182g/Nefrapp/graphs/contributors) per conoscere chi ha lavorato al progetto.
 
-## License
+## Licenza
 
 N/D
 
