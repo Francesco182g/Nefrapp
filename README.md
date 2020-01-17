@@ -1,12 +1,30 @@
-# Nefrapp
+# Nefrapp - Progetto_GPS_IS
 
-TODO:
-- Creare una dashboard per i visitatori non autenticati.
-- Spostare l'hashing della password in frontend.
+Nefrapp è un'applicazione per la gestione tra medici e pazienti in ambito nefrologico ed in particolare per il sostegno e la comunicazione medico-paziente inerente la dialisi peritoneale.
 
-Glossario delle nuove variabili di sessione:
-- ${isPaziente}, ${isMedico}, ${isAmministratore} sono boolean settati a true quando un utente della corrispondente categoria ha effettuato l'accesso al sito.
-- ${accessDone} è un boolean settato a true quando un utente qualsiasi ha effettuato l'accesso al sito.
-- ${utente} è un bean Utente contenente le informazioni che modellano l'utente attualmente in sessione.
+Il progetto è stato creato come prova didattica per gli esami di:
+* Gestione dei Progetti Software
+* Ingegneria del Software
 
-Non è necessario e ripeto NON È NECESSARIO dichiararare tali variabili nelle jsp, in quanto sono dichiarate in header e sidebar, e tutte le altre pagine le includono. Usatele soltanto, i nomi dovrebbero essere abbastanza intuitivi da ricordarli e non doverli ripescare dalla sessione.
+
+
+## Getting Started
+
+L'installazione del sistema è disponibile qui: [Nefrapp Manuale di Installazione](https://github.com/Francesco182g/Nefrapp/blob/master/Documentazione%20di%20Progetto/Nefrapp_MI_Vers.0.1%20.pdf)
+
+### Guida all'uso
+
+La guida all'uso del sistema è disponibile qui: [Nefrapp Manuale Utente](https://github.com/Francesco182g/Nefrapp/blob/master/Documentazione%20di%20Progetto/Nefrapp_MU_Vers.0.2.pdf)
+
+
+## Autori
+
+Visualizza la lista dei [contributors](https://github.com/Francesco182g/Nefrapp/graphs/contributors) per conoscere chi ha lavorato al progetto.
+
+## Licenza
+
+N/D
+
+## Acknowledgments
+
+* Progetto open-source

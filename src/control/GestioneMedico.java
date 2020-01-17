@@ -174,8 +174,8 @@ public class GestioneMedico extends HttpServlet {
 
       if (medico != null) {
 
-        if ((!email.equals(medico.getEmail())) && (MedicoModel
-            .getMedicoByEmail(email) != null)) {
+        if (!email.equals(medico.getEmail()) && MedicoModel
+            .checkEmail(email)) {
           response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=EmailGi�InUso");
           return;
         }
