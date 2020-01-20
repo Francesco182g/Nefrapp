@@ -1,9 +1,9 @@
-#Nefrapp - Progetto_GPS_IS
+# Nefrapp - Progetto_GPS_IS
 
 Nefrapp è un'applicazione per la gestione tra medici e pazienti in ambito nefrologico ed in particolare per il sostegno e la comunicazione medico-paziente inerente la dialisi peritoneale.
 
 Il progetto è stato creato come prova didattica per gli esami di:
-* Gestione dei Progett#i Software
+* Gestione dei Progetti Software
 * Ingegneria del Software
 
 
