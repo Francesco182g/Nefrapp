@@ -27,7 +27,7 @@ public class GestioneResetPassword extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private RequestDispatcher dispatcher;
 
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
       if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
@@ -87,7 +87,7 @@ public class GestioneResetPassword extends HttpServlet {
     return;
   }
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doPost(request, response);
     return;

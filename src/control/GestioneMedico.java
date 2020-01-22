@@ -34,7 +34,7 @@ public class GestioneMedico extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private RequestDispatcher dispatcher;
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
       String operazione = request.getParameter("operazione");
