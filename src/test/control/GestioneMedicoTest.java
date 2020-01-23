@@ -104,14 +104,14 @@ class GestioneMedicoTest {
 	    assertEquals("./login.jsp?notifica=accountDisattivato", response.getRedirectedUrl());	
 	  }
 	  
-	  /*
+	  
 	  @Test
 	  void testVisualizzaPazientiSeguiti() throws ServletException, IOException {
 		  request.setParameter("operazione", "VisualizzaPazientiSeguiti");
 		  request.setParameter("tipo", "sincrona");
 		  servlet.doGet(request, response);
 		  assertEquals("/listaPazientiView.jsp", response.getForwardedUrl());
-	  }*/
+	  }
 	  
 	  @Test
 	  void testOperazioneNonValida() throws ServletException, IOException {
@@ -146,8 +146,4 @@ class GestioneMedicoTest {
 		  servlet.doGet(request, response);
 		  assertEquals("/paginaErrore.jsp", response.getForwardedUrl());
 	  }
-	  
-	  
-	
-
 }

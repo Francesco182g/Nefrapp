@@ -734,6 +734,46 @@ class GestioneAmministratoreTest {
   }
   
   @Test
+  void TestModificaAccountPazienteSenzaPassword() throws ServletException, IOException {
+    request.setParameter("operazione", "modifica");
+    request.setParameter("codiceFiscale","BNCDNC67A01F205I");
+    request.setParameter("tipoUtente", "paziente");
+    request.setParameter("nome", "Alfredo");
+    request.setParameter("cognome","Rossi");
+    request.setParameter("sesso","M");
+    request.setParameter("dataDiNascita","30/12/1965");
+    request.setParameter("luogoDiNascita","Salerno");
+    request.setParameter("email","A.Rossi16@gmail.com");
+    request.setParameter("residenza","Via Roma, 22, Salerno, 84132, SA");
+    request.setParameter("password","");
+    request.setParameter("confermaPsw","");
+
+    servlet.doPost(request, response);
+
+    assertEquals("./dashboard.jsp?notifica=ModificaPazRiuscita",response.getRedirectedUrl());
+  }
+  
+  @Test
+  void TestModificaAccountMedicoSenzaPassword() throws ServletException, IOException {
+    request.setParameter("operazione", "modifica");
+    request.setParameter("codiceFiscale","GRMBNN67L11B516R");
+    request.setParameter("tipoUtente", "medico");
+    request.setParameter("nome", "Gianni");
+    request.setParameter("cognome","Brazof");
+    request.setParameter("sesso","M");
+    request.setParameter("dataDiNascita","10/10/1952");
+    request.setParameter("luogoDiNascita","Milano");
+    request.setParameter("email","b.gianni@gmail.com");
+    request.setParameter("residenza","Via Rafastia, 22, Salerno, 84132, SA");
+    request.setParameter("password","");
+    request.setParameter("confermaPsw","");
+
+    servlet.doPost(request, response);
+
+    assertEquals("./dashboard.jsp?notifica=ModificaMedRiuscita",response.getRedirectedUrl());
+  }
+  
+  @Test
   void TC_GA_8_1_ModificaAccountMedico() throws ServletException, IOException {
     request.setParameter("operazione", "modifica");
     request.setParameter("codiceFiscale","GRMBNN67L11B516R");

@@ -104,6 +104,7 @@ public class GestioneResetPassword extends HttpServlet {
   private void identificaRichiedente(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
     String codiceFiscale = request.getParameter("codiceFiscale");
+    System.out.println(codiceFiscale);
     // controlla se esiste il CF nel database (che sia paziente o medico)
     Utente utente = UtenteModel.getUtenteByCF(codiceFiscale);
     if (utente != null) {

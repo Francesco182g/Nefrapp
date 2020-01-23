@@ -100,31 +100,57 @@ class GestioneResetPasswordTest {
 	  @Test
 	  void testRichiedenteMedico() throws ServletException, IOException {
 		    request.setParameter("operazione", "identificaRichiedente");
-		    servlet.doPost(request, response);
-		    
 		    request.setParameter("codiceFiscale", "GRMBNN67L11B519R");
-		    
+		    servlet.doPost(request, response);
 		    assertEquals("./dashboard.jsp?notifica=identificazioneSuccesso", response.getRedirectedUrl());
 	  }
 	  
 	  @Test
 	  void testRichiedentePaziente() throws ServletException, IOException {
 		    request.setParameter("operazione", "identificaRichiedente");
-		    servlet.doGet(request, response);
-		    
 		    request.setParameter("codiceFiscale", "BNCDNC67A01F205I");
-		    
+		    servlet.doGet(request, response);
 		    assertEquals("./dashboard.jsp?notifica=identificazioneSuccesso", response.getRedirectedUrl());
 	  }
 	  
 	  @Test
 	  void testRichiedenteInesistente() throws ServletException, IOException {
 		    request.setParameter("operazione", "identificaRichiedente");
-		    servlet.doGet(request, response);
-		    
 		    request.setParameter("codiceFiscale", "BNCCCC67A01F205I");
-		    
+		    servlet.doGet(request, response);
 		    assertEquals("./richiestaResetView.jsp?notifica=CFnonPresente", response.getRedirectedUrl());
 	  }
-
+	  
+	  @Test
+	  void testResetMedico() throws ServletException, IOException {
+		  request.setParameter("operazione", "reset");
+		  request.setParameter("email", "G.Bernini67@gmail.com");
+		  request.setParameter("codiceFiscale", "GRMBNN67L11B519R");
+		  request.setParameter("password", "Quadri12");
+		  request.setParameter("confermaPsw", "Quadri12");
+		  servlet.doGet(request, response);
+		  assertEquals("./dashboard.jsp?notifica=resetSuccesso", response.getRedirectedUrl());
+	  }
+	  
+	  @Test
+	  void testResetMedicoEmailErrata() throws ServletException, IOException {
+		  request.setParameter("operazione", "reset");
+		  request.setParameter("email", "G.Xernini67@gmail.com");
+		  request.setParameter("codiceFiscale", "GRMBNN67L11B519R");
+		  request.setParameter("password", "Quadri12");
+		  request.setParameter("confermaPsw", "Quadri12");
+		  servlet.doGet(request, response);
+		  assertEquals("./resetPasswordView.jsp?notifica=datiErrati", response.getRedirectedUrl());
+	  }
+	  
+	  @Test
+	  void testResetMedicoDatiErrati() throws ServletException, IOException {
+		  request.setParameter("operazione", "reset");
+		  request.setParameter("email", "G.Xernini67@gmail.com");
+		  request.setParameter("codiceFiscale", "G9MBNN67L11B519R");
+		  request.setParameter("password", "Quadri12");
+		  request.setParameter("confermaPsw", "Quadri12");
+		  servlet.doGet(request, response);
+		  assertEquals("./paginaErrore.jsp?notifica=datiErrati", response.getRedirectedUrl());
+	  }
 }
