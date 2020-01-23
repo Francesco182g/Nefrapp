@@ -124,7 +124,6 @@ public class AnnuncioModel {
   public static void updateAnnuncio(Annuncio daAggiornare) {
     if (daAggiornare == null || daAggiornare.getIdAnnuncio() == null 
         || daAggiornare.getIdAnnuncio() == "") {
-      System.out.println("updateAnnuncio: l'annuncio che stai cercando di aggiornare non ha un id valido");
       return;
     }
 

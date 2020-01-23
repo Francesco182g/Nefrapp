@@ -209,7 +209,6 @@ public class GestioneComunicazione extends HttpServlet {
           }
 
         } catch (Exception e) {
-          System.out.println("caricaAllegato: errore nel caricamento del file");
           request.setAttribute("erroreCaricamento", true);
           e.printStackTrace();
           return;
@@ -223,7 +222,6 @@ public class GestioneComunicazione extends HttpServlet {
         return;
       }
     } catch (Exception e) {
-      System.out.println("caricaAllegato: errore nel caricamento dell'allegato");
       e.printStackTrace();
       request.setAttribute("erroreCaricamento", true);
       return;

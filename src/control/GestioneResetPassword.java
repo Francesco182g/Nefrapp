@@ -30,13 +30,6 @@ public class GestioneResetPassword extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
-      if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-        request.setAttribute("notifica", "Errore generato dalla richiesta!");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp"); 
-        dispatcher.forward(request, response);
-        return;
-      }
-      
       String operazione = request.getParameter("operazione");
 
       if (operazione == null) {
@@ -104,7 +97,6 @@ public class GestioneResetPassword extends HttpServlet {
   private void identificaRichiedente(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
     String codiceFiscale = request.getParameter("codiceFiscale");
-    System.out.println(codiceFiscale);
     // controlla se esiste il CF nel database (che sia paziente o medico)
     Utente utente = UtenteModel.getUtenteByCF(codiceFiscale);
     if (utente != null) {
@@ -124,7 +116,6 @@ public class GestioneResetPassword extends HttpServlet {
         return;
       }
     } else { 
-      System.out.println("identificaRichiedente: il CF inserito non è nel DB");
       response.sendRedirect("./richiestaResetView.jsp?notifica=CFnonPresente");
       //notifica già implementata
       return;
@@ -176,14 +167,9 @@ public class GestioneResetPassword extends HttpServlet {
     String password = request.getParameter("password");
     String confermaPsw = request.getParameter("confermaPsw");
 
-    System.out.println("email " + email);
-    System.out.println(codiceFiscale);
-
     if (validaReset(email, codiceFiscale, password, confermaPsw)) {
       Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
-      System.out.println(medico);
       if (medico.getEmail().equals(email)) {
-        System.out.println("Email corrisponde");
         MedicoModel.updatePasswordMedico(codiceFiscale, password);
         return;
       } else {
@@ -196,7 +182,6 @@ public class GestioneResetPassword extends HttpServlet {
         return;
       }
     } else {
-      System.out.println("effettuaReset: i dati inseriti nella richiesta di reset non sono validi");
       response.sendRedirect("./paginaErrore.jsp?notifica=datiErrati");
       //come sopra
       return;

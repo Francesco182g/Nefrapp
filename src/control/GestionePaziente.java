@@ -44,13 +44,6 @@ public class GestionePaziente extends HttpServlet {
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
-      if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-        request.setAttribute("notification", "Errore generato dalla richiesta!");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./dashboard.jsp");
-        dispatcher.forward(request, response);
-        return;
-      }	
-
       String operazione = request.getParameter("operazione");
 
       if (operazione.equals("visualizzaProfilo")) {
@@ -155,7 +148,6 @@ public class GestionePaziente extends HttpServlet {
 
 
       } else {
-        System.out.println("modificaDatiPersonali: Paziente non trovato");
         request.setAttribute("notifica", "Non è stato trovato il paziente da aggiornare");
       }
     } else {

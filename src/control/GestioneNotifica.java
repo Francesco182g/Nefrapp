@@ -66,10 +66,7 @@ public class GestioneNotifica extends HttpServlet {
         int nm = MessaggioModel.countMessaggiNonLetti(utente.getCodiceFiscale());
         session.setAttribute("notificheMessaggi", nm);
       }
-    } else {
-      System.out.println("L'utente deve essere loggato");
-
-    }
+    } 
   }
 
   /**

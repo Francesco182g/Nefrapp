@@ -201,7 +201,6 @@ public class GestioneAnnunci extends GestioneComunicazione {
       Medico medico = (Medico) session.getAttribute("utente");
       ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
       annunci = AnnuncioModel.getAnnunciByCFMedico(medico.getCodiceFiscale());
-      System.out.println(annunci);
 
       if (!annunci.isEmpty()) {
         for (Annuncio a : annunci) {

@@ -153,7 +153,6 @@ public class MessaggioModel {
   public static void updateMessaggio(Messaggio daAggiornare) {
 
     if (daAggiornare.getIdMessaggio() == null || daAggiornare.getIdMessaggio() == "") {
-      System.out.println("updateAnnuncio: il messaggio che stai cercando di aggiornare non ha un id valido");
       return;
     }
 
