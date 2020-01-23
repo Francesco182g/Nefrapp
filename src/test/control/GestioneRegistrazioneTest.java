@@ -26,6 +26,7 @@ import com.mongodb.client.MongoCollection;
 
 import bean.Medico;
 import bean.Utente;
+import bean.Amministratore;
 import control.GestioneRegistrazione;
 import model.DriverConnection;
 import model.PazienteModel;
@@ -37,11 +38,15 @@ class GestioneRegistrazioneTest {
   private MockHttpServletResponse response;
   private MockHttpSession session;
   private static Utente medico;
+  private static Utente amministratore;
 
   @BeforeEach
   void setUpBeforeClass() throws Exception {
     medico = new Medico("M", "Via Roma, 22, Scafati, 80030, NA", LocalDate.parse("1967-07-11"), 
         "GRMBNN67L11B519R", "Geremia", "Bernini", "G.Bernini67@gmail.com", "Campobasso");
+    
+    amministratore = new Amministratore("SNSNCL92D19I483U", "Nicola", "Sansone", "nico.sansone@live.it");
+    
     ArrayList<String> medici = new ArrayList<String>(Arrays.asList("SPSGPP67S09I483T"));
 
     MongoCollection<Document> paziente = DriverConnection.getConnection().getCollection("Paziente");
@@ -57,7 +62,21 @@ class GestioneRegistrazioneTest {
         .append("Email", "G.Russo67@gmail.com")
         .append("Attivo", true)
         .append("Medici", medici);
-    paziente.insertOne(doc);	
+    paziente.insertOne(doc);
+    
+    MongoCollection<Document> medicoo = DriverConnection.getConnection().getCollection("Medico");
+
+    doc = new Document("CodiceFiscale", "XXMBNN67L11B519R")
+        .append("Nome", "Geremia")
+        .append("Cognome", "Bernini")
+        .append("Password", "Quadri1234")
+        .append("DataDiNascita", LocalDate.parse("1967-09-11"))
+        .append("Sesso", "M")
+        .append("Residenza", "Via Italia, 22, Battipaglia, 84091, SA")
+        .append("LuogoDiNascita", "Scafati")
+        .append("Email", "G.Bernini67@gmail.com");
+    medicoo.insertOne(doc);	
+
   }
 
   @BeforeEach
@@ -74,6 +93,8 @@ class GestioneRegistrazioneTest {
   void tearDown() throws Exception {
     //eliminazione account registrato
     MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+    MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
+    
     BasicDBObject document = new BasicDBObject();
 
     document.put("CodiceFiscale", "RSSGPP67S09I483T");
@@ -81,6 +102,12 @@ class GestioneRegistrazioneTest {
 
     document.put("CodiceFiscale", "RSSGPP79E16I483P");
     pazienti.deleteOne(document);
+    
+    document.put("CodiceFiscale", "GRMBNN67L11B519R");
+    medici.deleteOne(document);
+    
+    document.put("CodiceFiscale", "XXMBNN67L11B519R");
+    medici.deleteOne(document);
   }
 
   @Test
@@ -623,4 +650,78 @@ class GestioneRegistrazioneTest {
 
     assertEquals("./dashboard.jsp?regPazOk", response.getRedirectedUrl());
   }
+  
+  @Test
+  void TestRegistrazioneMedico() throws ServletException, IOException{
+    request.setParameter("operazione", "registraMedico");
+    request.setParameter("codiceFiscale", "GRMBNN67L11B519R"); 
+    request.setParameter("nome", "Geremia");
+    request.setParameter("cognome", "Bernini");
+    request.setParameter("sesso", "M");
+    request.setParameter("dataDiNascita", "11/07/1967");
+    request.setParameter("luogoDiNascita", "Scafati");
+    request.setParameter("email", "G.Bernini67@live.it");
+    request.setParameter("residenza", "Via Mazzini, 22, Bellizzi, 84092, SA");
+    request.setParameter("password", "Quadri1234");
+    
+    session.setAttribute("utente", amministratore);
+    request.setSession(session);
+
+    servlet.doGet(request, response);
+
+    assertEquals("./registraMedico.jsp?notifica=registrato", response.getRedirectedUrl());
+  }
+  
+  @Test
+  void TestRegistrazioneMedicoPresente() throws ServletException, IOException{
+    request.setParameter("operazione", "registraMedico");
+    request.setParameter("codiceFiscale", "XXMBNN67L11B519R"); 
+    request.setParameter("nome", "Geremia");
+    request.setParameter("cognome", "Bernini");
+    request.setParameter("sesso", "M");
+    request.setParameter("dataDiNascita", "11/07/1967");
+    request.setParameter("luogoDiNascita", "Scafati");
+    request.setParameter("email", "G.Bernini67@live.it");
+    request.setParameter("residenza", "Via Mazzini, 22, Bellizzi, 84092, SA");
+    request.setParameter("password", "Quadri1234");
+    
+    session.setAttribute("utente", amministratore);
+    request.setSession(session);
+
+    servlet.doGet(request, response);
+
+    assertEquals("./registraMedico.jsp?notifica=presente", response.getRedirectedUrl());
+  }
+  
+  @Test
+  void TestRegistrazioneMedicoDatiErrati() throws ServletException, IOException{
+    request.setParameter("operazione", "registraMedico");
+    request.setParameter("codiceFiscale", "99MBNN67L11B519R"); 
+    request.setParameter("nome", "Geremia");
+    request.setParameter("cognome", "Bernini");
+    request.setParameter("sesso", "M");
+    request.setParameter("dataDiNascita", "11/07/1967");
+    request.setParameter("luogoDiNascita", "Scafati");
+    request.setParameter("email", "G.Bernini67@live.it");
+    request.setParameter("residenza", "Via Mazzini, 22, Bellizzi, 84092, SA");
+    request.setParameter("password", "Quadri1234");
+    
+    session.setAttribute("utente", amministratore);
+    request.setSession(session);
+
+    servlet.doGet(request, response);
+
+    assertEquals("./registraMedico.jsp?notifica=ParamErr", response.getRedirectedUrl());
+  }
+  
+  @Test
+  void TestRegistrazionePazientePresente() throws ServletException, IOException{
+    request.setParameter("operazione", "registraPazienteMedico");
+    request.setParameter("registrato", "Si");
+    request.setParameter("codiceFiscale", "RSSGPP67S09I483T"); 
+    servlet.doGet(request, response);
+    assertEquals("./dashboard.jsp", response.getRedirectedUrl());
+  }
+  
+  
 }
