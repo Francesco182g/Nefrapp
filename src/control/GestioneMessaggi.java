@@ -177,9 +177,7 @@ public class GestioneMessaggi extends GestioneComunicazione {
 
         }
       }
-    } else {
-      System.out.println("L'utente deve essere loggato");
-    }
+    } 
   }
 
   /**

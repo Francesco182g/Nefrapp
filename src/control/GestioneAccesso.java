@@ -45,13 +45,6 @@ public class GestioneAccesso extends HttpServlet {
     // Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona
     // ok)
     try {
-      if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-        request.setAttribute("notifica", "Errore generato dalla richiesta!");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
-        dispatcher.forward(request, response);
-        return;
-      }
-
       String operazione = request.getParameter("operazione");
 
       HttpSession session = request.getSession();
@@ -164,13 +157,11 @@ public class GestioneAccesso extends HttpServlet {
 
         else if (utente == null) {
           session.setAttribute("accessDone", false);
-          System.out.println("loginUtente: la combinazione CF-password non è stata trovata");
           response.sendRedirect("./login.jsp?notifica=datiLoginErrati");
           return;
         }
         else if (paziente.getAttivo() == false) {
           session.setAttribute("accessDone", false);
-          System.out.println("loginUtente: l'account del paziente è disattivato");
           response.sendRedirect("./login.jsp?notifica=accountDisattivo");
           return;
         }

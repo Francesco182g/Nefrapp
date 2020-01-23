@@ -246,45 +246,45 @@ public class GestioneMedico extends HttpServlet {
 
     if (!Pattern.matches(expCodiceFiscale, codiceFiscale) || codiceFiscale.length() != 16) {
       valido = false;
-      System.out.println("1");
     }
 
     if (!Pattern.matches(expNome, nome) || nome.length() < 2 || nome.length() > 30) {
       valido = false;
-      System.out.println("2");
     }
-    if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30)
-      valido = false;
+    
+    if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30) {
+    	valido = false;
+    }
+    
     if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20) {
       valido = false;
-      System.out.println("3");
     }
+    
     if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1) {
       valido = false;
-      System.out.println("4");
     }
+    
     if (!Pattern.matches(expEmail, email)) {
       valido = false;
-      System.out.println("5");
     }
+    
     if (!residenza.equals(""))
       if (!Pattern.matches(expResidenza, residenza)) {
         valido = false;
-        System.out.println("6");
       }
+    
     if (!luogoDiNascita.equals(""))
       if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita)) {
         valido = false;
-        System.out.println("7");
       }
+    
     if (!dataDiNascita.equals(""))
       if (!Pattern.matches(expDataDiNascita, dataDiNascita)) {
         valido = false;
-        System.out.println("8");
       }
+    
     if (!confermaPsw.equals(password)) {
       valido = false;
-      System.out.println("9");
     }
 
     return valido;

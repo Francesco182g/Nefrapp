@@ -34,14 +34,6 @@ public class GestioneParametri extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     try {
-      if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-        request.setAttribute("notifica", "Errore generato dalla richiesta!");
-        RequestDispatcher dispatcher = 
-            getServletContext().getRequestDispatcher("/paginaErrore.jsp"); 
-        dispatcher.forward(request, response);
-        return;
-      } 
-
       String operazione = request.getParameter("operazione");
 
       if (operazione.equals("inserisciScheda")) {
@@ -108,14 +100,8 @@ public class GestioneParametri extends HttpServlet {
     }
     else if (session.getAttribute("isMedico") != null 
         && (boolean)session.getAttribute("isMedico") == true) {
-      System.out.println(request.getParameter("CFPaziente"));
       scheda = SchedaParametriModel.getSchedeParametriByCF(request.getParameter("CFPaziente"));
     }
-    else {
-
-      System.out.println("Utente deve esssere loggato");
-    }
-
     request.setAttribute("schedaParametri", scheda);
   }
 
@@ -168,7 +154,6 @@ public class GestioneParametri extends HttpServlet {
       newScarico = Integer.parseInt(scarico);
       newCarico = Integer.parseInt(carico);
     } catch (NumberFormatException n) {
-      System.out.println("InserisciParametri: Errore nel parsing dei dati passati");
       response.sendRedirect("./inserimentoParametriView.jsp?notifica=schedaNonInserita");
       return;
     }
@@ -255,7 +240,6 @@ public class GestioneParametri extends HttpServlet {
             + scheda.getUF());
       }
     } catch (Exception e) {
-      System.out.println("Errore in gestione parametri:");
       e.printStackTrace();
     }
 

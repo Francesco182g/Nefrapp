@@ -51,13 +51,6 @@ public class GestioneRegistrazione extends HttpServlet {
       throws ServletException, IOException {
 
     try {
-      if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-        request.setAttribute("notifica", "Errore generato dalla richiesta!");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("");
-        dispatcher.forward(request, response);
-        return;
-      }
-
       HttpSession session = request.getSession();
       String operazione = request.getParameter("operazione");
       if (operazione.equals("registraMedico")) {
@@ -140,7 +133,6 @@ public class GestioneRegistrazione extends HttpServlet {
         }
         password = CriptazioneUtility.criptaConMD5(password);
         MedicoModel.addMedico(medico, password);
-        System.out.println("medico registrato");
         response.sendRedirect("./registraMedico.jsp?notifica=registrato");
       } else {
         response.sendRedirect("./registraMedico.jsp?notifica=presente");
