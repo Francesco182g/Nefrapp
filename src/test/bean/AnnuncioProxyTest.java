@@ -103,10 +103,11 @@ public class AnnuncioProxyTest {
 
   @Test
   void testGetData() {
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     AnnuncioProxy annuncioProxy = new AnnuncioProxy("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.",
         nomeAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")),annuncioProxy.getData());
+    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatter).toString(),annuncioProxy.getDataFormattata());
   }
 
   @Test

@@ -110,7 +110,7 @@ public class GestioneMedico extends HttpServlet {
     }
   }
 
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doGet(request, response);
     return;
@@ -176,7 +176,7 @@ public class GestioneMedico extends HttpServlet {
 
         if (!email.equals(medico.getEmail()) && MedicoModel
             .checkEmail(email)) {
-          response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=EmailGi�InUso");
+          response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=EmailGiaInUso");
           return;
         }
 
@@ -202,12 +202,12 @@ public class GestioneMedico extends HttpServlet {
         response.sendRedirect("./profilo.jsp?notifica=modificaEffettuata");
 
       } else {
-        request.setAttribute("notifica", "Non � stato trovato il medico da aggiornare");
+        request.setAttribute("notifica", "Non e' stato trovato il medico da aggiornare");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("./dashboard.jsp");
         requestDispatcher.forward(request, response);
       }
     } else {
-      request.setAttribute("notifica", "Uno o pi� parametri del medico non sono validi.");
+      request.setAttribute("notifica", "Uno o piu' parametri del medico non sono validi.");
       RequestDispatcher requestDispatcher = 
           request.getRequestDispatcher("./ModificaAccountMedicoView.jsp");
       requestDispatcher.forward(request, response);
