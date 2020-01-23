@@ -1,11 +1,13 @@
 package test.control;
 
 import static com.mongodb.client.model.Filters.eq;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -49,9 +51,10 @@ public class GestioneAnnunciTest {
   private static Annuncio annuncio;
   private static Medico medico;
   private static Paziente paziente;
+  private static String nomeAllegato = "bG9yZW0taXBzdW0uanBn";
+  private static String corpoAllegato = "CWFubnVuY2lvLnNldENvcnBvQWxsZWdhdG8oIkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0LCBjb25zZWN0ZXR1ciBhZGlwaXNjaW5nIGVsaXQsIHNlZCBkbyBlaXVzbW9kIHRlbXBvciBpbmNpZGlkdW50IHV0IGxhYm9yZSBldCBkb2xvcmUgbWFnbmEgYWxpcXVhLiBVdCBlbmltIGFkIG1pbmltIHZlbmlhbSwgcXVpcyBub3N0cnVkIGV4ZXJjaXRhdGlvbiB1bGxhbWNvIGxhYm9yaXMgbmlzaSB1dCBhbGlxdWlwIGV4IGVhIGNvbW1vZG8gY29uc2VxdWF0LiBEdWlzIGF1dGUgaXJ1cmUgZG9sb3IgaW4gcmVwcmVoZW5kZXJpdCBpbiB2b2x1cHRhdGUgdmVsaXQgZXNzZSBjaWxsdW0gZG9sb3JlIGV1IGZ1Z2lhdCBudWxsYSBwYXJpYXR1ci4gRXhjZXB0ZXVyIHNpbnQgb2NjYWVjYXQgY3VwaWRhdGF0IG5vbiBwcm9pZGVudCwgc3VudCBpbiBjdWxwYSBxdWkgb2ZmaWNpYSBkZXNlcnVudCBtb2xsaXQgYW5pbSBpZCBlc3QgbGFib3J1bS4iKTsK";
   private static String titolo = "Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.";
   private static String testo = "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.";
-  private static String nomeAllegato="dialisi-peritoneale.pdf";
   private static String CFMedico = "GRMBNN67L11B516R";
   private static String CFPaziente1 = "BNCLRD67A01F205I";
   private static HashMap<String, Boolean> destinatari;
@@ -101,7 +104,7 @@ public class GestioneAnnunciTest {
 
     destinatari = new HashMap<String, Boolean>();
     destinatari.put(CFPaziente1, false);
-    annuncio=new AnnuncioCompleto(CFMedico,titolo,testo,null,null,ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatari);
+    annuncio=new AnnuncioCompleto(CFMedico,titolo,testo,nomeAllegato,corpoAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatari);
 
     MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
     ArrayList<Document> destinatariView = new ArrayList<Document>();
@@ -148,6 +151,13 @@ public class GestioneAnnunciTest {
   @Test
   void testAnnuncioSenzaOperazione() throws ServletException, IOException {
     servlet.doGet(request, response);
+    assertEquals("./paginaErrore.jsp?notifica=noOperazione", response.getRedirectedUrl());
+  }
+  
+  @Test
+  void testAnnuncioOperazioneInvalida() throws ServletException, IOException {
+	request.setParameter("operazione", "operazioneInvalida");
+	servlet.doGet(request, response);
     assertEquals("./paginaErrore.jsp?notifica=noOperazione", response.getRedirectedUrl());
   }
 
@@ -287,6 +297,82 @@ public class GestioneAnnunciTest {
 
     assertEquals(annunciP.toString(), request.getAttribute("annunci").toString());
   }
+  
+  @Test
+  void LetturaAnnunciMedico() throws ServletException, IOException {
+    request.getSession().setAttribute("utente", medico);
+    request.getSession().setAttribute("isMedico", true);
+    request.getSession().setAttribute("accessDone", true);
+
+    ArrayList<AnnuncioProxy> annunciP = new ArrayList<>();
+
+    Annuncio secondoAnnuncio = new AnnuncioCompleto(CFMedico,titolo,testo,null,null,ZonedDateTime.now(ZoneId.of("Europe/Rome")), annuncio.getPazientiView());
+    MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
+    ArrayList<Document> destinatariView = new ArrayList<Document>();
+    Iterator it = secondoAnnuncio.getPazientiView().entrySet().iterator();
+
+    if (!it.hasNext()) {
+      Document coppia = new Document();
+      coppia.append("CFDestinatario", null).append("Visualizzazione", false);
+      destinatariView.add(coppia);
+    } else {
+      while (it.hasNext()) {
+        Map.Entry pair = (Map.Entry) it.next();
+        Document coppia = new Document();
+        coppia.append("CFDestinatario", pair.getKey()).append("Visualizzazione", pair.getValue());
+        destinatariView.add(coppia);
+      }
+    }
+
+    Document allegato = new Document("NomeAllegato", secondoAnnuncio.getNomeAllegato()).append("CorpoAllegato",
+        secondoAnnuncio.getCorpoAllegato());
+
+
+    Document doc = new Document("MedicoCodiceFiscale", secondoAnnuncio.getMedico())
+        .append("Titolo", secondoAnnuncio.getTitolo()).append("Testo", secondoAnnuncio.getTesto())
+        .append("Allegato", allegato).append("Data", secondoAnnuncio.getData().toInstant())
+        .append("PazientiView", destinatariView);
+    annunci.insertOne(doc);
+
+    ObjectId idObj = (ObjectId)doc.get("_id");
+    secondoAnnuncio.setIdAnnuncio(idObj.toString());
+
+    AnnuncioProxy primo = new AnnuncioProxy(annuncio.getMedico(), annuncio.getTitolo(),annuncio.getTesto(),annuncio.getNomeAllegato(),
+        annuncio.getData(), annuncio.getPazientiView());
+    AnnuncioProxy secondo = new AnnuncioProxy(secondoAnnuncio.getMedico(), secondoAnnuncio.getTitolo(),secondoAnnuncio.getTesto(),secondoAnnuncio.getNomeAllegato(),
+        secondoAnnuncio.getData(), secondoAnnuncio.getPazientiView());
+    primo.setIdAnnuncio(annuncio.getIdAnnuncio());
+    secondo.setIdAnnuncio(secondoAnnuncio.getIdAnnuncio());
+    //a questo punto non ha ancora settato la visualizzazione
+    primo.setVisualizzato(null);
+    secondo.setVisualizzato(null);
+    //l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
+    //perché nel mostrare la lista il model sceglie prima i messaggi più recenti
+
+    annunciP.add(secondo);
+    annunciP.add(primo);	
+
+    request.setParameter("operazione", "visualizzaPersonali");
+    servlet.doGet(request, response);
+
+    assertEquals(annunciP.toString(), request.getAttribute("annunci").toString());
+  }
+  
+  @Test
+  void LetturaAnnunciListaVuota() throws Exception {
+	  
+	tearDown();
+    request.getSession().setAttribute("utente", medico);
+    request.getSession().setAttribute("isMedico", true);
+    request.getSession().setAttribute("accessDone", true);
+
+    ArrayList<AnnuncioProxy> annunciP = new ArrayList<>();
+
+    request.setParameter("operazione", "visualizzaPersonali");
+    servlet.doGet(request, response);
+
+    assertEquals(annunciP.toString(), request.getAttribute("annunci").toString());
+  }
 
   @Test
   void testCaricaDestinatariAnnuncio() throws ServletException, IOException {
@@ -318,5 +404,48 @@ public class GestioneAnnunciTest {
     assertNull(MessaggioModel.getMessaggioById(annuncio.getIdAnnuncio()));
   }
 
+  @Test
+  void testRimuoviAnnuncio() throws ServletException, IOException {
+    request.getSession().setAttribute("utente", medico);
+    request.getSession().setAttribute("isMedico", true);
+    request.getSession().setAttribute("accessDone", true);
+    request.setParameter("id",annuncio.getIdAnnuncio());
+
+    request.setParameter("operazione", "rimuoviAnnuncio");
+    servlet.doGet(request, response);
+
+    assertNull(MessaggioModel.getMessaggioById(annuncio.getIdAnnuncio()));
+  }
+  
+  @Test
+  void testRimuoviAnnuncioIncompleto() throws ServletException, IOException {
+	annuncio.setMedico(null);
+    request.getSession().setAttribute("utente", medico);
+    request.getSession().setAttribute("isMedico", true);
+    request.getSession().setAttribute("accessDone", true);
+    request.getSession().setAttribute("id",annuncio.getIdAnnuncio());
+
+    request.setParameter("operazione", "rimuoviAnnuncioIncompleto");
+    servlet.doGet(request, response);
+
+    assertNull(MessaggioModel.getMessaggioById(annuncio.getIdAnnuncio()));
+  }
+  
+  @Test
+  void testGeneraDownload() throws ServletException, IOException {
+	PrintWriter pw;
+	request.getSession().setAttribute("utente", medico);
+    request.getSession().setAttribute("isMedico", true);
+    request.getSession().setAttribute("accessDone", true);
+    request.setParameter("id",annuncio.getIdAnnuncio());
+
+    request.setParameter("operazione", "generaDownload");
+    servlet.doGet(request, response);
+    
+    pw = response.getWriter();
+    assertNotNull(pw);
+  }
+  
+  
 
 }

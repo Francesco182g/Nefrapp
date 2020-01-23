@@ -108,7 +108,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
       }
 
       else {
-        response.sendRedirect("./paginaErrore?notifica=noOperazione");
+        response.sendRedirect("./paginaErrore.jsp?notifica=noOperazione");
         return;
       }
     } catch (MongoException e) {
