@@ -221,4 +221,18 @@ class GestionePianoTerapeuticoTest {
     assertEquals(modificato.getFarmaco(), "farmaci di prova");
     assertEquals(modificato.getDataFormattata(), "09/03/2020");
   }
+  
+  @Test
+  void testRichiestaAsincrona() throws ServletException, IOException {
+    request.getSession().setAttribute("utente", paziente);
+    request.getSession().setAttribute("isPaziente", true);
+    request.getSession().setAttribute("accessDone", true);
+    
+    request.setParameter("tipo", "asincrona");
+    request.setParameter("operazione", "visualizza");
+    
+    servlet.doPost(request, response);
+    
+    assertTrue(true);
+  }
 }

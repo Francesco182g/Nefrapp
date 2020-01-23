@@ -88,7 +88,7 @@ class GestionePazienteTest {
   @Test
   void TC_GP_4_1_ModificaAccountPaziente() throws ServletException, IOException {
     request.setParameter("operazione", "modificaAccount");
-    request.setParameter("codiceFiscale", "BNCDNC67A01F205I");
+    request.setParameter("codiceFiscale", "NCDNC67A01F205I");
     request.setParameter("nome", "A");
     request.setParameter("cognome","Rossi");
     request.setParameter("sesso","M");
@@ -539,6 +539,16 @@ class GestionePazienteTest {
     servlet.doGet(request, response);
 
     assertEquals("./profilo.jsp?notifica=modificaEffettuata", response.getRedirectedUrl());
+  }
+  
+  @Test
+  void TestModificaAccountPazienteSessioneVuota() throws ServletException, IOException {
+	session.setAttribute("utente", null);
+	request.setSession(session);
+
+    servlet.doGet(request, response);
+
+    assertEquals("./paginaErrore.jsp?notifica=eccezione", response.getRedirectedUrl());
   }
 
 }

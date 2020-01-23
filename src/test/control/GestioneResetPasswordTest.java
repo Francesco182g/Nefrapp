@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 
 import org.bson.Document;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockHttpSession;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
@@ -40,8 +38,6 @@ class GestioneResetPasswordTest {
 	private static final LocalDate dataNascitaPaziente = LocalDate.parse("1965-12-30");
 	private static final String residenzaPaziente = "Via Roma, 22, Salerno, 84132, SA";
 	private static final ArrayList<String> medici = new ArrayList<String>();
-	//private MockHttpSession session;
-	private RequestDispatcher dispatcher;
 
 	  @BeforeAll
 	  static void setUpBeforeClass() throws Exception {
@@ -58,9 +54,6 @@ class GestioneResetPasswordTest {
 	    servlet = new GestioneResetPassword();
 	    request = new MockHttpServletRequest();
 	    response = new MockHttpServletResponse();
-	    //session  = new  MockHttpSession();
-	    //session.setAttribute("utente", medico);
-	    //request.setSession(session);
 	    
 	    MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 	    String password = CriptazioneUtility.criptaConMD5("Quadri1234");
@@ -77,7 +70,6 @@ class GestioneResetPasswordTest {
 
 	  @AfterEach
 	  void tearDown() throws Exception {
-	    //session.invalidate();
 	    
 	    MongoCollection<Document> medici = DriverConnection.getConnection().getCollection("Medico");
 	    BasicDBObject document = new BasicDBObject();
@@ -146,9 +138,9 @@ class GestioneResetPasswordTest {
 	  @Test
 	  void testResetMedicoDatiErrati() throws ServletException, IOException {
 		  request.setParameter("operazione", "reset");
-		  request.setParameter("email", "G.Xernini67@gmail.com");
+		  request.setParameter("email", "G.Xernini67gmail.com");
 		  request.setParameter("codiceFiscale", "G9MBNN67L11B519R");
-		  request.setParameter("password", "Quadri12");
+		  request.setParameter("password", "Qu");
 		  request.setParameter("confermaPsw", "Quadri12");
 		  servlet.doGet(request, response);
 		  assertEquals("./paginaErrore.jsp?notifica=datiErrati", response.getRedirectedUrl());

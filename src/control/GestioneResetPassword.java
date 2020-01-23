@@ -47,17 +47,6 @@ public class GestioneResetPassword extends HttpServlet {
         return;
       }
 
-      //operazione non in uso. si può rimuovere?
-      else if (operazione.equals("richiesta")) {
-        richiediReset(request, response);
-
-        if (!response.isCommitted()) {
-          response.sendRedirect("./dashboard.jsp?");	
-        }
-
-        return;
-      }
-
       // Operazione per effettuare il reset della password
       else if (operazione.equals("reset")) {
         effettuaReset(request, response);
@@ -102,7 +91,6 @@ public class GestioneResetPassword extends HttpServlet {
     if (utente != null) {
       // messaggio da Sara: controlla se è medico o paziente,
       if (MedicoModel.getMedicoByCF(utente.getCodiceFiscale()) != null) {
-        System.out.println("è un medico");
         // è un medico, manda la mail con il link per la modifica della password
         String destinatario = utente.getEmail();
         InvioEmailUtility.inviaEmail(destinatario);
@@ -118,35 +106,6 @@ public class GestioneResetPassword extends HttpServlet {
     } else { 
       response.sendRedirect("./richiestaResetView.jsp?notifica=CFnonPresente");
       //notifica già implementata
-      return;
-    }
-  }
-
-  /*
-   * Questo metodo non so se sia ancora utile. Potrebbe esserlo nel momento in cui
-   * decidiamo di fare il check sull'identità del medico in due step. Si
-   * tratterebbe di aggiungere una view (dopo che il medico ha inserito il suo CF)
-   * dove si chiede al medico di inserire la sua mail. La lascio quì.
-   */
-  private void richiediReset(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    String email = request.getParameter("email");
-
-    if (validaMail(email)) {
-      try {
-        request.setAttribute("notifica", "Richiesta reset password inviata");
-        InvioEmailUtility.inviaEmail(email);
-        dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
-        return;
-
-      } catch (Exception e) {
-        request.setAttribute("notifica", "Si è veriifcato un'erorre durante l'invio dell'eamil. Riprova");
-        dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
-        return;
-      }
-    } else {
-      request.setAttribute("notifica", "Email inserita non valida");
-      dispatcher = getServletContext().getRequestDispatcher("/richiestaResetView.jsp");
       return;
     }
   }
@@ -186,22 +145,6 @@ public class GestioneResetPassword extends HttpServlet {
       //come sopra
       return;
     }
-  }
-  
-  /**
-   * Metodo che controlla la conformità della email con la regex.
-   * @param email da validare
-   * @return
-   */
-  private boolean validaMail(String email) {
-
-    final String expEmail = "^[A-Za-z0-9_.-]+@[a-zA-Z.]{2,}\\.[a-zA-Z]{2,3}$";
-
-    if (Pattern.matches(expEmail, email)) {
-      return true;
-    }
-
-    return false;
   }
   
   /**

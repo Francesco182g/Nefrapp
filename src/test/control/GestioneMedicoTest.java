@@ -179,7 +179,7 @@ class GestioneMedicoTest {
 		  request.setParameter("nome", "Geremia");
 		  request.setParameter("cognome","Bernini");
 		  request.setParameter("sesso","M");
-		  request.setParameter("dataDiNascita","24/07/1969");
+		  request.setParameter("dataDiNascita","");
 		  request.setParameter("luogoDiNascita", "Salerno");
 		  request.setParameter("email","G.Berninetti@gmail.com");
 		  request.setParameter("residenza","Via Roma, 22, Salerno, 84132, SA");
@@ -382,7 +382,7 @@ class GestioneMedicoTest {
 	  
 	  @Test
 	  void testNessunUtente() throws ServletException, IOException {
-		  session.setAttribute("utente", null);
+		  request.getSession().setAttribute("utente", null);
 		  request.setSession(session);
 		  servlet.doGet(request, response);
 		  assertEquals("/paginaErrore.jsp", response.getForwardedUrl());

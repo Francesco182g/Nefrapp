@@ -38,7 +38,6 @@ public class GestioneMedico extends HttpServlet {
       throws ServletException, IOException {
     try {
       String operazione = request.getParameter("operazione");
-      System.out.println(operazione);
       Amministratore amministratore = null;
       Medico medico = (Medico) request.getSession().getAttribute("utente");
       if (medico == null) {
