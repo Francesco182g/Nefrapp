@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file
+<!-- WARNING: Eclipse auto-generated file.
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
@@ -26,6 +26,7 @@
         <pathelement location="WebContent/WEB-INF/lib/spring-test-5.2.0.RELEASE.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/spring-web-5.2.0.RELEASE.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/spring-webmvc-5.2.2.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/tomcat-util.jar"/>
     </path>
     <path id="EAR Libraries.libraryclasspath"/>
     <path id="Apache Tomcat v8.5 [Apache Tomcat v8.5].libraryclasspath">
