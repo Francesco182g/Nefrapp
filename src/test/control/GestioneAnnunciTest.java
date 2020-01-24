@@ -42,6 +42,7 @@ import bean.MessaggioProxy;
 import bean.Paziente;
 import control.GestioneAnnunci;
 import control.GestioneMessaggi;
+import model.AnnuncioModel;
 import model.DriverConnection;
 import model.MessaggioModel;
 import utility.CreaBeanUtility;
@@ -237,6 +238,20 @@ public class GestioneAnnunciTest {
       fail("il caricamento è andato a buon fine");
     }
   }
+  
+  @Test
+  void TC_GM_9_5_InvioAnnunci() throws ServletException, IOException {
+    request.getSession().setAttribute("utente", medico);
+    request.getSession().setAttribute("isMedico", true);
+
+    request.setParameter("oggetto", titolo);
+    request.setParameter("testo", testo);
+    request.setParameter("operazione", "inviaAnnuncio");
+    request.setParameter("selectPaziente", paziente.getCodiceFiscale());
+    servlet.doPost(request, response);
+    
+    assertEquals("./dashboard.jsp?notifica=annuncioInviato", response.getRedirectedUrl());
+  }
 
   @Test
   void TC_GP_10_RicezioneAnnunci() throws ServletException, IOException {
@@ -399,9 +414,9 @@ public class GestioneAnnunciTest {
     request.getSession().setAttribute("id",annuncio.getIdAnnuncio());
 
     request.setParameter("operazione", "rimuoviAllegato");
-    servlet.doGet(request, response);
+    servlet.doPost(request, response);
 
-    assertNull(MessaggioModel.getMessaggioById(annuncio.getIdAnnuncio()));
+    assertNull(AnnuncioModel.getAnnuncioById(annuncio.getIdAnnuncio()));
   }
 
   @Test
@@ -419,16 +434,24 @@ public class GestioneAnnunciTest {
   
   @Test
   void testRimuoviAnnuncioIncompleto() throws ServletException, IOException {
-	annuncio.setMedico(null);
+    MongoCollection<Document> annunci = 
+        DriverConnection.getConnection().getCollection("Annuncio");
     request.getSession().setAttribute("utente", medico);
     request.getSession().setAttribute("isMedico", true);
     request.getSession().setAttribute("accessDone", true);
-    request.getSession().setAttribute("id",annuncio.getIdAnnuncio());
+    request.getSession().setAttribute("id", annuncio.getIdAnnuncio());
+
+    Document d = 
+        annunci.find(eq("_id", new ObjectId(annuncio.getIdAnnuncio())))
+        .projection(Projections.exclude("_id")).
+        first().append("MedicoCodiceFiscale", null);
+    annunci.insertOne(d);
+    ObjectId id = (ObjectId)d.get("_id");
 
     request.setParameter("operazione", "rimuoviAnnuncioIncompleto");
-    servlet.doGet(request, response);
+    servlet.doPost(request, response);
 
-    assertNull(MessaggioModel.getMessaggioById(annuncio.getIdAnnuncio()));
+    assertNull(AnnuncioModel.getAnnuncioById(id.toString()));
   }
   
   @Test

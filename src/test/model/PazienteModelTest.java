@@ -24,6 +24,7 @@ class PazienteModelTest {
 
   @BeforeEach
   void setUp() {
+	medici.add("GRMBNN67L11B519R");
     Paziente paziente = new Paziente("M", "RSSGPP79E16I483P", "Giuseppe", "Russo", "giuseppe.russo@live.it", residenzaPaziente, "Scafati", dataNascitaPaziente, false, medici);
     PazienteModel.addPaziente(paziente, "PasswordDifficile");
 
@@ -60,8 +61,10 @@ class PazienteModelTest {
   @Test
   void testGetPazientiSeguiti() {
     ArrayList<Paziente> pazienti = PazienteModel.getPazientiSeguiti("GRMBNN67L11B519R");
+    System.out.println(pazienti.toString());
     assertNotNull(pazienti);	
   }
+
 
   @Test
   void testAddPaziente() {
@@ -105,6 +108,15 @@ class PazienteModelTest {
     assertNotNull(paziente);
     String id = PazienteModel.getIdPazienteByCF("BNCLRD67A01F205I");
     assertNotNull(id);
+  }
+  
+  @Test
+  void testGetIdPazienteByCFNonPresente() {
+    Paziente paziente = new Paziente("M", "BNCLRD67A01F205O", "Andrea", "Rossi", "", residenzaPaziente, "Salerno", dataNascitaPaziente, false, medici);
+    PazienteModel.addPaziente(paziente, "Fiori5678");
+    assertNotNull(paziente);
+    String id = PazienteModel.getIdPazienteByCF("BNCLRD67A01F205I");
+    assertNull(id);
   }
 
   @Test

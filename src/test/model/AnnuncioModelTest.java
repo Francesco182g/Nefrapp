@@ -60,6 +60,29 @@ public class AnnuncioModelTest {
     assertEquals(annuncio.getData(),data);
     assertEquals(annuncio.getPazientiView(),destinatari);
   }
+  
+  @Test
+  void testGetAnnuncioByIdSbagliato() {
+    Annuncio annuncio = AnnuncioModel.getAnnuncioById("5e2a094047426c115426d64c");
+    assertNull(annuncio);
+  }
+  
+  @Test
+  void testAddAnnuncioNoDestinatari() {
+	  HashMap<String, Boolean> hm = new HashMap<>();
+	  AnnuncioCompleto originale = new AnnuncioCompleto(medico, titolo, testo, corpoAllegato, nomeAllegato, ZonedDateTime.now(), hm);
+	  String id = AnnuncioModel.addAnnuncio(originale);
+	  originale.setIdAnnuncio(id);
+	  originale.setVisualizzato(null);
+	  hm.put(null, false);
+	  originale.setPazientiView(hm);
+	  
+	  System.out.println(originale);
+	  
+	  Annuncio ottenuto = AnnuncioModel.getAnnuncioById(id);
+	  assertEquals(originale.toString(), ottenuto.toString());
+	  AnnuncioModel.deleteAnnuncioById(id);
+  }
 
   @Test
   void testUpdateAnnuncio() {
@@ -72,6 +95,18 @@ public class AnnuncioModelTest {
     assertNotNull(daAggiornare);
     assertEquals(daAggiornare.getTitolo(),"Nuovo annuncio");
     assertEquals(daAggiornare.getTesto(),"Nuove medicine in commercio");
+  }
+  
+  @Test
+  void testUpdateAnnuncioNoId() {
+    Annuncio daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
+    daAggiornare.setTitolo(titolo);
+    daAggiornare.setTesto(testo);
+    daAggiornare.setIdAnnuncio(null);
+    AnnuncioModel.updateAnnuncio(daAggiornare);
+    
+    daAggiornare.setIdAnnuncio(idAnnuncio);
+    assertEquals(daAggiornare.toString(), AnnuncioModel.getAnnuncioById(idAnnuncio).toString());
   }
 
   @Test
@@ -86,7 +121,7 @@ public class AnnuncioModelTest {
 
   @Test
   void testGetAnnuncioByCFPaziente() {
-    ArrayList<Annuncio> annunci = AnnuncioModel.getAnnunciByCFMedico(codiceFiscalePaziente);
+    ArrayList<Annuncio> annunci = AnnuncioModel.getAnnuncioByCFPaziente(codiceFiscalePaziente);
     boolean destinatarioGiusto = true;
 
     for (Annuncio a : annunci) {

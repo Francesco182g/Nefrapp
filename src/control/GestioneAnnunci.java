@@ -64,7 +64,7 @@ public class GestioneAnnunci extends GestioneComunicazione {
       }
 
       else if (operazione.equals("rimuoviAllegato")) {
-        rimuoviAllegato("messaggio", session);
+        rimuoviAllegato("annuncio", session);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         Gson gg = new Gson();

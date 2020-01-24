@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bean.Annuncio;
+import bean.AnnuncioCompleto;
 import bean.Messaggio;
 import bean.MessaggioCompleto;
 import model.AnnuncioModel;
@@ -52,6 +53,28 @@ public class MessaggioModelTest {
 
   @Test
   void testAddMessaggio() {
+	HashMap<String, Boolean> hm = new HashMap<>();
+    MessaggioCompleto messaggioDaAggiungere = new MessaggioCompleto(CFMittente, oggetto, testo,corpoAllegato,nomeAllegato,data, hm);
+    String idDaTestare = MessaggioModel.addMessaggio(messaggioDaAggiungere);
+    MessaggioCompleto messaggioDaTestare =
+        (MessaggioCompleto) MessaggioModel.getMessaggioById(idDaTestare);
+    assertNotNull(messaggioDaTestare);
+    assertEquals(messaggioDaTestare.getCodiceFiscaleMittente(),CFMittente);
+    assertEquals(messaggioDaTestare.getCorpoAllegato(),corpoAllegato);
+    assertEquals(messaggioDaTestare.getData(), data);
+    assertEquals(messaggioDaTestare.getDataFormattata(), data.format(formatData));
+    hm.put(null, false);
+    messaggioDaTestare.setDestinatariView(hm);
+    assertEquals(messaggioDaTestare.getDestinatariView(), hm);
+    assertEquals(messaggioDaTestare.getNomeAllegato(),nomeAllegato);
+    assertEquals(messaggioDaTestare.getOggetto(),oggetto);
+    assertEquals(messaggioDaTestare.getOraFormattata(),data.format(formatOra));
+    assertEquals(messaggioDaTestare.getTesto(), testo);
+    MessaggioModel.deleteMessaggioById(idDaTestare);
+  }
+  
+  @Test
+  void testAddMessaggioNoDestinatari() {
     MessaggioCompleto messaggioDaAggiungere = new MessaggioCompleto(CFMittente, oggetto, testo,corpoAllegato,nomeAllegato,data, destinatariView);
     String idDaTestare = MessaggioModel.addMessaggio(messaggioDaAggiungere);
     MessaggioCompleto messaggioDaTestare =
@@ -97,6 +120,20 @@ public class MessaggioModelTest {
     assertEquals(daAggiornare.getOggetto(),"Nuovo annuncio");
     assertEquals(daAggiornare.getTesto(),"Nuove medicine in commercio");
   }
+  
+  @Test
+  void testUpdateMessaggioNoId() {
+    Messaggio daAggiornare = MessaggioModel.getMessaggioById(id);
+    assertNotNull(daAggiornare);
+    daAggiornare.setOggetto("Nuovo annuncio");
+    daAggiornare.setTesto("Nuove medicine in commercio");
+    daAggiornare.setIdMessaggio(null);
+    MessaggioModel.updateMessaggio(daAggiornare);
+
+    daAggiornare = MessaggioModel.getMessaggioById("5de95046be6d62154c81eabe");
+    assertNull(daAggiornare);
+  }
+
 
   @Test
   void testGetMessaggioById() {

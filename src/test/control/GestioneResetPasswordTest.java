@@ -84,7 +84,13 @@ class GestioneResetPasswordTest {
 	  
 	  @Test
 	  void testNessunaOperazione() throws ServletException, IOException {
-		    request.setParameter("operazione", "");
+		    servlet.doGet(request, response);
+		    assertEquals("./paginaErrore.jsp?notifica=noOperazione", response.getRedirectedUrl());
+	  }
+	  
+	  @Test
+	  void testOperazioneInvalida() throws ServletException, IOException {
+		  	request.setParameter("operazione", "invalida");
 		    servlet.doGet(request, response);
 		    assertEquals("./paginaErrore.jsp?notifica=noOperazione", response.getRedirectedUrl());
 	  }
@@ -92,7 +98,7 @@ class GestioneResetPasswordTest {
 	  @Test
 	  void testRichiedenteMedico() throws ServletException, IOException {
 		    request.setParameter("operazione", "identificaRichiedente");
-		    request.setParameter("codiceFiscale", "GRMBNN67L11B519R");
+		    request.setParameter("codiceFiscale", medico.getCodiceFiscale());
 		    servlet.doPost(request, response);
 		    assertEquals("./dashboard.jsp?notifica=identificazioneSuccesso", response.getRedirectedUrl());
 	  }

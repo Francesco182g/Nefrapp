@@ -47,9 +47,13 @@ class GestioneParametriTest {
     schedaParametri = new SchedaParametri("BNCDNC67A01F205I", new BigDecimal(75), 120, 80, 1550, 700, 1, 1000, 1500,LocalDate.now());
   }
 
-  @AfterAll
-  static void tearDownAfterClass() throws Exception {
-  }
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+		MongoCollection<Document> schedaParametri = DriverConnection.getConnection().getCollection("SchedaParametri");
+		BasicDBObject document2 = new BasicDBObject();
+		document2.put("PazienteCodiceFiscale", "BNCDNC67A01F205I");
+		schedaParametri.deleteOne(document2);
+	}
 
   @BeforeEach
   void setUp() throws Exception {

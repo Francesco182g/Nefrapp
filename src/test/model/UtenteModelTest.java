@@ -59,4 +59,10 @@ class UtenteModelTest {
     assertEquals(utente.getEmail(), "G.Bernini67@gmail.com");
     assertEquals(utente.getCodiceFiscale(), "GRMBNN67L11B519R");
   }
+  
+  @Test
+  void testGetUtenteNonPresente() {
+    Utente utente = UtenteModel.getUtenteByCF("RSSGPP79E16O483");
+    assertNull(utente);
+  }
 }
