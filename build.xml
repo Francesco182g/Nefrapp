@@ -10,6 +10,7 @@
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
     <path id="Web App Libraries.libraryclasspath">
+        <pathelement location="WebContent/WEB-INF/lib/commons-codec-1.7.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/gson-2.3.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
