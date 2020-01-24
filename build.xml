@@ -7,8 +7,8 @@
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../eclipse/jee-2019-09/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
     <path id="Web App Libraries.libraryclasspath">
         <pathelement location="WebContent/WEB-INF/lib/gson-2.3.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
