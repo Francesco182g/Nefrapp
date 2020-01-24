@@ -169,7 +169,13 @@ public class AnnuncioCompletoTest {
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",null,destinatari);
     annuncio.setData(ZonedDateTime.now(ZoneId.of("Europe/Rome")));
-    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")),annuncio.getData());
+    DateTimeFormatter formatterOra = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
+    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterOra).toString(),
+    		annuncio.getData().format(formatterOra).toString());
+    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterData).toString(),
+    		annuncio.getData().format(formatterData).toString());
   }
 
   @Test

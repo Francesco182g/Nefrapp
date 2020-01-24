@@ -115,6 +115,12 @@ class GestioneRegistrazioneTest {
     servlet.doGet(request, response);
     assertEquals("./paginaErrore.jsp?notifica=eccezione", response.getRedirectedUrl());
   }
+  
+  @AfterAll
+  static void tearDownAfterClass() throws Exception {
+    MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("PianoTerapeutico");
+    pazienti.deleteMany(new Document());
+  }
 
   @Test
   void TC_GM_10_1_RegistrazionePazienteDaSeguire() throws ServletException, IOException{

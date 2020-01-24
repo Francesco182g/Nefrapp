@@ -186,8 +186,14 @@ class MessaggioCompletoTest {
     MessaggioCompleto MessaggioCompleto = new MessaggioCompleto("ABCD1111DFS12", "visita",
         "Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”",
         "codiceallegato", "ilpazienteirriverente.pdf", null, destinatariView);
+    DateTimeFormatter formatterOra = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
     MessaggioCompleto.setData(ZonedDateTime.now(ZoneId.of("Europe/Rome")));
-    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")), MessaggioCompleto.getData());
+    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterOra).toString(), 
+    		MessaggioCompleto.getData().format(formatterOra).toString());
+    assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterData).toString(), 
+    		MessaggioCompleto.getData().format(formatterData).toString());
   }
 
   @Test

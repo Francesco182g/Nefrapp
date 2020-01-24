@@ -1,5 +1,6 @@
 package test.model;
 
+import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -8,12 +9,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.bson.Document;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+
 import bean.Annuncio;
 import bean.AnnuncioCompleto;
 import model.AnnuncioModel;
+import model.DriverConnection;
 
 
 public class AnnuncioModelTest {
@@ -45,6 +53,12 @@ public class AnnuncioModelTest {
   @AfterEach
   void tearDown() throws Exception {
     AnnuncioModel.deleteAnnuncioById(idAnnuncio);
+  }
+  
+  @AfterAll
+  static void tearDownAfterClass() throws Exception {
+    MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Annuncio");
+    pazienti.deleteMany(new Document());
   }
 
   @Test
