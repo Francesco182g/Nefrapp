@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Nefrapp">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="D:/Users/Antonio/eclipse/jee-2018-12/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="Web App Libraries.libraryclasspath">
+        <pathelement location="WebContent/WEB-INF/lib/gson-2.3.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/mongo-java-driver-3.7.1.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-beans-5.2.0.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-context-5.2.2.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-core-5.2.0.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-jcl-5.2.0.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-test-5.2.0.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-web-5.2.0.RELEASE.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/spring-webmvc-5.2.2.RELEASE.jar"/>
+    </path>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="Apache Tomcat v8.5 [Apache Tomcat v8.5].libraryclasspath">
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/annotations-api.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/catalina-ant.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/catalina-ha.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/catalina-storeconfig.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/catalina-tribes.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/catalina.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/ecj-4.6.3.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/el-api.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/jasper-el.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/jasper.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/jaspic-api.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/jsp-api.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/servlet-api.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-api.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-coyote.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-dbcp.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-ru.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-jdbc.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-jni.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-util-scan.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-util.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/tomcat-websocket.jar"/>
+        <pathelement location="../../../Program Files/Apache Software Foundation/Tomcat 8.5/lib/websocket-api.jar"/>
+    </path>
+    <path id="JUnit 5.libraryclasspath">
+        <pathelement location="../.p2/pool/plugins/org.junit.jupiter.api_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.jupiter.engine_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.jupiter.params_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.platform.commons_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.platform.engine_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.platform.launcher_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.platform.runner_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.platform.suite.api_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit.vintage.engine_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.opentest4j_1.2.0.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.apiguardian_1.1.0.v20190826-0900.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    </path>
+    <path id="Nefrapp.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <pathelement location="../Desktop/javaee-api-8.0.jar"/>
+        <path refid="Apache Tomcat v8.5 [Apache Tomcat v8.5].libraryclasspath"/>
+        <path refid="JUnit 5.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="build/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="AmministratoreTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.AmministratoreTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="AnnuncioCompletoTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.AnnuncioCompletoTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="AnnuncioProxyTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.AnnuncioProxyTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="DriverConnection">
+        <java classname="model.DriverConnection" failonerror="true" fork="yes">
+            <classpath refid="Nefrapp.classpath"/>
+        </java>
+    </target>
+    <target name="MedicoModel">
+        <java classname="model.MedicoModel" failonerror="true" fork="yes">
+            <classpath refid="Nefrapp.classpath"/>
+        </java>
+    </target>
+    <target name="MedicoTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.MedicoTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="MessaggioCompletoTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.MessaggioCompletoTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="MessaggioProxyTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.MessaggioProxyTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="PazienteModel">
+        <java classname="model.PazienteModel" failonerror="true" fork="yes">
+            <classpath refid="Nefrapp.classpath"/>
+        </java>
+    </target>
+    <target name="PazienteTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.PazienteTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="PianoTerapeuticoModel">
+        <java classname="model.PianoTerapeuticoModel" failonerror="true" fork="yes">
+            <classpath refid="Nefrapp.classpath"/>
+        </java>
+    </target>
+    <target name="PianoTerapeuticoModelTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.model.PianoTerapeuticoModelTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="PianoTerapeuticoModelTest.testIsPianoTerapeuticoVisualizzato">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.model.PianoTerapeuticoModelTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="PianoTerapeuticoTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.PianoTerapeuticoTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="SchedaParametriModel">
+        <java classname="model.SchedaParametriModel" failonerror="true" fork="yes">
+            <classpath refid="Nefrapp.classpath"/>
+        </java>
+    </target>
+    <target name="SchedaParametriTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.SchedaParametriTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="UtenteTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.bean.UtenteTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Nefrapp.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
