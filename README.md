@@ -28,3 +28,5 @@ N/D
 ## Acknowledgments
 
 * Progetto open-source
+
+[![Build Status](https://travis-ci.org/Francesco182g/Infiniti.svg?branch=master)](https://travis-ci.org/Francesco182g/Infiniti)
