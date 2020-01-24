@@ -24,7 +24,6 @@ import static com.mongodb.client.model.Filters.*;
  */
 
 public class PazienteModel {
-
   /**
    * Questo metodo si occupa di verificare se i dati immessi dal paziente 
    * per effettuare il login sono presenti nel database.

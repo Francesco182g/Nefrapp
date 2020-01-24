@@ -28,6 +28,8 @@ class SchedaParametriModelTest {
   private static final ArrayList<String> medici = new ArrayList<String>();
   private static final LocalDate dataInizio = LocalDate.parse("2019-05-20");
   private static final LocalDate dataFine = LocalDate.parse("2019-05-29");
+  private static final LocalDate dataInizioRicerca = LocalDate.parse("2009-05-20");
+  private static final LocalDate dataFineRicerca = LocalDate.parse("2020-05-29");
 
 
   @BeforeEach
@@ -85,9 +87,9 @@ class SchedaParametriModelTest {
   }
 
   @Test
-  void testGetReportByPaziente() {
+  void testGetReportByPaziente() {	  
     ArrayList<SchedaParametri> schedeParametri = 
-        SchedaParametriModel.getReportByPaziente("RFFGPP79E16I483P", dataInizio, dataFine);
+        SchedaParametriModel.getReportByPaziente("RSSGPP79E16I483P", dataInizioRicerca, dataFineRicerca);
     assertNotNull(schedeParametri);
 
   }

@@ -98,11 +98,39 @@ public class AnnuncioModelTest {
   }
   
   @Test
-  void testUpdateAnnuncioNoId() {
+  void testUpdateAnnuncioMalformato() {
     Annuncio daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
+    assertNotNull(daAggiornare);
+    daAggiornare.setTitolo(null);
+    daAggiornare.setTesto(null);
+    daAggiornare.setCorpoAllegato(null);
+    daAggiornare.setData(null);
+    daAggiornare.setMedico(null);
+    AnnuncioModel.updateAnnuncio(daAggiornare);
+    daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
+    assertNotNull(daAggiornare);
+    assertEquals(daAggiornare.getTitolo(), titolo);
+    assertEquals(daAggiornare.getTesto(), testo);
+  }
+  
+  @Test
+  void testUpdateAnnuncioNoId() {
+	Annuncio daAggiornare = null;
+	AnnuncioModel.updateAnnuncio(daAggiornare);  
+	  
+    daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
     daAggiornare.setTitolo(titolo);
     daAggiornare.setTesto(testo);
     daAggiornare.setIdAnnuncio(null);
+    AnnuncioModel.updateAnnuncio(daAggiornare);
+    
+    daAggiornare.setIdAnnuncio(idAnnuncio);
+    assertEquals(daAggiornare.toString(), AnnuncioModel.getAnnuncioById(idAnnuncio).toString());
+    
+    daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
+    daAggiornare.setTitolo(titolo);
+    daAggiornare.setTesto(testo);
+    daAggiornare.setIdAnnuncio("");
     AnnuncioModel.updateAnnuncio(daAggiornare);
     
     daAggiornare.setIdAnnuncio(idAnnuncio);
@@ -115,6 +143,15 @@ public class AnnuncioModelTest {
     for (Annuncio a:annunci) {
       assertEquals(a.getMedico(),medico);
     }
+  }
+    
+  @Test
+  void testDeleteAnnuncioById() {
+	//id errato per testare se ci sono problemi in tale caso
+	AnnuncioModel.deleteAnnuncioById("5e29b99747426c5cf006360b");
+	AnnuncioModel.deleteAnnuncioById(idAnnuncio);
+	
+	assertNull(AnnuncioModel.getAnnuncioById(idAnnuncio));
   }
 
   //TODO Questi tre test

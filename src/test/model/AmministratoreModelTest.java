@@ -52,6 +52,13 @@ class AmministratoreModelTest {
     assertEquals(adminTest.getCognome(), "Carbosiero");
     assertEquals(adminTest.getEmail(), "f.carbosiero@live.it");
   }
+  
+  @Test
+  void testGetAmministratoreByCFPasswordErrati() {
+    Amministratore adminTest = 
+        AmministratoreModel.getAmministratoreByCFPassword("FLPBRZ02F17F876F", password);
+    assertNull(adminTest);
+  }
 
   @Test
   void testGetAmministratoreByCF() {
@@ -62,6 +69,12 @@ class AmministratoreModelTest {
     assertEquals(adminTest.getCognome(), "Carbosiero");
     assertEquals(adminTest.getEmail(), "f.carbosiero@live.it");
 
+  }
+  
+  @Test
+  void testGetAmministratoreByCFNonPresente() {
+	Amministratore adminTest = AmministratoreModel.getAmministratoreByCF("FLPBTZ62F17F876F");
+	assertNull(adminTest);
   }
 
 

@@ -24,6 +24,7 @@ class PazienteModelTest {
 
   @BeforeEach
   void setUp() {
+	PazienteModel p = new PazienteModel();
 	medici.add("GRMBNN67L11B519R");
     Paziente paziente = new Paziente("M", "RSSGPP79E16I483P", "Giuseppe", "Russo", "giuseppe.russo@live.it", residenzaPaziente, "Scafati", dataNascitaPaziente, false, medici);
     PazienteModel.addPaziente(paziente, "PasswordDifficile");
