@@ -82,7 +82,7 @@ class PazienteModelTest {
     assertEquals(paziente.getDataDiNascita(), dataNascitaPaziente);
     assertEquals(paziente.getLuogoDiNascita(), "Salerno");
     assertEquals(paziente.getAttivo(),false);
-    assertEquals(paziente.getMedici(), medici);
+    assertEquals(paziente.getMedici(), medici);    
   }
 
   @Test
@@ -112,10 +112,10 @@ class PazienteModelTest {
   
   @Test
   void testGetIdPazienteByCFNonPresente() {
-    Paziente paziente = new Paziente("M", "BNCLRD67A01F205O", "Andrea", "Rossi", "", residenzaPaziente, "Salerno", dataNascitaPaziente, false, medici);
+    Paziente paziente = new Paziente("M", "BNCLRD67A01F205I", "Andrea", "Rossi", "", residenzaPaziente, "Salerno", dataNascitaPaziente, false, medici);
     PazienteModel.addPaziente(paziente, "Fiori5678");
     assertNotNull(paziente);
-    String id = PazienteModel.getIdPazienteByCF("BNCLRD67A01F205I");
+    String id = PazienteModel.getIdPazienteByCF("BNCLRD67A01F205O");
     assertNull(id);
   }
 
