@@ -5,8 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="Nefrapp">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../eclipse/jee-2018-12/eclipse/"/>
-    <property name="junit.output.dir" value="junit"/>
+    <property name="ECLIPSE_HOME" value="../../eclipse/jee-2019-09/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
@@ -25,84 +24,77 @@
     </path>
     <path id="EAR Libraries.libraryclasspath"/>
     <path id="Apache Tomcat v8.5 [Apache Tomcat v8.5].libraryclasspath">
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/annotations-api.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/catalina-ant.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/catalina-ha.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/catalina-storeconfig.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/catalina-tribes.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/catalina.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/ecj-4.6.3.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/el-api.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/jasper-el.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/jasper.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/jaspic-api.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/jsp-api.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/servlet-api.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-api.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-coyote.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-dbcp.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-i18n-es.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-i18n-fr.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-i18n-ja.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-i18n-ru.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-jdbc.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-jni.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-util-scan.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-util.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/tomcat-websocket.jar"/>
-        <pathelement location="../../Desktop/Programmi/apache-tomcat-8.5.45/lib/websocket-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/annotations-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/catalina-ant.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/catalina-ha.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/catalina-storeconfig.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/catalina-tribes.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/catalina.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/ecj-4.6.3.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/el-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/jasper-el.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/jasper.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/jaspic-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/jsp-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/servlet-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-api.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-coyote.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-dbcp.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-i18n-ru.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-jdbc.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-jni.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-util-scan.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-util.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/tomcat-websocket.jar"/>
+        <pathelement location="../../../../apache-tomcat-8.5.34/lib/websocket-api.jar"/>
     </path>
     <path id="JUnit 5.libraryclasspath">
-        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.api_5.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.engine_5.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.params_5.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.platform.commons_1.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.platform.engine_1.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.platform.launcher_1.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.platform.runner_1.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.platform.suite.api_1.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.junit.vintage.engine_5.3.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.opentest4j_1.1.1.v20181005-1442.jar"/>
-        <pathelement location="../../.p2/pool/plugins/org.apiguardian_1.0.0.v20181005-1442.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.api_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.engine_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.params_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.commons_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.engine_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.launcher_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.runner_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.suite.api_1.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.vintage.engine_5.5.1.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.opentest4j_1.2.0.v20190826-0900.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.apiguardian_1.1.0.v20190826-0900.jar"/>
         <pathelement location="../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
         <pathelement location="../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
     <path id="Nefrapp.classpath">
-        <pathelement location="bin"/>
+        <pathelement location="build/classes"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Apache Tomcat v8.5 [Apache Tomcat v8.5].libraryclasspath"/>
         <pathelement location="WebContent/WEB-INF/lib/gson-2.3.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/mongo-java-driver-3.7.1.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-beans-5.2.0.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-context-5.2.2.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-core-5.2.0.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-jcl-5.2.0.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-test-5.2.0.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-web-5.2.0.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-webmvc-5.2.2.RELEASE.jar"/>
-        <path refid="Web App Libraries.libraryclasspath"/>
-        <path refid="EAR Libraries.libraryclasspath"/>
-        <path refid="Apache Tomcat v8.5 [Apache Tomcat v8.5].libraryclasspath"/>
         <path refid="JUnit 5.libraryclasspath"/>
     </path>
     <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
     </target>
     <target name="clean">
-        <delete dir="bin"/>
+        <delete dir="build/classes"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="Nefrapp.classpath"/>
         </javac>
@@ -120,260 +112,5 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
-    </target>
-    <target name="AmministratoreModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.AmministratoreModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="AmministratoreTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.bean.AmministratoreTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="AnnuncioModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.AnnuncioModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneAccessoTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestioneAccessoTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneAmministratoreTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestioneAmministratoreTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneComunicazioneTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestioneComunicazioneTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneMedico">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="control.GestioneMedico" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneMedicoTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestioneMedicoTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestionePazienteTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestionePazienteTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestionePianoTerapeuticoTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestionePianoTerapeuticoTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneRegistrazioneTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestioneRegistrazioneTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneResetPassword">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="control.GestioneResetPassword" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="GestioneResetPasswordTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.control.GestioneResetPasswordTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="MedicoModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.MedicoModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="MedicoTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.bean.MedicoTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="MessaggioModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.MessaggioModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="model">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="Nefrapp (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="PazienteModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.PazienteModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="PianoTerapeuticoModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.PianoTerapeuticoModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="PianoTerapeuticoTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.bean.PianoTerapeuticoTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="SchedaParametriModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.SchedaParametriModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="SchedaParametriTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.bean.SchedaParametriTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="test.bean">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="test.control">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="test.model">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="UtenteModelTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.model.UtenteModelTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="UtenteTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.bean.UtenteTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Nefrapp.classpath"/>
-        </junit>
-    </target>
-    <target name="junitreport">
-        <junitreport todir="${junit.output.dir}">
-            <fileset dir="${junit.output.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${junit.output.dir}"/>
-        </junitreport>
     </target>
 </project>
