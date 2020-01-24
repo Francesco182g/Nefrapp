@@ -14,6 +14,7 @@
         <pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/mongo-java-driver-3.7.1.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/servlet-api.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/spring-beans-5.2.0.RELEASE.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/spring-context-5.2.2.RELEASE.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/spring-core-5.2.0.RELEASE.jar"/>
