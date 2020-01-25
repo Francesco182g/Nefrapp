@@ -1,35 +1,27 @@
 package test.control;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import bean.Amministratore;
+import bean.Medico;
+import bean.Utente;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import control.GestioneRegistrazione;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.servlet.ServletException;
-
+import model.DriverConnection;
 import org.bson.Document;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Medico;
-import bean.Utente;
-import bean.Amministratore;
-import control.GestioneRegistrazione;
-import model.DriverConnection;
-import model.PazienteModel;
 
 class GestioneRegistrazioneTest {
 
@@ -75,7 +67,7 @@ class GestioneRegistrazioneTest {
         .append("Residenza", "Via Italia, 22, Battipaglia, 84091, SA")
         .append("LuogoDiNascita", "Scafati")
         .append("Email", "G.Bernini67@gmail.com");
-    medicoo.insertOne(doc);	
+    medicoo.insertOne(doc);
 
   }
 
@@ -123,7 +115,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_1_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_1_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483");
@@ -142,7 +134,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_2_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_2_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483PP");
@@ -161,7 +153,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_3_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_3_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483");
@@ -180,7 +172,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_4_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_4_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP67S09I483T"); //CF gi� esistente
@@ -199,7 +191,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_5_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_5_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -218,7 +210,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_6_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_6_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -237,7 +229,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_7_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_7_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -256,7 +248,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_8_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_8_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -275,7 +267,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_9_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_9_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -294,7 +286,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_10_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_10_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -313,7 +305,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_11_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_11_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -332,7 +324,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_12_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_12_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -351,7 +343,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_13_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_13_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -370,7 +362,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_14_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_14_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -389,7 +381,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_15_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_15_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -410,7 +402,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_16_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_16_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -429,7 +421,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_17_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_17_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -448,7 +440,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_18_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_18_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -467,7 +459,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_19_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_19_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -487,7 +479,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_20_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_20_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -506,7 +498,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_21_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_21_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -525,7 +517,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_22_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_22_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -544,7 +536,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_23_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_23_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -563,7 +555,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_24_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_24_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -582,7 +574,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_25_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_25_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -601,7 +593,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_26_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_26_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -620,7 +612,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_28_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_28_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -639,7 +631,7 @@ class GestioneRegistrazioneTest {
   }
 
   @Test
-  void TC_GM_10_29_RegistrazionePazienteDaSeguire() throws ServletException, IOException{
+  void TC_GM_10_29_RegistrazionePazienteDaSeguire() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "No");
     request.setParameter("codiceFiscale", "RSSGPP79E16I483P"); 
@@ -658,7 +650,7 @@ class GestioneRegistrazioneTest {
   }
   
   @Test
-  void TestRegistrazioneMedico() throws ServletException, IOException{
+  void TestRegistrazioneMedico() throws ServletException, IOException {
     request.setParameter("operazione", "registraMedico");
     request.setParameter("codiceFiscale", "GRMBNN67L11B519R"); 
     request.setParameter("nome", "Geremia");
@@ -679,7 +671,7 @@ class GestioneRegistrazioneTest {
   }
   
   @Test
-  void TestRegistrazioneMedicoPresente() throws ServletException, IOException{
+  void TestRegistrazioneMedicoPresente() throws ServletException, IOException {
     request.setParameter("operazione", "registraMedico");
     request.setParameter("codiceFiscale", "XXMBNN67L11B519R"); 
     request.setParameter("nome", "Geremia");
@@ -700,7 +692,7 @@ class GestioneRegistrazioneTest {
   }
   
   @Test
-  void TestRegistrazioneMedicoDatiErrati() throws ServletException, IOException{
+  void TestRegistrazioneMedicoDatiErrati() throws ServletException, IOException {
     request.setParameter("operazione", "registraMedico");
     request.setParameter("codiceFiscale", "99MBNN67L11B519R"); 
     request.setParameter("nome", "Geremia");
@@ -721,7 +713,7 @@ class GestioneRegistrazioneTest {
   }
   
   @Test
-  void TestRegistrazionePazientePresente() throws ServletException, IOException{
+  void TestRegistrazionePazientePresente() throws ServletException, IOException {
     request.setParameter("operazione", "registraPazienteMedico");
     request.setParameter("registrato", "Si");
     request.setParameter("codiceFiscale", "RSSGPP67S09I483T"); 

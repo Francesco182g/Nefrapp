@@ -1,26 +1,22 @@
 package test.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import bean.Paziente;
+import bean.SchedaParametri;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-
+import model.DriverConnection;
+import model.PazienteModel;
+import model.SchedaParametriModel;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Paziente;
-import bean.SchedaParametri;
-import model.DriverConnection;
-import model.PazienteModel;
-import model.SchedaParametriModel;
 
 class SchedaParametriModelTest {
   private static final LocalDate dataNascitaPaziente = LocalDate.parse("1967-07-11");
@@ -81,13 +77,13 @@ class SchedaParametriModelTest {
     assertEquals(schedeParametri.get(0).getTempoSosta(),1);
     assertEquals(schedeParametri.get(0).getCarico(),100);
     assertEquals(schedeParametri.get(0).getScarico(),1500);
-    assertEquals(schedeParametri.get(0).getDataFormattata(),"29/05/2019");	
-    assertEquals(schedeParametri.get(0).getData(),LocalDate.parse("2019-05-29"));	
+    assertEquals(schedeParametri.get(0).getDataFormattata(),"29/05/2019");
+    assertEquals(schedeParametri.get(0).getData(),LocalDate.parse("2019-05-29"));
 
   }
 
   @Test
-  void testGetReportByPaziente() {	  
+  void testGetReportByPaziente() {
     ArrayList<SchedaParametri> schedeParametri = 
         SchedaParametriModel.getReportByPaziente("RSSGPP79E16I483P", dataInizioRicerca, dataFineRicerca);
     assertNotNull(schedeParametri);

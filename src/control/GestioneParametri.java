@@ -1,5 +1,8 @@
 package control;
 
+import bean.Paziente;
+import bean.SchedaParametri;
+import bean.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -7,7 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import bean.Paziente;
-import bean.SchedaParametri;
-import bean.Utente;
 import model.SchedaParametriModel;
 
 /**
+ * Questa classe è una servlet che si occupa della gestione dei parametri del paziente.
  * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco
- * Questa classe è una servlet che si occupa della gestione dei parametri del paziente
  */
 @WebServlet("/GestioneParametri")
 public class GestioneParametri extends HttpServlet {
@@ -126,7 +124,7 @@ public class GestioneParametri extends HttpServlet {
    * @throws ServletException possibile eccezione
    */
   private void inserisciParametri(HttpServletRequest request, HttpServletResponse response) 
-      throws ServletException, IOException{
+      throws ServletException, IOException {
     HttpSession session = request.getSession();
     Paziente pazienteLoggato = (Paziente) session.getAttribute("utente");
 
@@ -141,7 +139,13 @@ public class GestioneParametri extends HttpServlet {
     String carico = request.getParameter("Carico");
 
     BigDecimal newPeso = null;
-    int newPaMin = 0, newPaMax = 0, newScaricoIniziale = 0, newUf = 0, newTempoSosta = 0, newScarico = 0, newCarico = 0;
+    int newPaMin = 0;
+    int newPaMax = 0;
+    int newScaricoIniziale = 0;
+    int newUf = 0;
+    int newTempoSosta = 0;
+    int newScarico = 0;
+    int newCarico = 0;
     SchedaParametri daAggiungere;
 
     try {
@@ -188,8 +192,8 @@ public class GestioneParametri extends HttpServlet {
 
     final String REGEX_CF = "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$";
 
-    if (Pattern.matches(REGEX_CF, cf) &&
-        newPeso.compareTo(new BigDecimal("29")) > 0 
+    if (Pattern.matches(REGEX_CF, cf) 
+        && newPeso.compareTo(new BigDecimal("29")) > 0 
         && newPeso.compareTo(new BigDecimal("151")) < 0 
         && newPaMin > 39 && newPaMin < 131 
         && newPaMax > 79 && newPaMax < 221 
@@ -221,7 +225,7 @@ public class GestioneParametri extends HttpServlet {
     ArrayList<SchedaParametri> report = 
         SchedaParametriModel.getReportByPaziente(pazienteCF, dataInizio, dataFine);
 
-    String fileName = "ReportPaziente-"+ pazienteCF + "-" + dataFine.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".xls";
+    String fileName = "ReportPaziente-" + pazienteCF + "-" + dataFine.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".xls";
     response.setContentType("application/vnd.ms-excel");
     response.setHeader("Content-disposition", "attachment; filename=" + fileName);
     try {

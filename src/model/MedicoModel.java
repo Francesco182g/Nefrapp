@@ -1,21 +1,20 @@
 package model;
 
 import static com.mongodb.client.model.Filters.eq;
+
+import bean.Medico;
+import bean.Paziente;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-import bean.Medico;
-import bean.Paziente;
 import utility.CreaBeanUtility;
-import utility.CriptazioneUtility;
 
 /**
- * 
- * @author Luca Esposito, Antonio Donnarumma.
  * Questa classe è un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti il medico.
+ * @author Luca Esposito, Antonio Donnarumma.
  */
 
 public class MedicoModel {
@@ -72,7 +71,7 @@ public class MedicoModel {
         .append("Residenza", daAggiungere.getResidenza())
         .append("LuogoDiNascita", daAggiungere.getLuogoDiNascita())
         .append("Email", daAggiungere.getEmail());
-    medico.insertOne(doc);	
+    medico.insertOne(doc);
   }
 
   /**

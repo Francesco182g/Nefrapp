@@ -1,27 +1,26 @@
 package test.model;
 
-import static com.mongodb.client.model.Filters.eq;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import bean.Annuncio;
+import bean.AnnuncioCompleto;
+import com.mongodb.client.MongoCollection;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
+import model.AnnuncioModel;
+import model.DriverConnection;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-
-import bean.Annuncio;
-import bean.AnnuncioCompleto;
-import model.AnnuncioModel;
-import model.DriverConnection;
 
 
 public class AnnuncioModelTest {
@@ -83,19 +82,19 @@ public class AnnuncioModelTest {
   
   @Test
   void testAddAnnuncioNoDestinatari() {
-	  HashMap<String, Boolean> hm = new HashMap<>();
-	  AnnuncioCompleto originale = new AnnuncioCompleto(medico, titolo, testo, corpoAllegato, nomeAllegato, ZonedDateTime.now(), hm);
-	  String id = AnnuncioModel.addAnnuncio(originale);
-	  originale.setIdAnnuncio(id);
-	  originale.setVisualizzato(null);
-	  hm.put(null, false);
-	  originale.setPazientiView(hm);
-	  
-	  System.out.println(originale);
-	  
-	  Annuncio ottenuto = AnnuncioModel.getAnnuncioById(id);
-	  assertEquals(originale.toString(), ottenuto.toString());
-	  AnnuncioModel.deleteAnnuncioById(id);
+    HashMap<String, Boolean> hm = new HashMap<>();
+    AnnuncioCompleto originale = new AnnuncioCompleto(medico, titolo, testo, corpoAllegato, nomeAllegato, ZonedDateTime.now(), hm);
+    String id = AnnuncioModel.addAnnuncio(originale);
+    originale.setIdAnnuncio(id);
+    originale.setVisualizzato(null);
+    hm.put(null, false);
+    originale.setPazientiView(hm);
+
+    System.out.println(originale);
+
+    Annuncio ottenuto = AnnuncioModel.getAnnuncioById(id);
+    assertEquals(originale.toString(), ottenuto.toString());
+    AnnuncioModel.deleteAnnuncioById(id);
   }
 
   @Test
@@ -129,24 +128,24 @@ public class AnnuncioModelTest {
   
   @Test
   void testUpdateAnnuncioNoId() {
-	Annuncio daAggiornare = null;
-	AnnuncioModel.updateAnnuncio(daAggiornare);  
-	  
+    Annuncio daAggiornare = null;
+    AnnuncioModel.updateAnnuncio(daAggiornare);  
+
     daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
     daAggiornare.setTitolo(titolo);
     daAggiornare.setTesto(testo);
     daAggiornare.setIdAnnuncio(null);
     AnnuncioModel.updateAnnuncio(daAggiornare);
-    
+
     daAggiornare.setIdAnnuncio(idAnnuncio);
     assertEquals(daAggiornare.toString(), AnnuncioModel.getAnnuncioById(idAnnuncio).toString());
-    
+
     daAggiornare = AnnuncioModel.getAnnuncioById(idAnnuncio);
     daAggiornare.setTitolo(titolo);
     daAggiornare.setTesto(testo);
     daAggiornare.setIdAnnuncio("");
     AnnuncioModel.updateAnnuncio(daAggiornare);
-    
+
     daAggiornare.setIdAnnuncio(idAnnuncio);
     assertEquals(daAggiornare.toString(), AnnuncioModel.getAnnuncioById(idAnnuncio).toString());
   }
@@ -161,11 +160,11 @@ public class AnnuncioModelTest {
     
   @Test
   void testDeleteAnnuncioById() {
-	//id errato per testare se ci sono problemi in tale caso
-	AnnuncioModel.deleteAnnuncioById("5e29b99747426c5cf006360b");
-	AnnuncioModel.deleteAnnuncioById(idAnnuncio);
-	
-	assertNull(AnnuncioModel.getAnnuncioById(idAnnuncio));
+    //id errato per testare se ci sono problemi in tale caso
+    AnnuncioModel.deleteAnnuncioById("5e29b99747426c5cf006360b");
+    AnnuncioModel.deleteAnnuncioById(idAnnuncio);
+
+    assertNull(AnnuncioModel.getAnnuncioById(idAnnuncio));
   }
 
   //TODO Questi tre test

@@ -1,15 +1,14 @@
 package test.bean;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import bean.AnnuncioCompleto;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
-
-import bean.AnnuncioCompleto;
 
 public class AnnuncioCompletoTest {
   private HashMap<String, Boolean> destinatari = new HashMap<String, Boolean>();
@@ -51,7 +50,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testGetCorpoAllegato() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals("codiceallegato",annuncio.getCorpoAllegato());
@@ -59,7 +58,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testGetNomeAllegato() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals("dialisi-peritoneale.pdf",annuncio.getNomeAllegato());
@@ -67,7 +66,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testGetData() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")),annuncio.getData());
@@ -76,7 +75,7 @@ public class AnnuncioCompletoTest {
   @Test
   void testGetDataFormattata() {
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(format),annuncio.getDataFormattata());
@@ -85,7 +84,7 @@ public class AnnuncioCompletoTest {
   @Test
   void testGetOraFormattata() {
     DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(format),annuncio.getOraFormattata());
@@ -93,7 +92,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testGetVisualizzato() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals(false,annuncio.getVisualizzato());
@@ -101,7 +100,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testGetIdAnnuncio() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setIdAnnuncio("1234");
@@ -110,7 +109,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testGetPazientiView() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     assertEquals(destinatari,annuncio.getPazientiView());
@@ -120,7 +119,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetMedico() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setMedico("DCPLRD71M12C129X");
@@ -129,7 +128,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetTitolo() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setTitolo("Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.");
@@ -138,7 +137,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetTesto() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setTesto("Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.");
@@ -147,7 +146,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetCorpoAllegato() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setCorpoAllegato("codiceallegato");
@@ -156,7 +155,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetNomeAllegato() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setNomeAllegato("dialisi-peritoneale.pdf");
@@ -165,7 +164,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetData() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",null,destinatari);
     annuncio.setData(ZonedDateTime.now(ZoneId.of("Europe/Rome")));
@@ -173,14 +172,14 @@ public class AnnuncioCompletoTest {
     DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterOra).toString(),
-    		annuncio.getData().format(formatterOra).toString());
+              annuncio.getData().format(formatterOra).toString());
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterData).toString(),
-    		annuncio.getData().format(formatterData).toString());
+              annuncio.getData().format(formatterData).toString());
   }
 
   @Test
   void testSetVisualizzato() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setVisualizzato(true);
@@ -189,7 +188,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetIdAnnuncio() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     annuncio.setIdAnnuncio("1234");
@@ -198,7 +197,7 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testSetPazientiView() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
     destinatari.putIfAbsent("CRRSRA30Q69Z420J", false);
@@ -210,14 +209,14 @@ public class AnnuncioCompletoTest {
 
   @Test
   void testToString() {
-    AnnuncioCompleto annuncio=new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
+    AnnuncioCompleto annuncio = new AnnuncioCompleto("DCPLRD71M12C129X","Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.",
         "Il file in allegato contiene istruzioni per i pazienti su come effettuare la dialisi peritoneale.","codiceallegato",
         "dialisi-peritoneale.pdf",ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatari);
-    String toStringBean= annuncio.toString();
-    String toStringTest= "Annuncio [idAnnuncio=" + annuncio.getIdAnnuncio() + ", medico=" + annuncio.getMedico() 
-    + ", pazienti=" + annuncio.getPazientiView() + ", titolo=" + annuncio.getTitolo() + ", testo=" 
-    + annuncio.getTesto() + ", allegato=" + annuncio.getNomeAllegato() + ", data=" + annuncio.getData() 
-    + ", visualizzato=" + annuncio.getVisualizzato() + "]";
+    String toStringBean = annuncio.toString();
+    String toStringTest = "Annuncio [idAnnuncio=" + annuncio.getIdAnnuncio() + ", medico=" + annuncio.getMedico() 
+            + ", pazienti=" + annuncio.getPazientiView() + ", titolo=" + annuncio.getTitolo() + ", testo=" 
+            + annuncio.getTesto() + ", allegato=" + annuncio.getNomeAllegato() + ", data=" + annuncio.getData() 
+            + ", visualizzato=" + annuncio.getVisualizzato() + "]";
     assertEquals(toStringBean, toStringTest);
   }
 }

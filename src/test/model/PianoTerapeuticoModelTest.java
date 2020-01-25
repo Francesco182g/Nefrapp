@@ -1,23 +1,14 @@
 package test.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import bean.PianoTerapeutico;
 import java.time.LocalDate;
-import java.util.List;
-
-import org.bson.Document;
+import model.PianoTerapeuticoModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Medico;
-import bean.PianoTerapeutico;
-import model.DriverConnection;
-import model.MedicoModel;
-import model.PianoTerapeuticoModel;
 
 class PianoTerapeuticoModelTest {
   private static final String CODICE_FISCALE_PAZIENTE = "CRRSRA90A50A091Q";

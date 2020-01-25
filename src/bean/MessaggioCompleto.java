@@ -5,9 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /**
- * 
+ * Implementazione concreta completa di un Messaggio.
  * @author NefrappTeam
- * Implementazione concreta completa di un Messaggio
  */
 public class MessaggioCompleto implements Messaggio {
 
@@ -21,7 +20,8 @@ public class MessaggioCompleto implements Messaggio {
   private Boolean visualizzato;
   private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
 
-  public MessaggioCompleto() {}
+  public MessaggioCompleto() {
+  }
 
   public MessaggioCompleto(String codiceFiscaleMittente, 
       String oggetto, String testo,String corpoAllegato, String nomeAllegato, 

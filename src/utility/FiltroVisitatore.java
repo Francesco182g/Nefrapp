@@ -59,6 +59,7 @@ public class FiltroVisitatore implements Filter {
     chain.doFilter(request, response);
   }
 
-  public void init(FilterConfig fConfig) throws ServletException {}
+  public void init(FilterConfig fConfig) throws ServletException {
+  }
 
 }

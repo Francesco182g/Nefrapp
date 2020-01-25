@@ -1,20 +1,18 @@
 package test.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import bean.Amministratore;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import model.AmministratoreModel;
+import model.DriverConnection;
+import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import org.bson.Document;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Amministratore;
-import model.AmministratoreModel;
-import model.DriverConnection;
-
 import utility.CriptazioneUtility;
 
 class AmministratoreModelTest {
@@ -30,7 +28,7 @@ class AmministratoreModelTest {
         .append("Cognome", "Carbosiero")
         .append("Password",password)
         .append("Email", "f.carbosiero@live.it");
-    admin.insertOne(doc);	
+    admin.insertOne(doc);
   }
 
   @AfterAll
@@ -47,7 +45,7 @@ class AmministratoreModelTest {
     Amministratore adminTest = 
         AmministratoreModel.getAmministratoreByCFPassword("FLPBRZ62F17F876F", password);
     assertNotNull(adminTest);
-    assertEquals(adminTest.getCodiceFiscale(), "FLPBRZ62F17F876F");	
+    assertEquals(adminTest.getCodiceFiscale(), "FLPBRZ62F17F876F");
     assertEquals(adminTest.getNome(), "Filippo");
     assertEquals(adminTest.getCognome(), "Carbosiero");
     assertEquals(adminTest.getEmail(), "f.carbosiero@live.it");
@@ -64,7 +62,7 @@ class AmministratoreModelTest {
   void testGetAmministratoreByCF() {
     Amministratore adminTest = AmministratoreModel.getAmministratoreByCF("FLPBRZ62F17F876F");
     assertNotNull(adminTest);
-    assertEquals(adminTest.getCodiceFiscale(), "FLPBRZ62F17F876F");	
+    assertEquals(adminTest.getCodiceFiscale(), "FLPBRZ62F17F876F");
     assertEquals(adminTest.getNome(), "Filippo");
     assertEquals(adminTest.getCognome(), "Carbosiero");
     assertEquals(adminTest.getEmail(), "f.carbosiero@live.it");
@@ -73,8 +71,8 @@ class AmministratoreModelTest {
   
   @Test
   void testGetAmministratoreByCFNonPresente() {
-	Amministratore adminTest = AmministratoreModel.getAmministratoreByCF("FLPBTZ62F17F876F");
-	assertNull(adminTest);
+    Amministratore adminTest = AmministratoreModel.getAmministratoreByCF("FLPBTZ62F17F876F");
+    assertNull(adminTest);
   }
 
 
@@ -91,7 +89,7 @@ class AmministratoreModelTest {
     Amministratore adminTest = 
         AmministratoreModel.getAmministratoreByCFPassword("FLPBRZ62F17F876F", nuovaPassword);
     assertNotNull(adminTest);
-    assertEquals(adminTest.getCodiceFiscale(), "FLPBRZ62F17F876F");	
+    assertEquals(adminTest.getCodiceFiscale(), "FLPBRZ62F17F876F");
     assertEquals(adminTest.getNome(), "Filippo");
     assertEquals(adminTest.getCognome(), "Carbosiero");
     assertEquals(adminTest.getEmail(), "f.carbosiero@live.it");

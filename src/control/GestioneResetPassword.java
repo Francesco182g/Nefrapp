@@ -1,26 +1,24 @@
 package control;
 
+import bean.Medico;
+import bean.Utente;
 import java.io.IOException;
 import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import bean.Medico;
-import bean.Utente;
 import model.MedicoModel;
 import model.PazienteModel;
 import model.UtenteModel;
 import utility.InvioEmailUtility;
 
 /**
- * @author Davide Benedetto Strianese, Questa classe è una servlet che si occupa
- *         del reset della password 
+ * Questa classe è una servlet che si occupa
+ * del reset della password.
+ * @author Davide Benedetto Strianese
  */
 @WebServlet("/GestioneResetPassword")
 public class GestioneResetPassword extends HttpServlet {

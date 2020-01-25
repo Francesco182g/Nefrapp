@@ -1,14 +1,22 @@
 package test.control;
 
 import static com.mongodb.client.model.Filters.eq;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bean.Medico;
+import bean.Paziente;
+import bean.PianoTerapeutico;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import control.GestionePianoTerapeutico;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javax.servlet.ServletException;
-
+import model.DriverConnection;
+import model.PianoTerapeuticoModel;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -17,17 +25,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-
-import bean.Medico;
-import bean.Paziente;
-import bean.PianoTerapeutico;
-import control.GestionePianoTerapeutico;
-import model.DriverConnection;
-import model.PianoTerapeuticoModel;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 

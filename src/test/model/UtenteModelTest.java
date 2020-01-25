@@ -1,21 +1,21 @@
 package test.model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import bean.Medico;
 import bean.Paziente;
 import bean.Utente;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import model.MedicoModel;
 import model.PazienteModel;
 import model.UtenteModel;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class UtenteModelTest {
   private static final LocalDate dataNascitaMedico = LocalDate.parse("1967-07-11");

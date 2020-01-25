@@ -1,57 +1,38 @@
 package test.control;
 
 import static com.mongodb.client.model.Filters.eq;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.Part;
-import org.bson.Document;
-import org.bson.internal.Base64;
-import org.bson.types.ObjectId;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockMultipartHttpServletRequest;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Projections;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import bean.Medico;
 import bean.Messaggio;
 import bean.MessaggioCompleto;
 import bean.MessaggioProxy;
 import bean.Paziente;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Projections;
 import control.GestioneMessaggi;
+import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import javax.servlet.ServletException;
 import model.DriverConnection;
 import model.MessaggioModel;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.web.WebAppConfiguration;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
@@ -59,10 +40,11 @@ import utility.CriptazioneUtility;
 
 
 //NB: mancano casi di test sull'inserimento di allegati.
-//L'unico modo che ho trovato per simulare l'inserimento di un file in un multipart form richiede una configurazione Spring completa.
+//L'unico modo che ho trovato per simulare l'inserimento di un file in 
+//un multipart form richiede una configurazione Spring completa.
 //L'inserimento di allegati sarà testato in testing di sistema.
 
-class GestioneMessaggiTest {	
+class GestioneMessaggiTest {
   private static Paziente paziente;
   private static Medico medico;
   private static Messaggio daPazAMed;
@@ -70,8 +52,8 @@ class GestioneMessaggiTest {
   private static String CfPaziente = "BNCLRD67A01F205I";
   private static String CfMedico = "GRMBNN67L11B516R";
   private String oggetto = "Cambio data appuntamento";
-  private String testo = "Gentile signor Alfredo,\n" + 
-      "Le comunico che a causa di impegni personali non potrò riceverla domani; \n" 
+  private String testo = "Gentile signor Alfredo,\n" 
+      + "Le comunico che a causa di impegni personali non potrò riceverla domani; \n" 
       + "le invio in allegato una tabella con i giorni e gli orari a "
       + "cui possiamo rimandare l’appuntamento.";
 
@@ -134,7 +116,7 @@ class GestioneMessaggiTest {
       messaggi.deleteOne(d);
     }
 
-    FindIterable <Document> messaggioDoc2 = messaggi.find(eq("MittenteCodiceFiscale", medico.getCodiceFiscale()))
+    FindIterable<Document> messaggioDoc2 = messaggi.find(eq("MittenteCodiceFiscale", medico.getCodiceFiscale()))
         .projection(Projections.include("_id"));
     for (Document d : messaggioDoc2) {
       messaggi.deleteOne(d);
@@ -180,9 +162,8 @@ class GestioneMessaggiTest {
     servlet.doPost(request, response);
 
     request.setParameter("oggetto", oggetto);
-    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" + 
-        "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n" + 
-        "");
+    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n"
+    + "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n");
     request.setParameter("selectPaziente", CfPaziente);
     request.setParameter("operazione", "inviaMessaggio");
     servlet.doPost(request, response);
@@ -253,9 +234,8 @@ class GestioneMessaggiTest {
     servlet.doPost(request, response);
 
     request.setParameter("oggetto", oggetto);
-    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" + 
-        "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n" + 
-        "");
+    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" 
+    + "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n");
     request.setParameter("selectMedico", CfMedico);
     request.setParameter("operazione", "inviaMessaggio");
     servlet.doPost(request, response);
@@ -273,9 +253,8 @@ class GestioneMessaggiTest {
     servlet.doPost(request, response);
 
     request.setParameter("oggetto", oggetto);
-    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" + 
-        "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n" + 
-        "");
+    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\n" 
+    + "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\n");
     request.setParameter("selectMedico", "");
     request.setParameter("operazione", "inviaMessaggio");
     servlet.doPost(request, response);
@@ -341,7 +320,7 @@ class GestioneMessaggiTest {
     //l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
     //perché nel mostrare la lista il model sceglie prima i messaggi più recenti
     messaggi.add(secondo);
-    messaggi.add(primo);	
+    messaggi.add(primo);
 
     request.setParameter("operazione", "visualizzaElencoMessaggio");
     servlet.doGet(request, response);
@@ -388,7 +367,7 @@ class GestioneMessaggiTest {
     //l'ordine di inserimento va invertito rispetto all'ordine di aggiunta al database
     //perché nel mostrare la lista il model sceglie prima i messaggi più recenti
     messaggi.add(secondo);
-    messaggi.add(primo);	
+    messaggi.add(primo);
 
     request.setParameter("operazione", "visualizzaElencoMessaggio");
     servlet.doGet(request, response);
@@ -454,8 +433,8 @@ class GestioneMessaggiTest {
     //inserisco un messaggio senza destinatari, condizione di rimozione
     Document d = 
         messaggi.find(eq("_id", new ObjectId(daMedAPaz.getIdMessaggio())))
-        .projection(Projections.exclude("_id")).
-        first().append("DestinatariView", null);
+        .projection(Projections.exclude("_id"))
+        .first().append("DestinatariView", null);
     messaggi.insertOne(d);
     ObjectId id = (ObjectId)d.get("_id");
 

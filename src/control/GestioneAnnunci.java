@@ -1,10 +1,14 @@
 package control;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import bean.Annuncio;
+import bean.Medico;
+import bean.Paziente;
+import bean.Utente;
+import com.google.gson.Gson;
+import com.mongodb.MongoException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,21 +16,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-import com.mongodb.MongoException;
-
-import bean.Annuncio;
-import bean.Medico;
-import bean.Paziente;
-import bean.Utente;
 import model.AnnuncioModel;
 import model.UtenteModel;
+import org.apache.tomcat.util.codec.binary.Base64;
 import utility.CriptazioneUtility;
 
 /**
- * @author Davide Benedetto Strianese, Sara, Nico, Eugenio Questa classe è una
- *         servlet che si occupa della gestione degli annunci
+ * Questa classe è una servlet che si occupa della gestione degli annunci.
+ * @author Davide Benedetto Strianese, Sara, Nico, Eugenio 
  */
 @WebServlet("/GestioneAnnunci")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB

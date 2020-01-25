@@ -6,9 +6,8 @@ import java.util.HashMap;
 import model.AnnuncioModel;
 
 /**
- * 
+ * Implementazione concreta lightweight di un Annuncio (proxy design pattern).
  * @author Sara Corrente
- * Implementazione concreta lightweight di un Annuncio (proxy design pattern)
  */
 public class AnnuncioProxy implements Annuncio {
   private Annuncio buffer = null;
@@ -21,7 +20,8 @@ public class AnnuncioProxy implements Annuncio {
   private Boolean visualizzato;
   private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>();
 
-  public AnnuncioProxy() {}
+  public AnnuncioProxy() {
+  }
 
   public AnnuncioProxy(String medico, String titolo, String testo, String nomeAllegato,
       ZonedDateTime data, HashMap<String, Boolean> pazientiView) {

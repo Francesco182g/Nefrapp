@@ -1,27 +1,21 @@
 package control;
 
+import bean.Amministratore;
+import bean.Medico;
+import bean.Paziente;
+import bean.Utente;
+import com.google.gson.Gson;
 import java.io.IOException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
-import com.google.gson.Gson;
-
-import bean.Amministratore;
-import bean.Medico;
-import bean.Paziente;
-import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
@@ -29,16 +23,14 @@ import model.PianoTerapeuticoModel;
 import utility.CriptazioneUtility;
 
 /**
+ *  Questa classe è una servlet che si occupa della gestione delle funzionalità dell'amministratore.
  *  @author Luca Esposito e Eugenio Corbisiero
- *  Questa classe è una servlet che si occupa della gestione delle funzionalità dell'amministratore
  */
 @WebServlet("/GestioneAmministratore")
 public class GestioneAmministratore extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  /**
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-   */
+
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     //Verifica del tipo di chiamata alla servlet (sincrona o asinconrona)(sincrona ok)
@@ -66,10 +58,10 @@ public class GestioneAmministratore extends HttpServlet {
 
       else {
         throw new Exception("Operazione invalida");
-      }	
+      }
     } catch (Exception e) {
       e.printStackTrace();
-      response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");	
+      response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
     }
 
   }
@@ -94,9 +86,6 @@ public class GestioneAmministratore extends HttpServlet {
     return;
   }
 
-  /**
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-   */
   public void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     // TODO Auto-generated method stub
@@ -129,7 +118,7 @@ public class GestioneAmministratore extends HttpServlet {
    */
   private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response, 
       HttpSession session) throws ServletException, IOException {
-    String codiceFiscale = request.getParameter("codiceFiscale");	
+    String codiceFiscale = request.getParameter("codiceFiscale");
     if (request.getParameter("tipoUtente").equals("amministratore")) {
       Amministratore amministratoreLoggato = (Amministratore) session.getAttribute("utente");
       if (amministratoreLoggato != null) {
@@ -151,7 +140,7 @@ public class GestioneAmministratore extends HttpServlet {
           response.sendRedirect("./resetPasswordAmministratoreView.jsp?notifica=PassErr");
         }
       }
-     } else {
+    } else {
       String nome = request.getParameter("nome");
       String cognome = request.getParameter("cognome");
       String sesso = request.getParameter("sesso");
@@ -194,9 +183,9 @@ public class GestioneAmministratore extends HttpServlet {
           response.sendRedirect("./ModificaAccountPazienteView.jsp?notifica=ParamErr");
         }
       }
-      else if (request.getParameter("tipoUtente").equals("medico")){
+      else if (request.getParameter("tipoUtente").equals("medico")) {
         Medico medico = MedicoModel.getMedicoByCF(codiceFiscale);
-        if (validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita)&&!MedicoModel.checkEmail(email)) {
+        if (validazione(codiceFiscale,nome,cognome,sesso,email,residenza,luogoDiNascita,dataDiNascita) && !MedicoModel.checkEmail(email)) {
           medico.setCognome(cognome);
           medico.setNome(nome);
           if (!dataDiNascita.equals("")) {
@@ -210,15 +199,14 @@ public class GestioneAmministratore extends HttpServlet {
           if (!password.equals("") || !confermaPassword.equals("")) {
             if (validaPassword(password,password,confermaPassword) && password.equals(confermaPassword)) {
               password = CriptazioneUtility.criptaConMD5(password);
-              MedicoModel.updateMedico(medico);								
+              MedicoModel.updateMedico(medico);
               MedicoModel.updatePasswordMedico(codiceFiscale, password);
               response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
             } else {
               response.sendRedirect("./ModificaAccountMedicoView.jsp?notifica=PassErr");
             }
           }
-          else
-          {
+          else {
             MedicoModel.updateMedico(medico);
             response.sendRedirect("./dashboard.jsp?notifica=ModificaMedRiuscita");
           }
@@ -273,17 +261,17 @@ public class GestioneAmministratore extends HttpServlet {
       if (!Pattern.matches(expEmail, email) || email.length() < 5 || email.length() > 50) {
         valido = false;
       }
-    if(!residenza.equals(""))
+    if (!residenza.equals(""))
       if (!Pattern.matches(expResidenza, residenza) || residenza.length() < 5 
           || residenza.length() > 50) {
         valido = false;
       }
-    if(!luogoDiNascita.equals(""))
+    if (!luogoDiNascita.equals(""))
       if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita) || luogoDiNascita.length() < 3
           || luogoDiNascita.length() > 30) {
         valido = false;
       }
-    if(!dataDiNascita.equals(""))
+    if (!dataDiNascita.equals(""))
       if (!Pattern.matches(expDataDiNascita, dataDiNascita)) {
         valido = false;
       }

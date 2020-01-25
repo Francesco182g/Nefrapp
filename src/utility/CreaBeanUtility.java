@@ -1,15 +1,5 @@
 package utility;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
-import org.bson.Document;
-
 import bean.Amministratore;
 import bean.Annuncio;
 import bean.AnnuncioCompleto;
@@ -21,12 +11,19 @@ import bean.MessaggioProxy;
 import bean.Paziente;
 import bean.PianoTerapeutico;
 import bean.SchedaParametri;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import org.bson.Document;
 
 /**
- * 
- * @author Antonio Questa classe contiene tutt i metodi di conversione dei
- *         documenti in bean
- * 
+ * Questa classe contiene tutt i metodi di conversione dei
+ * documenti in bean.
+ * @author Antonio 
  */
 
 public class CreaBeanUtility {
@@ -122,7 +119,7 @@ public class CreaBeanUtility {
   }
 
   /**
-   * Metodo che converte il documento inviato in un PianoTerapeutico
+   * Metodo che converte il documento inviato in un PianoTerapeutico.
    * 
    * @param datiPiano documento che continee i dati della scheda
    * @return schedaParametri convertito dal documento

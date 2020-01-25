@@ -1,18 +1,18 @@
 package test.model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import bean.Medico;
 import bean.Paziente;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import model.MedicoModel;
 import model.PazienteModel;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class PazienteModelTest {
   private static final LocalDate dataNascitaPaziente = LocalDate.parse("1979-05-16");
@@ -24,8 +24,8 @@ class PazienteModelTest {
 
   @BeforeEach
   void setUp() {
-	PazienteModel p = new PazienteModel();
-	medici.add("GRMBNN67L11B519R");
+    PazienteModel p = new PazienteModel();
+    medici.add("GRMBNN67L11B519R");
     Paziente paziente = new Paziente("M", "RSSGPP79E16I483P", "Giuseppe", "Russo", "giuseppe.russo@live.it", residenzaPaziente, "Scafati", dataNascitaPaziente, false, medici);
     PazienteModel.addPaziente(paziente, "PasswordDifficile");
 
@@ -63,7 +63,7 @@ class PazienteModelTest {
   void testGetPazientiSeguiti() {
     ArrayList<Paziente> pazienti = PazienteModel.getPazientiSeguiti("GRMBNN67L11B519R");
     System.out.println(pazienti.toString());
-    assertNotNull(pazienti);	
+    assertNotNull(pazienti);
   }
 
 
@@ -131,7 +131,7 @@ class PazienteModelTest {
   void testGetAllPazienti() {
     ArrayList<Paziente> pazienti = PazienteModel.getAllPazienti();
     //anche se non ci sono pazienti, restituisce un arrayList void che è comunque != null, no?
-    assertNotNull(pazienti);	
+    assertNotNull(pazienti);
   }
 
   @Test 
@@ -153,5 +153,5 @@ class PazienteModelTest {
     assertNotNull(daAggiornare);
     assertEquals(daAggiornare.getNome(), "Ettore");
     assertEquals(daAggiornare.getCognome(), "Anzano");
-  }	
+  }
 }

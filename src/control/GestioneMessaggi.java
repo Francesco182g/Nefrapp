@@ -1,8 +1,11 @@
 package control;
 
+import bean.Messaggio;
+import bean.Utente;
+import com.google.gson.Gson;
+import com.mongodb.MongoException;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-import com.mongodb.MongoException;
-
-import bean.Messaggio;
-import bean.Utente;
 import model.MessaggioModel;
 import model.UtenteModel;
 import utility.CriptazioneUtility;
 
 /**
- * @author Sara, Nico
  * Servlet implementation class GestioneMessaggio.
+ * @author Sara, Nico
  */
 @WebServlet("/GestioneMessaggi")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
@@ -35,11 +32,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
     super();
   }
 
-  /**
-   * @throws IOException possibile eccezione
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-   *      response)
-   */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
 
@@ -113,10 +105,6 @@ public class GestioneMessaggi extends GestioneComunicazione {
     return;
   }
 
-  /**
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-   *      response)
-   */
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
     try {
       doGet(request, response);
@@ -127,11 +115,11 @@ public class GestioneMessaggi extends GestioneComunicazione {
 
   /**
    * Metodo che prende la lista dei messaggi ricevuti dall'utente e lo salva nella
-   * richiesta
+   * richiesta.
    * 
    * @param request richiesta utilizzata per ottenere parametri e settare
    *                attributi
-   * @throws IOException
+   * @throws IOException possibile eccezione
    */
   private void visualizzaListaMessaggi(HttpServletRequest request, HttpServletResponse response) 
       throws IOException {

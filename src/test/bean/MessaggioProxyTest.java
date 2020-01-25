@@ -1,27 +1,22 @@
 package test.bean;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import bean.Messaggio;
+import bean.MessaggioCompleto;
+import bean.MessaggioProxy;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
+import model.MessaggioModel;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bean.Medico;
-import bean.Messaggio;
-import bean.MessaggioCompleto;
-import bean.MessaggioProxy;
-import model.MedicoModel;
-import model.MessaggioModel;
-
 class MessaggioProxyTest {
-  static private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
+  private static HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
 
   static String id = new String();
   

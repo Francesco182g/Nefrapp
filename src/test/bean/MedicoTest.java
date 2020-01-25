@@ -1,12 +1,11 @@
 package test.bean;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import bean.Medico;
+import java.time.LocalDate;
+import org.junit.jupiter.api.Test;
 
 class MedicoTest {
   private static final LocalDate dataNascitaMedico = LocalDate.parse("1967-07-11");

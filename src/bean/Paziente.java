@@ -5,11 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
- * 
+ * Questa classe rappresenta il paziente.
  * @author Sara Corrente
- * Questa classe rappresenta il paziente
  */
-public class Paziente extends Utente{
+public class Paziente extends Utente {
   private String sesso;
   private String residenza;
   private String luogoDiNascita;
@@ -17,7 +16,8 @@ public class Paziente extends Utente{
   private Boolean attivo;
   private ArrayList<String> medici;
 
-  public Paziente() {}
+  public Paziente() {
+  }
 
   public Paziente(String sesso, String codiceFiscale, String nome, String cognome, 
       String email, String residenza, String luogoDiNascita, LocalDate dataDiNascita, 

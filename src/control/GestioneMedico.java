@@ -1,11 +1,14 @@
 package control;
 
+import bean.Amministratore;
+import bean.Medico;
+import bean.Paziente;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,21 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-
-import bean.Amministratore;
-import bean.Medico;
-import bean.Paziente;
-import model.AnnuncioModel;
 import model.MedicoModel;
 import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 /**
+ * Questa clase è una servlet che si occupa della gestione del medico.
  * @author Antonio Donnarumma, Davide Benedetto Strianese, Matteo Falco 
- *         Questa clase � una servlet che si occupa della gestione del medico
- *
  */
 @WebServlet("/GestioneMedico")
 public class GestioneMedico extends HttpServlet {
@@ -252,7 +247,7 @@ public class GestioneMedico extends HttpServlet {
     }
     
     if (!Pattern.matches(expCognome, cognome) || cognome.length() < 2 || cognome.length() > 30) {
-    	valido = false;
+      valido = false;
     }
     
     if (!Pattern.matches(expPassword, password) || password.length() < 6 || password.length() > 20) {

@@ -3,13 +3,11 @@ package bean;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
 import model.MessaggioModel;
 
 /**
- * 
+ * Implementazione concreta lightweight di un Messaggio (proxy design pattern).
  * @author Domenico Musone
- * Implementazione concreta lightweight di un Messaggio (proxy design pattern)
  */
 public class MessaggioProxy implements Messaggio {
   private Messaggio buffer = null;
@@ -20,7 +18,8 @@ public class MessaggioProxy implements Messaggio {
   private Boolean visualizzato;
   private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
 
-  public MessaggioProxy() {}
+  public MessaggioProxy() {
+  }
 
   public MessaggioProxy(String codiceFiscaleMittente, String oggetto, 
       ZonedDateTime data, HashMap<String, Boolean> destinatariView) {
@@ -60,7 +59,7 @@ public class MessaggioProxy implements Messaggio {
       buffer = MessaggioModel.getMessaggioById(idMessaggio);
     }
 
-    return buffer.getTesto();	
+    return buffer.getTesto();
   }
 
   public void setTesto(String testo) {
@@ -92,7 +91,7 @@ public class MessaggioProxy implements Messaggio {
       buffer = MessaggioModel.getMessaggioById(idMessaggio);
     }
 
-    return buffer.getNomeAllegato();	
+    return buffer.getNomeAllegato();
   }
 
   public void setNomeAllegato(String nomeAllegato) {
@@ -100,7 +99,7 @@ public class MessaggioProxy implements Messaggio {
       buffer = MessaggioModel.getMessaggioById(idMessaggio);
     }
 
-    buffer.setNomeAllegato(nomeAllegato);	
+    buffer.setNomeAllegato(nomeAllegato);
   }
 
   public String getOraFormattata() {

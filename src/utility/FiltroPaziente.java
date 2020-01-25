@@ -15,8 +15,9 @@ import javax.servlet.http.HttpSession;
 
 
 
-/**Servlet filter che effettua il redirect ad una pagina di errore nel caso in cui un paziente
- * cercasse di fare accesso a una risorsa a lui non disponibile
+/**
+ * Servlet filter che effettua il redirect ad una pagina di errore nel caso in cui un paziente
+ * cercasse di fare accesso a una risorsa a lui non disponibile.
  * 
  * @author nico
  */
@@ -55,6 +56,7 @@ public class FiltroPaziente implements Filter {
     chain.doFilter(request, response);
   }
 
-  public void init(FilterConfig fConfig) throws ServletException {}
+  public void init(FilterConfig fConfig) throws ServletException {
+  }
 
 }

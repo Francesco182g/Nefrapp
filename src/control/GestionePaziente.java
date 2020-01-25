@@ -1,47 +1,34 @@
 package control;
 
+import bean.Medico;
+import bean.Paziente;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import bean.Medico;
-import bean.Paziente;
 import model.MedicoModel;
 import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 /**
- * Servlet implementation class GestionePaziente
- */
-/**
+ * Questa clase è una servlet che si occupa della gestione del paziente.
  * @author Silvio Di Martino
- * Questa clase è una servlet che si occupa della gestione del paziente
- *
  */
 @WebServlet("/GestionePaziente")
 public class GestionePaziente extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  /**
-   * @see HttpServlet#HttpServlet()
-   */
   public GestionePaziente() {
     super();
   }
 
-  /**
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-   */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
       String operazione = request.getParameter("operazione");
@@ -63,7 +50,7 @@ public class GestionePaziente extends HttpServlet {
         modificaDatiPersonali(request, response);
         caricaMedici(request,response);
         if (!response.isCommitted()) {
-          response.sendRedirect("./profilo.jsp?notifica=modificaEffettuata");	
+          response.sendRedirect("./profilo.jsp?notifica=modificaEffettuata");
         }
         return;
       }
@@ -71,14 +58,11 @@ public class GestionePaziente extends HttpServlet {
     } catch (Exception e) {
       e.printStackTrace();
       if (!response.isCommitted()) {
-        response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");	
+        response.sendRedirect("./paginaErrore.jsp?notifica=eccezione");
       }
     }
   }
 
-  /**
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-   */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws IOException {
     doGet(request, response);
@@ -109,7 +93,7 @@ public class GestionePaziente extends HttpServlet {
    * Metodo che modifica i dati personali di un utente Paziente.
    * @param request richiesta utilizzata per ottenere parametri e settare attributi
    * @throws IOException possibile eccezione
-   */	
+   */
   private void modificaDatiPersonali(HttpServletRequest request, HttpServletResponse response) 
       throws IOException {
     HttpSession session = request.getSession();
@@ -159,7 +143,7 @@ public class GestionePaziente extends HttpServlet {
   /**
    * Metodo che carica i medici che seguono il paziente in sessione.
    * @param request richiesta utilizzata per ottenere parametri e settare attributi
-   */	
+   */
   private void caricaMedici(HttpServletRequest request, HttpServletResponse response) {
     Paziente paziente = null;
     HttpSession session = request.getSession();
@@ -213,14 +197,14 @@ public class GestionePaziente extends HttpServlet {
     if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
       valido = false;
     if (email.length() != 0) {
-      if (!Pattern.matches(expEmail, email)||email.length()<5 ||email.length()>50)
+      if (!Pattern.matches(expEmail, email) || email.length() < 5 || email.length() > 50)
         valido = false;
     }
     if (!residenza.equals(""))
       if (!Pattern.matches(expResidenza, residenza))
         valido = false;
     if (!luogoDiNascita.equals(""))
-      if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita) || luogoDiNascita.length() < 5|| luogoDiNascita.length() > 50)
+      if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita) || luogoDiNascita.length() < 5 || luogoDiNascita.length() > 50)
         valido = false;
     if (!dataDiNascita.equals(""))
       if (!Pattern.matches(expDataDiNascita, dataDiNascita))
@@ -229,6 +213,6 @@ public class GestionePaziente extends HttpServlet {
       valido = false;
 
     return valido;
-  }	
+  }
 
 }

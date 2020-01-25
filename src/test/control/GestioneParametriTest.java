@@ -1,14 +1,20 @@
 package test.control;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import bean.Paziente;
+import bean.SchedaParametri;
+import bean.Utente;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import control.GestioneParametri;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javax.servlet.ServletException;
-
+import model.DriverConnection;
+import model.SchedaParametriModel;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,16 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Paziente;
-import bean.SchedaParametri;
-import bean.Utente;
-import control.GestioneParametri;
-import model.DriverConnection;
-import model.SchedaParametriModel;
 import utility.CriptazioneUtility;
 
 class GestioneParametriTest {
@@ -47,13 +43,13 @@ class GestioneParametriTest {
     schedaParametri = new SchedaParametri("BNCDNC67A01F205I", new BigDecimal(75), 120, 80, 1550, 700, 1, 1000, 1500,LocalDate.now());
   }
 
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-		MongoCollection<Document> schedaParametri = DriverConnection.getConnection().getCollection("SchedaParametri");
-		BasicDBObject document2 = new BasicDBObject();
-		document2.put("PazienteCodiceFiscale", "BNCDNC67A01F205I");
-		schedaParametri.deleteOne(document2);
-	}
+  @AfterAll
+  static void tearDownAfterClass() throws Exception {
+    MongoCollection<Document> schedaParametri = DriverConnection.getConnection().getCollection("SchedaParametri");
+    BasicDBObject document2 = new BasicDBObject();
+    document2.put("PazienteCodiceFiscale", "BNCDNC67A01F205I");
+    schedaParametri.deleteOne(document2);
+  }
 
   @BeforeEach
   void setUp() throws Exception {
@@ -82,7 +78,7 @@ class GestioneParametriTest {
         .append("Carico", schedaParametri.getCarico())
         .append("Scarico", schedaParametri.getScarico())
         .append("Data", schedaParametri.getData());
-    scheda.insertOne(doc);	
+    scheda.insertOne(doc);
   }
 
   @AfterEach

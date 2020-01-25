@@ -1,35 +1,34 @@
 package test.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import bean.Messaggio;
+import bean.MessaggioCompleto;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import static org.junit.jupiter.api.Assertions.*;
+import model.MessaggioModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bean.Annuncio;
-import bean.AnnuncioCompleto;
-import bean.Messaggio;
-import bean.MessaggioCompleto;
-import model.AnnuncioModel;
-import model.MessaggioModel;
-
 
 public class MessaggioModelTest {
-  private final static String CFDestinatario = "BNCLRD67A01F205I";
-  private final static String CFMittente = "GRMBNN67L11B516R";
-  private final static String oggetto = "visita";
-  private final static String testo = "Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”";
-  private final static String corpoAllegato = "codiceAllegato";
-  private final static String nomeAllegato = "ilpazienteirriverente.pdf";
-  private final static ZonedDateTime data = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
-  private final static HashMap<String,Boolean> destinatariView = new HashMap<String,Boolean>();
-  private final static DateTimeFormatter formatOra = DateTimeFormatter.ofPattern("HH:mm");
-  private final static DateTimeFormatter formatData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  private static final String CFDestinatario = "BNCLRD67A01F205I";
+  private static final String CFMittente = "GRMBNN67L11B516R";
+  private static final String oggetto = "visita";
+  private static final String testo = "Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”";
+  private static final String corpoAllegato = "codiceAllegato";
+  private static final String nomeAllegato = "ilpazienteirriverente.pdf";
+  private static final ZonedDateTime data = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
+  private static final HashMap<String,Boolean> destinatariView = new HashMap<String,Boolean>();
+  private static final DateTimeFormatter formatOra = DateTimeFormatter.ofPattern("HH:mm");
+  private static final DateTimeFormatter formatData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
   static MessaggioCompleto messaggio = new MessaggioCompleto(CFMittente, oggetto, testo,corpoAllegato,nomeAllegato,data, destinatariView);
   String id = "";
 
@@ -53,7 +52,7 @@ public class MessaggioModelTest {
 
   @Test
   void testAddMessaggio() {
-	HashMap<String, Boolean> hm = new HashMap<>();
+    HashMap<String, Boolean> hm = new HashMap<>();
     MessaggioCompleto messaggioDaAggiungere = new MessaggioCompleto(CFMittente, oggetto, testo,corpoAllegato,nomeAllegato,data, hm);
     String idDaTestare = MessaggioModel.addMessaggio(messaggioDaAggiungere);
     MessaggioCompleto messaggioDaTestare =

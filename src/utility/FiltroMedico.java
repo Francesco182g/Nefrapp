@@ -35,7 +35,8 @@ public class FiltroMedico implements Filter {
   
   RequestDispatcher dispatcher;
 
-  public void destroy() {}
+  public void destroy() {
+  }
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
       throws IOException, ServletException {
@@ -55,6 +56,7 @@ public class FiltroMedico implements Filter {
     chain.doFilter(request, response);
   }
 
-  public void init(FilterConfig fConfig) throws ServletException {}
+  public void init(FilterConfig fConfig) throws ServletException {
+  }
 
 }

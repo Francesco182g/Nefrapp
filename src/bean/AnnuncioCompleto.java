@@ -1,15 +1,14 @@
 package bean;
 
-import java.util.HashMap;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 /**
- * 
+ * Questa classe rappresenta l'annuncio.
  * @author Davide Benedetto Strianese 
- * Questa classe rappresenta l'annuncio
  */
-public class AnnuncioCompleto implements Annuncio{
+public class AnnuncioCompleto implements Annuncio {
   private String idAnnuncio;
   private String medico; // CF del medico che ha pubblicato l'annuncio
   private String titolo;
@@ -20,7 +19,8 @@ public class AnnuncioCompleto implements Annuncio{
   private Boolean visualizzato;
   private HashMap<String, Boolean> pazientiView = new HashMap<String, Boolean>(); 
   
-  public AnnuncioCompleto() {}
+  public AnnuncioCompleto() {
+  }
 
   
   public AnnuncioCompleto(String medico, String titolo, String testo, String corpoAllegato,

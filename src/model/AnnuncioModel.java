@@ -2,31 +2,24 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.time.ZonedDateTime;
+import bean.Annuncio;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Projections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Projections;
-
-import bean.Annuncio;
 import utility.CreaBeanUtility;
 
-/**
- * 
- * @author 
- * Questa classe � un manager che si occupa di interagire con il database.
- * Gestisce le query riguardanti l'annuncio
+/** 
+ * Questa classe è un manager che si occupa di interagire con il database.
  */
 public class AnnuncioModel {
 
@@ -87,7 +80,7 @@ public class AnnuncioModel {
       Document coppia = new Document();
       coppia.append("CFDestinatario", null).append("Visualizzazione", false);
       pazientiView.add(coppia);
-    } else {	
+    } else {
       while (it.hasNext()) {
         Map.Entry pair = (Map.Entry) it.next();
         Document coppia = new Document();
@@ -96,8 +89,8 @@ public class AnnuncioModel {
       }
     }
 
-    Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato()).
-        append("CorpoAllegato", daAggiungere.getCorpoAllegato());
+    Document allegato = new Document("NomeAllegato", daAggiungere.getNomeAllegato())
+        .append("CorpoAllegato", daAggiungere.getCorpoAllegato());
 
     Document doc = new Document("MedicoCodiceFiscale", daAggiungere.getMedico())
         //.append("PazientiCodiceFiscale", daAggiungere.getPazientiView())
@@ -154,7 +147,7 @@ public class AnnuncioModel {
     if (daAggiornare.getTesto() != null) {
       d.append("Testo", daAggiornare.getTesto());
     }
-    if (daAggiornare.getCorpoAllegato() != null && daAggiornare.getNomeAllegato()!= null) {
+    if (daAggiornare.getCorpoAllegato() != null && daAggiornare.getNomeAllegato() != null) {
       Document allegato = 
           new Document("NomeAllegato", daAggiornare.getNomeAllegato())
           .append("CorpoAllegato", daAggiornare.getCorpoAllegato());
@@ -263,7 +256,7 @@ public class AnnuncioModel {
    * @precondition idAnnuncio != null.
    */
   public static void setVisualizzatoAnnuncio(String idAnnuncio, String CFPaziente, Boolean visualizzato) {
-    MongoCollection<Document> annunciDB= 
+    MongoCollection<Document> annunciDB = 
         DriverConnection.getConnection().getCollection("Annuncio");
     Document updateQuery = new Document();
     Document query = new Document(new BasicDBObject("_id", new ObjectId(idAnnuncio)))

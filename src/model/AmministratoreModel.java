@@ -1,19 +1,20 @@
 package model;
 
 import static com.mongodb.client.model.Filters.eq;
+
+import bean.Amministratore;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-import bean.Amministratore;
 import utility.CreaBeanUtility;
 
 /**
+ * Questa classe � un manager che si occupa di interagire con il database.
+ * Gestisce le query riguardanti l'amministratore.
  * 
  * @author Luca Esposito, Eugenio Corbisiero
- * Questa classe � un manager che si occupa di interagire con il database.
- * Gestisce le query riguardanti l'amministratore
  */
 public class AmministratoreModel {
 

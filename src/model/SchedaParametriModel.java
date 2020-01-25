@@ -2,23 +2,21 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import org.bson.Document;
-
+import bean.SchedaParametri;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
-import bean.SchedaParametri;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import org.bson.Document;
 import utility.CreaBeanUtility;
 
 /**
- * 
- * @author NefrappTeam.
  * Questa classe � un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti la scheda dei parametri.
+ * @author NefrappTeam
  */
 public class SchedaParametriModel {
 
@@ -72,12 +70,11 @@ public class SchedaParametriModel {
         .append("Carico", daAggiungere.getCarico())
         .append("Scarico", daAggiungere.getScarico())
         .append("Data", daAggiungere.getData());
-    scheda.insertOne(doc);	
+    scheda.insertOne(doc);
   }
 
 
   /**
-   * 
    * Questo metodo si occupa di ricercare e di restituire tutte le schede parametri 
    * di un paziente comprese in un range di date.
    * 

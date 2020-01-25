@@ -1,5 +1,12 @@
 package control;
 
+import bean.Annuncio;
+import bean.AnnuncioCompleto;
+import bean.Medico;
+import bean.Messaggio;
+import bean.MessaggioCompleto;
+import bean.Paziente;
+import bean.Utente;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
@@ -8,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -16,28 +22,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
-import com.mongodb.MongoException;
-
-import bean.Annuncio;
-import bean.AnnuncioCompleto;
-import bean.Medico;
-import bean.Messaggio;
-import bean.MessaggioCompleto;
-import bean.Paziente;
-import bean.Utente;
 import javax.servlet.http.Part;
-import model.MessaggioModel;
 import model.AnnuncioModel;
 import model.MedicoModel;
+import model.MessaggioModel;
 import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 
 /**
  * Questa classe è una servlet che svolge le operazioni comuni delle
- * funzionalità di comunicazione
+ * funzionalità di comunicazione.
  * 
  * @author nico
  */
@@ -237,7 +232,7 @@ public class GestioneComunicazione extends HttpServlet {
 
   /**
    * Questo metodo rimuove una comunicazione incompleta nel caso in cui l'utente
-   * decida volontariamente di cancellare un allegato gia' caricato
+   * decida volontariamente di cancellare un allegato gia' caricato.
    * 
    * @param tipo stringa contenente il tipo di comunicazione da eliminare
    * @param session HttpSession da cui eliminare gli attributi relativi

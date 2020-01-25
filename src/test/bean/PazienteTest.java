@@ -1,13 +1,12 @@
 package test.bean;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import bean.Paziente;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
 
 class PazienteTest {
 

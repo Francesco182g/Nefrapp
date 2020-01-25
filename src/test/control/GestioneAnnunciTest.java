@@ -6,6 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import bean.Annuncio;
+import bean.AnnuncioCompleto;
+import bean.AnnuncioProxy;
+import bean.Medico;
+import bean.Paziente;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Projections;
+import control.GestioneAnnunci;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.ZoneId;
@@ -14,10 +23,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-
+import model.AnnuncioModel;
+import model.DriverConnection;
+import model.MessaggioModel;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
@@ -28,23 +38,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
-
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Projections;
-
-import bean.Annuncio;
-import bean.AnnuncioCompleto;
-import bean.AnnuncioProxy;
-import bean.Medico;
-import bean.Messaggio;
-import bean.MessaggioProxy;
-import bean.Paziente;
-import control.GestioneAnnunci;
-import control.GestioneMessaggi;
-import model.AnnuncioModel;
-import model.DriverConnection;
-import model.MessaggioModel;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
@@ -105,7 +98,7 @@ public class GestioneAnnunciTest {
 
     destinatari = new HashMap<String, Boolean>();
     destinatari.put(CFPaziente1, false);
-    annuncio=new AnnuncioCompleto(CFMedico,titolo,testo,nomeAllegato,corpoAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatari);
+    annuncio = new AnnuncioCompleto(CFMedico,titolo,testo,nomeAllegato,corpoAllegato,ZonedDateTime.now(ZoneId.of("Europe/Rome")), destinatari);
 
     MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
     ArrayList<Document> destinatariView = new ArrayList<Document>();
@@ -140,7 +133,7 @@ public class GestioneAnnunciTest {
   @AfterEach
   void tearDown() throws Exception {
     MongoCollection<Document> annunci = DriverConnection.getConnection().getCollection("Annuncio");
-    FindIterable <Document> messaggioDoc2 = annunci.find(eq("MedicoCodiceFiscale", CFMedico))
+    FindIterable<Document> messaggioDoc2 = annunci.find(eq("MedicoCodiceFiscale", CFMedico))
         .projection(Projections.include("_id"));
     for (Document d : messaggioDoc2) {
       annunci.deleteOne(d);
@@ -157,8 +150,8 @@ public class GestioneAnnunciTest {
   
   @Test
   void testAnnuncioOperazioneInvalida() throws ServletException, IOException {
-	request.setParameter("operazione", "operazioneInvalida");
-	servlet.doGet(request, response);
+    request.setParameter("operazione", "operazioneInvalida");
+    servlet.doGet(request, response);
     assertEquals("./paginaErrore.jsp?notifica=noOperazione", response.getRedirectedUrl());
   }
 
@@ -186,9 +179,9 @@ public class GestioneAnnunciTest {
     servlet.doPost(request, response);
 
     request.setParameter("oggetto", titolo);
-    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\r\n" + 
-        "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\r\n" + 
-        "");
+    request.setParameter("testo", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin nisi sit amet nibh congue scelerisque. Donec ornare pharetra erat, at lobortis tellus commodo eu. Integer gravida nulla non risus aliquam, elementum mollis turpis fringilla. Sed vel commodo ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum viverra diam fermentum sapien cursus scelerisque. Praesent porta ac diam eu tempus. Pellentesque pellentesque nisi enim, non pellentesque mauris maximus nec. Nunc et enim eu purus porta molestie eget sed libero. Donec ullamcorper ligula orci, eu molestie lorem pharetra at. Nulla tortor tellus, varius sagittis congue quis, lobortis et metus. Sed elementum varius justo, et sollicitudin lectus porttitor at.\r\n" 
+    + "Integer porta diam nec commodo consequat. Pellentesque pharetra vel lacus nec condimentum. Vivamus metus tortor, mattis non pulvinar in, mollis quis nibh. Cras ultrices vel orci eu bibendum. In pulvinar, lacus vitae cras amet.\r\n" 
+    + "");
     request.setParameter("operazione", "inviaAnnuncio");
     servlet.doPost(request, response);
     assertEquals("./dashboard.jsp?notifica=comunicazioneNonInviata", response.getRedirectedUrl());
@@ -305,7 +298,7 @@ public class GestioneAnnunciTest {
     //perché nel mostrare la lista il model sceglie prima i messaggi più recenti
 
     annunciP.add(secondo);
-    annunciP.add(primo);	
+    annunciP.add(primo);
 
     request.setParameter("operazione", "visualizzaPersonali");
     servlet.doGet(request, response);
@@ -365,7 +358,7 @@ public class GestioneAnnunciTest {
     //perché nel mostrare la lista il model sceglie prima i messaggi più recenti
 
     annunciP.add(secondo);
-    annunciP.add(primo);	
+    annunciP.add(primo);
 
     request.setParameter("operazione", "visualizzaPersonali");
     servlet.doGet(request, response);
@@ -375,8 +368,7 @@ public class GestioneAnnunciTest {
   
   @Test
   void LetturaAnnunciListaVuota() throws Exception {
-	  
-	tearDown();
+    tearDown();
     request.getSession().setAttribute("utente", medico);
     request.getSession().setAttribute("isMedico", true);
     request.getSession().setAttribute("accessDone", true);
@@ -443,8 +435,8 @@ public class GestioneAnnunciTest {
 
     Document d = 
         annunci.find(eq("_id", new ObjectId(annuncio.getIdAnnuncio())))
-        .projection(Projections.exclude("_id")).
-        first().append("MedicoCodiceFiscale", null);
+        .projection(Projections.exclude("_id"))
+        .first().append("MedicoCodiceFiscale", null);
     annunci.insertOne(d);
     ObjectId id = (ObjectId)d.get("_id");
 
@@ -456,15 +448,15 @@ public class GestioneAnnunciTest {
   
   @Test
   void testGeneraDownload() throws ServletException, IOException {
-	PrintWriter pw;
-	request.getSession().setAttribute("utente", medico);
+    PrintWriter pw;
+    request.getSession().setAttribute("utente", medico);
     request.getSession().setAttribute("isMedico", true);
     request.getSession().setAttribute("accessDone", true);
     request.setParameter("id",annuncio.getIdAnnuncio());
 
     request.setParameter("operazione", "generaDownload");
     servlet.doGet(request, response);
-    
+
     pw = response.getWriter();
     assertNotNull(pw);
   }

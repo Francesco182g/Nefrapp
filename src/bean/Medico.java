@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 
+ * Questa classe rappresenta il medico.
  * @author Antonio Donnarumma
- * Questa classe rappresenta il medico
  */
 public class Medico extends Utente { 
   private String sesso; 

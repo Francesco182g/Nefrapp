@@ -2,26 +2,19 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.Document;
-import org.bson.types.ObjectId;
-
+import bean.PianoTerapeutico;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Projections;
-
-import bean.Medico;
-import bean.PianoTerapeutico;
+import java.util.ArrayList;
+import java.util.List;
+import org.bson.Document;
 import utility.CreaBeanUtility;
 
 /**
- * 
- * @author Domenico Musono
- * Questa classe si occupa di contattare il database ed effettuare tutte le operazioni CRUD relative ai piani terapeutici
+ * Questa classe si occupa di contattare il database ed effettuare tutte le operazioni CRUD relative ai piani terapeutici.
+ * @author Domenico Musone
  */
 public class PianoTerapeuticoModel {
   /**
@@ -41,7 +34,7 @@ public class PianoTerapeuticoModel {
         .append("Farmaco",daAggiungere.getFarmaco())
         .append("FineTerapia", daAggiungere.getDataFineTerapia())
         .append("Visualizzato", daAggiungere.getVisualizzato());
-    pianoTerapeutico.insertOne(doc);	
+    pianoTerapeutico.insertOne(doc);
   }
 
   /**

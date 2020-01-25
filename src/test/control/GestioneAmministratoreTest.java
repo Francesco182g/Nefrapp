@@ -1,14 +1,22 @@
 package test.control;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import bean.Amministratore;
+import bean.Paziente;
+import bean.Utente;
+import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import control.GestioneAmministratore;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
-
+import model.DriverConnection;
+import model.MedicoModel;
+import model.PazienteModel;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,19 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-
-import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Amministratore;
-import bean.Paziente;
-import bean.Utente;
-import control.GestioneAccesso;
-import control.GestioneAmministratore;
-import model.DriverConnection;
-import model.MedicoModel;
-import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 class GestioneAmministratoreTest {
@@ -43,10 +38,11 @@ class GestioneAmministratoreTest {
   private static final String residenzaPaziente = "Via Roma, 22, Salerno, 84132, SA";
   private static final ArrayList<String> medici = new ArrayList<String>();
   private MockHttpSession session;
+  
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-	  admin = new Amministratore("FLPBRZ61A45F234F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
-	  paziente = new Paziente("M", "BNCDNC67A01F205I", "Andrea", "Rossi", "", residenzaPaziente, "Salerno", dataNascitaPaziente, false, medici);
+    admin = new Amministratore("FLPBRZ61A45F234F", "Filippo", "Carbosiero", "f.carbosiero@live.it");
+    paziente = new Paziente("M", "BNCDNC67A01F205I", "Andrea", "Rossi", "", residenzaPaziente, "Salerno", dataNascitaPaziente, false, medici);
   }
 
   @AfterAll
@@ -134,7 +130,7 @@ class GestioneAmministratoreTest {
     ArrayList<Object> list = new ArrayList<Object>();
     list.add(MedicoModel.getAllMedici());
     list.add(PazienteModel.getAllPazienti());
-    String jsonList=gg.toJson(list);
+    String jsonList = gg.toJson(list);
     System.out.println(response.getContentAsString());
     assertEquals(response.getContentAsString(),jsonList);
   }
@@ -1357,25 +1353,23 @@ class GestioneAmministratoreTest {
   }
   
   @Test
-  void testAccessoNonAutorizzato() throws ServletException, IOException{
-	  session.setAttribute("utente", paziente);
-	  request.setSession(session);
-	  request.setParameter("operazione", "caricaMedPaz");
-	  
-	  servlet.doPost(request, response);
-	  
-	  assertEquals(null, response.getRedirectedUrl());
+  void testAccessoNonAutorizzato() throws ServletException, IOException {
+    session.setAttribute("utente", paziente);
+    request.setSession(session);
+    request.setParameter("operazione", "caricaMedPaz");
+    servlet.doPost(request, response);
+    assertEquals(null, response.getRedirectedUrl());
   }
-  
+
   @Test
-  void testAccessoNonAutorizzato_2() throws ServletException, IOException{
-	  session.setAttribute("utente", null);
-	  request.setSession(session);
-	  request.setParameter("operazione", "caricaMedPaz");
-	  
-	  servlet.doPost(request, response);
-	  
-	  assertEquals(null, response.getRedirectedUrl());
+  void testAccessoNonAutorizzato_2() throws ServletException, IOException {
+    session.setAttribute("utente", null);
+    request.setSession(session);
+    request.setParameter("operazione", "caricaMedPaz");
+
+    servlet.doPost(request, response);
+
+    assertEquals(null, response.getRedirectedUrl());
   }
   
   @Test
@@ -1389,14 +1383,14 @@ class GestioneAmministratoreTest {
   
   @Test
   void testModificaDatiPersonaliUtenteNonValido() throws ServletException, IOException {
-	session.setAttribute("utente", null);
-	request.setSession(session);
-	request.setParameter("tipoUtente", "amministratore");
-	request.setParameter("operazione", "modifica");
-	request.setParameter("codiceFiscale","GRMBNN67L11B516R");
-	
+    session.setAttribute("utente", null);
+    request.setSession(session);
+    request.setParameter("tipoUtente", "amministratore");
+    request.setParameter("operazione", "modifica");
+    request.setParameter("codiceFiscale","GRMBNN67L11B516R");
+
     servlet.doPost(request, response);
-    
+
     assertEquals(null, response.getRedirectedUrl());
   }
 }

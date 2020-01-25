@@ -5,19 +5,18 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
 /**
- * 
- * @author Antonio Donnarumma
  * Questa classe si occupa di gestire la connessione con il database.
+ * @author Antonio Donnarumma
  */
 public class DriverConnection {
   //DATABASE ORIGINARIO SU AZURE
   //private static MongoClientURI uri = new MongoClientURI("mongodb+srv://teamNefrapp:nefrapp01@cluster0-gkgb4.azure.mongodb.net/test");
-	
+
   //USATO PER LO SVILUPPO
   //private static MongoClientURI doUri = new MongoClientURI("mongodb://filippo:pippo123@157.245.26.31/test");
   //private static MongoClient mongoClient = new MongoClient(doUri);
   //private static MongoDatabase database = mongoClient.getDatabase("NefrApp");
-	
+  
   //USATO PER LA DEMO DEL CLIENTE
   //private static MongoClientURI doUri = new MongoClientURI("mongodb://demo:pippo123@157.245.26.31/test");
   //private static MongoClient mongoClient = new MongoClient(doUri);

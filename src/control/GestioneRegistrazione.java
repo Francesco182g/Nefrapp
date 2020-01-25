@@ -1,5 +1,9 @@
 package control;
 
+import bean.Amministratore;
+import bean.Medico;
+import bean.Paziente;
+import bean.PianoTerapeutico;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,19 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import bean.Amministratore;
-import bean.Medico;
-import bean.Paziente;
-import bean.PianoTerapeutico;
 import model.MedicoModel;
 import model.PazienteModel;
 import model.PianoTerapeuticoModel;
 import utility.CriptazioneUtility;
 
 /**
- * @author Luca Esposito, Antonio Donnarumma, Davide Benedetto Strianese, Questa
- *         classe � una servlet che si occupa della registrazione di un utente
- *         del sistema.
+ * Questa classe è una servlet che si occupa della registrazione di un utente
+ * al sistema.
+ * @author Luca Esposito, Antonio Donnarumma, Davide Benedetto Strianese
  */
 @WebServlet("/GestioneRegistrazione")
 public class GestioneRegistrazione extends HttpServlet {
@@ -124,8 +124,8 @@ public class GestioneRegistrazione extends HttpServlet {
     String luogoDiNascita = request.getParameter("luogoDiNascita");
     String dataDiNascita = request.getParameter("dataDiNascita");
 
-    if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita)&&!MedicoModel.checkEmail(email)) {
-      if(MedicoModel.getMedicoByCF(codiceFiscale)==null && PazienteModel.getPazienteByCF(codiceFiscale)==null) {
+    if (validazione(codiceFiscale, nome, cognome, sesso, email, password,residenza,luogoDiNascita,dataDiNascita) && !MedicoModel.checkEmail(email)) {
+      if (MedicoModel.getMedicoByCF(codiceFiscale) == null && PazienteModel.getPazienteByCF(codiceFiscale) == null) {
         Medico medico =
             new Medico(sesso, residenza, null, codiceFiscale, nome, cognome, email,luogoDiNascita);
         if (!dataDiNascita.equals("")) {
@@ -142,6 +142,7 @@ public class GestioneRegistrazione extends HttpServlet {
       response.sendRedirect("./registraMedico.jsp?notifica=ParamErr");
     }
   }
+  
   /**
    * Metodo che inserisce un Paziente nel database. 
    * I dati della registrazione sono contenuti nella request.
@@ -185,17 +186,18 @@ public class GestioneRegistrazione extends HttpServlet {
       requestDispatcher.forward(request, response);
     }
   }
+  
   /**
    * Metodo per controllare la conformità dei campi con le regex.
-   * @param codiceFiscale
-   * @param nome
-   * @param cognome
-   * @param sesso
-   * @param email
-   * @param password
-   * @param residenza
-   * @param luogoDiNascita
-   * @param dataDiNascita
+   * @param codiceFiscale da validare
+   * @param nome da validare
+   * @param cognome da validare
+   * @param sesso da validare
+   * @param email da validare
+   * @param password da validare
+   * @param residenza da validare
+   * @param luogoDiNascita da validare
+   * @param dataDiNascita da validare
    * @return
    */
   private boolean validazione(String codiceFiscale, String nome, String cognome, String sesso, String email,
@@ -222,13 +224,13 @@ public class GestioneRegistrazione extends HttpServlet {
     if (!Pattern.matches(expSesso, sesso) || sesso.length() != 1)
       valido = false;
     if (!email.equals(""))
-      if (!Pattern.matches(expEmail, email)||email.length()<5 ||email.length()>50)
+      if (!Pattern.matches(expEmail, email) || email.length() < 5 || email.length() > 50)
         valido = false;
     if (!residenza.equals(""))
-      if (!Pattern.matches(expResidenza, residenza)||residenza.length()<5||residenza.length()>50)
+      if (!Pattern.matches(expResidenza, residenza) || residenza.length() < 5 || residenza.length() > 50)
         valido = false;
     if (!luogoDiNascita.equals(""))
-      if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita)|| luogoDiNascita.length() < 3|| luogoDiNascita.length() > 50)
+      if (!Pattern.matches(expLuogoDiNascita, luogoDiNascita) || luogoDiNascita.length() < 3 || luogoDiNascita.length() > 50)
         valido = false;
     if (!dataDiNascita.equals(""))
       if (!Pattern.matches(expDataDiNascita, dataDiNascita))

@@ -2,17 +2,15 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import org.bson.Document;
-
-import com.mongodb.client.MongoCollection;
 import bean.Utente;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
 import utility.CreaBeanUtility;
 
 /**
- * 
- * @author NefrappTeam.
  * Questa classe � un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti l'utente.
+ * @author NefrappTeam
  */
 public class UtenteModel {
 

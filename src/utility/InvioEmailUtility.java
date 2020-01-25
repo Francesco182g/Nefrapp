@@ -3,7 +3,6 @@ package utility;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -17,7 +16,7 @@ public class InvioEmailUtility {
   public static final String MITTENTE = "nefrappteam@gmail.com";
   public static final String PASSWORD = "ForseIlProgettoNonFallisce1289!?#";
 
-  public static void inviaEmail(String destinatario) throws Exception{
+  public static void inviaEmail(String destinatario) throws Exception {
 
     Properties properties = new Properties();
 

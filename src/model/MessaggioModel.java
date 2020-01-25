@@ -2,30 +2,23 @@ package model;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-
+import bean.Messaggio;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
-
-import bean.Messaggio;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import utility.CreaBeanUtility;
 
 /**
- * 
- * @author Domenici Musone.
  * Questa classe si occupa di contattare il database ed effettuare tutte leoperazioni CRUD relative ai messaggi.
+ * @author Domenico Musone.
  */
 public class MessaggioModel {
 

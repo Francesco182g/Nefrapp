@@ -4,10 +4,10 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 
 /**
+ * Interfaccia che determina le operazioni che possono essere 
+ * compiute da un'implementazione concreta di Annuncio.
  * 
  * @author NefrappTeam
- * Interfaccia che determina le operazioni che possono essere 
- * compiute da un'implementazione concreta di Annuncio
  */
 public interface Annuncio {
 

@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 
+ * Questa classe rappresenta il piano terapeutico.
  * @author Matteo Falco
- * Questa classe rappresenta il piano terapeutico
  */
 public class PianoTerapeutico {
   private String codiceFiscalePaziente;
@@ -15,7 +14,8 @@ public class PianoTerapeutico {
   private LocalDate dataFineTerapia;
   private Boolean visualizzato;
 
-  public PianoTerapeutico() {}
+  public PianoTerapeutico() {
+  }
 
   public PianoTerapeutico(String codiceFiscalePaziente, String diagnosi, 
       String farmaco, LocalDate dataFineTerapia) {

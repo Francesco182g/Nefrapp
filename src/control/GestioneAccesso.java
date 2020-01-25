@@ -1,32 +1,26 @@
 package control;
 
+import bean.Amministratore;
+import bean.Paziente;
+import bean.Utente;
+import com.mongodb.MongoException;
 import java.io.IOException;
 import java.util.regex.Pattern;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.mongodb.MongoException;
-
-import bean.Amministratore;
-import bean.Paziente;
-import bean.Utente;
 import model.AmministratoreModel;
 import model.MedicoModel;
 import model.PazienteModel;
 import utility.CriptazioneUtility;
 
 /**
- * 
+ * Questa classe è una servlet che si occupa della gestione dell'accesso
+ * al sistema.
  * @author Eugenio Corbisiero, Davide Benedetto Strianese, Silvio Di Martino
- *         Questa classe è una servlet che si occupa della gestione dell'accesso
- *         al sistema
- *
  */
 @WebServlet("/GestioneAccesso")
 public class GestioneAccesso extends HttpServlet {
@@ -146,8 +140,7 @@ public class GestioneAccesso extends HttpServlet {
     if (controllaParametri(codiceFiscale, password)) {
       password = CriptazioneUtility.criptaConMD5(password);
       utente = MedicoModel.getMedicoByCFPassword(codiceFiscale, password);
-      if (utente == null)
-      {
+      if (utente == null) {
         utente = PazienteModel.getPazienteByCFPassword(codiceFiscale, password);
         Paziente paziente = (Paziente) utente;
         if (utente != null && paziente.getAttivo() == true) {
@@ -171,8 +164,7 @@ public class GestioneAccesso extends HttpServlet {
         session.setAttribute("accessDone", true);
       }
 
-      if (utente != null) 
-      {
+      if (utente != null) {
         session.setAttribute("utente", utente);
         GestioneNotifica gn = new GestioneNotifica();
         gn.doGet(request, response);

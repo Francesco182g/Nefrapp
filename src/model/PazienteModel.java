@@ -1,26 +1,21 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import static com.mongodb.client.model.Filters.eq;
 
-import java.util.List;
-import org.bson.Document;
-
+import bean.Paziente;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import bean.Paziente;
-import utility.CriptazioneUtility;
+import java.util.ArrayList;
+import java.util.List;
+import org.bson.Document;
 import utility.CreaBeanUtility;
-
-import static com.mongodb.client.model.Filters.*;
+import utility.CriptazioneUtility;
 
 /**
- * 
- * @author Antonio Donnarumma, Luca Esposito, Silvio Di Martino
  * Questa classe  è un manager che si occupa di interagire con il database.
  * Gestisce le query riguardanti il paziente.
+ * @author Antonio Donnarumma, Luca Esposito, Silvio Di Martino
  */
 
 public class PazienteModel {
@@ -74,7 +69,7 @@ public class PazienteModel {
     }
 
     documenti.close();
-    return pazientiMedico;	
+    return pazientiMedico;
   }
 
   /**
@@ -101,7 +96,7 @@ public class PazienteModel {
         .append("Email", daAggiungere.getEmail())
         .append("Attivo", daAggiungere.getAttivo())
         .append("Medici", daAggiungere.getMedici());
-    paziente.insertOne(doc);	
+    paziente.insertOne(doc);
   }
 
   /**
@@ -173,7 +168,7 @@ public class PazienteModel {
   public static ArrayList<Paziente> getAllPazienti() {
     MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
     ArrayList<Paziente> listaPazienti = new ArrayList<Paziente>();
-    for (Document d :pazienti.find()){
+    for (Document d :pazienti.find()) {
       listaPazienti.add(CreaBeanUtility.daDocumentAPaziente(d));
     }
     return listaPazienti;

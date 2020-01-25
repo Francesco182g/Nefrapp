@@ -4,9 +4,9 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 
 /**
- * 
+ * Interfaccia che determina le operazioni che possono essere compiute 
+ * da un'implementazione concreta di Messaggio.
  * @author Domenico Musone
- * Interfaccia che determina le operazioni che possono essere compiute da un'implementazione concreta di Messaggio
  */
 public interface Messaggio {
 

@@ -1,9 +1,8 @@
 package bean;
 
 /**
- * 
+ * Questa classe rappresenta l'utnte generico del sito.
  * @author NefrappTeam
- * Questa classe rappresenta l'utnte generico del sito
  */
 public class Utente {
   private String codiceFiscale;
@@ -11,7 +10,8 @@ public class Utente {
   private String cognome;
   private String email;
 
-  public Utente() {}
+  public Utente() {
+  }
 
   public Utente(String codiceFiscale, String nome, String cognome,String email) {
     this.codiceFiscale = codiceFiscale;

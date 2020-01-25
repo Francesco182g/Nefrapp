@@ -1,14 +1,18 @@
 package test.control;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import bean.Paziente;
+import bean.Utente;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import control.GestionePaziente;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-
+import model.DriverConnection;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,14 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-
-import bean.Paziente;
-import bean.Utente;
-import control.GestionePaziente;
-import model.DriverConnection;
 import utility.CriptazioneUtility;
 
 class GestionePazienteTest {
@@ -45,7 +41,8 @@ class GestionePazienteTest {
   }
 
   @AfterAll
-  static void tearDownAfterClass() throws Exception {	}
+  static void tearDownAfterClass() throws Exception {
+  }
 
   @BeforeEach
   void setUp() throws Exception {
@@ -82,7 +79,7 @@ class GestionePazienteTest {
   void testDisattivaAccount() throws ServletException, IOException {
     request.setParameter("operazione", "disattivaAccount");
     servlet.doGet(request, response);
-    assertEquals("./login.jsp?notifica=accountDisattivato",response.getRedirectedUrl());	
+    assertEquals("./login.jsp?notifica=accountDisattivato",response.getRedirectedUrl());
   }
 
   @Test
@@ -543,8 +540,8 @@ class GestionePazienteTest {
   
   @Test
   void TestModificaAccountPazienteSessioneVuota() throws ServletException, IOException {
-	session.setAttribute("utente", null);
-	request.setSession(session);
+    session.setAttribute("utente", null);
+    request.setSession(session);
 
     servlet.doGet(request, response);
 

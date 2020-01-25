@@ -1,10 +1,13 @@
 package control;
 
+import bean.Medico;
+import bean.PianoTerapeutico;
+import bean.Utente;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,18 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-
-import bean.Medico;
-import bean.PianoTerapeutico;
-import bean.Utente;
 import model.PianoTerapeuticoModel;
 
 /**
- * 
- * @author Davide Benedetto Strianese Questa classe è una servlet che si occupa
- *         della gestione del piano terapeutico
+ * Questa classe è una servlet che si occupa
+ * della gestione del piano terapeutico.
+ * @author Davide Benedetto Strianese 
  */
 @WebServlet("/GestionePianoTerapeutico")
 public class GestionePianoTerapeutico extends HttpServlet {

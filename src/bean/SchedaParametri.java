@@ -5,9 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 
+ * Questa classe rappresenta la scheda parametri.
  * @author Silvio Di Martino 
- * Questa classe rappresenta la scheda parametri
  */
 public class SchedaParametri {
   private String pazienteCodiceFiscale;
@@ -19,9 +18,10 @@ public class SchedaParametri {
   private int tempoSosta;
   private int carico; 
   private int scarico;
-  private LocalDate data;	
+  private LocalDate data;
 
-  public SchedaParametri() {}
+  public SchedaParametri() {
+  }
 
   public SchedaParametri(String pazienteCodiceFiscale, BigDecimal peso, int paMin, int paMax, 
       int scaricoIniziale, int UF, int tempoSosta, int carico, int scarico, LocalDate data) {

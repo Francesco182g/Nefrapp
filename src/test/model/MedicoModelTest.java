@@ -1,24 +1,25 @@
 package test.model;
 
 import static com.mongodb.client.model.Filters.eq;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bean.Medico;
+import bean.Paziente;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import model.DriverConnection;
+import model.MedicoModel;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-
-import bean.Medico;
-import bean.Paziente;
-import model.DriverConnection;
-import model.MedicoModel;
 import utility.CreaBeanUtility;
 import utility.CriptazioneUtility;
 
@@ -115,29 +116,29 @@ class MedicoModelTest {
     assertEquals(daAggiornare.getEmail(), "G.Bernini1967@gmail.com");
   }
 
-	@Test
-	void testGetMediciByPazienteSeguito() {
-		String CfMedico = "GRMBNN67L11B519R";
-		String CfPaziente = "BNCLRD67A01F205I";
-		Paziente paziente;
-		MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
-		ArrayList<String> campoMedici = new ArrayList<>();
-		campoMedici.add(CfMedico);
-		String password1 = CriptazioneUtility.criptaConMD5("Fiori5678");
-		Document doc1 = new Document("CodiceFiscale", CfPaziente).append("Password", password1).append("Attivo", true)
-				.append("Medici", campoMedici);
-		pazienti.insertOne(doc1);
-		paziente = CreaBeanUtility.daDocumentAPaziente(doc1);
-		paziente.setMedici(campoMedici);
+  @Test
+  void testGetMediciByPazienteSeguito() {
+    String CfMedico = "GRMBNN67L11B519R";
+    String CfPaziente = "BNCLRD67A01F205I";
+    Paziente paziente;
+    MongoCollection<Document> pazienti = DriverConnection.getConnection().getCollection("Paziente");
+    ArrayList<String> campoMedici = new ArrayList<>();
+    campoMedici.add(CfMedico);
+    String password1 = CriptazioneUtility.criptaConMD5("Fiori5678");
+    Document doc1 = new Document("CodiceFiscale", CfPaziente).append("Password", password1).append("Attivo", true)
+        .append("Medici", campoMedici);
+    pazienti.insertOne(doc1);
+    paziente = CreaBeanUtility.daDocumentAPaziente(doc1);
+    paziente.setMedici(campoMedici);
 
-		ArrayList<Medico> medici = MedicoModel.getMediciByPazienteSeguito(paziente);
-		assertEquals(medici.get(0).getCodiceFiscale(), CfMedico);
-		
-	    FindIterable<Document> docs = pazienti.find(eq("CodiceFiscale", paziente.getCodiceFiscale()));
-	    for (Document d : docs) {
-	      pazienti.deleteOne(d);
-	    }
-	}
+    ArrayList<Medico> medici = MedicoModel.getMediciByPazienteSeguito(paziente);
+    assertEquals(medici.get(0).getCodiceFiscale(), CfMedico);
+
+    FindIterable<Document> docs = pazienti.find(eq("CodiceFiscale", paziente.getCodiceFiscale()));
+    for (Document d : docs) {
+      pazienti.deleteOne(d);
+    }
+  }
 
   @Test
   void testGetMedicoByEmail() {

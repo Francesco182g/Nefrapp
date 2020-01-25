@@ -1,15 +1,14 @@
 package test.bean;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import bean.MessaggioCompleto;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
-
-import bean.MessaggioCompleto;
 
 class MessaggioCompletoTest {
   private HashMap<String, Boolean> destinatariView = new HashMap<String, Boolean>();
@@ -191,9 +190,9 @@ class MessaggioCompletoTest {
     
     MessaggioCompleto.setData(ZonedDateTime.now(ZoneId.of("Europe/Rome")));
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterOra).toString(), 
-    		MessaggioCompleto.getData().format(formatterOra).toString());
+                    MessaggioCompleto.getData().format(formatterOra).toString());
     assertEquals(ZonedDateTime.now(ZoneId.of("Europe/Rome")).format(formatterData).toString(), 
-    		MessaggioCompleto.getData().format(formatterData).toString());
+                    MessaggioCompleto.getData().format(formatterData).toString());
   }
 
   @Test
@@ -221,7 +220,7 @@ class MessaggioCompletoTest {
   void testSetDestinatariView() {
     MessaggioCompleto MessaggioCompleto = new MessaggioCompleto("ABCD1111DFS12", "visita",
         "Gentile dottor Rossi,le allego una copia del mio ultimo racconto breve, intitolato “il Paziente Irriverente”",
-        "codiceallegato", "ilpazienteirriverente.pdf", ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatariView );
+        "codiceallegato", "ilpazienteirriverente.pdf", ZonedDateTime.now(ZoneId.of("Europe/Rome")),destinatariView);
     destinatariView.putIfAbsent("CRRSRA90A50A091Q", false);
     MessaggioCompleto.setDestinatariView(destinatariView);
     assertEquals(destinatariView, MessaggioCompleto.getDestinatariView());
