@@ -23,7 +23,8 @@ Visualizza la lista dei [contributors](https://github.com/Francesco182g/Nefrapp/
 
 ## Licenza
 
-N/D
+The MIT License (MIT)
+Copyright © 2020
 
 ## Acknowledgments
 
