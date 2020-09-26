@@ -30,3 +30,4 @@ N/D
 * Progetto open-source
 
 [![Build Status](https://travis-ci.org/Francesco182g/Nefrapp.svg?branch=master)](https://travis-ci.org/Francesco182g/Nefrapp)
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
